@@ -1,0 +1,13 @@
+MacQuadra800.qsf SHA256 75c69f933515f05c729076108b26515f3f6aff84a36692fdd58d2f95077fe1fd
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_XSTORE=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_LEA=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_LOADS=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_STORES=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_PEA=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_P6=1"
+set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_MEMORY_ENTRY=1"
+set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_COMPARE=1"
+set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_EARLY_DRAIN=1"
+set_global_assignment -name VERILOG_MACRO "CACHE_CD_OFF=1"
+set_global_assignment -name VERILOG_MACRO "CACHE_SMALL=1"

@@ -1,0 +1,23 @@
+0e5e 4e560000  link    A6, #$0
+0e62 2f03  move.l  D3, -(A7)
+0e64 7600  moveq   #$0, D3
+0e66 4ebaf1a8  jsr     (-$e58,PC); ($10)
+0e6a 2600  move.l  D0, D3
+0e6c 302e0008  move.w  ($8,A6), D0
+0e70 5340  subq.w  #1, D0
+0e72 670a  beq     $e7e
+0e74 5340  subq.w  #1, D0
+0e76 670c  beq     $e84
+0e78 5340  subq.w  #1, D0
+0e7a 670e  beq     $e8a
+0e7c 6010  bra     $e8e
+0e7e 4ebaf41a  jsr     (-$be6,PC); ($29a)
+0e82 600a  bra     $e8e
+0e84 4ebafdfe  jsr     (-$202,PC); ($c84)
+0e88 6004  bra     $e8e
+0e8a 4ebaf2ee  jsr     (-$d12,PC); ($17a)
+0e8e 2003  move.l  D3, D0
+0e90 c18c  exg     D0, A4
+0e92 261f  move.l  (A7)+, D3
+0e94 4e5e  unlk    A6
+0e96 4e75  rts

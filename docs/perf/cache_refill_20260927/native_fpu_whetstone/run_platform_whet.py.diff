@@ -1,0 +1,68 @@
+--- scratch/fpu_completion_eligibility_20260928/run_platform_whet.py
++++ scratch/native_fpu_kernel_20260928/run_platform_whet.py
+@@ -17,19 +17,20 @@
+ VERILATOR = '/home/alans/verilator5/bin/verilator'
+ 
+ p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+-p.add_argument('--image', type=Path, default=R/'scratch/whetstone_full_fixture_20260920/ram.bin')
++p.add_argument('--image', type=Path, default=HERE/'ram.bin')
+ p.add_argument('--rom', type=Path, default=R/'releases/quadra800.rom')
+ p.add_argument('--out', type=Path, required=True)
+ p.add_argument('--romlat', type=int, default=6, help='clk_sys cycles from a ROM beat request to its ack (DDR3 stand-in)')
+-p.add_argument('--ref', type=Path, default=R/'scratch/p198_ret/wl_p205_1',
+-               help='directory with whet_{globals,code,stack}.hex from the latency fixture, compared byte for byte')
+ p.add_argument('--no-compile', action='store_true')
+ a = p.parse_args()
+ 
++native_identity=json.loads((HERE/'image_identity.json').read_text())
++assert native_identity['selector']==1 and native_identity['resource_sha256']=='34ee511807b66d2360c505b352d0946c01730d764843ed815cfd49bab2fa8aa0'
++assert hashlib.sha256(a.image.read_bytes()).hexdigest()==native_identity['output_sha256'],'native image identity'
+ tree = Path(os.environ['TREE']).resolve()
+ rtl = tree/'rtl'
+ ap = rtl/'ap68040/rtl'
+-d = a.out.resolve(); d.mkdir(parents=True, exist_ok=True)
++d = a.out.resolve(); assert not d.exists(), "fresh output directory required"; d.mkdir(parents=True)
+ 
+ # The chip model is tb_sdram.sv's, unchanged except for its storage: the
+ # associative array becomes a flat 32M-word array (an unwritten cell reads 0,
+@@ -78,7 +79,7 @@
+ 
+ def run(cmd, log):
+     with (d/log).open('w') as f:
+-        r = subprocess.run(list(map(str, cmd)), cwd=d, stdout=f, stderr=subprocess.STDOUT)
++        r = subprocess.run(list(map(str, cmd)), cwd=d, stdout=f, stderr=subprocess.STDOUT, timeout=300)
+     text = (d/log).read_text(errors='replace')
+     if r.returncode:
+         sys.exit(f'{log} failed:\n' + text[-4000:])
+@@ -99,17 +100,21 @@
+ text = run(['stdbuf', '-oL', d/'obj/Vtb_platform_whet', '+prog='+str(a.image.resolve()), '+rom='+str(a.rom.resolve()),
+             f'+romlat={a.romlat}', *os.environ.get('EXTRA_PLUSARGS', '').split()], 'run.log')
+ assert 'WHETSTONE RETURNED' in text, text[-3000:]
+-keep = ('WHETSTONE', 'BUS32', 'SDRAM', 'BERR', 'CORE_LAT', 'EXT', 'WALKER', 'STOREBUF', 'BRIDGE', 'FPU_ELIG')
++keep = ('WHETSTONE', 'BUS32', 'SDRAM', 'BERR', 'CORE_LAT', 'EXT', 'WALKER', 'STOREBUF', 'BRIDGE', 'FPU_ELIG', 'NATIVE')
+ print('\n'.join(l for l in text.splitlines() if l.startswith(keep)))
+ 
+-if a.ref and (a.ref/'whet_globals.hex').exists():
+-    for n in ('whet_globals.hex', 'whet_code.hex', 'whet_stack.hex'):
+-        mine = [x.strip().lower() for x in (d/n).read_text().split()]
+-        ref = [x.strip().lower() for x in (a.ref/n).read_text().split() if not x.startswith('//')]
+-        print(f'MEMCHECK {n}: ' + ('match' if mine == ref else f'DIFFER ({len(mine)} / {len(ref)} bytes)'))
+-        assert mine == ref, f'oracle mismatch {n}'
+-
+-assert re.search(r'WHETSTONE_LOOP cycles=17641650\b',text), 'loop count differs from frozen baseline'
++abi=bytes(int(x,16) for x in (d/'native_abi.hex').read_text().split())
++expected=[0x11110003,0x11110004,0x11110005,0x11110006,0x11110007,0x22222222,0x33333333,0x600000,0x620000,0x66666666]
++assert abi[:40]==b''.join(x.to_bytes(4,'big') for x in expected),'initial sentinels'
++assert abi[:40]==abi[0x40:0x68],'D3-D7/A2-A6 preservation'
++assert int.from_bytes(abi[0x80:0x84],'big')==0x608ea0,'returned resource localA4'
++assert int.from_bytes(abi[0x84:0x88],'big')==0x640000 and abi[0x84:0x88]==abi[0x88:0x8c],'stack cleanup'
++assert abi[0x100:0x130]==abi[0x140:0x170],'FP4-FP7 preservation'
++fpchunks=[abi[0x100+i*12:0x10c+i*12] for i in range(4)]
++assert set(fpchunks)=={bytes.fromhex('40020000'+m+'00000000000000') for m in ['b0','c0','d0','e0']},'seeded FP sentinels'
++code=bytes(int(x,16) for x in (d/'native_code.hex').read_text().split())
++assert code==(a.image.read_bytes())[0x600000:0x600ea0],'native code unmodified'
++print('NATIVE_ABI D3_D7_A2_A6=match FP4_FP7=match SP=640000 A4=600000 D0=608EA0 code=unchanged')
+ assert 'SDRAM_PROTOCOL_ERRORS 0' in text, 'chip errors'
+ assert re.search(r'BERR 0\s+IPL_ASSERTED_CYCLES 0',text), 'bus error or IRQ'
+-print('FPU_ELIG_QUALIFIED baseline_clocks_match=1 three_memory_oracles_match=1 guest_600D=1 chip_errors=0')
++print('NATIVE_QUALIFIED native_FPSP_coverage=1 ABI_match=1 guest_600D=1 chip_errors=0 numerical_oracle=none')

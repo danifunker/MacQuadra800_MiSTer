@@ -1,0 +1,2 @@
+FAIL CLOSED: terminal regression failure in baseline/fpu_frames:
+$readmemh could not open ome/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/outputs/baseline/fpu_frames.hex. The tool output identifies an attempted path with the leading `/h` lost, then FAIL: access outside memory model at ffffffc4 and TEST FAILED with 3 errors. This was a path-length/harness issue, not an RTL result.

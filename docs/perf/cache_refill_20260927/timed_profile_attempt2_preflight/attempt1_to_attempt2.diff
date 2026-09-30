@@ -1,0 +1,280 @@
+--- a/verilator/sim_main.cpp
++++ b/verilator/sim_main.cpp
+@@ -1230,6 +1230,18 @@
+ 			printf("  %08X: %u cycles\n", pc_hist_pc(idx[i]), pc_hist[idx[i]]);
+ 	}
+ 	if (!headless) { audio.CleanUp(); video.CleanUp(); input.CleanUp(); }
++    if(std::getenv("SPEEDOMETER_FIXTURE_CHECK")) {
++        const uint32_t selector0=SIMEMU->ram[0x000fbea8/4]&0xffff;
++        const uint32_t selector1=SIMEMU->ram[0x000fbeac/4]>>16;
++        const uint32_t magic=SIMEMU->ram[0x00100100/4];
++        const uint32_t d0=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__regfile__DOT__bank_a[0];
++        const uint32_t sp=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__regfile__DOT__isp;
++        const uint32_t expected_d0=std::getenv("SPEEDOMETER_FIXTURE_D0")?std::strtoul(std::getenv("SPEEDOMETER_FIXTURE_D0"),nullptr,0):1;
++        const bool pass=selector0==4 && selector1==0x42 && magic==0x600d0042 && d0==expected_d0 && sp==0x00200000;
++        printf("FIXTURE_CHECK %s selector0=%04x selector1=%04x magic=%08x D0=%08x SP=%08x\n",
++            pass?"PASS":"FAIL",selector0,selector1,magic,d0,sp);
++        if(!pass)return 4;
++    }
+ 	top->final();
+ 	delete top;
+ 	return 0;
+--- a/scripts/fixtures/speedometer_timing_observer/adapter.inc
++++ b/scripts/fixtures/speedometer_timing_observer/adapter.inc
+@@ -14,10 +14,19 @@
+            SPEED_CORE(itt1),SPEED_CORE(dtt0),SPEED_CORE(dtt1)};
+     return c;
+ }
++static uint8_t speedometer_before_state=255;
++static bool speedometer_pipe_admit=false,speedometer_pipe_rf_owner=false;
++static uint32_t speedometer_pipe_pc=0;
++static uint16_t speedometer_pipe_opcode=0;
+ static void speedometer_before_eval() {
+     if(!speedometer_observer) return;
+     speedometer_observer->reset(VERTOPINTERN->reset);
+     if(VERTOPINTERN->reset) return;
++    speedometer_before_state=SPEED_CORE(state);
++    speedometer_pipe_admit=SPEED_CORE(pipe_input)&&SPEED_CORE(pipe_ready);
++    speedometer_pipe_rf_owner=SPEED_CORE(pipe_rf_owner);
++    speedometer_pipe_pc=speedometer_pipe_rf_owner?SPEED_CORE(pc):SPEED_CORE(pc_i);
++    speedometer_pipe_opcode=speedometer_pipe_rf_owner?SPEED_CORE(epf_data)[SPEED_CORE(epf_head)]:SPEED_CORE(ir);
+     speedometer_observer->context(speedometer_context(),main_time/2);
+     static bool invalidating=false;
+     const bool flush=SPEED_CPU(pf_req)||SPEED_CPU(cinv_req);
+@@ -26,9 +35,9 @@
+     speedometer::Bus b;
+     b.cycle=main_time/2;b.pc=SPEED_CORE(pc_i);
+     b.request=SPEED_CPU(mem_req);b.ack=SPEED_CPU(mem_ack);
+-    b.error=SPEED_CORE(mem_err);b.instruction=SPEED_CORE(mem_instr_q);
+-    b.write=SPEED_CPU(mem_write);b.addr=SPEED_CORE(mem_addr_q);
+-    b.fc=SPEED_CORE(fc_r);b.bytes=uint8_t(1u<<SPEED_CPU(mem_size));
++    b.error=SPEED_CPU(mem_flt)||(SPEED_CPU(mem_instr)?SPEED_CPU(ifr_berr):SPEED_CPU(core_berr));b.instruction=SPEED_CPU(mem_instr);
++    b.write=SPEED_CPU(mem_write);b.addr=SPEED_CPU(mem_addr);
++    b.fc=SPEED_CPU(mem_fc);b.bytes=uint8_t(1u<<SPEED_CPU(mem_size));
+     b.data=b.write?SPEED_CPU(core_wdata):SPEED_CPU(mm_rdata);   // P171: the wrapper aliases mem_wdata to core_wdata and mem_rdata to the cache's mm_rdata
+     // sim.v ties the machine CE to 1. This adapter must be changed if that
+     // integration changes; the standalone observer nevertheless tests CE=0.
+@@ -55,7 +64,22 @@
+     // overlay it, matching the core's existing operand-forwarding boundary.
+     speedometer::apply_pending(r,SPEED_CORE(rf_we),SPEED_CORE(rf_waddr),SPEED_CORE(rf_wdata),
+                                SPEED_CORE(aux_we),SPEED_CORE(aux_sel),SPEED_CORE(aux_wdata));
+-    speedometer_observer->dispatch(main_time/2,SPEED_CORE(pc_i),SPEED_CORE(ir),r);
++    const bool secondary=speedometer_pipe_admit&&speedometer_pipe_rf_owner;
++    // Secondary admissions lack an architectural register snapshot. All FPU
++    // timer/callback opcodes are unsupported; initial MOVEQ return recognition
++    // follows an unsupported RTS and has its own primary dispatch.
++    speedometer_observer->dispatch(main_time/2,
++        secondary?speedometer_pipe_pc:SPEED_CORE(pc_i),
++        secondary?speedometer_pipe_opcode:SPEED_CORE(ir),r,SPEED_CORE(state),
++        speedometer_before_state,speedometer_pipe_admit,speedometer_pipe_rf_owner,speedometer_pipe_pc,!secondary);
++    // Fail before a long workload if the selected fetch channel is not observed.
++    // This checks only nonzero sanity, not complete prefetch/BRF visibility.
++    if(speedometer_observer->dispatches()==10000 &&
++       (!speedometer_observer->instruction_acks()||!speedometer_observer->known_dispatches())) {
++        speedometer_observer->summary();
++        fprintf(stderr,"[OBSERVER] adapter sanity failed after 10000 dispatches\n");
++        std::exit(3);
++    }
+ }
+ #undef SPEED_CORE
+ #undef SPEED_CPU
+--- a/scripts/fixtures/speedometer_timing_observer/speedometer_observer.h
++++ b/scripts/fixtures/speedometer_timing_observer/speedometer_observer.h
+@@ -74,6 +74,26 @@
+     uint64_t fpu_last_cycle_=0, fpu_starts_=0, fpu_stops_=0;
+     uint64_t fpu_callbacks_=0, fpu_returns_=0, fpu_aborts_=0, fpu_unmatched_=0;
+     uint64_t fpu_prefix_aborts_=0;
++    uint64_t diag_rows_=0,diag_priority_rows_=0,diag_dropped_=0,dispatches_=0,known_dispatches_=0,ir_mismatch_=0;
++    uint64_t request_samples_=0,ack_samples_=0,instruction_acks_=0,data_acks_=0,fetched_bytes_=0,error_acks_=0;
++    uint64_t signature_failures_=0,secondary_skipped_=0,primary_mismatch_skipped_=0;
++    std::array<uint64_t,6> prefix_transitions_{};
++    std::array<uint64_t,6> invalidations_{};
++    std::array<std::array<uint64_t,6>,6> invalidation_phases_{};
++    void diagnostic(uint64_t cycle,const char* kind,uint32_t pc,const char* reason="",unsigned site=3) {
++        const bool priority=fpu_prefix_>=4 || std::string(kind)=="SIGNATURE_FAIL" ||
++            std::string(kind)=="IDENTIFY" || std::string(kind).find("FPU_")==0 ||
++            (std::string(kind)=="INVALIDATE" && fpu_identified_);
++        const bool allowed=priority ? diag_priority_rows_++<2048 : diag_rows_++<2048;
++        if(allowed) {
++            out_<<"LIVE cycle="<<cycle<<" kind="<<kind<<" phase="<<fpu_prefix_
++                <<" site="<<(site<3?site:(fpu_identified_?fpu_site_:fpu_prefix_site_))<<" pc="<<std::hex<<pc<<std::dec<<" reason="<<reason<<'\n';
++            out_.flush();
++        } else ++diag_dropped_;
++    }
++    void prefix_change(uint64_t cycle,uint32_t pc,unsigned before) {
++        if(before!=fpu_prefix_) {++prefix_transitions_[fpu_prefix_];diagnostic(cycle,"PREFIX",pc);}
++    }
+ 
+     static constexpr uint32_t fpu_prefix_at_[3]={0x4f4a,0x50bc,0x527a};
+     static constexpr uint32_t fpu_prefix_return_[3]={0x4f5c,0x50ce,0x528c};
+@@ -91,6 +111,9 @@
+                    uint64_t raw=0,const char* reason="") {
+         FpuEvent e{kind,cycle,site,micro,raw,reason};
+         if(fpu_sink_)fpu_sink_(e);
++        static const char* names[]={"FPU_Identify","FPU_TimerStart","FPU_TimerStop","FPU_TimerRawStop",
++            "FPU_CallbackStart","FPU_CallbackStop","FPU_Abort","FPU_Unmatched"};
++        diagnostic(cycle,names[kind],0,reason,site);
+     }
+     void fpu_abort(uint64_t cycle,const char* reason) {
+         if(fpu_timer_||fpu_callback_||fpu_raw_pending_) {
+@@ -103,10 +126,15 @@
+         // A cache/MMU invalidation during the helper call can clear the
+         // executed prefix before its post-JSR signature is visible. Count
+         // that separately from an identified timer-span abort.
+-        if(fpu_prefix_ && !fpu_identified_)++fpu_prefix_aborts_;
++        const unsigned bucket=std::string(reason)=="MMU_REGISTERS"?0:std::string(reason)=="PFLUSH_OR_CINV"?1:
++            std::string(reason)=="RESET"?2:std::string(reason)=="CODE_WRITE"?3:std::string(reason)=="CODE3_RELOCATED"?4:5;
++        ++invalidations_[bucket];++invalidation_phases_[bucket][fpu_prefix_];
++        if(fpu_prefix_||fpu_identified_||fpu_timer_||fpu_callback_||fpu_raw_pending_)
++            diagnostic(cycle,"INVALIDATE",fpu_prefix_pc_,reason);
++        if(fpu_prefix_)++fpu_prefix_aborts_;
+         fpu_abort(cycle,reason);fpu_identified_=false;fpu_prefix_=0;
+     }
+-    bool fpu_signature(uint32_t pc,uint8_t fc,unsigned site) const {
++    bool fpu_signature(uint32_t pc,uint8_t fc,unsigned site,uint32_t* failed_pc=nullptr,const char** reason=nullptr) const {
+         const uint8_t sig[]={0x3b,0x7c,0,4,0xbe,0xaa,0x3b,0x7c,
+                              uint8_t(fpu_selector_[site]>>8),
+                              uint8_t(fpu_selector_[site]),0xbe,0xac,
+@@ -115,23 +143,49 @@
+                              uint8_t(fpu_return_word_[site])};
+         for(unsigned i=0;i<sizeof(sig);i++) {
+             if(i>=14 && i<18)continue; // loader relocates JSR's absolute target
+-            uint8_t v;if(!get(pc-18+i,fc,v)||v!=sig[i])return false;
++            uint8_t v;
++            const bool present=get(pc-18+i,fc,v);
++            if(!present||v!=sig[i]) {
++                if(failed_pc)*failed_pc=pc-18+i;
++                if(reason)*reason=present?"SIGNATURE_BYTE_MISMATCH":"MISSING_SIGNATURE_BYTE";
++                return false;
++            }
+         }
+         return true;
+     }
+-    void fpu_dispatch(uint64_t cycle,uint32_t pc,uint16_t,const Registers& r) {
++    void fpu_dispatch(uint64_t cycle,uint32_t pc,uint16_t ir,const Registers& r,uint8_t state,uint8_t before_state,bool pipe_admit,bool pipe_rf_owner,uint32_t pipe_pc,bool fpu_enable) {
+         fpu_last_cycle_=cycle;
+         const uint8_t fc=(r.sr&0x2000)?6:2;
+         uint16_t op=0;
+         const bool known=word(pc,fc,op);
++        ++dispatches_;if(known){++known_dispatches_;if(ir!=op) {
++            ++ir_mismatch_;
++            if(ir_mismatch_<=20) {
++                out_<<"IR_MISMATCH cycle="<<cycle<<" pc="<<std::hex<<pc<<" ir="<<ir<<" fetched="<<op
++                    <<std::dec<<" state="<<unsigned(state)<<" before_state="<<unsigned(before_state)
++                    <<" pipe_admit="<<pipe_admit<<" pipe_rf_owner="<<pipe_rf_owner<<" pipe_pc="<<std::hex<<pipe_pc
++                    <<std::dec<<'\n';out_.flush();
++            }
++        }}
++        if(!fpu_enable)++secondary_skipped_;
++        if(fpu_enable && known && ir!=op)++primary_mismatch_skipped_;
++        if(!fpu_enable || (known && ir!=op)) {
++            if(dispatches_==10000 || dispatches_%1000000==0)diagnostic_snapshot(cycle);
++            return;
++        }
++        const unsigned before=fpu_prefix_;
+         // Both immediate MOVE.W writes must be executed. The final 20-byte
+         // signature is checked only after the JSR returns, when its next
+         // opcode has been fetched. The third 18-byte prefix is duplicated
+         // elsewhere in CODE3; its 20-byte form is unique in the pinned fork.
+         if(fpu_prefix_==5 && pc==fpu_prefix_pc_+18) {
+             const unsigned site=fpu_prefix_site_;
+-            if(known && op==fpu_return_word_[site] &&
+-               r.a[5]==fpu_prefix_a5_ && fpu_signature(pc,fc,site)) {
++            uint32_t failed_pc=pc;
++            const char* failure=!known?"OPCODE_UNKNOWN":op!=fpu_return_word_[site]?"RETURN_OPCODE_MISMATCH":
++                r.a[5]!=fpu_prefix_a5_?"A5_CHANGED":"";
++            const bool signature_ok=known && op==fpu_return_word_[site] && r.a[5]==fpu_prefix_a5_ &&
++                fpu_signature(pc,fc,site,&failed_pc,&failure);
++            if(signature_ok) {
+                 const uint32_t base=pc-fpu_prefix_return_[site];
+                 if(fpu_timer_||fpu_callback_||fpu_raw_pending_)
+                     fpu_abort(cycle,"NEW_SITE_DURING_SPAN");
+@@ -139,7 +193,8 @@
+                     fpu_drop_identity(cycle,"CODE3_RELOCATED");
+                 fpu_identified_=true;fpu_base_=base;fpu_fc_=fc;fpu_site_=site;
+                 fpu_event(FpuEvent::Identify,cycle,site);
+-            }
++                diagnostic(cycle,"IDENTIFY",pc);
++            } else {++signature_failures_;diagnostic(cycle,"SIGNATURE_FAIL",failed_pc,failure,site);}
+             fpu_prefix_=0;
+         } else if(fpu_prefix_==4 && pc==fpu_prefix_pc_+12) {
+             fpu_prefix_=known && op==0x4eb9 && r.a[5]==fpu_prefix_a5_ ? 5 : 0;
+@@ -148,6 +203,8 @@
+                 fpu_prefix_=3;
+             else {fpu_prefix_=1;fpu_prefix_pc_=pc;fpu_prefix_a5_=r.a[5];}
+         }
++        prefix_change(cycle,pc,before);
++        if(dispatches_==10000 || dispatches_%1000000==0)diagnostic_snapshot(cycle);
+         if(!fpu_identified_ || fc!=fpu_fc_)return;
+         const unsigned site=fpu_site_;
+         const uint32_t off=pc-fpu_base_;
+@@ -264,6 +321,11 @@
+         }
+     }
+     void bus(const Bus& b) {
++        if(!reset_ && b.ce && b.request) {
++            ++request_samples_;
++            if(b.ack){++ack_samples_;if(b.error)++error_acks_;
++                else if(b.instruction&&!b.write){++instruction_acks_;fetched_bytes_+=b.bytes;}else ++data_acks_;}
++        }
+         if(reset_ || !b.ce || !b.request || !b.ack || b.error ||
+            (b.bytes!=1 && b.bytes!=2 && b.bytes!=4)) return;
+         if(b.instruction && !b.write) {
+@@ -271,6 +333,7 @@
+             return;
+         }
+         if(b.write) {
++            const unsigned before=fpu_prefix_;
+             if(fpu_prefix_==1 && b.pc==fpu_prefix_pc_ &&
+                b.addr==fpu_prefix_a5_-0x4156 && b.bytes==2 && uint16_t(b.data)==4)
+                 fpu_prefix_=2;
+@@ -279,6 +342,7 @@
+                 for(unsigned site=0;site<3;site++)if(uint16_t(b.data)==fpu_selector_[site]) {
+                     fpu_prefix_site_=site;fpu_prefix_=4;break;
+                 }
++            prefix_change(b.cycle,b.pc,before);
+             // Fresh EXECUTED prefix proof, not merely stale fetched bytes:
+             // both MOVE.W instructions must actually write their known
+             // immediate values at the known A5-relative logical addresses.
+@@ -321,9 +385,9 @@
+             hex("pc",b.pc);hex("logical",b.addr);hex("value",b.data);out_<<'\n';
+         }
+     }
+-    void dispatch(uint64_t cycle,uint32_t pc,uint16_t ir,const Registers& r) {
++    void dispatch(uint64_t cycle,uint32_t pc,uint16_t ir,const Registers& r,uint8_t state=255,uint8_t before_state=255,bool pipe_admit=false,bool pipe_rf_owner=false,uint32_t pipe_pc=0,bool fpu_enable=true) {
+         if(reset_)return;
+-        fpu_dispatch(cycle,pc,ir,r);
++        fpu_dispatch(cycle,pc,ir,r,state,before_state,pipe_admit,pipe_rf_owner,pipe_pc,fpu_enable);
+         if(bounded()) return;
+         const uint8_t fc=(r.sr&0x2000)?6:2;
+         const bool live_prefix=prefix_==4 && pc==prefix_pc_+12 && r.a[5]==prefix_a5_;
+@@ -404,7 +468,29 @@
+             return;
+         }
+     }
++    uint64_t instruction_acks() const {return instruction_acks_;}
++    uint64_t known_dispatches() const {return known_dispatches_;}
++    uint64_t dispatches() const {return dispatches_;}
++    void diagnostic_snapshot(uint64_t cycle) {
++        out_<<"ADAPTER cycle="<<cycle<<" request_samples="<<request_samples_<<" ack_samples="<<ack_samples_
++            <<" instruction_acks="<<instruction_acks_<<" data_acks="<<data_acks_<<" error_acks="<<error_acks_
++            <<" fetched_bytes="<<fetched_bytes_<<" dispatches="<<dispatches_<<" known_dispatches="<<known_dispatches_
++            <<" ir_mismatch="<<ir_mismatch_<<" signature_failures="<<signature_failures_<<" secondary_skipped="<<secondary_skipped_<<" primary_mismatch_skipped="<<primary_mismatch_skipped_
++            <<" diagnostic_dropped="<<diag_dropped_<<" starts="<<fpu_starts_<<" stops="<<fpu_stops_
++            <<" callbacks="<<fpu_callbacks_<<" returns="<<fpu_returns_<<" aborts="<<fpu_aborts_
++            <<" unmatched="<<fpu_unmatched_<<" prefix_aborts="<<fpu_prefix_aborts_;
++        for(unsigned i=0;i<6;i++)out_<<" prefix"<<i<<'='<<prefix_transitions_[i];
++        for(unsigned i=0;i<6;i++)out_<<" invalidation"<<i<<'='<<invalidations_[i];
++        out_<<'\n';
++        for(unsigned reason=0;reason<6;reason++) {
++            out_<<"INVALIDATIONS cycle="<<cycle<<" reason="<<reason;
++            for(unsigned phase=0;phase<6;phase++)out_<<" phase"<<phase<<'='<<invalidation_phases_[reason][phase];
++            out_<<'\n';
++        }
++        out_.flush();
++    }
+     void summary() {
++        diagnostic_snapshot(fpu_last_cycle_);
+         out_<<"FPU_SUMMARY starts="<<fpu_starts_<<" stops="<<fpu_stops_
+             <<" callbacks="<<fpu_callbacks_<<" returns="<<fpu_returns_
+             <<" aborts="<<fpu_aborts_<<" unmatched="<<fpu_unmatched_

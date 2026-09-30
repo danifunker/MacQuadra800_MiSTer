@@ -1,0 +1,20 @@
+pr1 start local 22:16:15 mister 1790648175.660
+pr1 done-shot 22:17:03
+pr2 start local 22:17:33 mister 1790648253.368
+pr2 done-shot 22:18:21
+pr3 start local 22:18:51 mister 1790648331.648
+pr3 done-shot 22:19:40
+dup1 cmd-D local 22:21:14.225 mister 1790648474.492
+dup1 after-shot 22:22:04
+dup2 cmd-D local 22:28:04.884 mister 1790648885.092
+dup2 after-shot 22:28:54
+dup3 cmd-D local 22:29:05.048 mister 1790648945.256
+dup3 after-shot 22:29:54
+dup4 cmd-D local 22:30:11.686 mister 1790649011.929
+dup4 after-shot 22:31:01
+feel cmd-D 22:31:08.892
+typed r 22:31:12.714
+mouse moved 22:31:16.185
+grab-during done 22:31:17.528
+dupeoff cmd-D local 22:35:10.396 mister 1790649310.553
+dupeoff after-shot 22:36:00

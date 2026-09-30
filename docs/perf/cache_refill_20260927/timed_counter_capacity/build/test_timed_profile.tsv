@@ -1,0 +1,59 @@
+META	format	fpu-timed-profile-v2
+META	clock	post_eval_33MHz_rising_edges
+META	timer_bracket	start_trap_return_inclusive_to_stop_trap_call_exclusive
+META	callback_bracket	JSR_call_inclusive_to_return_exclusive
+META	raw_microseconds	A0_D0_at_timer_trap_returns
+META	site_labels	unknown_three_CODE3_sites
+META	invalid_samples	0
+META	raw_cap	4096
+META	raw_dropped	0
+META	diagnostic_dropped	0
+SCHEMA	TOTAL	site	span	status	clocks	dispatches	bg_samples	blocking_decode	go_samples	mrd_fill_overlap	mrd_fill_unacked_overlap
+SCHEMA	HISTOGRAM	kind	site	span	status	id	clocks
+SCHEMA	RAW	site	start_A0D0	stop_A0D0	delta_u64	backwards	start_return_cycle	stop_return_cycle
+SCHEMA	DIAG	site	cycle	kind	reason
+LIFECYCLE	0	identifies=1	unmatched=0	raw_pairs=2	raw_missing=1
+SPAN	0	timer	starts=4	complete=3	aborted=1	open=0
+TOTAL	0	timer	complete	7	7	7	7	0	0	0
+CORE	0	timer	complete	153	7
+CACHE	0	timer	complete	8	3
+CACHE	0	timer	complete	9	4
+FPU_FST	0	timer	complete	9	7
+FPU_OP_BUSY	0	timer	complete	2	7
+TOTAL	0	timer	partial	1	1	1	1	0	0	0
+CORE	0	timer	partial	153	1
+CACHE	0	timer	partial	9	1
+FPU_FST	0	timer	partial	9	1
+FPU_OP_BUSY	0	timer	partial	2	1
+SPAN	0	callback	starts=3	complete=3	aborted=0	open=0
+TOTAL	0	callback	complete	3	3	3	3	0	0	0
+CORE	0	callback	complete	153	3
+CACHE	0	callback	complete	8	1
+CACHE	0	callback	complete	9	2
+FPU_FST	0	callback	complete	9	3
+FPU_OP_BUSY	0	callback	complete	2	3
+TOTAL	0	callback	partial	0	0	0	0	0	0	0
+LIFECYCLE	1	identifies=0	unmatched=0	raw_pairs=0	raw_missing=0
+SPAN	1	timer	starts=1	complete=0	aborted=1	open=0
+TOTAL	1	timer	complete	0	0	0	0	0	0	0
+TOTAL	1	timer	partial	1	1	1	1	0	0	0
+CORE	1	timer	partial	153	1
+CACHE	1	timer	partial	9	1
+FPU_FST	1	timer	partial	9	1
+FPU_OP_BUSY	1	timer	partial	2	1
+SPAN	1	callback	starts=0	complete=0	aborted=0	open=0
+TOTAL	1	callback	complete	0	0	0	0	0	0	0
+TOTAL	1	callback	partial	0	0	0	0	0	0	0
+LIFECYCLE	2	identifies=0	unmatched=0	raw_pairs=0	raw_missing=0
+SPAN	2	timer	starts=0	complete=0	aborted=0	open=0
+TOTAL	2	timer	complete	0	0	0	0	0	0	0
+TOTAL	2	timer	partial	0	0	0	0	0	0	0
+SPAN	2	callback	starts=0	complete=0	aborted=0	open=0
+TOTAL	2	callback	complete	0	0	0	0	0	0	0
+TOTAL	2	callback	partial	0	0	0	0	0	0	0
+RAW	0	100	140	40	0	10	14
+RAW	0	200	250	50	0	20	24
+DIAG	0	9	identify	
+DIAG	0	31	abort	PFLUSH_OR_CINV
+DIAG	0	44	abort	CAPTURE_END
+DIAG	1	51	abort	CAPTURE_END

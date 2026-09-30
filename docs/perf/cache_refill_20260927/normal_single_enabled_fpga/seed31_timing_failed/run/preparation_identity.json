@@ -1,0 +1,18 @@
+{
+  "base_project": "scratch/fpu_normal_single_enabled_quartus_20260928_seed28",
+  "base_manifest_sha256": "9493062f5db90790d3a86360c5b80c0b077b2e7d23a634dc52fa6bca0025bc11",
+  "manifest_entries": 1892,
+  "new_manifest_sha256": "2a09ab93d2ba9b92d448eb07be0717061a3912ce23dea8418cbb5a169ec58747",
+  "qsf_seed28_sha256": "aefaa8767b19a86d7924534d2fbac69575a6789611946df9ef95c81445f87a3d",
+  "qsf_seed31_sha256": "711a64565e5aeaf4c8be9cb5606f142322c0ffd6434b0f2f85e710805e3951b4",
+  "qsf_diff_sha256": "b5da65d0ec3964f4b72eeed8380cbca4b6f47956c439f82907d6977075b914ee",
+  "changed_manifest_paths": [
+    "MacQuadra800.qsf"
+  ],
+  "candidate_fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "sdc_sha256": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062",
+  "status": "prepared-for-review; no Quartus launched",
+  "sdc_path": "MacQuadra800.sdc",
+  "cache_source_path": "rtl/ap68040/rtl/ap040_cache.v",
+  "cache_source_sha256": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747"
+}

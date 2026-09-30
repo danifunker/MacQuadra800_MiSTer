@@ -1,0 +1,56 @@
+--- completed/tb_platform_whet.sv
++++ capture/tb_platform_whet.sv
+@@ -482,6 +482,34 @@
+ function automatic bit[15:0]fft_free_return_op(input int idx);
+     case(idx)0:return 'h2044;1:return 'h204b;default:return 'h4cdf;endcase
+ endfunction
++bit fft_capture_done=0;
++task automatic fft_capture_buffers;
++    int bad,f,addr;bit[15:0]word;string file;
++    if(fft_capture_done||fft_alloc_returns!=3||fft_free_calls!=0||fft_calls!=20||fft_exptab_calls!=1||fft_n_checks!=20||fft_scalar_checks!=20||fft_math_pending)$fatal(1,"FFT capture lifecycle");
++    bad=0;
++    if(dut.cpu.store_buffer.count!=0)bad++;
++    if(dut.cpu.store_buffer.drain_active)bad++;
++    if(dut.cpu.store_buffer.buffer_req||dut.cpu.store_buffer.push)bad++;
++    if(dut.cpu.store_buffer.m_req&&dut.cpu.store_buffer.m_write)bad++;
++    if(mem_req&&mem_write&&mem_is_ram)bad++;
++    if(mem_wp_valid)bad++;
++    if(sdr.wq_push||sdr.wq_push_bus)bad++;
++    if(sdr.wq_wp!=sdr.wq_rp||sdr.wq_used!=0||!sdr.wq_empty)bad++;
++    if(sdr.wq_act||(sdr.busy_r&&sdr.we_ram))bad++;
++    if(sdr.req&&sdr.we)bad++;
++    $display("FFT_CAPTURE_GUARDS bad=%0d sb_count=%0d drain=%0d buffer_req=%0d push=%0d m_req=%0d m_write=%0d mem_req=%0d mem_write=%0d mem_is_ram=%0d wp_valid=%0d wq_wp=%0d wq_rp=%0d wq_used=%0d wq_empty=%0d wq_push=%0d wq_push_bus=%0d wq_act=%0d busy_r=%0d we_ram=%0d bridge_req=%0d bridge_we=%0d",bad,dut.cpu.store_buffer.count,dut.cpu.store_buffer.drain_active,dut.cpu.store_buffer.buffer_req,dut.cpu.store_buffer.push,dut.cpu.store_buffer.m_req,dut.cpu.store_buffer.m_write,mem_req,mem_write,mem_is_ram,mem_wp_valid,sdr.wq_wp,sdr.wq_rp,sdr.wq_used,sdr.wq_empty,sdr.wq_push,sdr.wq_push_bus,sdr.wq_act,sdr.busy_r,sdr.we_ram,sdr.req,sdr.we);
++    if(bad!=0)$fatal(1,"FFT_CAPTURE_NOT_DRAINED");
++    for(int x=0;x<3;x++)begin
++        file=$sformatf("fft_payload_%0d.hex",x);f=$fopen(file,"w");
++        if(f==0||fft_ptrs[x]==0)$fatal(1,"FFT capture missing file/pointer");
++        for(int b=0;b<fft_sizes[x];b++)begin
++            addr=fft_ptrs[x]+b;word=chip.mem[sdcell(addr&~1,addr[1])];
++            $fwrite(f,"%02h\n",addr[0]?word[7:0]:word[15:8]);
++        end
++        $fclose(f);$display("FFT_CAPTURE_BLOCK id=%0d ptr=%h bytes=%0d",x,fft_ptrs[x],fft_sizes[x]);
++    end
++    fft_capture_done=1;$display("FFT_CAPTURE_DONE pc=00600e00 blocks=3 bytes=5152");
++endtask
+ task automatic fft_event(input int pc,input bit[15:0]op,input int a0,input int d0,input int a2,input int a3,input int d7,input bit secondary);
+     if(pc>='h600000 && pc<'h600ec8 && op==fft_word(pc))begin
+         if(fft_alloc_pc(pc) && op==16'ha11e)begin
+@@ -493,6 +521,10 @@
+             if(secondary||fft_kind!=0||fft_free_calls>=3)$fatal(1,"FFT free call pairing");
+             for(int x=0;x<3;x++)if(fft_ptrs[x]==a0)found=x;
+             if(found!=fft_free_calls||fft_freed[found])$fatal(1,"FFT free pointer/order %h",a0);
++            if(fft_free_calls==0)begin
++                if(pc!='h600e00)$fatal(1,"FFT capture wrong firstfree PC");
++                fft_capture_buffers();
++            end
+             fft_free_pointer=a0;fft_freed[found]=1;fft_kind=2;fft_resume=pc+2;fft_free_calls++;
+             $display("FFT_CALL free=%0d pc=%h ptr=%h",fft_free_calls,pc,a0);
+         end else if(fft_kind!=0 && pc==fft_resume)begin
+@@ -546,6 +578,7 @@
+     end
+ end
+ task fft_finish;
++    if(!fft_capture_done)$fatal(1,"FFT buffer capture missing");
+     if(!fft_zone_saved||fft_kind!=0||fft_alloc_calls!=3||fft_alloc_returns!=3||fft_free_calls!=3||fft_free_returns!=3||fft_calls!=20||fft_exptab_calls!=1||fft_math_pending||fft_n_checks!=20||fft_scalar_checks!=20)$fatal(1,"FFT lifecycle incomplete");
+     for(int x=0;x<3;x++)if(!fft_freed[x])$fatal(1,"FFT unfreed payload");
+     if(fft_u32('h118)!=fft_zone||fft_u32('h2aa)!=fft_zone||fft_u32('h108)!=fft_memtop||fft_u32(fft_zone)!=fft_bklim||fft_u32(fft_zone+12)!=fft_freebytes)$fatal(1,"FFT heap scalar restoration");

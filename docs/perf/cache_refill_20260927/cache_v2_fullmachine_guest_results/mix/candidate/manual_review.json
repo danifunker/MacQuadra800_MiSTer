@@ -1,0 +1,25 @@
+{
+  "stage": "MANUAL_REVIEW_AFTER_ORIGINAL_TERMINAL_METADATA",
+  "kind": "mix",
+  "verdict": "INVALID_GUEST_TIMING",
+  "setup_byteexact_completed6c": true,
+  "setup_sha256": "c494076aac7cb6cf960b6258ef41b43068133f03ee3f40c29a2fa6a3a8300b93",
+  "final_sha256": "0941228750148435e93c78f90733376ee65c515c6ea727b968d29f3d7a9bd0ef",
+  "final_frame": "screenshot_f7382.png",
+  "finding": {
+    "verdict": "INVALID_GUEST_TIMING",
+    "completed6c_average": 1.798,
+    "current_average": 330.532,
+    "clearly_visible_invalid_seconds": {
+      "Bubble": -4548.0,
+      "Queens": -293.0,
+      "Puzzle": 0.0,
+      "Sieve": -19808.0
+    },
+    "occlusion_limit": "Do not infer middle rating/iteration cells or unclear Permutations sign from modal overlap"
+  },
+  "original_automated_exit_checks": "PASS; do not validate guest timing",
+  "overall_candidate_qualification": "FAILED",
+  "cause": "UNPROVEN",
+  "review_source": "Primary reviewed final/setup images; independent final image view and setup byte comparison recorded; no automatic OCR or timing oracle"
+}

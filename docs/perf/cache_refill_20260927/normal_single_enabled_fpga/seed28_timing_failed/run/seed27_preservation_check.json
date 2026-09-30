@@ -1,0 +1,66 @@
+{
+  "status": "PASS; seed27 tree/artifacts/reports preserved before seed28 launch preparation",
+  "seed27_source_manifest_sha256": "7f0ccc88ab128bf2d994c036ce6307572ed617e3c26b761a7357b5b217f6cbe4",
+  "artifacts_reports": [
+    {
+      "path": "candidate_6c_source_manifest.sha256",
+      "size_bytes": 231217,
+      "sha256": "7f0ccc88ab128bf2d994c036ce6307572ed617e3c26b761a7357b5b217f6cbe4"
+    },
+    {
+      "path": "source_postrun_check.json",
+      "size_bytes": 228,
+      "sha256": "79d0c99f3446ee83637b17e902520b22e5276e97a48dbfdabdc8d1e05dfd69b3"
+    },
+    {
+      "path": "tree/output_files/MacQuadra800.rbf",
+      "size_bytes": 4441088,
+      "sha256": "5c0c19e72e7af9332e96dd58c73dd6075949b74b202d36967ad46eb17f9c106c"
+    },
+    {
+      "path": "tree/output_files/MacQuadra800.sof",
+      "size_bytes": 6690368,
+      "sha256": "d0a3951971a08fc2dcb7b5f5fc935c929c0d4714bbd9a9e4fb3c76c334b56db6"
+    },
+    {
+      "path": "tree/output_files/MacQuadra800.fit.summary",
+      "size_bytes": 683,
+      "sha256": "d170ebe9c7a1155af9e1def75437ff6886acc685ce8acc3c8101f31e1aca92d1"
+    },
+    {
+      "path": "tree/output_files/MacQuadra800.sta.summary",
+      "size_bytes": 4395,
+      "sha256": "7811ca4d9fff0f4275d82c52dd4c4f30280c8d622f71b6e304c0caeda00f0b56"
+    },
+    {
+      "path": "tree/output_files/MacQuadra800.fit.rpt",
+      "size_bytes": 2993314,
+      "sha256": "be876ce5406e0bda0fec6dfc0206a9c9e2ce695dbe99b698145acbd395527a8a"
+    },
+    {
+      "path": "tree/output_files/MacQuadra800.sta.rpt",
+      "size_bytes": 396740,
+      "sha256": "52cf749647ac0ba84b08aaa99a80a4982058ece89eac71ba678a10ede3a9bea4"
+    },
+    {
+      "path": "tree/scratch/cross_sys2ram_fpu_normal_single_enabled_seed27_20260928.txt",
+      "size_bytes": 3456,
+      "sha256": "5574fc35a2eee8c997b8de40c2dc520c425556b5e9faf25fbb9f72669b697f0c"
+    },
+    {
+      "path": "tree/scratch/cross_ram2sys_fpu_normal_single_enabled_seed27_20260928.txt",
+      "size_bytes": 3444,
+      "sha256": "73dcadf3a4a17a15a40b574836f1be8ba3312ab81e7aa1b15f85cfa1222ddf14"
+    },
+    {
+      "path": "tree/scratch/cpu_timing_6c_seed27_20260928/worst_paths.txt",
+      "size_bytes": 5922,
+      "sha256": "bc51e511c63c903a32cd355a9e20bc14902b4dbb25dc548ea085501f958f2d7d"
+    },
+    {
+      "path": "tree/scratch/cpu_timing_6c_seed27_20260928/worst_detail.txt",
+      "size_bytes": 49589,
+      "sha256": "714b3dd09168180a71e505a9afb573bbbb4b4402d4d8b3ef324b5b08a2f6d81b"
+    }
+  ]
+}

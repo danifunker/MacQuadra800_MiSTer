@@ -1,0 +1,7 @@
+{
+  "initial_native_code_sha256": "a0956478bf3f4c808c8eb71696249b51de15c48ea59861ae4f3519fbb09d4115",
+  "binary_sha256": "6eacea781c5558ce118265654e970dbb562c096c83600ba06741defd2a76502a",
+  "source_manifest_sha256": "758081d085f23b22f3cd0faa360ad7fc7d14c71a1d77b8f1f08dadb712609a12",
+  "image_identity_sha256": "14defa6e009b40f9622a8a6096f138cbb54c5727eb98629943d58209345875fc",
+  "numerical_oracle": "none"
+}

@@ -1,0 +1,34 @@
+{
+  "unit": "codex-fpu-normal-single-enabled-quartus-20260928-seed27.service",
+  "invocation_id": "bab7cbe105154a4e8240da4ff6e18fd5",
+  "tool_session_id": 48284,
+  "wrapper_pid": 2446908,
+  "command": "bash scripts/build_only.sh",
+  "systemd_show": [
+    "MainPID=2446908",
+    "ExecMainStartTimestamp=Mon 2026-09-28 02:50:53 EDT",
+    "ActiveState=active",
+    "SubState=running",
+    "InvocationID=bab7cbe105154a4e8240da4ff6e18fd5"
+  ],
+  "captured_utc": "2026-09-28T06:51:37.994821+00:00",
+  "quartus_processes_at_capture": [
+    {
+      "pid": 2446923,
+      "comm": "quartus_sh",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_sh",
+      "exe_sha256": "bdfda93ce02a5e802194d1f001446ac333ac1c039898f1a12843fca32afaf917",
+      "cmdline": "quartus_sh --flow compile MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree"
+    },
+    {
+      "pid": 2446960,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_flow=15 --ipc_mode --smart --read_settings_files=on --write_settings_files=off MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree"
+    }
+  ],
+  "source_manifest_sha256": "7f0ccc88ab128bf2d994c036ce6307572ed617e3c26b761a7357b5b217f6cbe4"
+}

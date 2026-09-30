@@ -1,0 +1,5 @@
+rm Vtb_platform_whet__ALL.verilator_deplist.tmp
+make: Leaving directory '/home/alans/mister/MacQuadra800_MiSTer/scratch/native_whet_next_measurement_20260928/profile/run/obj'
+- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev v5.050
+- Verilator: Built from 13.706 MB sources in 38 modules, into 20.396 MB in 21 C++ files needing 0.015 MB
+- Verilator: Walltime 32.145 s (elab=0.091, cvt=3.767, bld=28.030); cpu 4.280 s on 2 threads; allocated 266.969 MB

@@ -1,0 +1,11 @@
+{
+  "status": "QUALIFIED_RUNTIME",
+  "started_utc": "2026-09-28T03:37:47.788907+00:00",
+  "source_manifest_sha256": "c17d0b327cb1883110675b73d24ed0e1bcf7339c02971385a899da95a908d121",
+  "runner_pid": 2319199,
+  "native_pid": 2319517,
+  "binary_sha256": "7c80f36f96b2cb06d6f50005532d780d3f951d243ef9bc6f437f618da3da6937",
+  "native_seen_utc": "2026-09-28T03:38:07.798012+00:00",
+  "exit_status": 0,
+  "finished_utc": "2026-09-28T03:38:45.805984+00:00"
+}

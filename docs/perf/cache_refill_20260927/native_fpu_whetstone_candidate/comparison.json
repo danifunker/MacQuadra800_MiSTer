@@ -1,0 +1,15 @@
+{
+  "scope": "matched native selector1 FPUWStone runtime/ABI only; no independent numerical oracle",
+  "baseline_loop": 8726508,
+  "candidate_loop": 8724166,
+  "saved_clocks": 2342,
+  "cycle_decrease_percent": 0.026837768326116243,
+  "baseline_FPU": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "candidate_FPU": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "only_RTL_delta": [
+    "ap68040/rtl/ap040_fpu.v"
+  ],
+  "runtime_gates": "PASS both",
+  "numerical_output": "UNQUALIFIED; no payload capture or independent oracle",
+  "inherited_labels": "Copied exact checker/result scope still say baseline; preflight/consumed sources/comparison identify candidate73bc."
+}

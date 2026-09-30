@@ -1,0 +1,42 @@
+{
+  "edges": 8541493,
+  "busy_op_samples": 1265136,
+  "planes": [
+    {
+      "id": 0,
+      "starts": 1979943,
+      "ends": 1979943,
+      "active": 0,
+      "touched": 1979851,
+      "whole": 1979850,
+      "latency_sum": 2642093,
+      "max": 74,
+      "partial": 1,
+      "partial_edges": 37,
+      "active_edges": 0,
+      "occupancy": 2642130,
+      "faults": 0,
+      "diag": 64,
+      "dropped": 1979787
+    },
+    {
+      "id": 1,
+      "starts": 1979943,
+      "ends": 1979943,
+      "active": 0,
+      "touched": 1979851,
+      "whole": 1979851,
+      "latency_sum": 2617451,
+      "max": 48,
+      "partial": 0,
+      "partial_edges": 0,
+      "active_edges": 0,
+      "occupancy": 2617451,
+      "faults": 0,
+      "diag": 64,
+      "dropped": 1979787
+    }
+  ],
+  "scope": "native joint occupancy and per-plane episodes; no additive stall total or numerical oracle"
+}
+PASS passive native profile reconciliation

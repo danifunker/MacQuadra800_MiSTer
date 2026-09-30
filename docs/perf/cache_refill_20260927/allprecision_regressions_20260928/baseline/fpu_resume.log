@@ -1,0 +1,9 @@
+tb_ap040_program: running fpu_resume.hex
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/inputs/tb/tb_ap040_program.v:808: $readmemh(fpu_resume.hex): Not enough words in the file for the requested range [0:32767].
+phase 0 passed (14090 cycles)
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/inputs/tb/tb_ap040_program.v:808: $readmemh(fpu_resume.hex): Not enough words in the file for the requested range [0:32767].
+phase 1 passed (21162 cycles)
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/inputs/tb/tb_ap040_program.v:808: $readmemh(fpu_resume.hex): Not enough words in the file for the requested range [0:32767].
+phase 2 passed (21162 cycles)
+ALL TESTS PASSED
+/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/inputs/tb/tb_ap040_program.v:858: $finish called at 564435000 (1ps)

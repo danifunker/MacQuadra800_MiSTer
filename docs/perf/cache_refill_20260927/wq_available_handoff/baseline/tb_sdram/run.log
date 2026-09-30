@@ -1,0 +1,209 @@
+
+tb_sdram: sdram_beat32 + sdram.sv against a chip model
+
+PASS  both ranks saw LOAD MODE REGISTER during startup
+PASS  both ranks program CAS latency 2, burst length 8
+PASS  read back the first longword
+PASS  read back the second longword
+PASS  in the chip, the high halfword is at the even word address
+PASS  critical word returns from a wrapped BL8 fill
+PASS  BL8 wrap caches slot 0
+PASS  BL8 wrap caches slot 1
+PASS  BL8 wrap caches slot 3
+PASS  same-row reads reuse the open page
+PASS  a different bank activates without closing bank 0
+PASS  returning to bank 0 reuses its independently open row
+PASS  same-bank row conflict precharges and reactivates
+PASS  rank 0 retains its own data
+PASS  rank 1 retains distinct data
+PASS  same row remains independently open in both ranks
+PASS  byte enables 0000 merge correctly
+PASS  byte enables 0001 merge correctly
+PASS  byte enables 0010 merge correctly
+PASS  byte enables 0011 merge correctly
+PASS  byte enables 0100 merge correctly
+PASS  byte enables 0101 merge correctly
+PASS  byte enables 0110 merge correctly
+PASS  byte enables 0111 merge correctly
+PASS  byte enables 1000 merge correctly
+PASS  byte enables 1001 merge correctly
+PASS  byte enables 1010 merge correctly
+PASS  byte enables 1011 merge correctly
+PASS  byte enables 1100 merge correctly
+PASS  byte enables 1101 merge correctly
+PASS  byte enables 1110 merge correctly
+PASS  byte enables 1111 merge correctly
+PASS  read immediately after a posted write
+PASS  back-to-back posted writes retire in order
+PASS  push queue read-after-write ordering
+PASS  push queue wrap/mask word 0
+PASS  push queue wrap/mask word 1
+PASS  push queue wrap/mask word 2
+PASS  push queue wrap/mask word 3
+PASS  push queue wrap/mask word 4
+PASS  push queue wrap/mask word 5
+PASS  push queue wrap/mask word 6
+PASS  push queue wrap/mask word 7
+PASS  push queue wrap/mask word 8
+PASS  push queue wrap/mask word 9
+PASS  push queue wrap/mask word 10
+PASS  push queue wrap/mask word 11
+PASS  push queue wrap/mask word 12
+PASS  push queue wrap/mask word 13
+PASS  push queue wrap/mask word 14
+PASS  push queue wrap/mask word 15
+PASS  push queue wrap/mask word 16
+PASS  push queue wrap/mask word 17
+PASS  push queue wrap/mask word 18
+PASS  push queue wrap/mask word 19
+PASS  push queue wrap/mask word 20
+PASS  push queue wrap/mask word 21
+PASS  push queue wrap/mask word 22
+PASS  push queue wrap/mask word 23
+PASS  push queue wrap/mask word 24
+PASS  push queue wrap/mask word 25
+PASS  push queue wrap/mask word 26
+PASS  push queue wrap/mask word 27
+PASS  push queue wrap/mask word 28
+PASS  push queue wrap/mask word 29
+PASS  push queue wrap/mask word 30
+PASS  push queue wrap/mask word 31
+PASS  push queue wrap/mask word 32
+PASS  push queue wrap/mask word 33
+PASS  push queue wrap/mask word 34
+PASS  push queue wrap/mask word 35
+PASS  push queue wrap/mask word 36
+PASS  push queue wrap/mask word 37
+PASS  push queue wrap/mask word 38
+PASS  push queue wrap/mask word 39
+PASS  push queue wrap/mask word 40
+PASS  push queue wrap/mask word 41
+PASS  push queue wrap/mask word 42
+PASS  push queue wrap/mask word 43
+PASS  push queue wrap/mask word 44
+PASS  push queue wrap/mask word 45
+PASS  push queue wrap/mask word 46
+PASS  push queue wrap/mask word 47
+PASS  push queue wrap/mask word 48
+PASS  push queue wrap/mask word 49
+PASS  push queue wrap/mask word 50
+PASS  push queue wrap/mask word 51
+PASS  push queue wrap/mask word 52
+PASS  push queue wrap/mask word 53
+PASS  push queue wrap/mask word 54
+PASS  push queue wrap/mask word 55
+PASS  push queue wrap/mask word 56
+PASS  push queue wrap/mask word 57
+PASS  push queue wrap/mask word 58
+PASS  push queue wrap/mask word 59
+PASS  push queue wrap/mask word 60
+PASS  push queue wrap/mask word 61
+PASS  push queue wrap/mask word 62
+PASS  push queue wrap/mask word 63
+PASS  push queue wrap/mask word 64
+PASS  push queue wrap/mask word 65
+PASS  push queue wrap/mask word 66
+PASS  push queue wrap/mask word 67
+PASS  push queue wrap/mask word 68
+PASS  push queue wrap/mask word 69
+PASS  push queue wrap/mask word 70
+PASS  push queue wrap/mask word 71
+PASS  push queue wrap/mask word 72
+PASS  push queue wrap/mask word 73
+PASS  push queue wrap/mask word 74
+PASS  push queue wrap/mask word 75
+PASS  push queue wrap/mask word 76
+PASS  push queue wrap/mask word 77
+PASS  push queue wrap/mask word 78
+PASS  push queue wrap/mask word 79
+PASS  push queue wrap/mask word 80
+PASS  push queue wrap/mask word 81
+PASS  push queue wrap/mask word 82
+PASS  push queue wrap/mask word 83
+PASS  push queue wrap/mask word 84
+PASS  push queue wrap/mask word 85
+PASS  push queue wrap/mask word 86
+PASS  push queue wrap/mask word 87
+PASS  push queue wrap/mask word 88
+PASS  push queue wrap/mask word 89
+PASS  push queue wrap/mask word 90
+PASS  push queue wrap/mask word 91
+PASS  push queue wrap/mask word 92
+PASS  push queue wrap/mask word 93
+PASS  push queue wrap/mask word 94
+PASS  push queue wrap/mask word 95
+PASS  push queue wrap/mask word 96
+PASS  push queue wrap/mask word 97
+PASS  push queue wrap/mask word 98
+PASS  push queue wrap/mask word 99
+PASS  push queue wrap/mask word 100
+PASS  push queue wrap/mask word 101
+PASS  push queue wrap/mask word 102
+PASS  push queue wrap/mask word 103
+PASS  push queue wrap/mask word 104
+PASS  push queue wrap/mask word 105
+PASS  push queue wrap/mask word 106
+PASS  push queue wrap/mask word 107
+PASS  push queue wrap/mask word 108
+PASS  push queue wrap/mask word 109
+PASS  push queue wrap/mask word 110
+PASS  push queue wrap/mask word 111
+PASS  push queue wrap/mask word 112
+PASS  push queue wrap/mask word 113
+PASS  push queue wrap/mask word 114
+PASS  push queue wrap/mask word 115
+PASS  push queue wrap/mask word 116
+PASS  push queue wrap/mask word 117
+PASS  push queue wrap/mask word 118
+PASS  push queue wrap/mask word 119
+PASS  push queue wrap/mask word 120
+PASS  push queue wrap/mask word 121
+PASS  push queue wrap/mask word 122
+PASS  push queue wrap/mask word 123
+PASS  push queue wrap/mask word 124
+PASS  push queue wrap/mask word 125
+PASS  push queue wrap/mask word 126
+PASS  push queue wrap/mask word 127
+PASS push stress exercised queue occupancy 7
+PASS  bank/row spread 0 round trip
+PASS  bank/row spread 1 round trip
+PASS  bank/row spread 2 round trip
+PASS  bank/row spread 3 round trip
+PASS  bank/row spread 4 round trip
+PASS  bank/row spread 5 round trip
+PASS  bank/row spread 6 round trip
+PASS  bank/row spread 7 round trip
+PASS  data survives auto-refresh
+PASS  rank 1 data survives auto-refresh
+PASS  64-deep sequential write stream reads back intact
+
+  cold read / critical  6 clk_sys (181 ns)
+  page-hit read         4 clk_sys (121 ns)
+  buffered line read    1 clk_sys (30 ns)
+  isolated write beat   1 clk_sys (30 ns)  [posted]
+  64 sequential reads   5847 ns = 43.7 MB/s
+  64 sequential writes  4757 ns = 53.8 MB/s (to drained)
+
+  rank 0:
+
+  chip protocol, informational (clk_ram cycles @ 99 MHz):
+    min ACT->ACT same bank (tRC)  18
+    min ACT->RD/WR         (tRCD) 2
+    min PRE->ACT           (tRP)  3
+    min ACT->PRE           (tRAS) 15
+    max gap between refreshes     768
+  rank 1:
+
+  chip protocol, informational (clk_ram cycles @ 99 MHz):
+    min ACT->ACT same bank (tRC)  7275
+    min ACT->RD/WR         (tRCD) 2
+    min PRE->ACT           (tRP)  1219
+    min ACT->PRE           (tRAS) 208
+    max gap between refreshes     768
+
+tb_sdram: 174 checks, 0 failures, 0 chip protocol errors
+tb_sdram: OK
+- /home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/shared/tb_sdram.sv:446: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01
+- Verilator: $finish at 225us; walltime 0.009 s; speed 23.980 ms/s
+- Verilator: cpu 0.009 s on 1 threads; allocated 6 MB

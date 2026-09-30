@@ -1,0 +1,82 @@
+{
+  "status": "PASS_XFIRST_PHASE_PAIR",
+  "runner_pid": 2600289,
+  "started_utc": "2026-09-28T10:22:16.886228+00:00",
+  "source_manifest_sha256": "64f727004c1ee4ed61fcdc180e1682bfbfa3493ae53e406f765237f9e5015ddb",
+  "cache_sha256": {
+    "baseline": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+    "candidate": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481"
+  },
+  "flags": [
+    "-g2012",
+    "-DAP040_EXPERIMENTAL_XSTORE"
+  ],
+  "candidate_observer_define": "TEST_XFIRST",
+  "scope": "direct cache ports; independent byte oracle; no CPU/MMU/SDRAM timing claim",
+  "per_step_timeout_seconds": 90,
+  "steps": [
+    {
+      "name": "baseline_build",
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-DAP040_EXPERIMENTAL_XSTORE",
+        "-I",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl",
+        "-s",
+        "tb_xfirst_sideband",
+        "-o",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/phase_attempt2/outputs/baseline.vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/phase_attempt2/tb_xfirst_sideband.sv",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl/ap040_cache.v",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl/primitives/dpram.v"
+      ],
+      "pid": 2600290,
+      "exit_status": 0,
+      "terminal": true
+    },
+    {
+      "name": "baseline_run",
+      "argv": [
+        "vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/phase_attempt2/outputs/baseline.vvp"
+      ],
+      "pid": 2600294,
+      "exit_status": 0,
+      "terminal": true
+    },
+    {
+      "name": "candidate_build",
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-DAP040_EXPERIMENTAL_XSTORE",
+        "-DTEST_XFIRST",
+        "-I",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/candidate/rtl/ap68040/rtl",
+        "-s",
+        "tb_xfirst_sideband",
+        "-o",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/phase_attempt2/outputs/candidate.vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/phase_attempt2/tb_xfirst_sideband.sv",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/candidate/rtl/ap68040/rtl/ap040_cache.v",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/candidate/rtl/ap68040/rtl/primitives/dpram.v"
+      ],
+      "pid": 2600295,
+      "exit_status": 0,
+      "terminal": true
+    },
+    {
+      "name": "candidate_run",
+      "argv": [
+        "vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/phase_attempt2/outputs/candidate.vvp"
+      ],
+      "pid": 2600299,
+      "exit_status": 0,
+      "terminal": true
+    }
+  ],
+  "postrun_source": "PASS",
+  "finished_utc": "2026-09-28T10:22:17.658624+00:00"
+}

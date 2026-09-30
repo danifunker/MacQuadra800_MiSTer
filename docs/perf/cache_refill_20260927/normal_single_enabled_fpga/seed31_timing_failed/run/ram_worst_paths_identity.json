@@ -1,0 +1,29 @@
+{
+  "unit": "codex-fpu-normal-single-enabled-quartus-20260928-seed31-ram-paths.service",
+  "invocation_id": "d1709b66fb0c4bdc9523182c173e7b5a",
+  "tool_session_id": 45673,
+  "quartus_sta_pid": 2504255,
+  "quartus_sta_executable_sha256": "3e5b6469769824667c28dcad237a4ad5f46aad67c3ccd76ec3c0824e7094fe78",
+  "command": "quartus_sta -t scratch/timequest_ram_worst_paths_seed31.tcl",
+  "target_clock": "emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk",
+  "tcl_path": "tree/scratch/timequest_ram_worst_paths_seed31.tcl",
+  "exit_status": 0,
+  "summary_report": "tree/scratch/ram_timing_6c_seed31_20260928/worst_paths.txt",
+  "summary_sha256": "9efa950ec15108f9381e40a3452fdaa9702a28679fe7fadf5e12219122f05ac1",
+  "detailed_report": "tree/scratch/ram_timing_6c_seed31_20260928/worst_detail.txt",
+  "detail_sha256": "c889a2a11c5e6d263f1fbf0c8ae26091d36eb41aa2edc3dd738f73954bcb6da4",
+  "summary_path_count": 12,
+  "detailed_path_count": 3,
+  "violated_paths_in_summary": 12,
+  "worst_path": {
+    "slack_ns": -0.103,
+    "startpoint": "emu:emu|sdram_beat32:sdr|wq_wp_handoff[3]",
+    "endpoint": "emu:emu|sdram_beat32:sdr|a_ram[24]",
+    "data_delay_ns": 4.544,
+    "clock_skew_ns": -0.45,
+    "logic_levels": 2
+  },
+  "status": "complete-timing-violation-detailed",
+  "violated_paths_in_detail": 3,
+  "interpretation": "All 12 paths in the summary are violated. The separate path_only report expands only the worst 3 of those 12 paths."
+}

@@ -1,0 +1,66 @@
+{
+  "unit": "codex-fpu-6c-wq-available-quartus-20260928-seed32.service",
+  "invocation_id": "c0f6b4cc51b3412793704bff5fb4b799",
+  "wrapper_child_pid": 2535240,
+  "quartus_sh_pid": 2535255,
+  "quartus_map_pid": 2535288,
+  "quartus_fit_pid": 2538902,
+  "started_local": "2026-09-28 04:49:54 EDT",
+  "finished_local": "2026-09-28 05:24:07 EDT",
+  "build_log": "tree/output_files/build_20260928_044954.log",
+  "wrapper_exit": 3,
+  "quartus_flow_errors": 4,
+  "analysis_synthesis": "successful",
+  "fitter": "failed Error11802, Cant fit design in device",
+  "fit_report_summary": "ALMs needed 38652/41910 (92%); do not infer specific resource shortage from this alone",
+  "timing_analysis": "not generated",
+  "cross_domain_sta": "NOT_AVAILABLE: fitter failed; not run",
+  "same_ram_clock_sta": "NOT_AVAILABLE: fitter failed; not run",
+  "fresh_rbf": "absent",
+  "source_manifest": "candidate_seed32_manifest.sha256",
+  "source_postrun": "source_postrun_check.json",
+  "artifacts": {
+    "MacQuadra800.fit.rpt": {
+      "bytes": 2659540,
+      "sha256": "bdff88321b8e4131b9db4f0434b1ca79a1ea78f74cf828f4d180292c97a53abe"
+    },
+    "MacQuadra800.fit.summary": {
+      "bytes": 679,
+      "sha256": "f4202e80a03abfaaca85281ee04fe0933ca3993cf0e945a734f1690d2080239a"
+    },
+    "MacQuadra800.fit.smsg": {
+      "bytes": 2174,
+      "sha256": "8a9464919de3b58b842724698c0914045c6c6f399ee464fff7e641ef03893c0d"
+    },
+    "MacQuadra800.flow.rpt": {
+      "bytes": 15706,
+      "sha256": "b6848dc4cd313aae643a0b6c2a4b8e64e52b133e583689818ea76d5692a3c107"
+    },
+    "MacQuadra800.map.summary": {
+      "bytes": 518,
+      "sha256": "9d3cb1bddeadd00025c930c76db9e49acc0afb192808478aeeac285e40220323"
+    },
+    "build_20260928_044954.log": {
+      "bytes": 311140,
+      "sha256": "6eedf65deaa8fcb344da3a18997f8cb812c8127876de6c698371386a2fecf3d2"
+    },
+    "MacQuadra800.rbf": {
+      "exists": false,
+      "bytes": 0,
+      "sha256": null
+    },
+    "MacQuadra800.sof": {
+      "exists": false,
+      "bytes": 0,
+      "sha256": null
+    },
+    "MacQuadra800.sta.summary": {
+      "exists": false,
+      "bytes": 0,
+      "sha256": null
+    }
+  },
+  "fit_report": "tree/output_files/MacQuadra800.fit.rpt",
+  "fit_summary": "tree/output_files/MacQuadra800.fit.summary",
+  "fit_error_context": "Error (11802) at end of tree/output_files/MacQuadra800.fit.rpt and build log"
+}

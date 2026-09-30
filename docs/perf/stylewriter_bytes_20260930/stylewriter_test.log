@@ -1,0 +1,16 @@
+[printerd] Starting mister_printerd (Model: stylewriter2500, Core: 'MacQuadra800', Baud: 57600, Device: /dev/ttyS1, Out: /media/fat/printers)
+[printerd] Started new print job: /media/fat/printers/Print_2026-09-30_03-14-39.pdf
+[printerd] Inactivity timeout reached (12s), finalizing job...
+[printerd] Job was empty, discarding.
+[printerd] Shutdown complete.
+=== restart Wed Sep 30 03:15:04 UTC 2026 after core load ===
+[printerd] Starting mister_printerd (Model: stylewriter2500, Core: 'MacQuadra800', Baud: 57600, Device: /dev/ttyS1, Out: /media/fat/printers)
+[printerd] Started new print job: /media/fat/printers/Print_2026-09-30_03-23-12.pdf
+[stylewriter] query '1' (0x31) -> 0x00
+[stylewriter] query '2' (0x32) -> 0x00
+[stylewriter] identify -> CS
+[stylewriter] query 'p' (0x70) -> 0x05
+[stylewriter] query 'B' (0x42) -> 0x80
+[printerd] Inactivity timeout reached (12s), finalizing job...
+[printerd] Job was empty, discarding.
+[printerd] Shutdown complete.

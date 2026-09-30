@@ -1,0 +1,1 @@
+PASS validator: old and new v1 reject cache 8/9; new v2 accepts 8/9 and rejects 16; v1 remains compatible

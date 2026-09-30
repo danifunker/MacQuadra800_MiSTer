@@ -1,0 +1,100 @@
+017a 4e56fe14  link    A6, #-$1ec
+017e 48e71c00  movem.l D3-D5, -(A7)
+0182 7600  moveq   #$0, D3
+0184 6018  bra     $19e
+0186 203c000000a4  move.l  #$a4, D0
+018c a31e  dc.w    $a31e; opcode 1010
+018e 3243  movea.w D3, A1
+0190 2009  move.l  A1, D0
+0192 e588  lsl.l   #2, D0
+0194 43eeff5c  lea     (-$a4,A6), A1
+0198 23880800  move.l  A0, (A1,D0.l)
+019c 5243  addq.w  #1, D3
+019e 0c430029  cmpi.w  #$29, D3
+01a2 6de2  blt     $186
+01a4 7600  moveq   #$0, D3
+01a6 6018  bra     $1c0
+01a8 203c000000a4  move.l  #$a4, D0
+01ae a31e  dc.w    $a31e; opcode 1010
+01b0 3243  movea.w D3, A1
+01b2 2009  move.l  A1, D0
+01b4 e588  lsl.l   #2, D0
+01b6 43eefeb8  lea     (-$148,A6), A1
+01ba 23880800  move.l  A0, (A1,D0.l)
+01be 5243  addq.w  #1, D3
+01c0 0c430029  cmpi.w  #$29, D3
+01c4 6de2  blt     $1a8
+01c6 7600  moveq   #$0, D3
+01c8 6018  bra     $1e2
+01ca 203c000000a4  move.l  #$a4, D0
+01d0 a31e  dc.w    $a31e; opcode 1010
+01d2 3243  movea.w D3, A1
+01d4 2009  move.l  A1, D0
+01d6 e588  lsl.l   #2, D0
+01d8 43eefe14  lea     (-$1ec,A6), A1
+01dc 23880800  move.l  A0, (A1,D0.l)
+01e0 5243  addq.w  #1, D3
+01e2 0c430029  cmpi.w  #$29, D3
+01e6 6de2  blt     $1ca
+01e8 7600  moveq   #$0, D3
+01ea 605c  bra     $248
+01ec 4ebafe34  jsr     (-$1cc,PC); ($22)
+01f0 486eff5c  pea     (-$a4,A6)
+01f4 4ebafe78  jsr     (-$188,PC); ($6e)
+01f8 486efeb8  pea     (-$148,A6)
+01fc 4ebafe70  jsr     (-$190,PC); ($6e)
+0200 7a01  moveq   #$1, D5
+0202 504f  addq.w  #8, A7
+0204 603a  bra     $240
+0206 7801  moveq   #$1, D4
+0208 602e  bra     $238
+020a 3f04  move.w  D4, -(A7)
+020c 3f05  move.w  D5, -(A7)
+020e 486efeb8  pea     (-$148,A6)
+0212 486eff5c  pea     (-$a4,A6)
+0216 3044  movea.w D4, A0
+0218 2008  move.l  A0, D0
+021a e588  lsl.l   #2, D0
+021c 3045  movea.w D5, A0
+021e 2208  move.l  A0, D1
+0220 e589  lsl.l   #2, D1
+0222 41eefe14  lea     (-$1ec,A6), A0
+0226 22701800  movea.l (A0,D1.l), A1
+022a 48710800  pea     (A1,D0.l)
+022e 4ebafeb8  jsr     (-$148,PC); ($e8)
+0232 5244  addq.w  #1, D4
+0234 4fef0010  lea     ($10,A7), A7
+0238 0c440028  cmpi.w  #$28, D4
+023c 6fcc  ble     $20a
+023e 5245  addq.w  #1, D5
+0240 0c450028  cmpi.w  #$28, D5
+0244 6fc0  ble     $206
+0246 5243  addq.w  #1, D3
+0248 0c430004  cmpi.w  #$4, D3
+024c 6d9e  blt     $1ec
+024e 7600  moveq   #$0, D3
+0250 6032  bra     $284
+0252 3043  movea.w D3, A0
+0254 2008  move.l  A0, D0
+0256 e588  lsl.l   #2, D0
+0258 41eeff5c  lea     (-$a4,A6), A0
+025c 20700800  movea.l (A0,D0.l), A0
+0260 a01f  dc.w    $a01f; opcode 1010
+0262 3043  movea.w D3, A0
+0264 2008  move.l  A0, D0
+0266 e588  lsl.l   #2, D0
+0268 41eefeb8  lea     (-$148,A6), A0
+026c 20700800  movea.l (A0,D0.l), A0
+0270 a01f  dc.w    $a01f; opcode 1010
+0272 3043  movea.w D3, A0
+0274 2008  move.l  A0, D0
+0276 e588  lsl.l   #2, D0
+0278 41eefe14  lea     (-$1ec,A6), A0
+027c 20700800  movea.l (A0,D0.l), A0
+0280 a01f  dc.w    $a01f; opcode 1010
+0282 5243  addq.w  #1, D3
+0284 0c430029  cmpi.w  #$29, D3
+0288 6dc8  blt     $252
+028a 4cdf0038  movem.l (A7)+, D3-D5
+028e 4e5e  unlk    A6
+0290 4e75  rts

@@ -1,0 +1,39 @@
+{
+  "unit": "codex-cache-xline-first-fill-quartus-seed31-20260928",
+  "invocation_id": "a86d8b88a314475f923915227a42ea79",
+  "wrapper_exit": 0,
+  "quartus_flow_exit": 0,
+  "quartus_full_compile": "successful",
+  "postrun_manifest_path": "source_manifest.sha256",
+  "postrun_manifest_entries": 1892,
+  "postrun_source_mismatches": 0,
+  "checked_unix_time": 1790592959.5324633,
+  "key_files_and_artifacts": [
+    {
+      "path": "rtl/ap68040/rtl/ap040_cache.v",
+      "sha256": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481"
+    },
+    {
+      "path": "rtl/ap68040/rtl/ap040_fpu.v",
+      "sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b"
+    },
+    {
+      "path": "MacQuadra800.qsf",
+      "sha256": "711a64565e5aeaf4c8be9cb5606f142322c0ffd6434b0f2f85e710805e3951b4"
+    },
+    {
+      "path": "MacQuadra800.sdc",
+      "sha256": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062"
+    },
+    {
+      "artifact": "MacQuadra800.rbf",
+      "size_bytes": 4440380,
+      "sha256": "85db1130b61fa21eb4129c41b032d23c26ec3407f94dc283b3c3eb14eebcabe7"
+    },
+    {
+      "artifact": "MacQuadra800.sof",
+      "size_bytes": 6690368,
+      "sha256": "cfcd19b624b5b043ae306cc6e42beebc33ca948eeb05342630808639093a7c6a"
+    }
+  ]
+}

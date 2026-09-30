@@ -1,0 +1,3 @@
+command=python3 check_timed_profile.py fpu_timed_profile.tsv
+exit_status=1
+FAIL: site 0 timer: require at least one complete span

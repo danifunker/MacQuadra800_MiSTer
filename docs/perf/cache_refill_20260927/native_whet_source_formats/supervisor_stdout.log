@@ -1,0 +1,4 @@
+PASS native baseline: return, ABI, code, native/FPSP coverage, histogram totals, zero chip/bus/IRQ errors; numerical oracle NONE
+loop 8726508 ROUNDguard 141674 STDONEedge 3489 FPU_nonidle 1266996
+PASS source-format sums/opportunities; loop8726508 unchanged
+PASS baseline native Whet source-format runtime gates; numerical oracle NONE

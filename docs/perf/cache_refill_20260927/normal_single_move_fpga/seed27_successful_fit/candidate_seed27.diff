@@ -1,0 +1,43 @@
+--- a/MacQuadra800.qsf
++++ b/MacQuadra800.qsf
+@@ -398,7 +398,7 @@
+ # 22 CPU -1.179 / SDRAM -2.264 / HDMI -0.967; 25 CPU -1.341; 27 CPU +0.193, SDRAM +0.295, HDMI -0.025
+ # (RBF md5 85924646; hardware: Mix 1.781/1.781, Color 8-bit 9.944 s, FPU 0.684, clean shutdown).
+ # 28 CPU -0.065 only; 29, 30 router failed; 31 HDMI -0.455 only (CPU +0.823, SDRAM +0.548); 32-35 router failed.  Walk stopped.
+-set_global_assignment -name SEED 21
++set_global_assignment -name SEED 27
+ # 2026-09-24: NEVER grew the full BRF fit by398 ALMs; retain the better ALWAYS setting.
+ set_global_assignment -name FITTER_AGGRESSIVE_ROUTABILITY_OPTIMIZATION ALWAYS
+ #
+--- a/rtl/ap68040/rtl/ap040_fpu.v
++++ b/rtl/ap68040/rtl/ap040_fpu.v
+@@ -1013,6 +1013,29 @@
+ 						    {32'd0, din[63:32], din[95:64]}, 3'd0,
+ 						    1'b0, 1'b1);   // packed -> E1, stag 7
+ 					end
++					else if (src_fmt == 3'd1 && opmode == 7'h00 &&
++                        din[94:87] != 8'd0 && din[94:87] != 8'hFF &&
++                        fpcr[7:6] == 2'b00 && fpcr[15:8] == 8'd0 &&
++                        !cr_we && !fm_we && !bsun_req && !fp_reset &&
++                        !frestore_idle && !frestore_unimp && !fsave_ack &&
++                        !pend_capture) begin : fast_normal_single_move
++                        // Exact normal single-to-extended conversion. Retain
++                        // F_ROUND/F_WB and their existing admission/status logic.
++                        // These assignments reproduce cv_s followed by F_EXEC
++                        // for FMOVE, including deferred-frame source shadows.
++                        a_s <= din[95];
++                        a_e <= {9'd0, din[94:87]} + 17'd16256;
++                        a_m <= {1'b1, din[86:64], 40'd0};
++                        a_t <= T_NUM;
++                        r_stag <= 3'd0;
++                        grs <= 3'd0;
++                        e_w <= $signed({10'd0, din[94:87]} + 18'd16256);
++                        sh_cmd <= {3'b010, src_fmt, dst_r, opmode};
++                        sh_src <= {din[95], ({7'd0, din[94:87]} + 15'd16256),
++                                   16'd0, 1'b1, din[86:64], 40'd0};
++                        sh_stag <= 3'd0;
++                        fst <= F_ROUND;
++                    end
+ 					else if (src_fmt == 3'd2 && din[63] && din[94:80] != 15'h7FFF &&
+ 					         fast_bin_kind(opmode) != 2'd0) begin
+ 						// P221: a normal extended memory source of a binary op

@@ -1,0 +1,12 @@
+{
+  "unit": "codex-fpu-normal-single-baseline-cross-sta-20260928-seed27.service",
+  "invocation_id": "705eacda360044d9bd7fb3054f81f7ba",
+  "process_pid": 2338539,
+  "process_command": "$QUARTUS_BIN/quartus_sta -t scripts/cpu/timequest_cross_domain.tcl fpu-baseline-s27",
+  "working_directory": "scratch/fpu_normal_single_baseline_quartus_20260928/tree",
+  "private_local_env_sourced": true,
+  "exit_status": 0,
+  "sys_to_ram_slack_ns": 0.295,
+  "ram_to_sys_slack_ns": 0.554,
+  "host_global_quartus_collision_check": "empty immediately before launch"
+}

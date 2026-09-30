@@ -1,0 +1,34 @@
+{
+  "status": "PREFLIGHT_PASS_ONLY",
+  "created_epoch": 1790570242.9433506,
+  "immutable_input_count": 100,
+  "immutable_input_manifest_sha256": "80723de23ff80d01845eeff63f9edab1511073800feddd3c1a90d8b99a972248",
+  "baseline_fpu_sha256": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "candidate_fpu_sha256": "55ff9b3cd1d59069ec0b94ca17e4dc3a8c87ac031317902285444d92643724a2",
+  "qsf_reference_sha256": "75c69f933515f05c729076108b26515f3f6aff84a36692fdd58d2f95077fe1fd",
+  "flags": [
+    "-g2012",
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "targets": [
+    "fpu",
+    "fpu_frames",
+    "fpu_resume",
+    "mmu",
+    "exceptions",
+    "fpu_normalize"
+  ],
+  "outputs_hashed_as_inputs": false
+}

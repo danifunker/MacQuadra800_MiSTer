@@ -1,0 +1,9 @@
+tb_ap040_program: running fpu.hex
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_core_regressions_20260928/inputs/tb/tb_ap040_program.v:808: $readmemh(fpu.hex): Not enough words in the file for the requested range [0:32767].
+phase 0 passed (103656 cycles)
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_core_regressions_20260928/inputs/tb/tb_ap040_program.v:808: $readmemh(fpu.hex): Not enough words in the file for the requested range [0:32767].
+phase 1 passed (148700 cycles)
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_core_regressions_20260928/inputs/tb/tb_ap040_program.v:808: $readmemh(fpu.hex): Not enough words in the file for the requested range [0:32767].
+phase 2 passed (148700 cycles)
+ALL TESTS PASSED
+/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_core_regressions_20260928/inputs/tb/tb_ap040_program.v:858: $finish called at 4010855000 (1ps)

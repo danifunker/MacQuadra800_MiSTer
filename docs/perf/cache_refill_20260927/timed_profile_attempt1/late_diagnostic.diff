@@ -1,0 +1,11 @@
+--- running_source/speedometer_observer.h
++++ later/speedometer_observer.h
+@@ -103,7 +103,7 @@
+         // A cache/MMU invalidation during the helper call can clear the
+         // executed prefix before its post-JSR signature is visible. Count
+         // that separately from an identified timer-span abort.
+-        if(fpu_prefix_ && !fpu_identified_)++fpu_prefix_aborts_;
++        if(fpu_prefix_)++fpu_prefix_aborts_;
+         fpu_abort(cycle,reason);fpu_identified_=false;fpu_prefix_=0;
+     }
+     bool fpu_signature(uint32_t pc,uint8_t fc,unsigned site) const {

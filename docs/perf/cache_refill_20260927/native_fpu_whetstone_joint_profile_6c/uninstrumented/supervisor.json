@@ -1,0 +1,26 @@
+{
+  "status": "QUALIFIED_NATIVE_RUNTIME",
+  "variant": "uninstrumented",
+  "candidate_fpu": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "source_manifest_sha256": "e5393d16e3281cef14d365fd7a421db1e27e358aa47782d51d42a4f1dcde9d9a",
+  "supervisor_pid": 2554538,
+  "started_utc": "2026-09-28T09:16:51.431629+00:00",
+  "runner_timeout_seconds": 650,
+  "scope": "native selector1 runtime/ABI only; original checker inherited baseline wording",
+  "runner_pid": 2554539,
+  "argv": [
+    "/usr/bin/python3",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/native_whet_next_measurement_20260928/uninstrumented/run_platform_whet.py",
+    "--out",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/native_whet_next_measurement_20260928/uninstrumented/run"
+  ],
+  "native_pid": 2554830,
+  "native_exe_sha256": "763a01ee5ae3448723a58f0d9614e7290582e767a9235f2878dfbb428cc70036",
+  "native_seen_utc": "2026-09-28T09:17:11.267201+00:00",
+  "exit_status": 0,
+  "original_checker": "PASS",
+  "passive_checker": "not_applicable",
+  "postrun_source_manifest": "PASS",
+  "finished_utc": "2026-09-28T09:17:48.251793+00:00",
+  "runner_terminal": true
+}

@@ -1,0 +1,32 @@
+{
+  "status": "EXIT0_REFILL_PASS_PENDING_SCREENSHOT_REVIEW",
+  "variant": "baseline",
+  "supervisor_pid": 2268433,
+  "started_utc": "2026-09-28T02:36:28.827409+00:00",
+  "argv": [
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_mix_20260928/baseline/Vemu",
+    "--headless",
+    "--no-cpu-trace",
+    "--disk",
+    "run.hda",
+    "+rom=rom.hex",
+    "+ram=0",
+    "--control",
+    "control.txt",
+    "--cpu-profile",
+    "refill.tsv",
+    "--max-cycles",
+    "20000000000",
+    "+ram_line_model",
+    "+ram_first_latency=4",
+    "+ram_line_publish_delay=2"
+  ],
+  "input_identity_sha256": "264b665665d782d81e3101b8c120138c05aaa48f29665d199716daf1de4e1da1",
+  "supervisor_sha256": "dbf9188402a5b2d73f1c297aea36b65643e74bd8473848f8834356c025abf093",
+  "binary_sha256": "fa4f49fb89ab14932dd4dbd3d957396435d86cac2031c6da406a8f4f1c32ed76",
+  "guest_measurement": "all10/1iteration setup+done/result screens required; not accepted byfixedwindow counters",
+  "child_pid": 2268438,
+  "exit_status": 0,
+  "finished_utc": "2026-09-28T04:22:58.425410+00:00",
+  "refill_check_exit_status": 0
+}

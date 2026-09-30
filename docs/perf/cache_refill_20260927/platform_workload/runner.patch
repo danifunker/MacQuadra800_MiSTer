@@ -1,0 +1,37 @@
+--- scripts/cpu/platform_fixture/run_platform_whet.py	2026-09-23 13:28:17.974219588 -0400
++++ scratch/fpu_refill_platform_workload_20260927/run_platform_whet.py	2026-09-27 16:29:41.470613825 -0400
+@@ -11,7 +11,8 @@
+ import argparse, hashlib, json, os, re, subprocess, sys
+ from pathlib import Path
+ 
+-R = Path(__file__).resolve().parents[3]
++R = next(x for x in Path(__file__).resolve().parents
++         if (x/'MacQuadra800.qsf').is_file() and (x/'verilator/tb_sdram.sv').is_file())
+ HERE = Path(__file__).resolve().parent
+ VERILATOR = '/home/alans/verilator5/bin/verilator'
+ 
+@@ -59,6 +60,14 @@
+ flags += ['-DAP040_PIPELINE_MEMORY_ENTRY', '-DAP040_PIPELINE_COMPARE', '-DAP040_PIPELINE_EARLY_DRAIN',
+           '-DCACHE_CD_OFF=1', '-DCACHE_SMALL=1', '-DSIMULATION=1']  # SIMULATION: behavioural BRAMs, as the full-machine sim
+ flags += os.environ.get('EXTRA_FLAGS', '').split()
++active_macros = set(re.findall(r'^set_global_assignment -name VERILOG_MACRO "([A-Z0-9_]+)=1"',
++                               (R/'MacQuadra800.qsf').read_text(), re.M))
++for flag in flags:
++    if flag.startswith('-DAP040_') or flag in ('-DCACHE_CD_OFF=1', '-DCACHE_SMALL=1'):
++        assert flag[2:].split('=')[0] in active_macros, f'fixture flag absent from qsf: {flag}'
++assert {x for x in active_macros if x.startswith('AP040_')} == {
++    f[2:].split('=')[0] for f in flags if f.startswith('-DAP040_')
++}, 'fixture AP040 flags no longer match release qsf'
+ 
+ (d/'identity.json').write_text(json.dumps({
+     'tree': str(tree),
+@@ -81,7 +90,8 @@
+             '-Wno-LATCH', '-Wno-UNDRIVEN', '-Wno-MISINDENT', '-Wno-COMBDLY', '-Wno-INITIALDLY',
+             '-Wno-SYNCASYNCNET', '-Wno-BLKLOOPINIT', '-Wno-MULTIDRIVEN', '-Wno-GENUNNAMED', '-Wno-DECLFILENAME',
+             '-Wno-TIMESCALEMOD', '-Wno-BLKSEQ']
+-    run([VERILATOR, '--binary', '--timing', '-O3', '--x-assign', 'fast', '--x-initial', 'fast', '--noassert',
++    run([VERILATOR, '--binary', '--timing', '-O3', '--unroll-count', '256',
++         '--x-assign', 'fast', '--x-initial', 'fast', '--noassert',
+          '-j', '8', '--build-jobs', '8', '--timescale-override', '1ps/1ps', *warn,
+          '--top-module', 'tb_platform_whet', '--Mdir', d/'obj', '-I'+str(rtl), '-I'+str(ap), *flags, *sources],
+         'compile.log')

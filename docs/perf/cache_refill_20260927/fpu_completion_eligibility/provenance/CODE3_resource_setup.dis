@@ -1,0 +1,15 @@
+4ec6 4e56ffbe  link    A6, #-$42
+4eca 48e71f38  movem.l D3-D7/A2-A4, -(A7)
+4ece 7600  moveq   #$0, D3
+4ed0 594f  subq.w  #4, A7
+4ed2 2f3c74457354  move.l  #$74457354, -(A7)
+4ed8 3f3c2ee0  move.w  #$2ee0, -(A7)
+4edc a9a0  dc.w    $a9a0; opcode 1010
+4ede 205f  movea.l (A7)+, A0
+4ee0 2448  movea.l A0, A2
+4ee2 200a  move.l  A2, D0
+4ee4 6708  beq     $4eee
+4ee6 204a  movea.l A2, A0
+4ee8 a029  dc.w    $a029; opcode 1010
+4eea 2852  movea.l (A2), A4
+4eec 6006  bra     $4ef4

@@ -1,0 +1,22 @@
+{
+  "unit": "codex-fpu-normal-single-move-quartus-20260928.service",
+  "invocation_id": "81b9b5968e4b4169add9bfb9a9676631",
+  "systemd_main_child_pid": 2275761,
+  "quartus_map_pid": 2275800,
+  "prelaunch_collision_check": {
+    "checked_unix_time": 1790563312.946788,
+    "quartus_processes": []
+  },
+  "exit_status": 0,
+  "unit_result": "success",
+  "phase": "Analysis & Synthesis only (build_only.sh --check)",
+  "elapsed": "00:05:16",
+  "peak_virtual_memory_mb": 2961,
+  "systemd_memory_peak": "3.5G",
+  "quartus_errors": 0,
+  "quartus_warnings": 179,
+  "completed_local": "2026-09-27 22:47:09",
+  "build_log": "build_20260927_224152.log",
+  "map_summary": "MacQuadra800.map.summary",
+  "map_report": "MacQuadra800.map.rpt"
+}

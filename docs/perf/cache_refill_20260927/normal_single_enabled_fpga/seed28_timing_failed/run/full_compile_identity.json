@@ -1,0 +1,88 @@
+{
+  "unit": "codex-fpu-normal-single-enabled-quartus-20260928-seed28.service",
+  "invocation_id": "f78d586fd2aa408bb55ae9a74a3da195",
+  "tool_session_id": 99758,
+  "wrapper_pid_namespace": 2468408,
+  "build_command": "bash scripts/build_only.sh",
+  "working_directory": "tree/",
+  "source_manifest_sha256": "9493062f5db90790d3a86360c5b80c0b077b2e7d23a634dc52fa6bca0025bc11",
+  "prelaunch_collision_check": "full_prelaunch_collision_check.json",
+  "quartus_processes_host_verified": [
+    {
+      "pid": 2468423,
+      "comm": "quartus_sh",
+      "ppid": 2468410
+    },
+    {
+      "pid": 2468457,
+      "comm": "quartus_map",
+      "ppid": 2468423
+    }
+  ],
+  "started_observed_utc": "2026-09-28T07:20:34Z",
+  "status": "complete-timing-failed",
+  "milestones": [
+    {
+      "stage": "quartus_sh",
+      "pid": 2468423,
+      "ppid": 2468410
+    },
+    {
+      "stage": "quartus_map",
+      "pid": 2468457,
+      "ppid": 2468423,
+      "result": "synthesis complete; 24790 registers, 3389411 block-memory bits, 36 DSP, 4 PLL"
+    },
+    {
+      "stage": "quartus_fit",
+      "pid": 2471941,
+      "ppid": 2468423,
+      "status": "live"
+    }
+  ],
+  "systemd_invocation_exit_status": 1,
+  "wrapper_exit_status": 1,
+  "quartus_full_flow_exit_status": 0,
+  "started_local": "2026-09-28 03:19:48 EDT",
+  "ended_local": "2026-09-28 03:43:20 EDT",
+  "elapsed": "23m32s",
+  "build_log": "tree/output_files/build_20260928_031948.log",
+  "process_identity_file": "full_quartus_processes.json",
+  "source_postrun_check": "source_postrun_check.json",
+  "resource_use": {
+    "device": "5CSEBA6U23I7",
+    "quartus_version": "17.0.2",
+    "alms_used": 38650,
+    "alms_total": 41910,
+    "registers": 24667,
+    "ram_blocks_used": 468,
+    "ram_blocks_total": 553,
+    "block_memory_bits": 3389411,
+    "dsp_blocks": 36,
+    "plls": 4
+  },
+  "timing": {
+    "cpu_setup_slack_ns": -1.225,
+    "cpu_setup_tns_ns": -49.875,
+    "hdmi_setup_slack_ns": -0.71,
+    "hdmi_setup_tns_ns": -3.828,
+    "ram_clock_setup_slack_ns": 0.422,
+    "worst_hold_slack_ns": 0.25,
+    "hold_tns_ns": 0,
+    "full_flow_status": "analysis/synthesis, fitter, assembler, and TimeQuest all completed with 0 Quartus errors; repository timing gate failed. Do not deploy."
+  },
+  "artifacts": {
+    "rbf": {
+      "path": "tree/output_files/MacQuadra800.rbf",
+      "size_bytes": 4448892,
+      "sha256": "366a7633d6737a47cca1a60f4a0aa6494792050fbcae52c7e062dd3f36d4e333"
+    },
+    "sof": {
+      "path": "tree/output_files/MacQuadra800.sof",
+      "size_bytes": 6690368,
+      "sha256": "6c201428341a86f6bb8d84960b2aaff34fdd84eab55382490081583b9707be91"
+    }
+  },
+  "fit_summary_sha256": "e5d8408355b45dc1c93f915d15db5c6be493f3b2601f512e478c4507e4b633f8",
+  "sta_summary_sha256": "35dee247c2911b224fdd168947363391c9e5d846b9e5c16294c34111d003ee39"
+}

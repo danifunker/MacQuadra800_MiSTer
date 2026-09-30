@@ -1,0 +1,35 @@
+0700 4e560000  link    A6, #$0
+0704 48e71020  movem.l D3/A2, -(A7)
+0708 246e0008  movea.l ($8,A6), A2
+070c 7600  moveq   #$0, D3
+070e 60000094  bra     $7a4
+0712 f22a4800000c  fmove.x   ($c,A2), FP0
+0718 f22a48220018  fadd.x   ($18,A2), FP0
+071e f22a48220024  fadd.x   ($24,A2), FP0
+0724 f22a48280030  fsub.x   ($30,A2), FP0
+072a f22c4823801a  fmul.x   (-$7fe6,A4), FP0
+0730 f22a6800000c  fmove.x   FP0, ($c,A2)
+0736 f22a4800000c  fmove.x   ($c,A2), FP0
+073c f22a48220018  fadd.x   ($18,A2), FP0
+0742 f22a48280024  fsub.x   ($24,A2), FP0
+0748 f22a48220030  fadd.x   ($30,A2), FP0
+074e f22c4823801a  fmul.x   (-$7fe6,A4), FP0
+0754 f22a68000018  fmove.x   FP0, ($18,A2)
+075a f22a4800000c  fmove.x   ($c,A2), FP0
+0760 f22a48280018  fsub.x   ($18,A2), FP0
+0766 f22a48220024  fadd.x   ($24,A2), FP0
+076c f22a48220030  fadd.x   ($30,A2), FP0
+0772 f22c4823801a  fmul.x   (-$7fe6,A4), FP0
+0778 f22a68000024  fmove.x   FP0, ($24,A2)
+077e f22a481a000c  fneg.x   ($c,A2), FP0
+0784 f22a48220018  fadd.x   ($18,A2), FP0
+078a f22a48220024  fadd.x   ($24,A2), FP0
+0790 f22a48220030  fadd.x   ($30,A2), FP0
+0796 f22c4823801a  fmul.x   (-$7fe6,A4), FP0
+079c f22a68000030  fmove.x   FP0, ($30,A2)
+07a2 5243  addq.w  #1, D3
+07a4 0c430006  cmpi.w  #$6, D3
+07a8 6d00ff68  blt     $712
+07ac 4cdf0408  movem.l (A7)+, D3/A2
+07b0 4e5e  unlk    A6
+07b2 4e75  rts

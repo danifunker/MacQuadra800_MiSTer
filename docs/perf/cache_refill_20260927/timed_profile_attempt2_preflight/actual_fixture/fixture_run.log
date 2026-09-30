@@ -1,0 +1,10 @@
+[NCR 0] housekeeping: rst=1 bus=0 probe=1
+[NCR 12] forward op=ff -> lba=7dff0000
+[MACHINE] overlay cleared at cycle 333
+SCC_SERIAL_OUT: ch=B byte=00 time=27827
+SCC_SERIAL_OUT: ch=A byte=00 time=27827
+Reached 500000 cycles, exiting
+[FPU-TIMED] wrote fixture_timed.tsv
+CPU trace: 22 instructions, last pc=40805144 (cpu_trace.log)
+PC histogram (top 15 of 0 256-byte buckets):
+FIXTURE_CHECK PASS selector0=0004 selector1=0042 magic=600d0042 D0=00000001 SP=00200000

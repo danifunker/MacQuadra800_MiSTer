@@ -1,0 +1,23 @@
+[SIM-CONTROL] reading fpu_control_full.txt (nonblocking, simulated-cycle pacing)
+[SIM-CONTROL] wait 700000000 rising edges cycle=49
+[SIM-CONTROL] wait 200000000 rising edges cycle=1400224051
+[SIM-CONTROL] down 76 cycle=1800904051
+[SIM-CONTROL] up 76 cycle=1801664055
+[SIM-CONTROL] down 0D cycle=1889104051
+[SIM-CONTROL] up 0D cycle=1889864055
+[SIM-CONTROL] down 0D cycle=1897224061
+[SIM-CONTROL] up 0D cycle=1897984065
+[SIM-CONTROL] wait 10000000 rising edges cycle=1905344071
+[SIM-CONTROL] down 5A cycle=1926064051
+[SIM-CONTROL] up 5A cycle=1926824055
+[SIM-CONTROL] down 5A cycle=3326704053
+[SIM-CONTROL] up 5A cycle=3327464057
+[SIM-CONTROL] down 76 cycle=3394824065
+[SIM-CONTROL] up 76 cycle=3395584069
+[CPU-PROFILE] started at simulator cycle 3592624051
+[SIM-CONTROL] down 5A cycle=3592624053
+[SIM-CONTROL] up 5A cycle=3593384057
+[SIM-CONTROL] wait 1300000000 rising edges cycle=3600744063
+Saved screenshot_f7382.png (800x600)
+[CPU-PROFILE] wrote fpu_refill.tsv: 1304100000 cycles, 202036213 opcode dispatches, 6.455 clocks/dispatch
+[SIM-CONTROL] wait 1000000 rising edges cycle=6200824053

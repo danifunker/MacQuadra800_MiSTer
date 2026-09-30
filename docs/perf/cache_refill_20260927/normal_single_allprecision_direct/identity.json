@@ -1,0 +1,30 @@
+{
+  "sources": {
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_refill_platform_workload_20260927/baseline/rtl/ap68040/rtl/ap040_fpu.v": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_candidate_20260928/ap040_fpu.v": "55ff9b3cd1d59069ec0b94ca17e4dc3a8c87ac031317902285444d92643724a2",
+    "/home/alans/mister/MacQuadra800_MiSTer/MacQuadra800.qsf": "75c69f933515f05c729076108b26515f3f6aff84a36692fdd58d2f95077fe1fd",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_tests_20260928/tb_normal_single_move.sv": "8119a3af7d6fc96a5fff7ca7557d01eedade857afbf8e6759f93fa785d72ab88",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_tests_20260928/prepare.py": "e22284fa1021d5b4001bdcf1d8dec20d47603f6551e25a9fa012daa4ab2aa800",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_tests_20260928/tests.inc": "59e3090648caa76664087c9564e84cb51b747638ad41c52c82ecfefd5e4aad15",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_tests_20260928/run.py": "8455ebb87d397cd4c01cc8defcb7b8727c1e93c840521d954722cb0dca1b1fae",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_refill_platform_workload_20260927/baseline/rtl/ap68040/rtl/ap040_defs.svh": "195c37afb9961a1baf8c6ebbdba8df53da97d93c5cb4924cf673a3e9dc065a81"
+  },
+  "flags": [
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "independent_oracle": "normal IEEE single exact extended conversion +preserved status/quotient/CC/frame fields; excluded baseline signatures compared",
+  "tool": "iverilog -g2012/vvp",
+  "scope": "FPU unit realports; no CPU/workload/timing qualification"
+}

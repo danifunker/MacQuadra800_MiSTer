@@ -1,0 +1,40 @@
+00e8 4e56fff8  link    A6, #-$8
+00ec 48e70e30  movem.l D4-D6/A2-A3, -(A7)
+00f0 246e0008  movea.l ($8,A6), A2
+00f4 2c2e000c  move.l  ($c,A6), D6
+00f8 266e0010  movea.l ($10,A6), A3
+00fc 3a2e0014  move.w  ($14,A6), D5
+0100 382e0016  move.w  ($16,A6), D4
+0104 4292  clr.l   (A2)
+0106 7401  moveq   #$1, D2
+0108 6052  bra     $15c
+010a 3042  movea.w D2, A0
+010c 2008  move.l  A0, D0
+010e e588  lsl.l   #2, D0
+0110 3044  movea.w D4, A0
+0112 2208  move.l  A0, D1
+0114 e589  lsl.l   #2, D1
+0116 20730800  movea.l (A3,D0.l), A0
+011a f23044001800  fmove.s   (A0,D1.l), FP0
+0120 3045  movea.w D5, A0
+0122 2008  move.l  A0, D0
+0124 e588  lsl.l   #2, D0
+0126 2046  movea.l D6, A0
+0128 3242  movea.w D2, A1
+012a 2209  move.l  A1, D1
+012c e589  lsl.l   #2, D1
+012e 22700800  movea.l (A0,D0.l), A1
+0132 f23144801800  fmove.s   (A1,D1.l), FP1
+0138 f20000a3  fmul.x   FP0, FP1
+013c f22e6480fff8  fmove.s   FP1, (-$8,A6)
+0142 f22e4400fff8  fmove.s   (-$8,A6), FP0
+0148 f2124480  fmove.s   (A2), FP1
+014c f20000a2  fadd.x   FP0, FP1
+0150 f22e6480fffc  fmove.s   FP1, (-$4,A6)
+0156 24aefffc  move.l  (-$4,A6), (A2)
+015a 5242  addq.w  #1, D2
+015c 0c420028  cmpi.w  #$28, D2
+0160 6fa8  ble     $10a
+0162 4cdf0c70  movem.l (A7)+, D4-D6/A2-A3
+0166 4e5e  unlk    A6
+0168 4e75  rts

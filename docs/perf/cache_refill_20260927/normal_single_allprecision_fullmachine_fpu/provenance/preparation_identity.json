@@ -1,0 +1,19 @@
+{
+  "original_manifest": "c528f7e7e9030de959dd5c8adddb239c3727abb5895a2285f9b35c04de243810",
+  "original_project": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_move_fullmachine_20260928",
+  "candidate_fpu": "55ff9b3cd1d59069ec0b94ca17e4dc3a8c87ac031317902285444d92643724a2",
+  "original_manifest_files": 208,
+  "only_RTL_delta": [
+    "rtl/ap68040/rtl/ap040_fpu.v"
+  ],
+  "stage": "source-only review-ready, host checks PASS; no fullguest build/run",
+  "copied_bytes": 11938270,
+  "modified_selected_inputs": [
+    "PLAN.md",
+    "rtl/ap68040/rtl/ap040_fpu.v",
+    "verilator/Makefile",
+    "verilator/sim_main.cpp"
+  ],
+  "observer_added": "verilator/sim_fpu_guard_profile.h",
+  "host_only_checks": "host_checks.json"
+}

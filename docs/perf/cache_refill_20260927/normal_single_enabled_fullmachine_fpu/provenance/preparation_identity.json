@@ -1,0 +1,10 @@
+{
+  "base_manifest_sha256": "cd794af982858ddbb3f116345bf9dd301111897c73c575a343f6283ccc58ab0f",
+  "base_project": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_fullmachine_20260928",
+  "selected_files": 218,
+  "candidate_fpu": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "only_RTL_delta": "rtl/ap68040/rtl/ap040_fpu.v",
+  "sim_main_sha256": "3a1902f3d4076dfbcce62265cb5da34c9ebcba57cb4e73216c577d502326f634",
+  "observer_header_sha256": "10d57ba74f446d4e91815cf7f24baf9551370eabe326f93b83e6282d514e8be1",
+  "stage": "PREPARE_ONLY_NO_BUILD_OR_SIMULATION"
+}

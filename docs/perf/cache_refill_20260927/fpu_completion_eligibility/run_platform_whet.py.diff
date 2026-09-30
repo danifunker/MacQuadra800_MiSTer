@@ -1,0 +1,31 @@
+--- baseline_fixture/run_platform_whet.py
++++ eligibility_fixture/run_platform_whet.py
+@@ -92,19 +92,24 @@
+             '-Wno-TIMESCALEMOD', '-Wno-BLKSEQ']
+     run([VERILATOR, '--binary', '--timing', '-O3', '--unroll-count', '256',
+          '--x-assign', 'fast', '--x-initial', 'fast', '--noassert',
+-         '-j', '8', '--build-jobs', '8', '--timescale-override', '1ps/1ps', *warn,
++         '-j', '2', '--build-jobs', '2', '--timescale-override', '1ps/1ps', *warn,
+          '--top-module', 'tb_platform_whet', '--Mdir', d/'obj', '-I'+str(rtl), '-I'+str(ap), *flags, *sources],
+         'compile.log')
+ 
+ text = run(['stdbuf', '-oL', d/'obj/Vtb_platform_whet', '+prog='+str(a.image.resolve()), '+rom='+str(a.rom.resolve()),
+             f'+romlat={a.romlat}', *os.environ.get('EXTRA_PLUSARGS', '').split()], 'run.log')
+ assert 'WHETSTONE RETURNED' in text, text[-3000:]
+-keep = ('WHETSTONE', 'BUS32', 'SDRAM', 'BERR', 'CORE_LAT', 'EXT', 'WALKER', 'STOREBUF', 'BRIDGE')
++keep = ('WHETSTONE', 'BUS32', 'SDRAM', 'BERR', 'CORE_LAT', 'EXT', 'WALKER', 'STOREBUF', 'BRIDGE', 'FPU_ELIG')
+ print('\n'.join(l for l in text.splitlines() if l.startswith(keep)))
+ 
+ if a.ref and (a.ref/'whet_globals.hex').exists():
+     for n in ('whet_globals.hex', 'whet_code.hex', 'whet_stack.hex'):
+         mine = [x.strip().lower() for x in (d/n).read_text().split()]
+         ref = [x.strip().lower() for x in (a.ref/n).read_text().split() if not x.startswith('//')]
+-        print(f'MEMCHECK {n}: ' + ('match' if mine == ref else
+-              f'DIFFER ({sum(1 for x, y in zip(mine, ref) if x != y)} bytes of {len(ref)})'))
++        print(f'MEMCHECK {n}: ' + ('match' if mine == ref else f'DIFFER ({len(mine)} / {len(ref)} bytes)'))
++        assert mine == ref, f'oracle mismatch {n}'
++
++assert re.search(r'WHETSTONE_LOOP cycles=17641650\b',text), 'loop count differs from frozen baseline'
++assert 'SDRAM_PROTOCOL_ERRORS 0' in text, 'chip errors'
++assert re.search(r'BERR 0\s+IPL_ASSERTED_CYCLES 0',text), 'bus error or IRQ'
++print('FPU_ELIG_QUALIFIED baseline_clocks_match=1 three_memory_oracles_match=1 guest_600D=1 chip_errors=0')

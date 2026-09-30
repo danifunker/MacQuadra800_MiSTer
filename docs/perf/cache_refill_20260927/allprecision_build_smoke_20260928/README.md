@@ -1,0 +1,15 @@
+# 55ff full-machine build and disk-free smoke evidence
+
+This compact archive covers the completed 55ff full-machine Verilator build, observer host tests, the corrected disk-free smoke2, and the earlier invalid ROM-path smoke. It does **not** include a live FPU guest run, a disk image, ROM hex, generated C++, object files, compiled simulator, or ccache. The source manifest is copied unchanged from the frozen project; it is an identity record, not a claim that its referenced source files are all archived here.
+
+The candidate FPU source SHA-256 is `55ff9b3cd1d59069ec0b94ca17e4dc3a8c87ac031317902285444d92643724a2`. `source/candidate_vs_previous_73bc.diff` captures the single eligibility change from the previous candidate; `source/candidate_vs_baseline.diff` records the candidate block versus original source. The full-machine source manifest hash is `cd794af982858ddbb3f116345bf9dd301111897c73c575a343f6283ccc58ab0f` and matches the frozen identity and build identity. The build used Verilator 5.050, the ten AP040 release macros plus `SCSI_CACHE_OFF`, 8+8 cache profile, RAM model 4/2, and unroll 256, per the build metadata. Both supervised `make fastboot` and `make -j2 V=.../verilator` children exited 0. The completed identity records binary SHA-256 `fc196b28762c249c6af8820326a1c4689f9ac99e30350160a70091eac8464a4d`; the binary itself is intentionally omitted.
+
+The host observer unit test passed its exact predicate/FPCR/port/priority/held-request/window/snapshot/report checks. The mapping syntax check referenced the earlier 73bc generated header, not a 55ff full-model generated header; its scope is explicitly limited in `host_checks.json`. The copied host test source, observer headers, mapping source, report checker, and source diffs make this evidence reviewable without bundling build products.
+
+The corrected smoke2 child exited 0 using short local ROM argument `+rom=rom.hex`; the recorded ROM hash is `045c02746b5f15f83132d33c5414f806e7b049f3bfe53a7bd0ecacb8e072d673`. Its CPU profile covers 100,002 edges and reports zero raw FP events. This bounded disk-free smoke demonstrates generated-model, ROM, control, profile, and report-checker integration only. It contains no guest benchmark/workload coverage and establishes no FPU guard eligibility.
+
+The first disk-free smoke is retained as invalid evidence. It exited 0 at the process level, but the absolute ROM plusarg was truncated: the log records a missing ROM file and the strict empty-profile checker failed. Do not interpret its zero events as successful integration or workload coverage. The corrected smoke2 is the valid integration result.
+
+`check_archive.py` is a portable Python 3 standard-library checker. Run `python3 check_archive.py .` from this directory. It verifies the archive SHA256SUMS, build/host-test identities, smoke2 terminal/checker evidence, the invalid-smoke diagnosis, and absence of copied binaries, ROMs, disks, caches, or live `fpu_run` outputs. It does not launch tests or builds.
+
+No live fullguest FPU results are included here; those remain a separate run and separate evidence stream.

@@ -1,0 +1,17 @@
+{
+  "git_head": "708c12542a74c0b92872910d330a6e989b6a2181",
+  "snapshot": "git archive 708c12542a74c0b92872910d330a6e989b6a2181; extracted into tree/",
+  "tracked_file_count": 1892,
+  "only_tracked_file_changes": [
+    "MacQuadra800.qsf",
+    "rtl/ap68040/rtl/ap040_fpu.v"
+  ],
+  "fpu_candidate_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "qsf_sha256": "9b6fa7c352dd7667339e6e6ec4f03a00d1894b7e7fce14908f8b57b99c059ec4",
+  "qsf_seed": 27,
+  "qsf_seed_delta": "SEED 21 -> SEED 27 only; no other QSF change",
+  "private_local_env_copied": true,
+  "local_env_mode": "0600",
+  "local_env_manifest_included": false,
+  "quartus_scope": "one full compile; no deployment"
+}

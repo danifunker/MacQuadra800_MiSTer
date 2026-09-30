@@ -1,0 +1,85 @@
+{
+  "status": "FAILED",
+  "started_utc": "2026-09-28T09:59:44.255659+00:00",
+  "runner_pid": 2585658,
+  "input_manifest_sha256": "23937433536945689927de234649d8e1e8e5d556e05ad9d97d953b7ca7dbc25f",
+  "flags": [
+    "-g2012",
+    "-DAP040_EXPERIMENTAL_XSTORE"
+  ],
+  "tools": {
+    "iverilog": {
+      "path": "/usr/bin/iverilog",
+      "sha256": "a6071e4b4a68feafca0c8ee0e6aa275eee9a43a108c62801cfd1eca6eab6d8a3"
+    },
+    "vvp": {
+      "path": "/usr/bin/vvp",
+      "sha256": "a10bd7d4a0850308ac8c2c98115b6a3084f9be978307610f2a521190c28f4023"
+    }
+  },
+  "steps": [
+    {
+      "name": "baseline_xstore_build",
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-DAP040_EXPERIMENTAL_XSTORE",
+        "-I",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl",
+        "-s",
+        "tb_ap040_cache_xstore",
+        "-o",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/outputs/baseline_xstore.vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/common/tb_ap040_cache_xstore.sv",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl/ap040_cache.v",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl/primitives/dpram.v"
+      ],
+      "child_pid": 2585659,
+      "exit_status": 0,
+      "terminal": true
+    },
+    {
+      "name": "baseline_xstore_run",
+      "argv": [
+        "vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/outputs/baseline_xstore.vvp"
+      ],
+      "child_pid": 2585663,
+      "exit_status": 0,
+      "terminal": true
+    },
+    {
+      "name": "baseline_posted_build",
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-DAP040_EXPERIMENTAL_XSTORE",
+        "-I",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl",
+        "-s",
+        "tb_posted_read_matrix",
+        "-o",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/outputs/baseline_posted.vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/common/tb_cache_posted_read_matrix.sv",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl/ap040_cache.v",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl/primitives/dpram.v"
+      ],
+      "child_pid": 2585672,
+      "exit_status": 0,
+      "terminal": true
+    },
+    {
+      "name": "baseline_posted_run",
+      "argv": [
+        "vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/outputs/baseline_posted.vvp"
+      ],
+      "child_pid": 2585676,
+      "exit_status": 1,
+      "terminal": true
+    }
+  ],
+  "scope": "direct-port cache units with XSTORE; XSTORE bench unmodified, posted bench pin-only adapter; other CPU macros not consumed; behavioral dual-port RAM",
+  "error": "AssertionError('baseline_posted_run')",
+  "finished_utc": "2026-09-28T09:59:45.445730+00:00"
+}

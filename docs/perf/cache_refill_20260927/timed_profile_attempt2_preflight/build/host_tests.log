@@ -1,0 +1,4 @@
+PASS pinned resource/CODE3 hashes, DoFPUBenchMarks, three unique relocation-masked 20-byte signatures and timer/callback opcodes
+PASS pinned CODE3 runtime relocation, 3 sites, repeated timer/callback spans, fallback, raw Microseconds, invalidation and partial capture
+PASS timed profile boundaries, aggregate, partial, raw pairs and capture-end diagnosis
+PASS synthetic runtime relocation, raw carry/backwards, MMU context invalidation, fault/CE exclusion, split elapsed read, aggregate, fallback, bounds, pending RF and SP banks

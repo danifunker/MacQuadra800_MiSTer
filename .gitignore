@@ -92,3 +92,4 @@ verilator/obj_dir_*/
 scripts/guest/*.png
 verilator/sim/mac/
 verilator/run.hda
+rtl/ap68040/tb/build_lx/

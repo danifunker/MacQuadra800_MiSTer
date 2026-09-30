@@ -1,0 +1,575 @@
+{
+  "stage": "QUALIFIED_PAIR",
+  "candidate_fpu": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "loop_cycles_each": 8724166,
+  "original_checks_reports_memory_captures": "byte_exact",
+  "profile": {
+    "edges": 8724166,
+    "busy_op_samples": 1265136,
+    "planes": [
+      {
+        "id": 0,
+        "starts": 1979943,
+        "ends": 1979943,
+        "active": 0,
+        "touched": 1979851,
+        "whole": 1979850,
+        "latency_sum": 2815362,
+        "max": 75,
+        "partial": 1,
+        "partial_edges": 37,
+        "active_edges": 0,
+        "occupancy": 2815399,
+        "faults": 0,
+        "diag": 64,
+        "dropped": 1979787
+      },
+      {
+        "id": 1,
+        "starts": 1979943,
+        "ends": 1979943,
+        "active": 0,
+        "touched": 1979851,
+        "whole": 1979851,
+        "latency_sum": 2790718,
+        "max": 49,
+        "partial": 0,
+        "partial_edges": 0,
+        "active_edges": 0,
+        "occupancy": 2790718,
+        "faults": 0,
+        "diag": 64,
+        "dropped": 1979787
+      }
+    ],
+    "scope": "native joint occupancy and per-plane episodes; no additive stall total or numerical oracle"
+  },
+  "margins": [
+    {
+      "id": 0,
+      "pc": 4912061,
+      "cpu": 1556905
+    },
+    {
+      "id": 1,
+      "pc": 1729593,
+      "cpu": 487278
+    },
+    {
+      "id": 2,
+      "pc": 2082439,
+      "cpu": 1075899
+    },
+    {
+      "id": 3,
+      "pc": 73,
+      "cpu": 5604084
+    }
+  ],
+  "largest_joint_cells": [
+    {
+      "pc": 0,
+      "cpu": 3,
+      "fst": 0,
+      "n": 3302458
+    },
+    {
+      "pc": 1,
+      "cpu": 3,
+      "fst": 0,
+      "n": 1353702
+    },
+    {
+      "pc": 2,
+      "cpu": 3,
+      "fst": 0,
+      "n": 875558
+    },
+    {
+      "pc": 0,
+      "cpu": 0,
+      "fst": 0,
+      "n": 780935
+    },
+    {
+      "pc": 2,
+      "cpu": 0,
+      "fst": 0,
+      "n": 615581
+    },
+    {
+      "pc": 1,
+      "cpu": 0,
+      "fst": 0,
+      "n": 153416
+    },
+    {
+      "pc": 0,
+      "cpu": 2,
+      "fst": 0,
+      "n": 146709
+    },
+    {
+      "pc": 2,
+      "cpu": 2,
+      "fst": 0,
+      "n": 140390
+    },
+    {
+      "pc": 2,
+      "cpu": 1,
+      "fst": 4,
+      "n": 115690
+    },
+    {
+      "pc": 0,
+      "cpu": 1,
+      "fst": 4,
+      "n": 102915
+    },
+    {
+      "pc": 0,
+      "cpu": 2,
+      "fst": 7,
+      "n": 97979
+    },
+    {
+      "pc": 1,
+      "cpu": 2,
+      "fst": 0,
+      "n": 90208
+    },
+    {
+      "pc": 0,
+      "cpu": 1,
+      "fst": 14,
+      "n": 76717
+    },
+    {
+      "pc": 2,
+      "cpu": 2,
+      "fst": 7,
+      "n": 67380
+    },
+    {
+      "pc": 2,
+      "cpu": 2,
+      "fst": 14,
+      "n": 66290
+    },
+    {
+      "pc": 0,
+      "cpu": 2,
+      "fst": 3,
+      "n": 58728
+    },
+    {
+      "pc": 0,
+      "cpu": 2,
+      "fst": 10,
+      "n": 49614
+    },
+    {
+      "pc": 2,
+      "cpu": 1,
+      "fst": 14,
+      "n": 49400
+    },
+    {
+      "pc": 0,
+      "cpu": 2,
+      "fst": 1,
+      "n": 49309
+    },
+    {
+      "pc": 2,
+      "cpu": 2,
+      "fst": 3,
+      "n": 48310
+    }
+  ],
+  "group_aggregate_by_plane_address_kind_policy": [
+    {
+      "plane": 0,
+      "address_region": 0,
+      "kind": 0,
+      "policy": 0,
+      "count": 389921,
+      "latency_sum": 555633,
+      "max": 72
+    },
+    {
+      "plane": 0,
+      "address_region": 0,
+      "kind": 1,
+      "policy": 0,
+      "count": 106010,
+      "latency_sum": 126724,
+      "max": 75
+    },
+    {
+      "plane": 0,
+      "address_region": 1,
+      "kind": 0,
+      "policy": 0,
+      "count": 208377,
+      "latency_sum": 229154,
+      "max": 51
+    },
+    {
+      "plane": 0,
+      "address_region": 1,
+      "kind": 1,
+      "policy": 0,
+      "count": 96271,
+      "latency_sum": 332035,
+      "max": 73
+    },
+    {
+      "plane": 0,
+      "address_region": 1,
+      "kind": 2,
+      "policy": 0,
+      "count": 6,
+      "latency_sum": 11,
+      "max": 3
+    },
+    {
+      "plane": 0,
+      "address_region": 2,
+      "kind": 0,
+      "policy": 0,
+      "count": 3,
+      "latency_sum": 19,
+      "max": 15
+    },
+    {
+      "plane": 0,
+      "address_region": 2,
+      "kind": 1,
+      "policy": 0,
+      "count": 594271,
+      "latency_sum": 837090,
+      "max": 49
+    },
+    {
+      "plane": 0,
+      "address_region": 2,
+      "kind": 2,
+      "policy": 0,
+      "count": 579927,
+      "latency_sum": 719384,
+      "max": 31
+    },
+    {
+      "plane": 0,
+      "address_region": 3,
+      "kind": 1,
+      "policy": 0,
+      "count": 5063,
+      "latency_sum": 15309,
+      "max": 45
+    },
+    {
+      "plane": 0,
+      "address_region": 3,
+      "kind": 2,
+      "policy": 0,
+      "count": 1,
+      "latency_sum": 3,
+      "max": 3
+    },
+    {
+      "plane": 1,
+      "address_region": 0,
+      "kind": 0,
+      "policy": 0,
+      "count": 389921,
+      "latency_sum": 550319,
+      "max": 42
+    },
+    {
+      "plane": 1,
+      "address_region": 0,
+      "kind": 1,
+      "policy": 0,
+      "count": 106010,
+      "latency_sum": 118305,
+      "max": 43
+    },
+    {
+      "plane": 1,
+      "address_region": 1,
+      "kind": 0,
+      "policy": 0,
+      "count": 208377,
+      "latency_sum": 224053,
+      "max": 37
+    },
+    {
+      "plane": 1,
+      "address_region": 1,
+      "kind": 1,
+      "policy": 0,
+      "count": 96271,
+      "latency_sum": 331334,
+      "max": 25
+    },
+    {
+      "plane": 1,
+      "address_region": 1,
+      "kind": 2,
+      "policy": 0,
+      "count": 6,
+      "latency_sum": 10,
+      "max": 2
+    },
+    {
+      "plane": 1,
+      "address_region": 2,
+      "kind": 0,
+      "policy": 0,
+      "count": 3,
+      "latency_sum": 17,
+      "max": 14
+    },
+    {
+      "plane": 1,
+      "address_region": 2,
+      "kind": 1,
+      "policy": 0,
+      "count": 594271,
+      "latency_sum": 837086,
+      "max": 49
+    },
+    {
+      "plane": 1,
+      "address_region": 2,
+      "kind": 2,
+      "policy": 0,
+      "count": 579928,
+      "latency_sum": 719378,
+      "max": 31
+    },
+    {
+      "plane": 1,
+      "address_region": 3,
+      "kind": 1,
+      "policy": 0,
+      "count": 5063,
+      "latency_sum": 10214,
+      "max": 42
+    },
+    {
+      "plane": 1,
+      "address_region": 3,
+      "kind": 2,
+      "policy": 0,
+      "count": 1,
+      "latency_sum": 2,
+      "max": 2
+    }
+  ],
+  "scope": "measured native6c selector1 occupancy and per-plane inclusive service; ROMlat6 fixture stub, no summed stall total or numerical oracle",
+  "exclusive_pc_cpu_rank": [
+    {
+      "pc": 0,
+      "cpu": 3,
+      "samples": 3362789,
+      "percent": 38.54567875026679,
+      "fpu_nonidle": 60331,
+      "background_samples": 180286
+    },
+    {
+      "pc": 1,
+      "cpu": 3,
+      "samples": 1365664,
+      "percent": 15.653805762063675,
+      "fpu_nonidle": 11962,
+      "background_samples": 28748
+    },
+    {
+      "pc": 2,
+      "cpu": 3,
+      "samples": 875558,
+      "percent": 10.036008026440578,
+      "fpu_nonidle": 0,
+      "background_samples": 115690
+    },
+    {
+      "pc": 0,
+      "cpu": 0,
+      "samples": 786978,
+      "percent": 9.020667419670831,
+      "fpu_nonidle": 6043,
+      "background_samples": 12443
+    },
+    {
+      "pc": 2,
+      "cpu": 0,
+      "samples": 615581,
+      "percent": 7.056044096364054,
+      "fpu_nonidle": 0,
+      "background_samples": 0
+    },
+    {
+      "pc": 0,
+      "cpu": 2,
+      "samples": 529958,
+      "percent": 6.074597846946058,
+      "fpu_nonidle": 383249,
+      "background_samples": 0
+    },
+    {
+      "pc": 2,
+      "cpu": 2,
+      "samples": 408820,
+      "percent": 4.686063974481916,
+      "fpu_nonidle": 268430,
+      "background_samples": 0
+    },
+    {
+      "pc": 0,
+      "cpu": 1,
+      "samples": 232336,
+      "percent": 2.6631313526129605,
+      "fpu_nonidle": 232336,
+      "background_samples": 232336
+    },
+    {
+      "pc": 2,
+      "cpu": 1,
+      "samples": 182480,
+      "percent": 2.0916612544969913,
+      "fpu_nonidle": 182480,
+      "background_samples": 182480
+    },
+    {
+      "pc": 1,
+      "cpu": 0,
+      "samples": 154346,
+      "percent": 1.7691777070725156,
+      "fpu_nonidle": 930,
+      "background_samples": 930
+    },
+    {
+      "pc": 1,
+      "cpu": 2,
+      "samples": 137121,
+      "percent": 1.5717376308520494,
+      "fpu_nonidle": 46913,
+      "background_samples": 0
+    },
+    {
+      "pc": 1,
+      "cpu": 1,
+      "samples": 72462,
+      "percent": 0.8305894225304745,
+      "fpu_nonidle": 72462,
+      "background_samples": 72462
+    },
+    {
+      "pc": 3,
+      "cpu": 3,
+      "samples": 73,
+      "percent": 0.0008367562011085071,
+      "fpu_nonidle": 0,
+      "background_samples": 0
+    }
+  ],
+  "translated_groups_with_excess_over_one": [
+    {
+      "address_region": 2,
+      "kind": 1,
+      "count": 594271,
+      "sum": 837086,
+      "max": 49,
+      "excess_over_one": 242815,
+      "excess_percent_loop": 2.7832459859200296
+    },
+    {
+      "address_region": 2,
+      "kind": 2,
+      "count": 579928,
+      "sum": 719378,
+      "max": 31,
+      "excess_over_one": 139450,
+      "excess_percent_loop": 1.598433592391525
+    },
+    {
+      "address_region": 0,
+      "kind": 0,
+      "count": 389921,
+      "sum": 550319,
+      "max": 42,
+      "excess_over_one": 160398,
+      "excess_percent_loop": 1.838548234868525
+    },
+    {
+      "address_region": 1,
+      "kind": 1,
+      "count": 96271,
+      "sum": 331334,
+      "max": 25,
+      "excess_over_one": 235063,
+      "excess_percent_loop": 2.6943893548105344
+    },
+    {
+      "address_region": 1,
+      "kind": 0,
+      "count": 208377,
+      "sum": 224053,
+      "max": 37,
+      "excess_over_one": 15676,
+      "excess_percent_loop": 0.17968479737776655
+    },
+    {
+      "address_region": 0,
+      "kind": 1,
+      "count": 106010,
+      "sum": 118305,
+      "max": 43,
+      "excess_over_one": 12295,
+      "excess_percent_loop": 0.14093037661135746
+    },
+    {
+      "address_region": 3,
+      "kind": 1,
+      "count": 5063,
+      "sum": 10214,
+      "max": 42,
+      "excess_over_one": 5151,
+      "excess_percent_loop": 0.05904289303986192
+    },
+    {
+      "address_region": 2,
+      "kind": 0,
+      "count": 3,
+      "sum": 17,
+      "max": 14,
+      "excess_over_one": 14,
+      "excess_percent_loop": 0.00016047379199341232
+    },
+    {
+      "address_region": 1,
+      "kind": 2,
+      "count": 6,
+      "sum": 10,
+      "max": 2,
+      "excess_over_one": 4,
+      "excess_percent_loop": 4.584965485526066e-05
+    },
+    {
+      "address_region": 3,
+      "kind": 2,
+      "count": 1,
+      "sum": 2,
+      "max": 2,
+      "excess_over_one": 1,
+      "excess_percent_loop": 1.1462413713815166e-05
+    }
+  ],
+  "translated_total_excess_over_one": 810867,
+  "translated_ROM_excess_over_one": 172693,
+  "interpretation_limit": "Inclusive episode sum minus count is excess over one sampled edge; not removable cycles or additive with CPU/FPU/other observation planes."
+}

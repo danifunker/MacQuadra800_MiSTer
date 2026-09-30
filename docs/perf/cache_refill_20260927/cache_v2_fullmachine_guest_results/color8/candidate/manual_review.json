@@ -1,0 +1,21 @@
+{
+  "stage": "MANUAL_REVIEW_AFTER_ORIGINAL_TERMINAL_METADATA",
+  "kind": "color8",
+  "verdict": "ISOLATED_VISIBLE_RESULT_ONLY_NOT_OVERALL_QUALIFICATION",
+  "setup_byteexact_completed6c": true,
+  "setup_sha256": "92082dbb64531d12b08550b9861840f7c48f034cbd143afed3bdd6c994794810",
+  "final_sha256": "f1b0eae8b07efbe84a9be0c7e2d00fbd6085835219d97dccf019c8d4bf547c22",
+  "final_frame": "screenshot_f5525.png",
+  "finding": {
+    "verdict": "ISOLATED_VISIBLE_RESULT_ONLY_NOT_OVERALL_QUALIFICATION",
+    "completed6c_seconds": 9.878,
+    "current_seconds": 9.856,
+    "current_rating": 1.075,
+    "current_iterations": 1,
+    "other_iterations": 0
+  },
+  "original_automated_exit_checks": "PASS; do not validate guest timing",
+  "overall_candidate_qualification": "FAILED",
+  "cause": "UNPROVEN",
+  "review_source": "Primary reviewed final/setup images; independent final image view and setup byte comparison recorded; no automatic OCR or timing oracle"
+}

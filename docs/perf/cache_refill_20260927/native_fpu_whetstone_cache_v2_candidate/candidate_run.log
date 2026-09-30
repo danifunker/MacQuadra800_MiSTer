@@ -1,0 +1,893 @@
+LOADED image into SDRAM model (romlat=6)
+SDRAM ready at 123957300 ps
+[NCR 0] housekeeping: rst=1 bus=0 probe=1
+[NCR 12] forward op=ff -> lba=7dff0000
+NATIVE_START fpcr=00000000 pc=006300ae
+NEXT_EP plane=0 pc=006300ae addr=0063fffe instr=0 write=1 size=1 fc=5 policy=0 bypass=0 latency=38 window=37 first_window=0
+NEXT_EP plane=1 pc=006300ae addr=0063fffe instr=0 write=1 size=1 fc=5 policy=0 bypass=1 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=006300b2 addr=006300c0 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=15 window=15 first_window=1
+NEXT_EP plane=1 pc=006300b2 addr=006300c0 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=14 window=14 first_window=1
+NEXT_EP plane=0 pc=006300b2 addr=0063fffa instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=4 window=4 first_window=1
+NEXT_EP plane=1 pc=006300b2 addr=0063fffa instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=4 window=4 first_window=1
+NEXT_EP plane=0 pc=00600000 addr=00600000 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=51 window=51 first_window=1
+NEXT_EP plane=1 pc=00600000 addr=00600000 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=11 window=11 first_window=1
+NEXT_EP plane=0 pc=0060000c addr=0060000c instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=5 window=5 first_window=1
+NEXT_EP plane=1 pc=0060000c addr=0060000c instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=5 window=5 first_window=1
+NEXT_EP plane=0 pc=0060000c addr=00600010 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=11 window=11 first_window=1
+NEXT_EP plane=1 pc=0060000c addr=00600010 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=11 window=11 first_window=1
+NEXT_EP plane=0 pc=00600e5e addr=00600e5e instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=13 window=13 first_window=1
+NEXT_EP plane=1 pc=00600e5e addr=00600e5e instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=13 window=13 first_window=1
+NEXT_EP plane=0 pc=00600e5e addr=00600e60 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=11 window=11 first_window=1
+NEXT_EP plane=1 pc=00600e5e addr=00600e60 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=11 window=11 first_window=1
+NEXT_EP plane=0 pc=00600e5e addr=0063fff6 instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=3 window=3 first_window=1
+NEXT_EP plane=1 pc=00600e5e addr=0063fff6 instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=00600e62 addr=00600e64 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=00600e62 addr=00600e64 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=00600e62 addr=0063fff2 instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=00600e62 addr=0063fff2 instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=00600e66 addr=00600010 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=00600e66 addr=00600010 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=00600e66 addr=0063ffee instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=00600e66 addr=0063ffee instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=00600014 addr=00600020 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=17 window=17 first_window=1
+NEXT_EP plane=1 pc=00600014 addr=00600020 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=17 window=17 first_window=1
+NEXT_EP plane=0 pc=0060001c addr=0063ffe6 instr=0 write=1 size=1 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=0060001c addr=0063ffe6 instr=0 write=1 size=1 fc=5 policy=0 bypass=1 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=0060001c addr=0063ffe8 instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=0060001c addr=0063ffe8 instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=0060001c addr=0063ffec instr=0 write=1 size=1 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=0060001c addr=0063ffec instr=0 write=1 size=1 fc=5 policy=0 bypass=1 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=0060001c addr=00000028 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=45 window=45 first_window=1
+NEXT_EP plane=1 pc=0060001c addr=00000028 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=12 window=12 first_window=1
+NEXT_EP plane=0 pc=408099b0 addr=408099b0 instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=48 window=48 first_window=1
+NEXT_EP plane=1 pc=408099b0 addr=408099b0 instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=13 window=13 first_window=1
+NEXT_EP plane=0 pc=408099b0 addr=408099b2 instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=32 window=32 first_window=1
+NEXT_EP plane=1 pc=408099b0 addr=408099b2 instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=32 window=32 first_window=1
+NEXT_EP plane=0 pc=408099b0 addr=408099b4 instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=1 pc=408099b0 addr=408099b4 instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=408099b0 addr=408099b6 instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=1 pc=408099b0 addr=408099b6 instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=408099b0 addr=408099b8 instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=1 pc=408099b0 addr=408099b8 instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=408099b0 addr=408099ba instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=1 pc=408099b0 addr=408099ba instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=408099b0 addr=408099bc instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=1 pc=408099b0 addr=408099bc instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=408099b0 addr=408099be instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=1 pc=408099b0 addr=408099be instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=408099b0 addr=0063ffe2 instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=3 window=3 first_window=1
+NEXT_EP plane=1 pc=408099b0 addr=0063ffe2 instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=408099b2 addr=0063ffde instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=408099b2 addr=0063ffde instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=408099b4 addr=0063ffe8 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=18 window=18 first_window=1
+NEXT_EP plane=1 pc=408099b4 addr=0063ffe8 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=18 window=18 first_window=1
+NEXT_EP plane=0 pc=408099b8 addr=408099c0 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=16 window=16 first_window=1
+NEXT_EP plane=1 pc=408099b8 addr=408099c0 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=16 window=16 first_window=1
+NEXT_EP plane=0 pc=408099b8 addr=0060001c instr=0 write=0 size=1 fc=5 policy=0 bypass=0 latency=73 window=73 first_window=1
+NEXT_EP plane=1 pc=408099b8 addr=0060001c instr=0 write=0 size=1 fc=5 policy=0 bypass=0 latency=12 window=12 first_window=1
+NEXT_EP plane=0 pc=408099f0 addr=408099f0 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=15 window=15 first_window=1
+NEXT_EP plane=1 pc=408099f0 addr=408099f0 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=14 window=14 first_window=1
+NEXT_EP plane=0 pc=408099f0 addr=408099f4 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=31 window=31 first_window=1
+NEXT_EP plane=1 pc=408099f0 addr=408099f4 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=31 window=31 first_window=1
+NEXT_EP plane=0 pc=408099f0 addr=0063ffda instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=3 window=3 first_window=1
+NEXT_EP plane=1 pc=408099f0 addr=0063ffda instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=408099f2 addr=0063ffd6 instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=408099f2 addr=0063ffd6 instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=408099f6 addr=40809a00 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=15 window=15 first_window=1
+NEXT_EP plane=1 pc=408099f6 addr=40809a00 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=15 window=15 first_window=1
+NEXT_EP plane=0 pc=408099f6 addr=0063ffea instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=31 window=31 first_window=1
+NEXT_EP plane=1 pc=408099f6 addr=0063ffea instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=31 window=31 first_window=1
+NEXT_EP plane=0 pc=40809a02 addr=0063ffd2 instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=40809a02 addr=0063ffd2 instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=40809a04 addr=40809a10 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=15 window=15 first_window=1
+NEXT_EP plane=1 pc=40809a04 addr=40809a10 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=15 window=15 first_window=1
+NEXT_EP plane=0 pc=40809a04 addr=00000554 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=41 window=41 first_window=1
+NEXT_EP plane=1 pc=40809a04 addr=00000554 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=40 window=40 first_window=1
+NEXT_EP plane=0 pc=40809a04 addr=0063ffce instr=0 write=1 size=2 fc=5 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=1 pc=40809a04 addr=0063ffce instr=0 write=1 size=2 fc=5 policy=0 bypass=1 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=4080d76c addr=4080d76c instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=54 window=54 first_window=1
+NEXT_EP plane=1 pc=4080d76c addr=4080d76c instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=13 window=13 first_window=1
+NEXT_EP plane=0 pc=4080d76c addr=4080d770 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=41 window=41 first_window=1
+NEXT_EP plane=1 pc=4080d76c addr=4080d770 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=41 window=41 first_window=1
+NEXT_EP plane=0 pc=4080d76c addr=0000031a instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=43 window=43 first_window=1
+NEXT_EP plane=1 pc=4080d76c addr=0000031a instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=42 window=42 first_window=1
+NEXT_EP plane=0 pc=4080d770 addr=4080d774 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=4 window=4 first_window=1
+NEXT_EP plane=1 pc=4080d770 addr=4080d774 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=4 window=4 first_window=1
+NEXT_EP plane=0 pc=4080d770 addr=0063ffce instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=27 window=27 first_window=1
+NEXT_EP plane=1 pc=4080d770 addr=0063ffce instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=26 window=26 first_window=1
+NEXT_EP plane=0 pc=40809a0a addr=40809a0a instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=6 window=6 first_window=1
+NEXT_EP plane=1 pc=40809a0a addr=40809a0a instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=5 window=5 first_window=1
+NEXT_EP plane=0 pc=40809a0a addr=0063ffd2 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=40809a0a addr=0063ffd2 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=40809a0c addr=40809a10 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=40809a0c addr=40809a10 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=40809a0c addr=0063ffd6 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=40809a0c addr=0063ffd6 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=40809a0e addr=0063ffda instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=40809a0e addr=0063ffda instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=40809a10 addr=0063ffde instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=40809a10 addr=0063ffde instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=40809a12 addr=0063ffe2 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=40809a12 addr=0063ffe2 instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=40809a14 addr=40809a20 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=14 window=14 first_window=1
+NEXT_EP plane=1 pc=40809a14 addr=40809a20 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=14 window=14 first_window=1
+NEXT_EP plane=0 pc=40809a18 addr=0063ffea instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=33 window=33 first_window=1
+NEXT_EP plane=1 pc=40809a18 addr=0063ffea instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=33 window=33 first_window=1
+NEXT_EP plane=0 pc=0060001e addr=0060001e instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=3 window=3 first_window=1
+NEXT_EP plane=1 pc=0060001e addr=0060001e instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=2 window=2 first_window=1
+NEXT_EP plane=0 pc=0060001e addr=00600020 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=0060001e addr=00600020 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=00600020 addr=0063ffee instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=11 window=11 first_window=1
+NEXT_EP plane=1 pc=00600020 addr=0063ffee instr=0 write=0 size=2 fc=5 policy=0 bypass=0 latency=11 window=11 first_window=1
+NEXT_EP plane=0 pc=00600e6a addr=00600e6a instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=6 window=6 first_window=1
+NEXT_EP plane=1 pc=00600e6a addr=00600e6a instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=6 window=6 first_window=1
+NEXT_EP plane=0 pc=00600e6c addr=00600e70 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=13 window=13 first_window=1
+NEXT_EP plane=1 pc=00600e6c addr=00600e70 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=13 window=13 first_window=1
+NEXT_EP plane=0 pc=00600e6c addr=0063fffe instr=0 write=0 size=1 fc=5 policy=0 bypass=0 latency=6 window=6 first_window=1
+NEXT_EP plane=1 pc=00600e6c addr=0063fffe instr=0 write=0 size=1 fc=5 policy=0 bypass=0 latency=6 window=6 first_window=1
+NEXT_EP plane=0 pc=00600e70 addr=00600e74 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=00600e70 addr=00600e74 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=00600e7e addr=00600e7e instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=1 pc=00600e7e addr=00600e7e instr=1 write=0 size=1 fc=6 policy=0 bypass=0 latency=1 window=1 first_window=1
+NEXT_EP plane=0 pc=00600e7e addr=00600e80 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=11 window=11 first_window=1
+NEXT_EP plane=1 pc=00600e7e addr=00600e80 instr=1 write=0 size=2 fc=6 policy=0 bypass=0 latency=11 window=11 first_window=1
+SCC_SERIAL_OUT: ch=B byte=00 time=544809150
+SCC_SERIAL_OUT: ch=A byte=00 time=544809150
+HEARTBEAT cycle=2000000 pc=40890b12
+HEARTBEAT cycle=4000000 pc=006006d4
+HEARTBEAT cycle=6000000 pc=0060063a
+HEARTBEAT cycle=8000000 pc=408927d6
+WHETSTONE_LOOP cycles=8541493 platform=sdram romlat=6
+NEXT_META format=native-whet-joint-v1 finish=BEFORE_ORIGINAL_DRAIN pc=ROM,BODY,REST_RESOURCE,OTHER cpu=MRD,DEC_BLOCKED,GO,OTHER plane=LOGICAL_WRAPPER,PHYSICAL_CACHE_INPUT fault=WRAPPER_mem_flt_OR_berr latency=FIRST_REQ_TO_COMPLETION_INCLUSIVE partials=WINDOW_INTERSECTIONS
+NEXT_JOINT pc=0 cpu=0 fst=0 n=780923
+NEXT_JOINT pc=0 cpu=0 fst=4 n=639
+NEXT_JOINT pc=0 cpu=0 fst=11 n=2556
+NEXT_JOINT pc=0 cpu=0 fst=14 n=2848
+NEXT_JOINT pc=0 cpu=1 fst=4 n=102915
+NEXT_JOINT pc=0 cpu=1 fst=10 n=41365
+NEXT_JOINT pc=0 cpu=1 fst=13 n=11339
+NEXT_JOINT pc=0 cpu=1 fst=14 n=76717
+NEXT_JOINT pc=0 cpu=2 fst=0 n=146709
+NEXT_JOINT pc=0 cpu=2 fst=1 n=49309
+NEXT_JOINT pc=0 cpu=2 fst=2 n=3779
+NEXT_JOINT pc=0 cpu=2 fst=3 n=58728
+NEXT_JOINT pc=0 cpu=2 fst=5 n=40121
+NEXT_JOINT pc=0 cpu=2 fst=6 n=3489
+NEXT_JOINT pc=0 cpu=2 fst=7 n=97979
+NEXT_JOINT pc=0 cpu=2 fst=9 n=41052
+NEXT_JOINT pc=0 cpu=2 fst=10 n=49614
+NEXT_JOINT pc=0 cpu=2 fst=11 n=640
+NEXT_JOINT pc=0 cpu=2 fst=14 n=35049
+NEXT_JOINT pc=0 cpu=2 fst=17 n=3489
+NEXT_JOINT pc=0 cpu=3 fst=0 n=3301865
+NEXT_JOINT pc=0 cpu=3 fst=4 n=22801
+NEXT_JOINT pc=0 cpu=3 fst=10 n=8249
+NEXT_JOINT pc=0 cpu=3 fst=11 n=12164
+NEXT_JOINT pc=0 cpu=3 fst=13 n=5376
+NEXT_JOINT pc=0 cpu=3 fst=14 n=11741
+NEXT_JOINT pc=1 cpu=0 fst=0 n=141798
+NEXT_JOINT pc=1 cpu=0 fst=12 n=930
+NEXT_JOINT pc=1 cpu=1 fst=4 n=12262
+NEXT_JOINT pc=1 cpu=1 fst=10 n=1757
+NEXT_JOINT pc=1 cpu=1 fst=11 n=36110
+NEXT_JOINT pc=1 cpu=1 fst=12 n=12092
+NEXT_JOINT pc=1 cpu=1 fst=13 n=1994
+NEXT_JOINT pc=1 cpu=1 fst=14 n=8247
+NEXT_JOINT pc=1 cpu=2 fst=0 n=90208
+NEXT_JOINT pc=1 cpu=2 fst=1 n=6607
+NEXT_JOINT pc=1 cpu=2 fst=2 n=4204
+NEXT_JOINT pc=1 cpu=2 fst=3 n=9457
+NEXT_JOINT pc=1 cpu=2 fst=4 n=1
+NEXT_JOINT pc=1 cpu=2 fst=5 n=958
+NEXT_JOINT pc=1 cpu=2 fst=7 n=8900
+NEXT_JOINT pc=1 cpu=2 fst=9 n=3994
+NEXT_JOINT pc=1 cpu=2 fst=10 n=1757
+NEXT_JOINT pc=1 cpu=2 fst=11 n=1570
+NEXT_JOINT pc=1 cpu=2 fst=12 n=930
+NEXT_JOINT pc=1 cpu=2 fst=14 n=8535
+NEXT_JOINT pc=1 cpu=3 fst=0 n=1353700
+NEXT_JOINT pc=1 cpu=3 fst=4 n=4524
+NEXT_JOINT pc=1 cpu=3 fst=12 n=7438
+NEXT_JOINT pc=2 cpu=0 fst=0 n=444323
+NEXT_JOINT pc=2 cpu=1 fst=4 n=115690
+NEXT_JOINT pc=2 cpu=1 fst=10 n=12350
+NEXT_JOINT pc=2 cpu=1 fst=13 n=5040
+NEXT_JOINT pc=2 cpu=1 fst=14 n=49400
+NEXT_JOINT pc=2 cpu=2 fst=0 n=140390
+NEXT_JOINT pc=2 cpu=2 fst=1 n=21340
+NEXT_JOINT pc=2 cpu=2 fst=3 n=48310
+NEXT_JOINT pc=2 cpu=2 fst=5 n=15710
+NEXT_JOINT pc=2 cpu=2 fst=7 n=67380
+NEXT_JOINT pc=2 cpu=2 fst=9 n=37050
+NEXT_JOINT pc=2 cpu=2 fst=10 n=12350
+NEXT_JOINT pc=2 cpu=2 fst=14 n=66290
+NEXT_JOINT pc=2 cpu=3 fst=0 n=876368
+NEXT_JOINT pc=3 cpu=3 fst=0 n=73
+NEXT_OP pc=0 cpu=0 op=20 n=3196
+NEXT_OP pc=0 cpu=0 op=22 n=930
+NEXT_OP pc=0 cpu=0 op=23 n=1277
+NEXT_OP pc=0 cpu=0 op=28 n=640
+NEXT_OP pc=0 cpu=1 op=00 n=21455
+NEXT_OP pc=0 cpu=1 op=22 n=75413
+NEXT_OP pc=0 cpu=1 op=23 n=126919
+NEXT_OP pc=0 cpu=1 op=28 n=8549
+NEXT_OP pc=0 cpu=2 op=00 n=72220
+NEXT_OP pc=0 cpu=2 op=20 n=1280
+NEXT_OP pc=0 cpu=2 op=22 n=151586
+NEXT_OP pc=0 cpu=2 op=23 n=120596
+NEXT_OP pc=0 cpu=2 op=28 n=25530
+NEXT_OP pc=0 cpu=2 op=7f n=12037
+NEXT_OP pc=0 cpu=3 op=00 n=6921
+NEXT_OP pc=0 cpu=3 op=20 n=12804
+NEXT_OP pc=0 cpu=3 op=22 n=13926
+NEXT_OP pc=0 cpu=3 op=23 n=23481
+NEXT_OP pc=0 cpu=3 op=28 n=3199
+NEXT_OP pc=1 cpu=0 op=04 n=930
+NEXT_OP pc=1 cpu=1 op=00 n=3243
+NEXT_OP pc=1 cpu=1 op=04 n=13952
+NEXT_OP pc=1 cpu=1 op=1a n=120
+NEXT_OP pc=1 cpu=1 op=20 n=39250
+NEXT_OP pc=1 cpu=1 op=22 n=5072
+NEXT_OP pc=1 cpu=1 op=23 n=5913
+NEXT_OP pc=1 cpu=1 op=28 n=4912
+NEXT_OP pc=1 cpu=2 op=00 n=25584
+NEXT_OP pc=1 cpu=2 op=04 n=2790
+NEXT_OP pc=1 cpu=2 op=1a n=361
+NEXT_OP pc=1 cpu=2 op=20 n=3140
+NEXT_OP pc=1 cpu=2 op=22 n=5558
+NEXT_OP pc=1 cpu=2 op=23 n=4800
+NEXT_OP pc=1 cpu=2 op=28 n=4680
+NEXT_OP pc=1 cpu=3 op=00 n=4524
+NEXT_OP pc=1 cpu=3 op=04 n=7438
+NEXT_OP pc=2 cpu=1 op=00 n=47470
+NEXT_OP pc=2 cpu=1 op=1a n=840
+NEXT_OP pc=2 cpu=1 op=20 n=8990
+NEXT_OP pc=2 cpu=1 op=22 n=71580
+NEXT_OP pc=2 cpu=1 op=23 n=46040
+NEXT_OP pc=2 cpu=1 op=28 n=7560
+NEXT_OP pc=2 cpu=2 op=00 n=115440
+NEXT_OP pc=2 cpu=2 op=1a n=2520
+NEXT_OP pc=2 cpu=2 op=20 n=17980
+NEXT_OP pc=2 cpu=2 op=22 n=83930
+NEXT_OP pc=2 cpu=2 op=23 n=42680
+NEXT_OP pc=2 cpu=2 op=28 n=5880
+NEXT_MARGIN id=0 pc=4911456 cpu=1374017
+NEXT_MARGIN id=1 pc=1717973 cpu=487278
+NEXT_MARGIN id=2 pc=1911991 cpu=1075899
+NEXT_MARGIN id=3 pc=73 cpu=5604299
+NEXT_BG pc=0 cpu=0 n=12443
+NEXT_BG pc=0 cpu=1 n=232336
+NEXT_BG pc=0 cpu=3 n=180286
+NEXT_BG pc=1 cpu=0 n=930
+NEXT_BG pc=1 cpu=1 n=72462
+NEXT_BG pc=1 cpu=3 n=28748
+NEXT_BG pc=2 cpu=1 n=182480
+NEXT_BG pc=2 cpu=3 n=115690
+NEXT_WAIT plane=0 pc=0 cpu=0 fst=0 n=609866
+NEXT_WAIT plane=0 pc=0 cpu=0 fst=4 n=1
+NEXT_WAIT plane=0 pc=0 cpu=0 fst=11 n=1917
+NEXT_WAIT plane=0 pc=0 cpu=0 fst=14 n=2848
+NEXT_WAIT plane=0 pc=0 cpu=1 fst=4 n=6666
+NEXT_WAIT plane=0 pc=0 cpu=1 fst=10 n=12
+NEXT_WAIT plane=0 pc=0 cpu=1 fst=13 n=1
+NEXT_WAIT plane=0 pc=0 cpu=1 fst=14 n=12623
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=0 n=7890
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=1 n=12
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=2 n=2
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=3 n=14
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=5 n=7
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=6 n=2
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=7 n=33
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=9 n=6
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=10 n=17
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=14 n=20
+NEXT_WAIT plane=0 pc=0 cpu=2 fst=17 n=2
+NEXT_WAIT plane=0 pc=0 cpu=3 fst=0 n=845494
+NEXT_WAIT plane=0 pc=0 cpu=3 fst=4 n=944
+NEXT_WAIT plane=0 pc=0 cpu=3 fst=10 n=5
+NEXT_WAIT plane=0 pc=0 cpu=3 fst=11 n=1936
+NEXT_WAIT plane=0 pc=0 cpu=3 fst=13 n=3806
+NEXT_WAIT plane=0 pc=0 cpu=3 fst=14 n=1898
+NEXT_WAIT plane=0 pc=1 cpu=0 fst=0 n=134326
+NEXT_WAIT plane=0 pc=1 cpu=0 fst=12 n=930
+NEXT_WAIT plane=0 pc=1 cpu=1 fst=4 n=689
+NEXT_WAIT plane=0 pc=1 cpu=1 fst=11 n=6
+NEXT_WAIT plane=0 pc=1 cpu=1 fst=12 n=1
+NEXT_WAIT plane=0 pc=1 cpu=1 fst=13 n=2
+NEXT_WAIT plane=0 pc=1 cpu=1 fst=14 n=762
+NEXT_WAIT plane=0 pc=1 cpu=2 fst=0 n=348
+NEXT_WAIT plane=0 pc=1 cpu=2 fst=1 n=10
+NEXT_WAIT plane=0 pc=1 cpu=2 fst=2 n=1
+NEXT_WAIT plane=0 pc=1 cpu=2 fst=3 n=11
+NEXT_WAIT plane=0 pc=1 cpu=2 fst=5 n=2
+NEXT_WAIT plane=0 pc=1 cpu=2 fst=7 n=6
+NEXT_WAIT plane=0 pc=1 cpu=2 fst=9 n=5
+NEXT_WAIT plane=0 pc=1 cpu=2 fst=11 n=1
+NEXT_WAIT plane=0 pc=1 cpu=2 fst=14 n=9
+NEXT_WAIT plane=0 pc=1 cpu=3 fst=0 n=373667
+NEXT_WAIT plane=0 pc=1 cpu=3 fst=4 n=5
+NEXT_WAIT plane=0 pc=1 cpu=3 fst=12 n=1860
+NEXT_WAIT plane=0 pc=2 cpu=0 fst=0 n=422964
+NEXT_WAIT plane=0 pc=2 cpu=1 fst=4 n=2524
+NEXT_WAIT plane=0 pc=2 cpu=1 fst=14 n=843
+NEXT_WAIT plane=0 pc=2 cpu=2 fst=0 n=6
+NEXT_WAIT plane=0 pc=2 cpu=2 fst=5 n=1
+NEXT_WAIT plane=0 pc=2 cpu=2 fst=7 n=3
+NEXT_WAIT plane=0 pc=2 cpu=2 fst=9 n=3
+NEXT_WAIT plane=0 pc=2 cpu=3 fst=0 n=207060
+NEXT_WAIT plane=0 pc=3 cpu=3 fst=0 n=63
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=0 n=305928
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=1 n=30963
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=2 n=43175
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=3 n=6641
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=5 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=8 n=3033
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=12 n=7
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=13 n=90
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=14 n=13
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=15 n=5
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=28 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=29 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=30 n=39
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=31 n=7
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=39 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=40 n=8
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=41 n=2
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=46 n=2
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=47 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=49 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=53 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=0 policy=0 bin=64 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=0 n=97112
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=2 n=8202
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=4 n=638
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=12 n=11
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=13 n=6
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=30 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=31 n=18
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=32 n=6
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=40 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=42 n=11
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=46 n=1
+NEXT_LAT plane=0 pc=0 addr_region=0 kind=1 policy=0 bin=64 n=3
+NEXT_LAT plane=0 pc=0 addr_region=1 kind=1 policy=0 bin=64 n=1
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=0 n=301798
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=2 n=37852
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=3 n=6629
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=4 n=1861
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=5 n=1571
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=9 n=1
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=10 n=2
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=11 n=3
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=12 n=3
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=17 n=1
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=26 n=1
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=30 n=10
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=31 n=1
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=32 n=18
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=33 n=6
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=39 n=1
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=40 n=3
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=41 n=1
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=1 policy=0 bin=47 n=1
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=0 n=277611
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=1 n=5329
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=2 n=10122
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=3 n=4227
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=4 n=32
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=5 n=970
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=6 n=461
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=7 n=801
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=27 n=1
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=28 n=2
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=29 n=2
+NEXT_LAT plane=0 pc=0 addr_region=2 kind=2 policy=0 bin=30 n=18
+NEXT_LAT plane=0 pc=0 addr_region=3 kind=1 policy=0 bin=40 n=1
+NEXT_LAT plane=0 pc=0 addr_region=3 kind=1 policy=0 bin=42 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=0 n=140157
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=1 n=3
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=2 n=5201
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=3 n=24
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=4 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=6 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=10 n=19
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=11 n=9
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=12 n=15
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=13 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=14 n=2
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=15 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=17 n=5
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=18 n=2
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=19 n=8
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=21 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=25 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=29 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=0 policy=0 bin=38 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=1 policy=0 bin=0 n=3518
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=1 policy=0 bin=2 n=1115
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=1 policy=0 bin=3 n=639
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=1 policy=0 bin=5 n=4
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=1 policy=0 bin=6 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=1 policy=0 bin=12 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=1 policy=0 bin=13 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=1 policy=0 bin=19 n=1
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=2 policy=0 bin=0 n=2
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=2 policy=0 bin=1 n=3
+NEXT_LAT plane=0 pc=1 addr_region=1 kind=2 policy=0 bin=2 n=1
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=1 policy=0 bin=0 n=70486
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=1 policy=0 bin=2 n=958
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=1 policy=0 bin=3 n=3
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=1 policy=0 bin=5 n=6170
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=1 policy=0 bin=6 n=1
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=1 policy=0 bin=9 n=1
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=1 policy=0 bin=11 n=2
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=1 policy=0 bin=12 n=1
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=1 policy=0 bin=15 n=1
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=2 policy=0 bin=0 n=159600
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=2 policy=0 bin=1 n=4
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=2 policy=0 bin=2 n=20324
+NEXT_LAT plane=0 pc=1 addr_region=2 kind=2 policy=0 bin=3 n=15
+NEXT_LAT plane=0 pc=1 addr_region=3 kind=1 policy=0 bin=2 n=5060
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=0 n=53903
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=1 n=8991
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=2 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=3 n=2
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=4 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=5 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=10 n=7
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=11 n=3
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=12 n=6
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=13 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=14 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=15 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=16 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=17 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=19 n=2
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=20 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=0 policy=0 bin=50 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=1 policy=0 bin=0 n=60660
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=1 policy=0 bin=2 n=30325
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=1 policy=0 bin=3 n=1
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=1 policy=0 bin=5 n=3
+NEXT_LAT plane=0 pc=2 addr_region=1 kind=1 policy=0 bin=6 n=1
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=1 policy=0 bin=0 n=123918
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=1 policy=0 bin=2 n=33827
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=1 policy=0 bin=3 n=8989
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=1 policy=0 bin=4 n=139
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=1 policy=0 bin=5 n=8
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=1 policy=0 bin=10 n=1
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=1 policy=0 bin=17 n=1
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=1 policy=0 bin=18 n=1
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=1 policy=0 bin=31 n=1
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=2 policy=0 bin=0 n=79805
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=2 policy=0 bin=1 n=937
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=2 policy=0 bin=2 n=17604
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=2 policy=0 bin=3 n=938
+NEXT_LAT plane=0 pc=2 addr_region=2 kind=2 policy=0 bin=7 n=1123
+NEXT_LAT plane=0 pc=2 addr_region=3 kind=1 policy=0 bin=44 n=1
+NEXT_LAT plane=0 pc=3 addr_region=2 kind=0 policy=0 bin=0 n=1
+NEXT_LAT plane=0 pc=3 addr_region=2 kind=0 policy=0 bin=2 n=1
+NEXT_LAT plane=0 pc=3 addr_region=2 kind=0 policy=0 bin=14 n=1
+NEXT_LAT plane=0 pc=3 addr_region=2 kind=2 policy=0 bin=3 n=1
+NEXT_LAT plane=0 pc=3 addr_region=3 kind=2 policy=0 bin=2 n=1
+NEXT_GROUP plane=0 pc=0 addr_region=0 kind=0 policy=0 n=389921 sum=555134 max=72
+NEXT_GROUP plane=0 pc=0 addr_region=0 kind=1 policy=0 n=106010 sum=126723 max=74
+NEXT_GROUP plane=0 pc=0 addr_region=1 kind=1 policy=0 n=1 sum=73 max=73
+NEXT_GROUP plane=0 pc=0 addr_region=2 kind=1 policy=0 n=349763 sum=462146 max=48
+NEXT_GROUP plane=0 pc=0 addr_region=2 kind=2 policy=0 n=299576 sum=351862 max=31
+NEXT_GROUP plane=0 pc=0 addr_region=3 kind=1 policy=0 n=2 sum=84 max=43
+NEXT_GROUP plane=0 pc=1 addr_region=1 kind=0 policy=0 n=145453 sum=156851 max=39
+NEXT_GROUP plane=0 pc=1 addr_region=1 kind=1 policy=0 n=5280 sum=9497 max=20
+NEXT_GROUP plane=0 pc=1 addr_region=1 kind=2 policy=0 n=6 sum=11 max=3
+NEXT_GROUP plane=0 pc=1 addr_region=2 kind=1 policy=0 n=77623 sum=110462 max=16
+NEXT_GROUP plane=0 pc=1 addr_region=2 kind=2 policy=0 n=179943 sum=220640 max=4
+NEXT_GROUP plane=0 pc=1 addr_region=3 kind=1 policy=0 n=5060 sum=15180 max=3
+NEXT_GROUP plane=0 pc=2 addr_region=1 kind=0 policy=0 n=62924 sum=72290 max=51
+NEXT_GROUP plane=0 pc=2 addr_region=1 kind=1 policy=0 n=90990 sum=151664 max=7
+NEXT_GROUP plane=0 pc=2 addr_region=2 kind=1 policy=0 n=166885 sum=262178 max=32
+NEXT_GROUP plane=0 pc=2 addr_region=2 kind=2 policy=0 n=100407 sum=147227 max=8
+NEXT_GROUP plane=0 pc=2 addr_region=3 kind=1 policy=0 n=1 sum=45 max=45
+NEXT_GROUP plane=0 pc=3 addr_region=2 kind=0 policy=0 n=3 sum=19 max=15
+NEXT_GROUP plane=0 pc=3 addr_region=2 kind=2 policy=0 n=1 sum=4 max=4
+NEXT_GROUP plane=0 pc=3 addr_region=3 kind=2 policy=0 n=1 sum=3 max=3
+NEXT_PLANE id=0 starts=1979943 ends=1979943 active=0 touched=1979851 whole=1979850 latency_sum=2642093 max=74 partial=1 partial_edges=37 active_edges=0 occupancy=2642130 faults=0 diag=64 dropped=1979787
+NEXT_EVER plane=0 busy_dec_mask=0 n=1940949
+NEXT_EVER plane=0 busy_dec_mask=1 n=0
+NEXT_EVER plane=0 busy_dec_mask=2 n=14836
+NEXT_EVER plane=0 busy_dec_mask=3 n=24065
+NEXT_BYPASS plane=0 bit=0 n=1979850
+NEXT_BYPASS plane=0 bit=1 n=0
+NEXT_WAIT plane=1 pc=0 cpu=0 fst=0 n=602018
+NEXT_WAIT plane=1 pc=0 cpu=0 fst=4 n=1
+NEXT_WAIT plane=1 pc=0 cpu=0 fst=11 n=1278
+NEXT_WAIT plane=1 pc=0 cpu=0 fst=14 n=2848
+NEXT_WAIT plane=1 pc=0 cpu=1 fst=4 n=6666
+NEXT_WAIT plane=1 pc=0 cpu=1 fst=10 n=12
+NEXT_WAIT plane=1 pc=0 cpu=1 fst=13 n=1
+NEXT_WAIT plane=1 pc=0 cpu=1 fst=14 n=12623
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=0 n=7890
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=1 n=12
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=2 n=2
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=3 n=14
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=5 n=7
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=6 n=2
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=7 n=33
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=9 n=6
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=10 n=17
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=14 n=20
+NEXT_WAIT plane=1 pc=0 cpu=2 fst=17 n=2
+NEXT_WAIT plane=1 pc=0 cpu=3 fst=0 n=840178
+NEXT_WAIT plane=1 pc=0 cpu=3 fst=4 n=944
+NEXT_WAIT plane=1 pc=0 cpu=3 fst=10 n=5
+NEXT_WAIT plane=1 pc=0 cpu=3 fst=11 n=1936
+NEXT_WAIT plane=1 pc=0 cpu=3 fst=13 n=3805
+NEXT_WAIT plane=1 pc=0 cpu=3 fst=14 n=1897
+NEXT_WAIT plane=1 pc=1 cpu=0 fst=0 n=128626
+NEXT_WAIT plane=1 pc=1 cpu=0 fst=12 n=930
+NEXT_WAIT plane=1 pc=1 cpu=1 fst=4 n=689
+NEXT_WAIT plane=1 pc=1 cpu=1 fst=11 n=6
+NEXT_WAIT plane=1 pc=1 cpu=1 fst=12 n=1
+NEXT_WAIT plane=1 pc=1 cpu=1 fst=13 n=2
+NEXT_WAIT plane=1 pc=1 cpu=1 fst=14 n=762
+NEXT_WAIT plane=1 pc=1 cpu=2 fst=0 n=348
+NEXT_WAIT plane=1 pc=1 cpu=2 fst=1 n=10
+NEXT_WAIT plane=1 pc=1 cpu=2 fst=2 n=1
+NEXT_WAIT plane=1 pc=1 cpu=2 fst=3 n=11
+NEXT_WAIT plane=1 pc=1 cpu=2 fst=5 n=2
+NEXT_WAIT plane=1 pc=1 cpu=2 fst=7 n=6
+NEXT_WAIT plane=1 pc=1 cpu=2 fst=9 n=5
+NEXT_WAIT plane=1 pc=1 cpu=2 fst=11 n=1
+NEXT_WAIT plane=1 pc=1 cpu=2 fst=14 n=9
+NEXT_WAIT plane=1 pc=1 cpu=3 fst=0 n=368606
+NEXT_WAIT plane=1 pc=1 cpu=3 fst=4 n=5
+NEXT_WAIT plane=1 pc=1 cpu=3 fst=12 n=1860
+NEXT_WAIT plane=1 pc=2 cpu=0 fst=0 n=422931
+NEXT_WAIT plane=1 pc=2 cpu=1 fst=4 n=2524
+NEXT_WAIT plane=1 pc=2 cpu=1 fst=14 n=843
+NEXT_WAIT plane=1 pc=2 cpu=2 fst=0 n=6
+NEXT_WAIT plane=1 pc=2 cpu=2 fst=5 n=1
+NEXT_WAIT plane=1 pc=2 cpu=2 fst=7 n=3
+NEXT_WAIT plane=1 pc=2 cpu=2 fst=9 n=3
+NEXT_WAIT plane=1 pc=2 cpu=3 fst=0 n=207018
+NEXT_WAIT plane=1 pc=3 cpu=3 fst=0 n=25
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=0 n=305928
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=1 n=30963
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=2 n=48240
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=3 n=1576
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=4 n=1
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=8 n=3033
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=12 n=16
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=13 n=89
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=14 n=11
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=15 n=5
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=28 n=1
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=29 n=1
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=30 n=40
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=31 n=6
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=38 n=1
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=40 n=8
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=0 policy=0 bin=41 n=2
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=0 n=97112
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=1 n=8194
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=2 n=8
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=4 n=638
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=12 n=21
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=30 n=1
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=31 n=18
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=32 n=6
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=40 n=1
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=41 n=1
+NEXT_LAT plane=1 pc=0 addr_region=0 kind=1 policy=0 bin=42 n=10
+NEXT_LAT plane=1 pc=0 addr_region=1 kind=1 policy=0 bin=11 n=1
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=0 n=301798
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=1 n=2
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=2 n=37850
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=3 n=6629
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=4 n=1861
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=5 n=1571
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=9 n=1
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=10 n=2
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=11 n=3
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=12 n=3
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=17 n=1
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=25 n=1
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=29 n=1
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=30 n=9
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=31 n=1
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=32 n=18
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=33 n=6
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=39 n=1
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=40 n=3
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=41 n=1
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=1 policy=0 bin=47 n=1
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=0 n=277611
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=1 n=5332
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=2 n=10119
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=3 n=4227
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=4 n=32
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=5 n=970
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=6 n=461
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=7 n=801
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=26 n=1
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=28 n=2
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=29 n=5
+NEXT_LAT plane=1 pc=0 addr_region=2 kind=2 policy=0 bin=30 n=15
+NEXT_LAT plane=1 pc=0 addr_region=3 kind=1 policy=0 bin=39 n=1
+NEXT_LAT plane=1 pc=0 addr_region=3 kind=1 policy=0 bin=41 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=0 n=140157
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=1 n=5063
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=2 n=141
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=3 n=24
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=4 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=6 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=10 n=19
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=11 n=9
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=12 n=15
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=13 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=14 n=2
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=15 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=17 n=5
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=18 n=2
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=19 n=8
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=21 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=25 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=29 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=0 policy=0 bin=38 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=1 policy=0 bin=0 n=3518
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=1 policy=0 bin=2 n=1754
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=1 policy=0 bin=4 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=1 policy=0 bin=5 n=3
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=1 policy=0 bin=6 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=1 policy=0 bin=12 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=1 policy=0 bin=13 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=1 policy=0 bin=19 n=1
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=2 policy=0 bin=0 n=2
+NEXT_LAT plane=1 pc=1 addr_region=1 kind=2 policy=0 bin=1 n=4
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=1 policy=0 bin=0 n=70486
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=1 policy=0 bin=2 n=958
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=1 policy=0 bin=3 n=3
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=1 policy=0 bin=5 n=6170
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=1 policy=0 bin=6 n=1
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=1 policy=0 bin=9 n=1
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=1 policy=0 bin=11 n=2
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=1 policy=0 bin=12 n=1
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=1 policy=0 bin=15 n=1
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=2 policy=0 bin=0 n=159600
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=2 policy=0 bin=1 n=4
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=2 policy=0 bin=2 n=20324
+NEXT_LAT plane=1 pc=1 addr_region=2 kind=2 policy=0 bin=3 n=15
+NEXT_LAT plane=1 pc=1 addr_region=3 kind=1 policy=0 bin=1 n=5060
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=0 n=53903
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=1 n=8992
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=3 n=2
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=4 n=1
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=5 n=1
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=10 n=8
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=11 n=3
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=12 n=6
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=13 n=1
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=14 n=1
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=15 n=1
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=16 n=1
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=17 n=1
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=19 n=2
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=0 policy=0 bin=20 n=1
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=1 policy=0 bin=0 n=60660
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=1 policy=0 bin=2 n=30325
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=1 policy=0 bin=3 n=1
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=1 policy=0 bin=5 n=3
+NEXT_LAT plane=1 pc=2 addr_region=1 kind=1 policy=0 bin=6 n=1
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=1 policy=0 bin=0 n=123918
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=1 policy=0 bin=2 n=33827
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=1 policy=0 bin=3 n=8989
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=1 policy=0 bin=4 n=139
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=1 policy=0 bin=5 n=8
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=1 policy=0 bin=10 n=1
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=1 policy=0 bin=17 n=1
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=1 policy=0 bin=18 n=1
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=1 policy=0 bin=31 n=1
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=2 policy=0 bin=0 n=79805
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=2 policy=0 bin=1 n=938
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=2 policy=0 bin=2 n=17603
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=2 policy=0 bin=3 n=938
+NEXT_LAT plane=1 pc=2 addr_region=2 kind=2 policy=0 bin=7 n=1123
+NEXT_LAT plane=1 pc=2 addr_region=3 kind=1 policy=0 bin=11 n=1
+NEXT_LAT plane=1 pc=3 addr_region=2 kind=0 policy=0 bin=0 n=1
+NEXT_LAT plane=1 pc=3 addr_region=2 kind=0 policy=0 bin=1 n=1
+NEXT_LAT plane=1 pc=3 addr_region=2 kind=0 policy=0 bin=13 n=1
+NEXT_LAT plane=1 pc=3 addr_region=2 kind=2 policy=0 bin=1 n=1
+NEXT_LAT plane=1 pc=3 addr_region=2 kind=2 policy=0 bin=3 n=1
+NEXT_LAT plane=1 pc=3 addr_region=3 kind=2 policy=0 bin=1 n=1
+NEXT_GROUP plane=1 pc=0 addr_region=0 kind=0 policy=0 n=389921 sum=549821 max=42
+NEXT_GROUP plane=1 pc=0 addr_region=0 kind=1 policy=0 n=106010 sum=118305 max=43
+NEXT_GROUP plane=1 pc=0 addr_region=1 kind=1 policy=0 n=1 sum=12 max=12
+NEXT_GROUP plane=1 pc=0 addr_region=2 kind=1 policy=0 n=349763 sum=462142 max=48
+NEXT_GROUP plane=1 pc=0 addr_region=2 kind=2 policy=0 n=299576 sum=351855 max=31
+NEXT_GROUP plane=1 pc=0 addr_region=3 kind=1 policy=0 n=2 sum=82 max=42
+NEXT_GROUP plane=1 pc=1 addr_region=1 kind=0 policy=0 n=145453 sum=151791 max=39
+NEXT_GROUP plane=1 pc=1 addr_region=1 kind=1 policy=0 n=5280 sum=8857 max=20
+NEXT_GROUP plane=1 pc=1 addr_region=1 kind=2 policy=0 n=6 sum=10 max=2
+NEXT_GROUP plane=1 pc=1 addr_region=2 kind=1 policy=0 n=77623 sum=110462 max=16
+NEXT_GROUP plane=1 pc=1 addr_region=2 kind=2 policy=0 n=179943 sum=220640 max=4
+NEXT_GROUP plane=1 pc=1 addr_region=3 kind=1 policy=0 n=5060 sum=10120 max=2
+NEXT_GROUP plane=1 pc=2 addr_region=1 kind=0 policy=0 n=62924 sum=72249 max=21
+NEXT_GROUP plane=1 pc=2 addr_region=1 kind=1 policy=0 n=90990 sum=151664 max=7
+NEXT_GROUP plane=1 pc=2 addr_region=2 kind=1 policy=0 n=166885 sum=262178 max=32
+NEXT_GROUP plane=1 pc=2 addr_region=2 kind=2 policy=0 n=100407 sum=147226 max=8
+NEXT_GROUP plane=1 pc=2 addr_region=3 kind=1 policy=0 n=1 sum=12 max=12
+NEXT_GROUP plane=1 pc=3 addr_region=2 kind=0 policy=0 n=3 sum=17 max=14
+NEXT_GROUP plane=1 pc=3 addr_region=2 kind=2 policy=0 n=2 sum=6 max=4
+NEXT_GROUP plane=1 pc=3 addr_region=3 kind=2 policy=0 n=1 sum=2 max=2
+NEXT_PLANE id=1 starts=1979943 ends=1979943 active=0 touched=1979851 whole=1979851 latency_sum=2617451 max=48 partial=0 partial_edges=0 active_edges=0 occupancy=2617451 faults=0 diag=64 dropped=1979787
+NEXT_EVER plane=1 busy_dec_mask=0 n=1940950
+NEXT_EVER plane=1 busy_dec_mask=1 n=0
+NEXT_EVER plane=1 busy_dec_mask=2 n=14836
+NEXT_EVER plane=1 busy_dec_mask=3 n=24065
+NEXT_BYPASS plane=1 bit=0 n=1399916
+NEXT_BYPASS plane=1 bit=1 n=579935
+NEXT_TOTAL edges=8541493 joint=8541493 busy_op=1265136
+WHETSTONE RETURNED cycles=8542269 loop=8541493
+NATIVE_COVERAGE body=1717973 resource=3629964 rom=4911456 vector11_pc=162035 unimp_pulse_samples=5060
+NATIVE_OVERLAP bg=825375 blockingdec=487278 go=1075899 mrd_fill=4169 mrd_unacked=1214
+NATIVE_TOTAL clocks=8541493 core=8541493 cache=8541493 fst=8541493
+NATIVE_CORE state=3 samples=257812
+NATIVE_CORE state=4 samples=499493
+NATIVE_CORE state=8 samples=397194
+NATIVE_CORE state=9 samples=1374017
+NATIVE_CORE state=10 samples=835410
+NATIVE_CORE state=11 samples=223393
+NATIVE_CORE state=13 samples=308573
+NATIVE_CORE state=15 samples=10121
+NATIVE_CORE state=16 samples=1
+NATIVE_CORE state=17 samples=1
+NATIVE_CORE state=19 samples=2
+NATIVE_CORE state=20 samples=268293
+NATIVE_CORE state=21 samples=931
+NATIVE_CORE state=22 samples=5060
+NATIVE_CORE state=23 samples=15180
+NATIVE_CORE state=24 samples=16111
+NATIVE_CORE state=26 samples=30075
+NATIVE_CORE state=27 samples=58797
+NATIVE_CORE state=28 samples=150278
+NATIVE_CORE state=30 samples=223468
+NATIVE_CORE state=34 samples=14
+NATIVE_CORE state=35 samples=5061
+NATIVE_CORE state=36 samples=5061
+NATIVE_CORE state=37 samples=5061
+NATIVE_CORE state=38 samples=5060
+NATIVE_CORE state=39 samples=5061
+NATIVE_CORE state=41 samples=5061
+NATIVE_CORE state=42 samples=5061
+NATIVE_CORE state=43 samples=5060
+NATIVE_CORE state=44 samples=5060
+NATIVE_CORE state=45 samples=5060
+NATIVE_CORE state=46 samples=5060
+NATIVE_CORE state=47 samples=5060
+NATIVE_CORE state=51 samples=50823
+NATIVE_CORE state=52 samples=15180
+NATIVE_CORE state=55 samples=10121
+NATIVE_CORE state=56 samples=9134
+NATIVE_CORE state=57 samples=1
+NATIVE_CORE state=62 samples=14192
+NATIVE_CORE state=65 samples=14192
+NATIVE_CORE state=68 samples=10403
+NATIVE_CORE state=69 samples=282
+NATIVE_CORE state=70 samples=36128
+NATIVE_CORE state=78 samples=2
+NATIVE_CORE state=79 samples=2
+NATIVE_CORE state=102 samples=10120
+NATIVE_CORE state=112 samples=25300
+NATIVE_CORE state=113 samples=25300
+NATIVE_CORE state=114 samples=5060
+NATIVE_CORE state=116 samples=5060
+NATIVE_CORE state=117 samples=20240
+NATIVE_CORE state=118 samples=20240
+NATIVE_CORE state=120 samples=20240
+NATIVE_CORE state=130 samples=25300
+NATIVE_CORE state=131 samples=25300
+NATIVE_CORE state=134 samples=930
+NATIVE_CORE state=135 samples=930
+NATIVE_CORE state=136 samples=930
+NATIVE_CORE state=137 samples=930
+NATIVE_CORE state=151 samples=10120
+NATIVE_CORE state=153 samples=877648
+NATIVE_CORE state=155 samples=156537
+NATIVE_CORE state=156 samples=6060
+NATIVE_CORE state=157 samples=12522
+NATIVE_CORE state=158 samples=123057
+NATIVE_CORE state=160 samples=1075899
+NATIVE_CORE state=161 samples=154623
+NATIVE_CORE state=162 samples=70840
+NATIVE_CORE state=163 samples=20240
+NATIVE_CORE state=164 samples=88948
+NATIVE_CORE state=165 samples=229960
+NATIVE_CORE state=173 samples=10119
+NATIVE_CORE state=177 samples=15180
+NATIVE_CORE state=178 samples=91285
+NATIVE_CORE state=179 samples=35427
+NATIVE_CORE state=180 samples=5061
+NATIVE_CORE state=182 samples=65780
+NATIVE_CORE state=183 samples=65780
+NATIVE_CORE state=190 samples=339103
+NATIVE_CORE state=191 samples=5084
+NATIVE_CORE state=250 samples=930
+NATIVE_CACHE state=0 samples=7339939
+NATIVE_CACHE state=1 samples=292932
+NATIVE_CACHE state=4 samples=8300
+NATIVE_CACHE state=5 samples=293
+NATIVE_CACHE state=6 samples=630743
+NATIVE_CACHE state=8 samples=134643
+NATIVE_CACHE state=9 samples=134643
+FPU_ELIG_WINDOW clocks=8541493 sampling=pre_edge_existing_in_loop
+FPU_ELIG_ROUND samples=258827 eligible=141674 bg=31804 decode_wait=30711 cpu_go=109870
+FPU_ELIG_ROUND_REJECT reason=0 samples=4
+FPU_ELIG_ROUND_REJECT reason=1 samples=4
+FPU_ELIG_ROUND_REJECT reason=2 samples=117149
+FPU_ELIG_ROUND_REJECT reason=3 samples=0
+FPU_ELIG_ROUND_REJECT reason=4 samples=4
+FPU_ELIG_ROUND_REJECT reason=5 samples=0
+FPU_ELIG_ROUND_REJECT reason=6 samples=0
+FPU_ELIG_ROUND_REJECT reason=7 samples=0
+FPU_ELIG_ROUND_REJECT reason=8 samples=0
+FPU_ELIG_ROUND_REJECT reason=9 samples=0
+FPU_ELIG_STDONE samples=3489 enables_zero=3489 eligible=3489 enabled=0 sideport=0 not_ce_reset=0
+FPU_ELIG_FST id=0 samples=7276357
+FPU_ELIG_FST id=1 samples=77256
+FPU_ELIG_FST id=2 samples=7983
+FPU_ELIG_FST id=3 samples=116495
+FPU_ELIG_FST id=4 samples=258832
+FPU_ELIG_FST id=5 samples=56789
+FPU_ELIG_FST id=6 samples=3489
+FPU_ELIG_FST id=7 samples=174259
+FPU_ELIG_FST id=9 samples=82096
+FPU_ELIG_FST id=10 samples=127442
+FPU_ELIG_FST id=11 samples=53040
+FPU_ELIG_FST id=12 samples=21390
+FPU_ELIG_FST id=13 samples=23749
+FPU_ELIG_FST id=14 samples=258827
+FPU_ELIG_FST id=17 samples=3489
+FPU_ELIG_BUSY_OP op=00 samples=296857
+FPU_ELIG_BUSY_OP op=04 samples=25110
+FPU_ELIG_BUSY_OP op=1a samples=3841
+FPU_ELIG_BUSY_OP op=20 samples=86640
+FPU_ELIG_BUSY_OP op=22 samples=407995
+FPU_ELIG_BUSY_OP op=23 samples=371706
+FPU_ELIG_BUSY_OP op=28 samples=60950
+FPU_ELIG_BUSY_OP op=7f samples=12037
+FPU_ELIG_ROUND_OP op=00 samples=83613 eligible=83610
+FPU_ELIG_ROUND_OP op=04 samples=930 eligible=0
+FPU_ELIG_ROUND_OP op=1a samples=960 eligible=959
+FPU_ELIG_ROUND_OP op=20 samples=11200 eligible=8990
+FPU_ELIG_ROUND_OP op=22 samples=75091 eligible=25234
+FPU_ELIG_ROUND_OP op=23 samples=76188 eligible=13408
+FPU_ELIG_ROUND_OP op=28 samples=10845 eligible=9473
+SDRAM_PROTOCOL_ERRORS 0
+SDRAM_TIMING tRC=13 tRCD=2 tRP=3 tRAS=6 max_refresh_gap=780
+BERR 0  IPL_ASSERTED_CYCLES 0  ROM_READS total=664 loop=664  VRAM_BEATS 0
+CORE_LAT instr n=598301 sum=784294 | read n=801615 sum=1138052 | write n=579935 sum=719785
+EXT read_line_hit n=0 sum=0 mean=0.00
+EXT read_first_miss n=167 sum=1614 mean=9.66
+EXT_HIST read_first_miss 7:13 8:9 9:9 10:133 12:1 13:1 15:1
+EXT read_bus32 n=0 sum=0 mean=0.00
+EXT write_direct n=540242 sum=1581867 mean=2.93
+EXT_HIST write_direct 2:38859 3:501383
+EXT write_bus32 n=39693 sum=396962 mean=10.00
+EXT_HIST write_bus32 10:39661 11:32
+EXT instr n=627 sum=6246 mean=9.96
+EXT_HIST instr 2:3 7:26 8:13 9:23 10:533 11:3 12:6 13:4 14:8 15:1 16:4 20:1 24:1 25:1
+BUS32_SHAPE class=4 size=2 addr[3:0]=2 n=6643
+BUS32_SHAPE class=4 size=2 addr[3:0]=6 n=4198
+BUS32_SHAPE class=4 size=2 addr[3:0]=a n=18581
+BUS32_SHAPE class=4 size=2 addr[3:0]=e n=10271
+BUS32_REGION class=4 addr=0630000 n=39693
+WALKER n=42 sum=378
+STOREBUF full_stall_cycles=50808
+STOREBUF_OCC 0:6307423 1:1221151 2:555675 3:339634 4:117610
+BRIDGE ram_reads=169 read_wait_fifo_cycles=193 wq_full_cycles=1069 wq_noroom_cycles=98570 write_blocked_by_room=77726 fill_poisoned_pushes=0
+BRIDGE_WQ_OCC 0:5773073 1:536139 2:594412 3:341546 4:321900 5:457985 6:417868 7:97501 8:1069
+BRIDGE_WQ_AT_READ 0:130 1:8 2:19 3:8 4:1 5:1 6:1 7:1
+SDRAM rd hit=45 conflict=89 closed=35 | wr hit=2208850 conflict=53 closed=33119 | refresh=33540 busy=6884765/25624479 clk_ram
+- /home/alans/mister/MacQuadra800_MiSTer/scratch/native_whet_cache_v2_comparison_20260928/candidate/tb_platform_whet.sv:460: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01
+- Verilator: $finish at 259ms; walltime 35.760 s; speed 7.242 ms/s
+- Verilator: cpu 35.756 s on 1 threads; allocated 170 MB

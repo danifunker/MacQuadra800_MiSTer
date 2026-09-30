@@ -1,0 +1,8 @@
+{
+  "candidate_fpu": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "candidate_path": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_candidate_20260928/ap040_fpu.v",
+  "base_observer_path": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_fullmachine_20260928/verilator/sim_fpu_guard_profile.h",
+  "base_observer_sha256": "660e5a3bc092b09be52609bfd3364f47f723532d1cc074de3b3ab3dc556c66be",
+  "integration": "not performed; header+host tests only",
+  "build_or_simulator_run": "none"
+}

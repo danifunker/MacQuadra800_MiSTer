@@ -1,0 +1,43 @@
+{
+  "scope": "matched full OS Speedometer FPU three subtests/oneiteration, original calibrated RAMmodel4/2; guest times/screens only",
+  "baseline_fpu": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "candidate_fpu": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "only_RTL_delta": "ap68040/rtl/ap040_fpu.v",
+  "baseline": {
+    "KWhet_per_second": 3849.262,
+    "matrix_seconds": 0.991,
+    "FFT_seconds": 0.447,
+    "ratings": [
+      0.739,
+      0.713,
+      0.642
+    ],
+    "aggregate": 0.698
+  },
+  "candidate": {
+    "KWhet_per_second": 3850.048,
+    "matrix_seconds": 0.991,
+    "FFT_seconds": 0.447,
+    "ratings": [
+      0.739,
+      0.713,
+      0.642
+    ],
+    "aggregate": 0.698
+  },
+  "iterations": [
+    1,
+    1,
+    1
+  ],
+  "tests_done": true,
+  "setup_byteexact": true,
+  "final_byteexact": false,
+  "fixed_window_clocks": 1304100000,
+  "profile_usage": "reconciliation/fullwindowoccupancy only, no actual timed-subtest attribution",
+  "candidate_source_postrun": "PASS unchanged",
+  "candidate_child_postrun": "absent",
+  "promotion_target": "No aggregate10% gain established; aggregate unchanged",
+  "environment_explanation": "Unknown; native resetFPCR vs OS FPCR precision/enables/guard reach is read-only investigation hypothesis, not proven here",
+  "limitations": "calibrated fullguest simulation model, not independent numerical oracle or FPGA measurement"
+}

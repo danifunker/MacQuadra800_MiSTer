@@ -1,0 +1,115 @@
+{
+  "scope": "existing fullcore FPU/frames/FPSPpreparedresume/FPCR plus MMU/exceptions and normalization; CPU bus model, no fullmachine/OS/hardware",
+  "simulation_status": "PASS",
+  "runner_exit_status": 1,
+  "runner_infrastructure_note": "run.py erroneously put output stdout.log in source inputs; final hash assertion rejected the grown log after all12simulations completed successfully. This checker verifies every real frozen source and every terminal simulation result; no rerun or input repair.",
+  "noninput_output_excluded": [
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_move_regressions_20260928/stdout.log"
+  ],
+  "targets": {
+    "baseline": {
+      "fpu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 103656,
+          "1": 148702,
+          "2": 148702
+        },
+        "log_sha256": "e65fa715a44830ffe0f6ea512b1c5086a4daf4d73559e58e6d17d4db9b2404fe"
+      },
+      "fpu_frames": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 8488,
+          "1": 12820,
+          "2": 12820
+        },
+        "log_sha256": "311592055f8c6ce3156b6f85af2e36f27887a0c01fc67011dae3966461e751e8"
+      },
+      "fpu_resume": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 14090,
+          "1": 21162,
+          "2": 21162
+        },
+        "log_sha256": "b85e8315a54c5ab2ac1e1901889411b17153d1e417905b9317d58ae121762ddb"
+      },
+      "mmu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 340160,
+          "1": 505494,
+          "2": 505494
+        },
+        "log_sha256": "fb5eb299092c04ce3b1b6d88afd3b5236bf51e49eeecf4cd69075bbc5c1b32e4"
+      },
+      "exceptions": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 140688,
+          "1": 213186,
+          "2": 213182
+        },
+        "log_sha256": "d1556f2011c5576f700586671c8b0380d75d80b8cefb01b2c97927e16232edc9"
+      },
+      "fpu_normalize": {
+        "status": "PASS",
+        "bus_phase_cycles": {},
+        "log_sha256": "aef7e97239f6b390987e0e40ccb8ce95b1a70df1205c668959b50c95fb877e6f"
+      }
+    },
+    "candidate": {
+      "fpu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 103656,
+          "1": 148700,
+          "2": 148700
+        },
+        "log_sha256": "d615a7fb9a07f2415fd749ab61b502229e7c53c936a11fe6b330fd9601de6926"
+      },
+      "fpu_frames": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 8488,
+          "1": 12820,
+          "2": 12820
+        },
+        "log_sha256": "a00b101b271198b94a24d1baddcb2974ed5f44c55e5f7ac7ebc373620b3f0d40"
+      },
+      "fpu_resume": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 14090,
+          "1": 21162,
+          "2": 21162
+        },
+        "log_sha256": "ab73da9530280b16edf6e4c1125ac5061d05fe423787f4df8882302a5fbee909"
+      },
+      "mmu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 340160,
+          "1": 505494,
+          "2": 505494
+        },
+        "log_sha256": "752381d8a14c195693a71854e400620b0c649ef19f91a4cf86e2282cb198a0b4"
+      },
+      "exceptions": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 140688,
+          "1": 213186,
+          "2": 213182
+        },
+        "log_sha256": "c4f3d58ae5c4cf03e2dbd81b2852790305199b8ce154c980083c6a5846706842"
+      },
+      "fpu_normalize": {
+        "status": "PASS",
+        "bus_phase_cycles": {},
+        "log_sha256": "aef7e97239f6b390987e0e40ccb8ce95b1a70df1205c668959b50c95fb877e6f"
+      }
+    }
+  }
+}

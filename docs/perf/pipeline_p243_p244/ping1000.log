@@ -1,0 +1,5 @@
+PING 10.3.231.233 (10.3.231.233) 1400(1428) bytes of data.
+
+--- 10.3.231.233 ping statistics ---
+1000 packets transmitted, 1000 received, 0% packet loss, time 200201ms
+rtt min/avg/max/mdev = 2.881/3.165/6.369/0.174 ms

@@ -1,0 +1,203 @@
+09de 4e56ffea  link    A6, #-$16
+09e2 48e71f30  movem.l D3-D7/A2-A3, -(A7)
+09e6 f227e010  fmovem.x   FP4 , -(A7)
+09ea 246e000a  movea.l ($a,A6), A2
+09ee 266e000e  movea.l ($e,A6), A3
+09f2 2e2e0012  move.l  ($12,A6), D7
+09f6 f22e4a000016  fmove.x   ($16,A6), FP4
+09fc 306e0008  movea.w ($8,A6), A0
+0a00 2a08  move.l  A0, D5
+0a02 8bfc0002  divs.w  #$2, D5
+0a06 3d7c0001fffe  move.w  #$1, (-$2,A6)
+0a0c 7800  moveq   #$0, D4
+0a0e 3c2efffe  move.w  (-$2,A6), D6
+0a12 7601  moveq   #$1, D3
+0a14 3005  move.w  D5, D0
+0a16 d043  add.w   D3, D0
+0a18 48c0  ext.l   D0
+0a1a e788  lsl.l   #3, D0
+0a1c f23244000800  fmove.s   (A2,D0.l), FP0
+0a22 3043  movea.w D3, A0
+0a24 2008  move.l  A0, D0
+0a26 e788  lsl.l   #3, D0
+0a28 f23244800800  fmove.s   (A2,D0.l), FP1
+0a2e f20000a2  fadd.x   FP0, FP1
+0a32 f22e6480ffea  fmove.s   FP1, (-$16,A6)
+0a38 3003  move.w  D3, D0
+0a3a d044  add.w   D4, D0
+0a3c 48c0  ext.l   D0
+0a3e e788  lsl.l   #3, D0
+0a40 27aeffea0800  move.l  (-$16,A6), (A3,D0.l)
+0a46 3005  move.w  D5, D0
+0a48 d043  add.w   D3, D0
+0a4a 48c0  ext.l   D0
+0a4c e788  lsl.l   #3, D0
+0a4e f23244000804  fmove.s   ($4,A2,D0.l), FP0
+0a54 3043  movea.w D3, A0
+0a56 2008  move.l  A0, D0
+0a58 e788  lsl.l   #3, D0
+0a5a f23244800804  fmove.s   ($4,A2,D0.l), FP1
+0a60 f20000a2  fadd.x   FP0, FP1
+0a64 f22e6480ffea  fmove.s   FP1, (-$16,A6)
+0a6a 3003  move.w  D3, D0
+0a6c d044  add.w   D4, D0
+0a6e 48c0  ext.l   D0
+0a70 e788  lsl.l   #3, D0
+0a72 27aeffea0804  move.l  (-$16,A6), ($4,A3,D0.l)
+0a78 3043  movea.w D3, A0
+0a7a 2008  move.l  A0, D0
+0a7c e788  lsl.l   #3, D0
+0a7e f23244000800  fmove.s   (A2,D0.l), FP0
+0a84 3003  move.w  D3, D0
+0a86 d045  add.w   D5, D0
+0a88 48c0  ext.l   D0
+0a8a e788  lsl.l   #3, D0
+0a8c f23244800800  fmove.s   (A2,D0.l), FP1
+0a92 f2000428  fsub.x   FP1, FP0
+0a96 f22e6400ffea  fmove.s   FP0, (-$16,A6)
+0a9c f22e4400ffea  fmove.s   (-$16,A6), FP0
+0aa2 3004  move.w  D4, D0
+0aa4 5240  addq.w  #1, D0
+0aa6 48c0  ext.l   D0
+0aa8 e788  lsl.l   #3, D0
+0aaa 2047  movea.l D7, A0
+0aac f23044800800  fmove.s   (A0,D0.l), FP1
+0ab2 f20000a3  fmul.x   FP0, FP1
+0ab6 f22e6480ffee  fmove.s   FP1, (-$12,A6)
+0abc f22e4400ffee  fmove.s   (-$12,A6), FP0
+0ac2 3043  movea.w D3, A0
+0ac4 2008  move.l  A0, D0
+0ac6 e788  lsl.l   #3, D0
+0ac8 f23244800804  fmove.s   ($4,A2,D0.l), FP1
+0ace 3003  move.w  D3, D0
+0ad0 d045  add.w   D5, D0
+0ad2 48c0  ext.l   D0
+0ad4 e788  lsl.l   #3, D0
+0ad6 f23245000804  fmove.s   ($4,A2,D0.l), FP2
+0adc f20008a8  fsub.x   FP2, FP1
+0ae0 f22e6480fff2  fmove.s   FP1, (-$e,A6)
+0ae6 f22e4480fff2  fmove.s   (-$e,A6), FP1
+0aec 3004  move.w  D4, D0
+0aee 5240  addq.w  #1, D0
+0af0 48c0  ext.l   D0
+0af2 e788  lsl.l   #3, D0
+0af4 2047  movea.l D7, A0
+0af6 f23045000804  fmove.s   ($4,A0,D0.l), FP2
+0afc f2000523  fmul.x   FP1, FP2
+0b00 f22e6500fff6  fmove.s   FP2, (-$a,A6)
+0b06 f22e4480fff6  fmove.s   (-$a,A6), FP1
+0b0c f2000428  fsub.x   FP1, FP0
+0b10 f22e6400fffa  fmove.s   FP0, (-$6,A6)
+0b16 3003  move.w  D3, D0
+0b18 d046  add.w   D6, D0
+0b1a 48c0  ext.l   D0
+0b1c e788  lsl.l   #3, D0
+0b1e 27aefffa0800  move.l  (-$6,A6), (A3,D0.l)
+0b24 3043  movea.w D3, A0
+0b26 2008  move.l  A0, D0
+0b28 e788  lsl.l   #3, D0
+0b2a f23244000800  fmove.s   (A2,D0.l), FP0
+0b30 3003  move.w  D3, D0
+0b32 d045  add.w   D5, D0
+0b34 48c0  ext.l   D0
+0b36 e788  lsl.l   #3, D0
+0b38 f23244800800  fmove.s   (A2,D0.l), FP1
+0b3e f2000428  fsub.x   FP1, FP0
+0b42 f22e6400fffa  fmove.s   FP0, (-$6,A6)
+0b48 f22e4400fffa  fmove.s   (-$6,A6), FP0
+0b4e 3004  move.w  D4, D0
+0b50 5240  addq.w  #1, D0
+0b52 48c0  ext.l   D0
+0b54 e788  lsl.l   #3, D0
+0b56 2047  movea.l D7, A0
+0b58 f23044800804  fmove.s   ($4,A0,D0.l), FP1
+0b5e f20000a3  fmul.x   FP0, FP1
+0b62 f22e6480fff6  fmove.s   FP1, (-$a,A6)
+0b68 f22e4400fff6  fmove.s   (-$a,A6), FP0
+0b6e 3043  movea.w D3, A0
+0b70 2008  move.l  A0, D0
+0b72 e788  lsl.l   #3, D0
+0b74 f23244800804  fmove.s   ($4,A2,D0.l), FP1
+0b7a 3003  move.w  D3, D0
+0b7c d045  add.w   D5, D0
+0b7e 48c0  ext.l   D0
+0b80 e788  lsl.l   #3, D0
+0b82 f23245000804  fmove.s   ($4,A2,D0.l), FP2
+0b88 f20008a8  fsub.x   FP2, FP1
+0b8c f22e6480fff2  fmove.s   FP1, (-$e,A6)
+0b92 f22e4480fff2  fmove.s   (-$e,A6), FP1
+0b98 3004  move.w  D4, D0
+0b9a 5240  addq.w  #1, D0
+0b9c 48c0  ext.l   D0
+0b9e e788  lsl.l   #3, D0
+0ba0 2047  movea.l D7, A0
+0ba2 f23045000800  fmove.s   (A0,D0.l), FP2
+0ba8 f2000523  fmul.x   FP1, FP2
+0bac f22e6500ffee  fmove.s   FP2, (-$12,A6)
+0bb2 f22e4480ffee  fmove.s   (-$12,A6), FP1
+0bb8 f20000a2  fadd.x   FP0, FP1
+0bbc f22e6480ffea  fmove.s   FP1, (-$16,A6)
+0bc2 3003  move.w  D3, D0
+0bc4 d046  add.w   D6, D0
+0bc6 48c0  ext.l   D0
+0bc8 e788  lsl.l   #3, D0
+0bca 27aeffea0804  move.l  (-$16,A6), ($4,A3,D0.l)
+0bd0 5243  addq.w  #1, D3
+0bd2 b646  cmp.w   D6, D3
+0bd4 6f00fe3e  ble     $a14
+0bd8 3806  move.w  D6, D4
+0bda 3c04  move.w  D4, D6
+0bdc dc6efffe  add.w   (-$2,A6), D6
+0be0 bc45  cmp.w   D5, D6
+0be2 6f00fe30  ble     $a14
+0be6 7601  moveq   #$1, D3
+0be8 3043  movea.w D3, A0
+0bea 2008  move.l  A0, D0
+0bec e788  lsl.l   #3, D0
+0bee 204b  movea.l A3, A0
+0bf0 d1c0  adda.l  D0, A0
+0bf2 3243  movea.w D3, A1
+0bf4 2009  move.l  A1, D0
+0bf6 e788  lsl.l   #3, D0
+0bf8 224a  movea.l A2, A1
+0bfa d3c0  adda.l  D0, A1
+0bfc 22d8  move.l  (A0)+, (A1)+
+0bfe 22d8  move.l  (A0)+, (A1)+
+0c00 5243  addq.w  #1, D3
+0c02 b66e0008  cmp.w   ($8,A6), D3
+0c06 6fe0  ble     $be8
+0c08 302efffe  move.w  (-$2,A6), D0
+0c0c d06efffe  add.w   (-$2,A6), D0
+0c10 3d40fffe  move.w  D0, (-$2,A6)
+0c14 ba6efffe  cmp.w   (-$2,A6), D5
+0c18 6c00fdf2  bge     $a0c
+0c1c 7601  moveq   #$1, D3
+0c1e 604a  bra     $c6a
+0c20 3043  movea.w D3, A0
+0c22 2008  move.l  A0, D0
+0c24 e788  lsl.l   #3, D0
+0c26 f23244000800  fmove.s   (A2,D0.l), FP0
+0c2c f2001023  fmul.x   FP4, FP0
+0c30 f22e6400fffa  fmove.s   FP0, (-$6,A6)
+0c36 3043  movea.w D3, A0
+0c38 2008  move.l  A0, D0
+0c3a e788  lsl.l   #3, D0
+0c3c 25aefffa0800  move.l  (-$6,A6), (A2,D0.l)
+0c42 3043  movea.w D3, A0
+0c44 2008  move.l  A0, D0
+0c46 e788  lsl.l   #3, D0
+0c48 f23244000804  fmove.s   ($4,A2,D0.l), FP0
+0c4e f200109a  fneg.x   FP4, FP1
+0c52 f20000a3  fmul.x   FP0, FP1
+0c56 f22e6480fffa  fmove.s   FP1, (-$6,A6)
+0c5c 3043  movea.w D3, A0
+0c5e 2008  move.l  A0, D0
+0c60 e788  lsl.l   #3, D0
+0c62 25aefffa0804  move.l  (-$6,A6), ($4,A2,D0.l)
+0c68 5243  addq.w  #1, D3
+0c6a b66e0008  cmp.w   ($8,A6), D3
+0c6e 6fb0  ble     $c20
+0c70 f21fd008  fmovem.x   (A7)+, FP4 
+0c74 4cdf0cf8  movem.l (A7)+, D3-D7/A2-A3
+0c78 4e5e  unlk    A6
+0c7a 4e75  rts

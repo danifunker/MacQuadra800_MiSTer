@@ -119,7 +119,14 @@ assign pending = (count != 0);
 // A posted write is acknowledged in its capture cycle: nothing upstream
 // waits on it combinationally, and accept_ack still guards the held
 // request from being captured twice.
-assign s_ack   = buffer_req ? (accept_ack | (push & s_posted)) :
+// A read's acknowledge does not look at the address: buffer_req decodes the
+// translated address (RAM window / VRAM), and with it in the mux every read
+// ack -- including the instruction fetch's one-clock hit downstream -- carried
+// the MMU lookup in its cone (the fitted worst path, ifr_addr -> MMU ->
+// buffer_req -> c_ack -> branch-refill seed, 2026-09-25).  For a write the
+// choice is unchanged; a read is never buffer_req.
+assign s_ack   = s_write ? (buffer_req ? (accept_ack | (push & s_posted)) :
+                            (direct_active ? m_ack : 1'b0)) :
                  (direct_active ? m_ack : 1'b0);
 assign s_rdata = m_rdata;
 

@@ -1,0 +1,99 @@
+name	type	mode	depth_a	width_a	depth_b	width_b	size_bits
+altshift_taps:dv_de1_rtl_0|shift_taps_1vu:auto_generated|altsyncram_rr91:altsyncram4|ALTSYNCRAM	AUTO	Simple Dual Port	3	47	3	47	141
+altshift_taps:mask_bypass_rtl_0|shift_taps_vuu:auto_generated|altsyncram_qr91:altsyncram5|ALTSYNCRAM	AUTO	Simple Dual Port	6	24	6	24	144
+altshift_taps:mask_bypass_rtl_1|shift_taps_0vu:auto_generated|altsyncram_pr91:altsyncram4|ALTSYNCRAM	AUTO	Simple Dual Port	4	81	4	81	324
+ascal:ascal|altshift_taps:i_ppix.r_rtl_0|shift_taps_bgv:auto_generated|altsyncram_nr91:altsyncram5|ALTSYNCRAM	AUTO	Simple Dual Port	5	24	5	24	120
+ascal:ascal|altshift_taps:o_vpix_inner[2].r_rtl_0|shift_taps_agv:auto_generated|altsyncram_jr91:altsyncram4|ALTSYNCRAM	AUTO	Simple Dual Port	4	24	4	24	96
+ascal:ascal|altsyncram:i_dpram_rtl_0|altsyncram_g9j1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	32	128	32	128	4096
+ascal:ascal|altsyncram:i_mem[0].r[7]__1|altsyncram_89q1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	2048	24	2048	24	49152
+ascal:ascal|altsyncram:o_dpram_rtl_0|altsyncram_32k1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	32	128	32	128	4096
+ascal:ascal|altsyncram:o_h_poly_mem_rtl_0|altsyncram_o9j1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	256	40	256	40	10240
+ascal:ascal|altsyncram:o_line0[0].r[7]__2|altsyncram_ccn1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	2048	24	2048	24	49152
+ascal:ascal|altsyncram:o_line1[0].r[7]__3|altsyncram_ccn1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	2048	24	2048	24	49152
+ascal:ascal|altsyncram:o_line2[0].r[7]__4|altsyncram_ccn1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	2048	24	2048	24	49152
+ascal:ascal|altsyncram:o_line3[0].r[7]__5|altsyncram_ccn1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	2048	24	2048	24	49152
+ascal:ascal|altsyncram:o_linf0[0].r[7]__6|altsyncram_m6n1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	256	24	256	24	6144
+ascal:ascal|altsyncram:o_linf1[0].r[7]__7|altsyncram_m6n1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	256	24	256	24	6144
+ascal:ascal|altsyncram:o_linf2[0].r[7]__8|altsyncram_m6n1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	256	24	256	24	6144
+ascal:ascal|altsyncram:o_linf3[0].r[7]__9|altsyncram_m6n1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	256	24	256	24	6144
+ascal:ascal|altsyncram:o_v_poly_mem_rtl_0|altsyncram_o9j1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	256	40	256	40	10240
+audio_out:audio_out|aud_mix_top:audmix_r|altshift_taps:a1_rtl_0|shift_taps_8gv:auto_generated|altsyncram_fr91:altsyncram4|ALTSYNCRAM	AUTO	Simple Dual Port	3	32	3	32	96
+emu:emu|altsyncram:vram0_rtl_0|altsyncram_4vu1:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	82016	8	82016	8	656128
+emu:emu|altsyncram:vram1_rtl_0|altsyncram_4vu1:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	82016	8	82016	8	656128
+emu:emu|altsyncram:vram2_rtl_0|altsyncram_4vu1:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	82016	8	82016	8	656128
+emu:emu|altsyncram:vram3_rtl_0|altsyncram_4vu1:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	82016	8	82016	8	656128
+emu:emu|mt32pi:mt32pi|altsyncram:lcd_data_rtl_0|altsyncram_fcj1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	8192	1	8192
+emu:emu|quadra800:machine|dafb:dafb|dafb_clut:clut_b_i|altsyncram:mem_rtl_0|altsyncram_slu1:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	256	8	256	8	2048
+emu:emu|quadra800:machine|dafb:dafb|dafb_clut:clut_g_i|altsyncram:mem_rtl_0|altsyncram_slu1:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	256	8	256	8	2048
+emu:emu|quadra800:machine|dafb:dafb|dafb_clut:clut_r_i|altsyncram:mem_rtl_0|altsyncram_slu1:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	256	8	256	8	2048
+emu:emu|quadra800:machine|iosb:iosb|adb:adbx|altsyncram:kbdFifo_rtl_0|altsyncram_6tm1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	8	8	8	8	64
+emu:emu|quadra800:machine|iosb:iosb|altdpram:djmemc_regs_rtl_0|dpram_8no1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	16	32	16	32	512
+emu:emu|quadra800:machine|iosb:iosb|altdpram:iosb_regs_hi_rtl_0|dpram_qlo1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	32	8	32	8	256
+emu:emu|quadra800:machine|iosb:iosb|altdpram:iosb_regs_lo_rtl_0|dpram_qlo1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	32	8	32	8	256
+emu:emu|quadra800:machine|iosb:iosb|easc:easc|easc_bank:banks[0].bank|altsyncram:ram|altsyncram_trp2:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	128	32	128	32	4096
+emu:emu|quadra800:machine|iosb:iosb|easc:easc|easc_bank:banks[1].bank|altsyncram:ram|altsyncram_trp2:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	128	32	128	32	4096
+emu:emu|quadra800:machine|iosb:iosb|easc:easc|easc_bank:banks[2].bank|altsyncram:ram|altsyncram_trp2:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	128	32	128	32	4096
+emu:emu|quadra800:machine|iosb:iosb|easc:easc|easc_bank:banks[3].bank|altsyncram:ram|altsyncram_trp2:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	128	32	128	32	4096
+emu:emu|quadra800:machine|iosb:iosb|ncr53c96:scsi|cd_audio:g_cd_audio.cd_audio_i|cd_sdp:frame_ram|altsyncram:ram_rtl_0|altsyncram_7qk1:auto_generated|ALTSYNCRAM	M10K block	Simple Dual Port	4096	16	4096	16	65536
+emu:emu|quadra800:machine|iosb:iosb|ncr53c96:scsi|ncr_sbuf:sbuf|altsyncram:ram|altsyncram_2hq2:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	256	16	256	16	4096
+emu:emu|quadra800:machine|iosb:iosb|rtc3430042:rtc|altsyncram:pram_rtl_0|altsyncram_7hk1:auto_generated|ALTSYNCRAM	M10K block	Simple Dual Port	256	8	256	8	2048
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata0_b0_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata0_b1_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata0_b2_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata0_b3_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata1_b0_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata1_b1_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata1_b2_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata1_b3_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata2_b0_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata2_b1_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata2_b2_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata2_b3_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata3_b0_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata3_b1_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata3_b2_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:cdata3_b3_rtl_0|altsyncram_4ml1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	1024	8	1024	8	8192
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata0_b0_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata0_b1_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata0_b2_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata0_b3_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata1_b0_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata1_b1_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata1_b2_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata1_b3_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata2_b0_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata2_b1_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata2_b2_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata2_b3_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata3_b0_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata3_b1_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata3_b2_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:idata3_b3_rtl_0|altsyncram_qji1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata0_b1_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata0_b2_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata0_b3_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata1_b1_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata1_b2_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata1_b3_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata2_b1_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata2_b2_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata2_b3_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata3_b1_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata3_b2_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|altsyncram:pairdata3_b3_rtl_0|altsyncram_mgl1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	512	8	512	8	4096
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|dpram:ctag_ram_i|altsyncram:ram|altsyncram_tip2:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	256	90	256	90	23040
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_cache:g_cache.cache|dpram:ctag_ram|altsyncram:ram|altsyncram_tip2:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	256	90	256	90	23040
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_fpu:g_fpu.fpu|ap040_fp_regfile:fpregs|altdpram:bank_a_rtl_0|dpram_rlo1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	8	80	8	80	640
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_fpu:g_fpu.fpu|ap040_fp_regfile:fpregs|altdpram:bank_b_rtl_0|dpram_rlo1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	8	80	8	80	640
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_regfile:regfile|altdpram:bank_a_rtl_0|dpram_8no1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	16	32	16	32	512
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_regfile:regfile|altdpram:bank_b_rtl_0|dpram_8no1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	16	32	16	32	512
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_regfile:regfile|altdpram:bank_f_rtl_0|dpram_h8o1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	16	32	16	32	512
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_regfile:regfile|altdpram:extra_reads.bank_c_rtl_0|dpram_8no1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	16	32	16	32	512
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_regfile:regfile|altdpram:extra_reads.bank_d_rtl_0|dpram_8no1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	16	32	16	32	512
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_regfile:regfile|altdpram:extra_reads.bank_e_rtl_0|dpram_8no1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	16	32	16	32	512
+emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_mmu:mmu|dpram:atc_ram|altsyncram:ram|altsyncram_fip2:auto_generated|ALTSYNCRAM	M10K block	True Dual Port	32	184	32	184	5888
+emu:emu|sdram_beat32:sdr|altdpram:wq_mem|dpram_9fq1:auto_generated|ALTDPRAM_INSTANCE	MLAB	Simple Dual Port	8	61	8	61	488
+osd:hdmi_osd|altsyncram:osd_buffer_rtl_0|altsyncram_i6k1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	4096	8	4096	8	32768
+osd:vga_osd|altsyncram:osd_buffer_rtl_0|altsyncram_i6k1:auto_generated|ALTSYNCRAM	AUTO	Simple Dual Port	4096	8	4096	8	32768
+vga_out:vga_scaler_out|altshift_taps:din1_rtl_0|shift_taps_quu:auto_generated|altsyncram_dr91:altsyncram4|ALTSYNCRAM	AUTO	Simple Dual Port	3	31	3	31	93
+yc_out:yc_out|altshift_taps:luma_d0_rtl_0|shift_taps_htu:auto_generated|altsyncram_to91:altsyncram5|ALTSYNCRAM	AUTO	Simple Dual Port	5	9	5	9	45

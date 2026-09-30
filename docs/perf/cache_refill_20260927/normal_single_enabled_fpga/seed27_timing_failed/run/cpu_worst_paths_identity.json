@@ -1,0 +1,21 @@
+{
+  "unit": "codex-fpu-normal-single-enabled-quartus-20260928-seed27-cpu-paths.service",
+  "invocation_id": "3a6379d7e6c14f85acd86a225fdb0c7d",
+  "tool_session_id": 22559,
+  "quartus_sta_pid": 2464058,
+  "quartus_sta_executable_sha256": "3e5b6469769824667c28dcad237a4ad5f46aad67c3ccd76ec3c0824e7094fe78",
+  "command": "quartus_sta -t scripts/cpu/timequest_worst_paths.tcl scratch/cpu_timing_6c_seed27_20260928",
+  "exit_status": 0,
+  "summary_report": "tree/scratch/cpu_timing_6c_seed27_20260928/worst_paths.txt",
+  "detailed_report": "tree/scratch/cpu_timing_6c_seed27_20260928/worst_detail.txt",
+  "worst_path": {
+    "slack_ns": -0.449,
+    "startpoint": "emu:emu|quadra800:machine|wombat_cpu:cpu|pres_instr",
+    "endpoint": "emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|epf_data[2][10]",
+    "data_delay_ns": 30.083,
+    "clock_skew_ns": -0.519,
+    "logic_levels": 29,
+    "interpretation": "path traverses CPU/MMU/cache/store-buffer/integer-pipeline/BRF logic; no FPU cell in reported datapath"
+  },
+  "status": "complete"
+}

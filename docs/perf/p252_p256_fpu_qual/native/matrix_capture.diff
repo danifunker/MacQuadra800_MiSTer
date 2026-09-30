@@ -1,0 +1,29 @@
+488a489,512
+> bit matrix_capture_done=0;
+> task automatic matrix_capture_rows;
+>     int bad,f,addr;bit[15:0]word;
+>     if(matrix_capture_done||matrix_alloc_returns!=123||matrix_free_calls!=0||matrix_kind!=0)$fatal(1,"MATRIX capture lifecycle");
+>     bad=0;
+>     if(dut.cpu.store_buffer.count!=0)bad++;
+>     if(dut.cpu.store_buffer.drain_active)bad++;
+>     if(dut.cpu.store_buffer.buffer_req||dut.cpu.store_buffer.push)bad++;
+>     if(dut.cpu.store_buffer.m_req&&dut.cpu.store_buffer.m_write)bad++;
+>     if(mem_req&&mem_write&&mem_is_ram)bad++;
+>     if(mem_wp_valid)bad++;
+>     if(sdr.wq_push||sdr.wq_push_bus)bad++;
+>     if(sdr.wq_wp!=sdr.wq_rp||sdr.wq_used!=0||!sdr.wq_empty)bad++;
+>     if(sdr.wq_act||(sdr.busy_r&&sdr.we_ram))bad++;
+>     if(sdr.req&&sdr.we)bad++;
+>     $display("MATRIX_CAPTURE_GUARDS bad=%0d",bad);
+>     if(bad!=0)$fatal(1,"MATRIX_CAPTURE_NOT_DRAINED");
+>     f=$fopen("matrix_rows.hex","w");
+>     for(int x=0;x<123;x++)for(int b=0;b<'ha4;b++)begin
+>         addr=matrix_ptrs[x]+b;word=chip.mem[sdcell(addr&~1,addr[1])];
+>         $fwrite(f,"%02h\n",addr[0]?word[7:0]:word[15:8]);
+>     end
+>     $fclose(f);matrix_capture_done=1;$display("MATRIX_CAPTURE_DONE rows=123 bytes=%0d",123*'ha4);
+> endtask
+499a524
+>             if(matrix_free_calls==0)matrix_capture_rows();
+546a572
+>     if(!matrix_capture_done)$fatal(1,"MATRIX capture missing");

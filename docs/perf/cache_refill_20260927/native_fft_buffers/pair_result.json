@@ -1,0 +1,34 @@
+{
+  "scope": "native FFT matched baseline/candidate payload regression, NOT independent numerical FFT oracle",
+  "baseline_loop": 14301941,
+  "candidate_loop": 13358788,
+  "capture": "validated firstfree600e00 primary dispatch, natural-drain guard, no time advance",
+  "blocks": [
+    {
+      "id": 0,
+      "pointer": 4136320,
+      "bytes": 2056,
+      "full_sha256": "7177a5afa75e6a40c836037460216f0cc6347b6faae35f5894de08cb5410171d",
+      "equality": "PASS",
+      "complex_active_bytes": 2048,
+      "complex_active_sha256": "9bc03a48141ba894dc5e0fb2d692e8b4226fe5a9aa1df371a26977951a76e3b8"
+    },
+    {
+      "id": 1,
+      "pointer": 4138384,
+      "bytes": 2056,
+      "full_sha256": "31a27d2cc65237a4888b2669e353dcb431b203b87d1ce4ea8592be69f546a93a",
+      "equality": "PASS",
+      "complex_active_bytes": 2048,
+      "complex_active_sha256": "eaa38e7ba32ae8d0be0d5cbeff6e44636f56421b6419788e7fb0b191da9bebd2"
+    },
+    {
+      "id": 2,
+      "pointer": 4140448,
+      "bytes": 1040,
+      "full_sha256": "d8d967451aee36d77435db66fd3d8bca0057c01b31cd941d62a5682f20eaac0e",
+      "equality": "PASS"
+    }
+  ],
+  "total_bytes_compared": 5152
+}

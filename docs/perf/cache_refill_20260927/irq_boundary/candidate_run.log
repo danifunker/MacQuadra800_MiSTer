@@ -1,0 +1,111 @@
+tb_ap040_program: running /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/boundary_candidate/irq.hex
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/tb_ap040_program_retained.v:817: $readmemh(/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/boundary_candidate/irq.hex): Not enough words in the file for the requested range [0:32767].
+BULK_TRACE cycle=229 pc=0000040e core_state=3 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=231 bulk_delta=2 pc=00000410 irq_pend=0
+BULK_TRACE cycle=242 pc=00000410 core_state=8 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=244 bulk_delta=2 pc=00000414 irq_pend=0
+BULK_TRACE cycle=259 pc=00000420 core_state=10 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=261 bulk_delta=2 pc=00000420 irq_pend=0
+BULK_TRACE cycle=283 pc=00000428 core_state=10 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=285 bulk_delta=2 pc=00000428 irq_pend=0
+BULK_TRACE cycle=312 pc=00000434 core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=314 bulk_delta=2 pc=00000434 irq_pend=0
+BULK_TRACE cycle=323 pc=00000434 core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=325 bulk_delta=2 pc=00000434 irq_pend=0
+BULK_TRACE cycle=341 pc=00000600 core_state=3 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=343 bulk_delta=2 pc=00000604 irq_pend=0
+BULK_TRACE cycle=353 pc=00000604 core_state=9 pipe_owner=0 pipe_load=1 irq_pend=1 fill_acked=1
+CANCEL_TRACE cycle=354 bulk_delta=1 pc=00000604
+BUSY_RELEASE cycle=355 bulk_delta=2 pc=00000604 irq_pend=1
+BULK_TRACE cycle=386 pc=00000604 core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=388 bulk_delta=2 pc=0000061e irq_pend=0
+BULK_TRACE cycle=397 pc=0000061e core_state=178 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=399 bulk_delta=2 pc=0000061e irq_pend=0
+BULK_TRACE cycle=408 pc=0000061e core_state=178 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=410 bulk_delta=2 pc=0000061e irq_pend=0
+BULK_TRACE cycle=445 pc=0000062e core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=447 bulk_delta=2 pc=0000062e irq_pend=0
+BULK_TRACE cycle=464 pc=00000640 core_state=8 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=466 bulk_delta=2 pc=00000642 irq_pend=0
+BULK_TRACE cycle=480 pc=00000650 core_state=8 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=482 bulk_delta=2 pc=00000654 irq_pend=0
+BULK_TRACE cycle=499 pc=0000065a core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=501 bulk_delta=2 pc=0000065a irq_pend=0
+BULK_TRACE cycle=510 pc=0000065a core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=512 bulk_delta=2 pc=0000065a irq_pend=0
+phase 0 passed (550 cycles)
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/tb_ap040_program_retained.v:817: $readmemh(/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/boundary_candidate/irq.hex): Not enough words in the file for the requested range [0:32767].
+BULK_TRACE cycle=831 pc=0000040e core_state=3 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=833 bulk_delta=2 pc=00000410 irq_pend=0
+BULK_TRACE cycle=847 pc=00000410 core_state=8 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=849 bulk_delta=2 pc=00000414 irq_pend=0
+BULK_TRACE cycle=871 pc=00000420 core_state=10 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=873 bulk_delta=2 pc=00000420 irq_pend=0
+BULK_TRACE cycle=906 pc=00000428 core_state=10 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=908 bulk_delta=2 pc=00000428 irq_pend=0
+BULK_TRACE cycle=950 pc=00000434 core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=952 bulk_delta=2 pc=00000434 irq_pend=0
+BULK_TRACE cycle=970 pc=00000434 core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=972 bulk_delta=2 pc=00000434 irq_pend=0
+BULK_TRACE cycle=989 pc=00000600 core_state=3 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=991 bulk_delta=2 pc=00000604 irq_pend=0
+BULK_TRACE cycle=1006 pc=00000604 core_state=9 pipe_owner=0 pipe_load=1 irq_pend=1 fill_acked=1
+CANCEL_TRACE cycle=1007 bulk_delta=1 pc=00000604
+BUSY_RELEASE cycle=1008 bulk_delta=2 pc=00000604 irq_pend=1
+BULK_TRACE cycle=1054 pc=00000604 core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1056 bulk_delta=2 pc=0000061e irq_pend=0
+BULK_TRACE cycle=1074 pc=0000061e core_state=178 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1076 bulk_delta=2 pc=0000061e irq_pend=0
+BULK_TRACE cycle=1086 pc=0000061e core_state=178 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1088 bulk_delta=2 pc=0000061e irq_pend=0
+BULK_TRACE cycle=1128 pc=0000062e core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1130 bulk_delta=2 pc=0000062e irq_pend=0
+BULK_TRACE cycle=1156 pc=00000640 core_state=8 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1158 bulk_delta=2 pc=00000642 irq_pend=0
+BULK_TRACE cycle=1173 pc=00000650 core_state=8 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1175 bulk_delta=2 pc=00000654 irq_pend=0
+BULK_TRACE cycle=1201 pc=0000065a core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1203 bulk_delta=2 pc=0000065a irq_pend=0
+BULK_TRACE cycle=1217 pc=0000065a core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1219 bulk_delta=2 pc=0000065a irq_pend=0
+phase 1 passed (700 cycles)
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/tb_ap040_program_retained.v:817: $readmemh(/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/boundary_candidate/irq.hex): Not enough words in the file for the requested range [0:32767].
+BULK_TRACE cycle=1541 pc=0000040e core_state=3 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1543 bulk_delta=2 pc=00000410 irq_pend=0
+BULK_TRACE cycle=1557 pc=00000410 core_state=8 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1559 bulk_delta=2 pc=00000414 irq_pend=0
+BULK_TRACE cycle=1581 pc=00000420 core_state=10 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1583 bulk_delta=2 pc=00000420 irq_pend=0
+BULK_TRACE cycle=1616 pc=00000428 core_state=10 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1618 bulk_delta=2 pc=00000428 irq_pend=0
+BULK_TRACE cycle=1660 pc=00000434 core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1662 bulk_delta=2 pc=00000434 irq_pend=0
+BULK_TRACE cycle=1680 pc=00000434 core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1682 bulk_delta=2 pc=00000434 irq_pend=0
+BULK_TRACE cycle=1699 pc=00000600 core_state=3 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1701 bulk_delta=2 pc=00000604 irq_pend=0
+BULK_TRACE cycle=1716 pc=00000604 core_state=9 pipe_owner=0 pipe_load=1 irq_pend=1 fill_acked=1
+CANCEL_TRACE cycle=1717 bulk_delta=1 pc=00000604
+BUSY_RELEASE cycle=1718 bulk_delta=2 pc=00000604 irq_pend=1
+BULK_TRACE cycle=1764 pc=00000604 core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1766 bulk_delta=2 pc=0000061e irq_pend=0
+BULK_TRACE cycle=1784 pc=0000061e core_state=178 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1786 bulk_delta=2 pc=0000061e irq_pend=0
+BULK_TRACE cycle=1796 pc=0000061e core_state=178 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1798 bulk_delta=2 pc=0000061e irq_pend=0
+BULK_TRACE cycle=1838 pc=0000062e core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1840 bulk_delta=2 pc=0000062e irq_pend=0
+BULK_TRACE cycle=1866 pc=00000640 core_state=8 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1868 bulk_delta=2 pc=00000642 irq_pend=0
+BULK_TRACE cycle=1883 pc=00000650 core_state=8 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1885 bulk_delta=2 pc=00000654 irq_pend=0
+BULK_TRACE cycle=1911 pc=0000065a core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1913 bulk_delta=2 pc=0000065a irq_pend=0
+BULK_TRACE cycle=1927 pc=0000065a core_state=9 pipe_owner=0 pipe_load=0 irq_pend=0 fill_acked=1
+BUSY_RELEASE cycle=1929 bulk_delta=2 pc=0000065a irq_pend=0
+phase 2 passed (700 cycles)
+ALL TESTS PASSED
+/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/tb_ap040_program_retained.v:867: $finish called at 19795000 (1ps)
+RETAINED_COVERAGE offers=48 match_edges=48 bulk_edges=48 write_kills=6 bulk_irq_same_edge=3 irq_near_bulk=3 cancel_near_bulk=3 busy_releases=48
+HANDOFF entries=3 commits=3 paused=0 cancelled=0 loads=3 stores=0 peas=0
+BOUNDARY commits=3 injections=3

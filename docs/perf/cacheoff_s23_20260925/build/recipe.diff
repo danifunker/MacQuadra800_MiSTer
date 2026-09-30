@@ -1,0 +1,30 @@
+--- a0b3072/MacQuadra800.qsf
++++ cacheoff_s23/MacQuadra800.qsf
+@@ -373,7 +373,7 @@
+ # address again, and a redirect replaces a speculative fetch the platform has not accepted yet (ifr_avail).
+ # Sim vs P170: Permute -7.0 %, Whetstone -1.9 %, Queens -1.5 %, Dhrystone -2.3 %.
+ # Sep24 common-ALU design fits capacity but seed28 cannot route; isolate seed21 trial.
+-set_global_assignment -name SEED 21
++set_global_assignment -name SEED 23
+ # 2026-09-24: NEVER grew the full BRF fit by398 ALMs; retain the better ALWAYS setting.
+ set_global_assignment -name FITTER_AGGRESSIVE_ROUTABILITY_OPTIMIZATION ALWAYS
+ #
+@@ -519,6 +519,7 @@
+ #set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_COMPARE=1"
+ #set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_EARLY_DRAIN=1"
+ set_global_assignment -name VERILOG_MACRO "MISTER_DISABLE_SHADOWMASK=1"
++set_global_assignment -name VERILOG_MACRO "SCSI_CACHE_OFF=1"
+ set_global_assignment -name VERILOG_MACRO "CACHE_CD_OFF=1"
+ #set_global_assignment -name VERILOG_MACRO "VIDEO_512_OFF=1"
+ set_global_assignment -name VERILOG_MACRO "CACHE_SMALL=1"
+--- a0b3072/rtl/ap68040/rtl/ap040_cache.v
++++ cacheoff_s23/rtl/ap68040/rtl/ap040_cache.v
+@@ -138,7 +138,7 @@
+ // Sets, rows ({bank, set}) and data words ({bank, set, way}) derive from it;
+ // the tag is everything above the index.
+ // Interim peripheral build: 8 KB per bank leaves M10Ks for Mac devices.
+-localparam SETW = 7;
++localparam SETW = 8;
+ localparam ROWIW = SETW + 1;
+ localparam DIDXW = SETW + 3;
+ localparam TAGW = 28 - SETW;

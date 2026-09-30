@@ -1,0 +1,127 @@
+0824 4e56fec0  link    A6, #-$140
+0828 48e71f20  movem.l D3-D7/A2, -(A7)
+082c f227e030  fmovem.x   FP4 FP5 , -(A7)
+0830 246e000a  movea.l ($a,A6), A2
+0834 f23c4a8040000000c90fdaa22436fee1  fmove.x   #$40000000, FP5
+0844 f23c56004010000000000000  fmove.d   #$40100000, FP4
+0850 7801  moveq   #$1, D4
+0852 6044  bra     $898
+0854 f2001400  fmove.x   FP5, FP0
+0858 f2001020  fdiv.x   FP4, FP0
+085c f200001d  fcos.x   FP0, FP0
+0860 f23c54234000000000000000  fmul.d   #$40000000, FP0
+086c f23c54803ff0000000000000  fmove.d   #$3ff00000, FP1
+0878 f20000a0  fdiv.x   FP0, FP1
+087c 700c  moveq   #$c, D0
+087e c1c4  muls.w  D4, D0
+0880 41eefec8  lea     (-$138,A6), A0
+0884 d1c0  adda.l  D0, A0
+0886 f2106880  fmove.x   FP1, (A0)
+088a f2001000  fmove.x   FP4, FP0
+088e f2001022  fadd.x   FP4, FP0
+0892 f2000200  fmove.x   FP0, FP4
+0896 5244  addq.w  #1, D4
+0898 0c440019  cmpi.w  #$19, D4
+089c 6fb6  ble     $854
+089e 306e0008  movea.w ($8,A6), A0
+08a2 2e08  move.l  A0, D7
+08a4 8ffc0002  divs.w  #$2, D7
+08a8 3047  movea.w D7, A0
+08aa 2c08  move.l  A0, D6
+08ac 8dfc0002  divs.w  #$2, D6
+08b0 7a01  moveq   #$1, D5
+08b2 257c3f8000000008  move.l  #$3f800000, ($8,A2)
+08ba 42aa000c  clr.l   ($c,A2)
+08be 3006  move.w  D6, D0
+08c0 5240  addq.w  #1, D0
+08c2 48c0  ext.l   D0
+08c4 e788  lsl.l   #3, D0
+08c6 42b20800  clr.l   (A2,D0.l)
+08ca 3006  move.w  D6, D0
+08cc 5240  addq.w  #1, D0
+08ce 48c0  ext.l   D0
+08d0 e788  lsl.l   #3, D0
+08d2 25bc3f8000000804  move.l  #$3f800000, ($4,A2,D0.l)
+08da 3007  move.w  D7, D0
+08dc 5240  addq.w  #1, D0
+08de 48c0  ext.l   D0
+08e0 e788  lsl.l   #3, D0
+08e2 25bcbf8000000800  move.l  #$bf800000, (A2,D0.l)
+08ea 3007  move.w  D7, D0
+08ec 5240  addq.w  #1, D0
+08ee 48c0  ext.l   D0
+08f0 e788  lsl.l   #3, D0
+08f2 42b20804  clr.l   ($4,A2,D0.l)
+08f6 3046  movea.w D6, A0
+08f8 2808  move.l  A0, D4
+08fa 89fc0002  divs.w  #$2, D4
+08fe 3604  move.w  D4, D3
+0900 3003  move.w  D3, D0
+0902 9044  sub.w   D4, D0
+0904 5240  addq.w  #1, D0
+0906 48c0  ext.l   D0
+0908 e788  lsl.l   #3, D0
+090a f23244000800  fmove.s   (A2,D0.l), FP0
+0910 3003  move.w  D3, D0
+0912 d044  add.w   D4, D0
+0914 5240  addq.w  #1, D0
+0916 48c0  ext.l   D0
+0918 e788  lsl.l   #3, D0
+091a f23244800800  fmove.s   (A2,D0.l), FP1
+0920 f20000a2  fadd.x   FP0, FP1
+0924 f22e6480fec0  fmove.s   FP1, (-$140,A6)
+092a f22e4400fec0  fmove.s   (-$140,A6), FP0
+0930 700c  moveq   #$c, D0
+0932 c1c5  muls.w  D5, D0
+0934 41eefec8  lea     (-$138,A6), A0
+0938 d1c0  adda.l  D0, A0
+093a f2104823  fmul.x   (A0), FP0
+093e f22e6400fec4  fmove.s   FP0, (-$13c,A6)
+0944 3003  move.w  D3, D0
+0946 5240  addq.w  #1, D0
+0948 48c0  ext.l   D0
+094a e788  lsl.l   #3, D0
+094c 25aefec40800  move.l  (-$13c,A6), (A2,D0.l)
+0952 3003  move.w  D3, D0
+0954 9044  sub.w   D4, D0
+0956 5240  addq.w  #1, D0
+0958 48c0  ext.l   D0
+095a e788  lsl.l   #3, D0
+095c f23244000804  fmove.s   ($4,A2,D0.l), FP0
+0962 3003  move.w  D3, D0
+0964 d044  add.w   D4, D0
+0966 5240  addq.w  #1, D0
+0968 48c0  ext.l   D0
+096a e788  lsl.l   #3, D0
+096c f23244800804  fmove.s   ($4,A2,D0.l), FP1
+0972 f20000a2  fadd.x   FP0, FP1
+0976 f22e6480fec4  fmove.s   FP1, (-$13c,A6)
+097c f22e4400fec4  fmove.s   (-$13c,A6), FP0
+0982 700c  moveq   #$c, D0
+0984 c1c5  muls.w  D5, D0
+0986 41eefec8  lea     (-$138,A6), A0
+098a d1c0  adda.l  D0, A0
+098c f2104823  fmul.x   (A0), FP0
+0990 f22e6400fec0  fmove.s   FP0, (-$140,A6)
+0996 3003  move.w  D3, D0
+0998 5240  addq.w  #1, D0
+099a 48c0  ext.l   D0
+099c e788  lsl.l   #3, D0
+099e 25aefec00804  move.l  (-$140,A6), ($4,A2,D0.l)
+09a4 d646  add.w   D6, D3
+09a6 b647  cmp.w   D7, D3
+09a8 6f00ff56  ble     $900
+09ac 3f3c0019  move.w  #$19, -(A7)
+09b0 3005  move.w  D5, D0
+09b2 5240  addq.w  #1, D0
+09b4 3f00  move.w  D0, -(A7)
+09b6 4ebafe02  jsr     (-$1fe,PC); ($7ba)
+09ba 3a00  move.w  D0, D5
+09bc 3c04  move.w  D4, D6
+09be 0c460001  cmpi.w  #$1, D6
+09c2 584f  addq.w  #4, A7
+09c4 6e00ff30  bgt     $8f6
+09c8 f21fd00c  fmovem.x   (A7)+, FP5 FP4 
+09cc 4cdf04f8  movem.l (A7)+, D3-D7/A2
+09d0 4e5e  unlk    A6
+09d2 4e75  rts

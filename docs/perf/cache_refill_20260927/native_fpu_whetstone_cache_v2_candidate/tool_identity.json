@@ -1,0 +1,19 @@
+{
+  "verilator": {
+    "path": "/home/alans/verilator5/bin/verilator",
+    "sha256": "fb2cc573b1055cf096c90e1efc9966fe56bdb4b265c83590cf2a49f7a0defcdf",
+    "version": "Verilator 5.050 2026-07-01 rev v5.050"
+  },
+  "make": {
+    "path": "/usr/bin/make",
+    "sha256": "d78b8f1d099fbcfb6f2f49ab87223b9b68fb3956642f92d6ec6de812e8afa965"
+  },
+  "stdbuf": {
+    "path": "/usr/bin/stdbuf",
+    "sha256": "f041fa6f5669a3de64d7d8a0ddd055942aaae69a271aa4d40461aa9102a54268"
+  },
+  "python3": {
+    "path": "/home/alans/miniconda3/bin/python3.13",
+    "sha256": "c4f8191d99a3d059825b16d1b56b0ddf1cbb9ba6f18b2823559148af3fa90db8"
+  }
+}

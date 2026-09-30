@@ -1,0 +1,16 @@
+{
+  "checked_unix_time": 1790587819.8588257,
+  "base_manifest_entries": 1892,
+  "candidate_manifest_entries": 1892,
+  "base_manifest_sha256": "84c6b48b1637b46c73940da8f46b9834498dd7deddcd61bedc6ac83310094cae",
+  "candidate_manifest_sha256": "0d2d84ea49bad9a234646fe37dbf0a4c0d038d4d7ccda8317395be1d0f878a1c",
+  "qsf_seed32_sha256": "822ecfa6d72e581d362ec0bb0c3e8ee370fcb9a8ef66f4499f7adede44ada3f0",
+  "qsf_seed33_sha256": "4bbdf01bbc0b2b62cf175f6d6fccd5509f62b2d891e0f0506c3ae75a3085be63",
+  "qsf_diff_sha256": "a92a564b7e11f41522b3888c86a380ca50bcfc25491ee1d83487222db747060b",
+  "hash_deltas": [
+    "MacQuadra800.qsf"
+  ],
+  "generated_dirs": [],
+  "local_env_mode": "0o600",
+  "result": "PASS"
+}

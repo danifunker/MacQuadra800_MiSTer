@@ -1,0 +1,33 @@
+{
+  "archive": "docs/perf/cache_refill_20260927/native_fpu_whetstone_joint_profile_6c/profile",
+  "run_identity_sha256": "27242439fd3b32f48c9e965addf0824568652cffc47b9ec2dda0802c808e9d0a",
+  "run_log_sha256": "1a564e5dfb727d824dfaabc9682185e9764e3a002badfd0a81fde8bbb790c557",
+  "loop_cycles": 8724166,
+  "romlat": 6,
+  "image_sha256": "9e58e9b226e03acbee4e1ae690a8b67500328dfb5933df55e1b832c926c653e9",
+  "rom_sha256": "7d9cb8c3bae0e26171adf9f24bedf10bf6371ae3c9bdbcdfd3b94e5350099fb6",
+  "fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "baseline_cache_sha256": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+  "captures": {
+    "native_abi.hex": "3236221c2b42617a6eafa578cde3fdf10f590b5cc58d7bd48aa1174cc60eccd2",
+    "native_code.hex": "d4c36779374ad69ddeca5f0b7e77cf1db0647620dfd89bf3f600f4f08d569845",
+    "native_globals.hex": "2560b04ce38ac3b9262fc43af88cc1dc89522b60aec4bb67972013d3d6d197cd",
+    "native_stack.hex": "f81f08d870a4d6d2256d0a7da7ef9026b4c11f657d97ba842c0fbfd33576366b"
+  },
+  "flags": [
+    "-DAP040_EXPERIMENTAL_XSTORE",
+    "-DAP040_EXPERIMENTAL_LEA",
+    "-DAP040_EXPERIMENTAL_PIPELINE",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6",
+    "-DAP040_PIPELINE_MEMORY_ENTRY",
+    "-DAP040_PIPELINE_COMPARE",
+    "-DAP040_PIPELINE_EARLY_DRAIN",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "qualification": "original runtime/profile checks PASS; 6c matched native joint profile"
+}

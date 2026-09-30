@@ -1,5 +1,12 @@
 # Performance measurements — Speedometer 4.02
 
+**Current checkpoint (2026-09-28):** see [handoff](../HANDOFF-20260928.md) and
+the final sections below for 6c FPU/cache-v2 results. The goal is paused;
+the terminal cache-v2 FPU/Mix guest trial failed timing qualification despite
+passing automated capture checks. Earlier sections are
+dated measurements; their hardware addresses and mounted-disk descriptions
+are historical observations, not current access instructions.
+
 > **2026-09-01 follow-up:** a timing-clean related-clock SDRAM handoff now
 > measures 151 ns per isolated read and 22.0 MB/s sequentially in
 > `tb_sdram`. On hardware, Speedometer **3.23 PR Tests** improved from CPU
@@ -2242,3 +2249,370 @@ QuadSquad8 copy, Speedometer 4.02 Benchmark Mix, all ten tests, one iteration.
 Median **1.670** (range 1.661-1.676): 8.6 % under the timing-violating
 interim build's 1.828, 88 % of the real Quadra 800's 1.897.  Evidence:
 `docs/perf/fullfeature_clean_20260925/`.
+
+## The pipeline back with timing met: Mix 1.778 (2026-09-26, 02:13-02:21 guest time)
+
+Commit `31b6e99` (P243/P244, the store buffer's read ack, `SCSI_CACHE_OFF`, three
+release-lite trims, 8+8 KB CPU caches), seed 24, RBF md5 `8481fce4`.  Timing is met
+on every clock: CPU +1.141, HDMI +0.158, SDRAM +0.791 ns.  Main: the write-buffer
+build.  32 MB, disposable QuadSquad8 copy.
+
+Mix: 1.768, 1.779, 1.778, 1.784, 1.777; **median 1.778**.  PR: CPU 0.895, Graphics
+1.031, Disk 1.595, Math 20.942, PR 1.152.  FPU Benchmarks: average 0.687 (KWhet
+3855, Matrix 1.025 s, FFT 0.454 s).  Color 8-bit: 13.967 s.
+
+Peripherals on this build: 1,000/1,000 pings, the HFS data CD reads, and the CD
+audio transport works (Play, Pause, Resume, Stop).  Per-test comparison with
+the real Quadra 800: `docs/perf/VS_REAL_QUADRA_20260926.md`.  Evidence:
+`docs/perf/pipeline_p243_p244/`.
+
+## VRAM fast path and MOVE16 chaining: Color 8-bit 13.97 -> 11.42 s (2026-09-26)
+
+Commits `31ff820` (VRAM writes straight into the block RAM, reads beside
+wombat_bus32 with a combinational ack) and `0679ca8` (P245, MOVE16 chained at
+the acknowledge), seed 21.  RBF md5 `9355b638`, timing met on every clock
+(CPU +0.461, HDMI +0.441, SDRAM +0.155 ns).  Main: the write-buffer build.
+32 MB, disposable QuadSquad8 copy.
+
+| | `31b6e99` | `31ff820` (seed 24) | `0679ca8` (seed 21) | real Q800 |
+|---|---|---|---|---|
+| Color 8-bit | 13.967 s | 12.626 / 12.605 s | 11.504 / 11.420 s | 8.211 s |
+| Mix | 1.778 median | 1.767 / 1.776 / 1.776 | 1.768 / 1.777 / 1.777 | 1.899 |
+
+8-bit QuickDraw went from 59 % to 72 % of the real machine.  The sim runs the
+same test in 10.834 s; the gap to hardware is most likely the ROM, which is
+DDR3 on hardware (see `docs/GRAPHICS_PROFILE_20260926.md`, "Next: the ROM").
+Screens: `docs/perf/vram_move16_20260926/`.
+
+## The ROM's retained line: Color 8-bit 11.42 -> 9.87 s, PR 1.202 (2026-09-26)
+
+Commit `faf9d98`, seed 21, RBF md5 `7bcd182d`; timing met on every clock (CPU
++0.357, HDMI +0.249, SDRAM +0.102 ns).  Instrumented sims showed that the test's
+ROM beats are almost all **instruction-cache fills** (no uncached or
+MMU-inhibited ROM reads).  Each fill beat had been a DDR3 round trip of its own.
+Now a ROM read fetches the whole line in one two-beat burst, and the other three
+beats come from the retained line.  The hottest ROM pages during the test are
+$4080D000, $40809000, $4080E000 and $40811000.
+
+| | `31b6e99` | `0679ca8` | `faf9d98` | real Q800 |
+|---|---|---|---|---|
+| Color 8-bit | 13.967 s | 11.42 s | **9.87 s** | 8.211 s |
+| Mix | 1.778 | 1.777 | 1.781 | 1.899 |
+| PR (CPU / Graphics / Disk / Math) | 1.152 (0.895 / 1.031 / 1.595 / 20.94) | -- | **1.202** (0.895 / 1.168 / 1.617 / 20.97) | 1.605 (1.186 / 1.347 / 3.443 / 20.01) |
+
+8-bit QuickDraw now runs at 83 % of the real machine.  Screens:
+`docs/perf/romline_20260926/`.
+
+## Dani's prefetch-fault fix on hardware: unchanged speed (2026-09-27)
+
+`6f0f159` (the recorded-prefetch-fault fix ported from danifunker/NeXT-Color_MiSTer
+`6d2e1a5`), seed 27: CPU +0.193, SDRAM +0.295, **HDMI -0.025 ns** (not a release
+build; no seed of 11 has closed yet, see the `.qsf`).  RBF md5 `85924646`, Main
+`mac-printer-writebuffer` (`45182b73`).  Mix 1.781 / 1.781, Color 8-bit 9.944 s, FPU
+0.684, clean Shut Down: the same as `faf9d98`.  Screens: `docs/perf/prefetchfix_20260927/`.
+
+## Enabled normal-single FPU move: simulated guest gain (2026-09-28)
+
+The scratch candidate `6c157b3b` permits the exact normal `FMOVE.S` shortcut
+with FPCR exception enables set, retaining the existing ROUND/writeback
+exception handling. With the full CPU recipe, 8+8 KB caches and prefetch-fault
+fix, its completed Speedometer 4.02 guest FPU score is **0.729**, versus
+**0.698** for the previous `55ff9b3c` candidate: **+4.44%** in displayed score.
+These runs use the same calibrated Verilator RAM model and one iteration per
+test. They are not FPGA measurements.
+
+FPU rows below are sorted from lowest to highest current Speedometer rating.
+The percentage column uses Speedometer's Quadra 650 reference, not the real
+Quadra 800 comparison elsewhere in this document.
+
+| Test | Previous 55ff | Candidate 6c | Reference speed | Throughput change |
+|---|---:|---:|---:|---:|
+| Fast Fourier | 0.447 s | 0.418 s | 68.7% | +6.94% |
+| Whetstone | 3850.048 KWhetstones/s | 3850.048 KWhetstones/s | 73.9% | unchanged |
+| Matrix multiply | 0.991 s | 0.928 s | 76.1% | +6.79% |
+
+Time-based throughput changes use `previous_time / candidate_time - 1` and
+the displayed, rounded values. The corresponding Color8 run completed in
+**9.878 s**, unchanged. CPU Mix also completed at **1.798**, with all ten
+visible absolute results matching the prior 73bc candidate. Against the
+original baseline, Whetstone is 1762.002→1762.139, Dhrystone
+17931.816→17932.324, Puzzle 0.755→0.756 s, and the other seven absolute
+results are unchanged. Setup selected all ten tests at iteration1;
+the completed-result dialog covers some middle rating/iteration cells.
+The hardware target of at least 0.759 remains unproven.
+
+Setup and completed screenshots, immutable source/model identities, strict
+profile checks and manual reviews are archived in
+[FPU evidence](perf/cache_refill_20260927/normal_single_enabled_fullmachine_fpu/README.md)
+and [Color evidence](perf/cache_refill_20260927/normal_single_enabled_fullmachine_color/README.md).
+The [Mix evidence](perf/cache_refill_20260927/normal_single_enabled_fullmachine_mix/README.md)
+preserves both the original-baseline and prior-candidate comparisons.
+The separate SDRAM queue handoff timing change is covered by
+[paired physical-memory tests](perf/cache_refill_20260927/wq_available_handoff/README.md);
+the full-guest RAM model does not exercise that bridge. No new hardware result
+or release qualification is established by these simulations.
+
+## Whetstone cache target measured (2026-09-28)
+
+A passive native replay of the 6c FPU workload completed in **8,724,166
+clocks**, with reports and four memory captures unchanged from its reference.
+The physical LONG read at **0x600eae** occurred **9,630** times, consuming
+**199,716 inclusive latency edges** (mean **20.739**, maximum **25**). Every
+observed request missed the first cache line and took the existing bypass
+path. That makes first-line allocation for crossing reads a concrete next
+experiment; it does not establish why the tag was absent historically.
+
+The latency above one edge per request is 190,086 edges, or **2.18%** of this
+native loop. This is latency accounting, **not a predicted speed gain**:
+allocation, replay, replacement, and workload effects still need measurement.
+See the [resource-read evidence](perf/cache_refill_20260927/native_fpu_whetstone_resource_reads_6c/README.md)
+for exact paths, source identities, and limits of the native fixture.
+
+The subsequent cache-v2 native run completed in **8,541,493 clocks**, versus
+the qualified 6c baseline's **8,724,166**: **182,673 fewer clocks (2.094%)**,
+equivalent to **2.139% higher throughput** for this fixture. The only RTL
+change is cache `7cba7f73`→`9e8c0582`; FPU, entry, memory images, passive
+monitor, ROM latency6, and release CPU flags are unchanged. All four final
+ABI/code/global/stack captures match byte-for-byte, and original runtime and
+profile checks pass. Aggregate external read_bus32 episodes fall9,773→0,
+while C_PASS occupancy falls804,428→630,743 samples. These are coarse counters,
+not exact candidate per-address attribution. Evidence:
+[native cache-v2 results](perf/cache_refill_20260927/native_fpu_whetstone_cache_v2_candidate/README.md).
+This native result is not a full-guest or FPGA benchmark, and does not prove
+the0.759 hardware target. The subsequent full-machine trial is terminal and failed guest qualification, as recorded below.
+
+The combined 6c FPU + cache-v2, original-bridge seed31 FPGA build completed
+with 38,760/41,910 ALMs (92%), 468 RAM blocks and 36 DSPs. Final setup slack:
+CPU +0.623 ns, RAM +0.693 ns, HDMI +0.206 ns; minimum hold +0.226 ns.
+Crossings pass at +0.712/+0.759 ns; all 12 detailed RAM paths pass (minimum
++0.693 ns). Root verified reports, unchanged 1,892 inputs and the 4,440,380-byte
+RBF SHA256 `85db1130b61fa21eb4129c41b032d23c26ec3407f94dc283b3c3eb14eebcabe7`.
+Evidence project: `scratch/cache_xline_first_fill_quartus_seed31_20260928/tree/`.
+This establishes fit/timing, not hardware functionality or speed.
+
+FPGA reports and provenance are preserved in the [seed31 archive](perf/cache_refill_20260927/cache_v2_fpga_seed31/README.md). Timing passes under the unchanged release constraints; external I/O including SDRAM_DQ remains unconstrained as in the baseline. This is not board-level I/O signoff.
+
+
+## Cache-v2 fullguest trial: invalid FPU/Mix timings (2026-09-28)
+
+The combined6c FPU + cache9e8c0582 trial **failed qualification**. All three
+original runs completed with exit0, unchanged223-input source hashes and
+passing refill/observer checks. Setup4277 images and controls are byte-exact
+completed6c. Nevertheless, the reviewed final guest displays are anomalous:
+
+| Run | Completed6c | Cache-v2 display | Interpretation |
+|---|---|---|---|
+| FPU | Average0.729; Whet3850.048; Matrix0.928s; FFT0.418s | Average−96.774; Whet11460.135; Matrix0.007s; FFT−738.000s | Invalid timing; no speed credit |
+| Mix | Average1.798 | Average330.532; Bubble−4548s, Queens−293s, Puzzle0.000s, Sieve−19808s | Invalid timing; no speed credit |
+| Color8 | 9.878s | 9.856s, rating1.075, iteration1 | Isolated visible result; does not qualify the combined trial |
+
+The Mix modal hides some rating/iteration cells; no hidden values are inferred.
+Automated PASS verifies capture/guard reconciliation and identities, not the
+guest timing oracle. Cause is **unproven**; these anomalies must not be
+classified as a harmless timer artifact. No aggregate improvement or hardware
+gain follows from this trial. Earlier native/fit results retain their own scope.
+
+FPU finished12:25:28UTC, Mix12:28:08UTC, Color12:01:32UTC. All original model
+and supervisor processes were absent at final verification. Vemu SHA727eb129…,
+source manifest8c70ed5a…, FPU6c157b3b and sole cache delta7cba7f73→9e8c0582
+remain pinned. The original calibrated4/2/fullrelease10CPU+SCSI_CACHE_OFF/
+unroll256/8+8KB recipe and separate golden disks were used. No retries or
+subsequent simulations, RTL edits, hardware tests or deployment occurred.
+
+[Compact evidence and comparisons](perf/cache_refill_20260927/cache_v2_fullmachine_guest_results/README.md)
+preserve exact setup/final screens, completed6c comparisons, terminal/checker
+records and separate manual reviews without rewriting original metadata.
+The goal is **paused**; the user chooses subsequent work. A possible next
+step, requiring authorization, is focused review of cross-line replay/coherence
+and guest timer reads/writes before any instrumented matched replay. No new
+run or corrective cause is claimed here.
+
+## FPU issue and latency trims P250..P253 (2026-09-28, afternoon)
+
+A new harness, `docs/perf/fpu_latency_20260928/run.sh`, runs the real core,
+FPU and caches in Verilator with a fixed-latency memory and prints clocks per
+instruction for straight-line runs of 16/32/64 copies. On the 0b2d265 baseline
+it showed that issue interval equals latency for every FP instruction (the
+FPU is one op at a time and the next FP instruction waited at decode), that
+nothing finished in fewer than five clocks, and that two of those clocks were
+the request/completion handshake. Four commits followed, each gated by
+`rtl/ap68040/tb/run_tests.sh` in both configurations and re-measured:
+
+| clocks per instruction | 0b2d265 | P250 | P251 | P252 | P253 | 68040 execute stage |
+|---|---:|---:|---:|---:|---:|---:|
+| FMOVE.X FPm,FPn | 5 | 5 | 4 | 4 | **3** | |
+| FADD.X, equal exponents | 6 | 6 | 5 | **4** | 4 | 3 |
+| FADD.X, exponent difference 5 or 40 | 7 | 7 | 5 | **4** | 4 | 3 |
+| FSUB.X, no cancellation | 8 | 8 | 6 | **5** | 5 | 3 |
+| FMUL.X FPm,FPn | 7 | 7 | 5 | **4** | 4 | 5 |
+| FDIV.X / FSQRT.X | 29 | 29 | 28 | **27** | 27 | 37.5 / 103 |
+| FCMP.X | 5 | 5 | 4 | 4 | 4 | |
+| FMUL.X (A0),FPn | 11 | 8 | 8 | 8 | 8 | |
+| FMUL.D (A0),FPn | 12 | 9 | 9 | 9 | **7** | |
+| FMUL.S (A0),FPn | 11 | 9 | 8 | 8 | **6** | |
+| FADD.D (A0)+,FPn | 12 | 10 | 9 | 9 | **7** | |
+| FMOVE.D (A0),FPn | 9 | 8 | 8 | 8 | **6** | |
+| FADD.X + FMOVE.X FPn,(A0) pair (bus latency 1) | 16 | 16 | 14 | 13 | 13 | |
+| FINTRZ / FMOVECR trap, handler RTE | 65 | 65 | 65 | 65 | 65 | |
+| same trap, handler FSAVE / FRESTORE / RTE | 167 | 163 | 163 | 163 | 163 | |
+| TRAP #0 / A-line round trip | 58 / 62 | 58 / 62 | 58 / 62 | 58 / 62 | 58 / 62 | |
+
+- **P250** (`ap040_core.v`): the decode, EA and operand reads of FP
+  instruction N+1 overlap the released op N; only the request waits
+  (`fp_issue`, `S_FPU_ISSUE`).
+- **P251** (`ap040_fpu.v`): done is combinational in F_WB, the DSP product is
+  registered in F_BIN, and the alignment shift is folded into F_ADDX through
+  the one shared shifter.
+- **P252**: F_ROUND writes the common result back itself (`round_wb_now`);
+  `accepted` is masked in that clock.
+- **P253**: dispatch-clock unpack for normal D and S memory sources (P221 did
+  X) and for the move class with a register or memory source.
+
+Memory-operand rows are then bound by the operand reads at one clock each
+(S 6, D 7, X 8) and stores by the bus.
+
+The timed-window breakdown ([fpu_subtest_breakdown_20260928](perf/fpu_subtest_breakdown_20260928/README.md))
+then showed where Matrix and FFT really spend their clocks: FMOVE.S loads
+and stores with d16(An) and d8(An,Xn) operands, 74 % of Matrix's FP
+instructions and 87 % of its FP clocks, at 10-14 core clocks each while the
+FPU FSM itself takes 4 and 2. A displacement or index cost four EA states.
+Whetstone spends 58.5 % of its window inside the ROM FPSP handler (5,060
+vector-11 traps for FSIN/FCOS/FATAN/FETOX/FLOGN, about 1,000 clocks each);
+cache refill is 0.04-1.3 % inside the timed windows. Two more commits:
+
+| clocks per instruction or group | 0b2d265 | P254 | P255 | P256 |
+|---|---:|---:|---:|---:|
+| FMOVE.S FPn,(A0) | 7 | 7 | **5** | 5 |
+| FMOVE.D FPn,(A0) | 9 | 9 | **8** | 8 |
+| FADD.X + FMOVE.S store pair | 12 | 12 | **9** | 9 |
+| FMOVE.S d16(A0),FPn / d8(A0,D0.L),FPn | 12 / 12 | 9 / 9 | 9 / 9 | **5 / 5** |
+| FMOVE.S FPn,d16(A0) | 11 | 11 | 7 | **5** |
+| FMOVE.D d16(A0),FPn / FPn,d16(A0) | 13 / 13 | 10 / 13 | 10 / 12 | **6 / 8** |
+| Matrix inner-loop group (load, FMUL, FADD, ADDQ) | 26 | 19 | 19 | **15** |
+| FFT butterfly group (2 loads, FSUB, FMUL, FADD, 2 stores) | 65 | 53 | 47 | **33** |
+
+- **P255** (`ap040_fpu.v`): normal single/double register stores are packed
+  in the dispatch clock (`st_s_*`, `st_d_*`) when in range and not trapping.
+- **P256** (`ap040_core.v`): S_FPU_DEC resolves d16(An), d16(PC) and the
+  brief-format indexed operands itself (`fp_inl_*`), with the index register
+  preselected on port B by `dispatch_fpu`; four EA states skipped.
+
+The per-clock traces of the trap paths (`docs/perf/fpu_latency_20260928/traces_b2ed1b0.md`)
+showed the handler prefetch fill (26 clocks: eight word requests with a gap
+each) as the largest phase of every exception, and the 13-longword UNIMP
+frame's save and restore as 103 of the 167-clock FPSP round trip. Two more:
+
+| clocks per round trip | b2ed1b0 | P257 | P258 |
+|---|---:|---:|---:|
+| TRAP #0 -> RTE | 58 | **49** | 49 |
+| A-line -> ADDQ / RTE | 63 | **54** | 54 |
+| FINTRZ vector 11, handler RTE | 65 | **56** | 56 |
+| same, handler FSAVE / FRESTORE / RTE | 151 (163 at bus latency 3) | 151 | **125** |
+| FSAVE -(A7) ; FRESTORE (A7)+, idle | 11 | 11 | **10** |
+
+- **P257** (`ap040_core.v`): the exception prefetch fetches the handler
+  window in aligned longwords (word only for an odd-word entry and the last
+  word), as `issue_ifetch` already did for redirects.
+- **P258**: FSAVE frame words issued back to back from one state; FSAVE
+  stores and FRESTORE reads hinted (`hint_st_fsave`, `hint_frest`).
+
+**Simulated guest results** ([qualification](perf/p252_p256_fpu_qual/README.md);
+same calibrated RAM model, one iteration per test, every final screen
+reviewed):
+
+| Speedometer 4.02 | 0b2d265 | 3c3ade8 (P250-251) | b2ed1b0 (P252-256) | ad7a0d4 (P257-258) | real Quadra 800 |
+|---|---:|---:|---:|---:|---:|
+| FPU average | 0.698 | 0.745 | 0.978 | **0.985** | 1.011 |
+| KWhetstones/s (FPU) | 3849 | 4058 | 4480 | **4591** | 5457 |
+| Matrix Multiply | 0.991 s | 0.921 s | 0.667 s | **0.667 s** | 0.713 s |
+| Fast Fourier | 0.447 s | 0.417 s | 0.283 s | **0.283 s** | 0.288 s |
+| CPU Mix | 1.798 | 1.809 | 1.816 | not run | 1.899 |
+| Color 8-bit | 9.878 s | 9.878 s | 9.878 s | not run | 8.211 s |
+
+Native kernels on the SDRAM path give byte-identical results with 14 %
+(Whetstone), 33 % (Matrix) and 37 % (FFT) fewer clocks, matching the guest
+time cuts.
+
+## On hardware: FPU 0.973, Mix 1.803 (2026-09-28 evening)
+
+`ad7a0d4`, disposable QuadSquad8 copy, 32 MB, Main `ff404af9` (the
+FujiNet/printer Main that was on the box; both Quadra checks pass). Two fits
+of the same RTL ([evidence](perf/hw_p258_seed31_20260928/README.md)):
+
+| | marginal seed 31 (CPU -0.226, md5 `19beb5b2`) | **clean seed 31 + effort settings (CPU +0.103, md5 `b7e88b81`)** | 6f0f159 | real Q800 |
+|---|---:|---:|---:|---:|
+| FPU average, median of 5 | 0.978 | **0.973** | 0.684 | 1.011 |
+| KWhet / Matrix / FFT | 4571 / 0.688 s / 0.279 s | 4563 / 0.693 s / 0.280 s | 3865 / 1.017 / 0.454 | 5457 / 0.713 / 0.288 |
+| Mix, median of 5 | 1.793 | **1.803** | 1.781 | 1.899 |
+| Color 8-bit | 9.876 / 9.829 s | 9.900 / 9.851 s | 9.944 | 8.211 |
+
+No invalid run in 24; the clock kept step with the MiSTer's for the whole
+session; Finder idle four minutes; clean Shut Down both times. Individual
+Mix rows move by up to 20 % between the two fits (Sieve 1.046 -> 0.842 s,
+Int. Matrix 0.463 -> 0.515, Bubble 0.710 -> 0.682) while each row is stable
+to a few ms within a session: per-row differences between builds are
+memory placement per boot, so only whole-Mix medians compare across builds.
+The clean fit needs `PLACEMENT_EFFORT_MULTIPLIER 2.0` and
+`ROUTER_TIMING_OPTIMIZATION_LEVEL MAXIMUM`, now in the `.qsf`.
+
+
+## Disk: the first throughput numbers (2026-09-28 evening)
+
+Release core `b7e88b81` (`SCSI_CACHE_OFF` recipe), disposable QuadSquad8
+copy, Main `ff404af9` with the write buffer, Samsung 239 GiB SDXC at 50 MHz
+high-speed, exFAT `sync,dirsync`, image opened `O_SYNC`. Evidence:
+[guest side](perf/disk_guest_20260928/README.md), [Main path](disk-main-path-20260928.md).
+
+| measure | result |
+|---|---|
+| Speedometer 4.02 PR Disk, median of 5 | **1.623** (1.579-1.626; real Quadra 800 3.443, 47 %) |
+| Finder duplicate, 3.96 MB Photoshop, 4 runs | 7.0 s median = **565 kB/s** (read phase then write phase) |
+| Finder duplicate, 5.2 MB Illustrator, source not in Linux's page cache | 9.0 s = 577 kB/s (same as cached: the SD card does not limit reads) |
+| sequential read | **1.5-1.9 MiB/s** (2.4 in the best 0.26 s window); about 205 us per 512-byte sector at best, 275-305 sustained |
+| sequential write | **0.96 MiB/s**; about 510 us per sector; Main's write buffer turns them into ~62 KiB `write()` calls and spends 15-20 % of the write phase blocked in them |
+| Main CPU | a busy-poll loop that always takes one whole core; not overloaded |
+
+Where the time goes (Main-side trace, same document): every hard-disk
+request is one 512-byte block, the 53C96 engine raises the next request only
+after the guest has drained or filled its single sector buffer, and Main
+serves one request per main-loop pass: about 110 us of SPI per read and 150
+per write (the 257-word data command; at 512 bytes per trip reads cannot
+pass about 4.4 MiB/s even with no waiting) plus 100-200 us from one request
+to the next. So roughly half of a read round trip is the transfer and half is
+Main's turnaround. The Performance Rating run also gave PR CPU 0.796 against
+0.895 on `31b6e99`, on one boot; Benchmark Mix on the same code went up, so
+that component needs a second boot before it means anything.
+
+Next, in order: the tight service loop in Main (built, `scratch/mac_main_sdprof_20260928/`,
+not installed; removes the turnaround, no FPGA change), then multi-block
+requests, then the DDR3 path if the SPI wire itself is the limit.
+
+
+## Disk: the ping-pong sector buffer, PR Disk 1.70 -> 2.46 (2026-09-29)
+
+`2b30d64` (P260, the 53C96 engine's sector buffer as two halves in the same
+M10K: reads prefetch sector n+1 while the guest drains n, writes flush one
+half while the guest fills the other), seed 27, every clock met, RBF md5
+`f769b9e1`, `MiSTer_20260928` (tight loop), 32 MB, disposable Quad Squad
+copy. Evidence: [hardware](perf/p260_hw_20260929/README.md),
+[simulation](perf/p260_pingpong_sim_20260929/README.md).
+
+| | 20260928 baseline (`ff404af9` Main) | tight-loop Main (`dc281d64`) | **P260 + tight loop (`f769b9e1`)** | real Quadra 800 |
+|---|---:|---:|---:|---:|
+| PR Disk, median of 5 | 1.623 | 1.699-1.741 | **2.462** | 3.443 |
+| PR | 1.124 | 1.211 | **1.266** | 1.605 |
+| 4 MB Finder duplicate, median | 7.0 s | 6.68 s | **4.95 s** | |
+| read phase | 1.5-1.9 MiB/s | 1.65 | **2.06-2.36** (best 0.25 s window 4.1) | |
+| write phase | 0.96 | 0.94-1.01 | **1.37-1.53** | |
+| CPU / Graphics / Math (PR) | 0.796* / 1.159 / 21.46 | 0.895 / 1.155 / 21.4 | 0.896 / 1.167 / 21.46 | |
+| FPU / Mix | | 0.955-0.981 / | 0.951 cold, 0.976 warm / 1.807 | 1.011 / 1.899 |
+
+(* a one-boot effect.) 30 duplicates on one boot, no hang; idle clock in
+step; clean Shut Down. In the sim the same engine made the randomised-
+latency copies 18-34 % faster and byte-identical; hardware gives 26 %. The
+disk is now at 72 % of the real machine on Speedometer's rating. What is left
+per sector: the 108 us SPI transfer of 512 bytes (the wire: 4.4 MiB/s at
+this transfer size) and, for writes, the O_SYNC card write behind Main's
+write buffer; the next levers are command-sized transfers (needs buffer
+space the chip does not have as ALMs) or the DDR3 path, and a flush thread
+in Main.

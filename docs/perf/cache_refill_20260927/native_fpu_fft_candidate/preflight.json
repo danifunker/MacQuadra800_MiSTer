@@ -1,0 +1,11 @@
+{
+  "variant": "candidate",
+  "candidate_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "baseline_source_manifest_sha256": "9536621ff62e1194671028c833734c9a00896cf38aeeec3cbe463fc1668e4712",
+  "RTL_differences": [
+    "ap68040/rtl/ap040_fpu.v"
+  ],
+  "TB_image_monitor_checker_byteexact_baseline": true,
+  "baseline_loop": 14301941,
+  "numerical_oracle": "NONE"
+}

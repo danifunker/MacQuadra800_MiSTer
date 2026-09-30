@@ -1,0 +1,11 @@
+--- native_fft_baseline/runner
++++ native_fft_candidate/runner
+@@ -30,7 +30,7 @@
+ tree = Path(os.environ['TREE']).resolve()
+ rtl = tree/'rtl'
+ ap = rtl/'ap68040/rtl'
+-assert hashlib.sha256((ap/'ap040_fpu.v').read_bytes()).hexdigest()=='2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465', 'baseline FPU required'
++assert hashlib.sha256((ap/'ap040_fpu.v').read_bytes()).hexdigest()=='73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f', 'candidate FPU required'
+ assert hashlib.sha256((ap/'ap040_cache.v').read_bytes()).hexdigest()=='7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747', 'baseline cache required'
+ d = a.out.resolve(); assert not d.exists(), "fresh output directory required"; d.mkdir(parents=True)
+ 

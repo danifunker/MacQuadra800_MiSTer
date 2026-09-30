@@ -1,0 +1,12 @@
+tb_ap040_program: running /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/boundary_baseline/irq.hex
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/tb_ap040_program_retained.v:817: $readmemh(/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/boundary_baseline/irq.hex): Not enough words in the file for the requested range [0:32767].
+phase 0 passed (582 cycles)
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/tb_ap040_program_retained.v:817: $readmemh(/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/boundary_baseline/irq.hex): Not enough words in the file for the requested range [0:32767].
+phase 1 passed (732 cycles)
+WARNING: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/tb_ap040_program_retained.v:817: $readmemh(/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/boundary_baseline/irq.hex): Not enough words in the file for the requested range [0:32767].
+phase 2 passed (732 cycles)
+ALL TESTS PASSED
+/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_bulk_irq_20260927/tb_ap040_program_retained.v:867: $finish called at 20755000 (1ps)
+RETAINED_COVERAGE offers=48 match_edges=144 bulk_edges=0 write_kills=12 bulk_irq_same_edge=0 irq_near_bulk=0 cancel_near_bulk=0 busy_releases=0
+HANDOFF entries=3 commits=3 paused=0 cancelled=0 loads=3 stores=0 peas=0
+BOUNDARY commits=3 injections=3

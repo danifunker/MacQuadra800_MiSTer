@@ -936,8 +936,22 @@ module scc
 	// From Z8530 datasheet: "In Local Loopback mode, CTS and DCD inputs are
 	// Per MAME z80scc.cpp: loopback forces CTS/DCD active internally for
 	// TX/RX state machines but does NOT change RR0 bits 5/3. RR0 reflects
-	// external pin state only. No cable connected = 0.
-	wire rr0_cts_a = 1'b0;
+	// external pin state only.
+	// Channel A's CTS is the real pin (2026-09-29), two flops synchronising
+	// the asynchronous input.  Polarity was settled on hardware, not from the
+	// datasheet: the Mac's drivers treat RR0 bit 5 = 0 as "clear to send" as
+	// this core presents it (the constant 0 it used to be is why the
+	// ImageWriter always printed), so the framework's active-low UART_CTS
+	// (the daemon's RTS) passes through UNinverted: RTS asserted -> 0 ->
+	// ready, RTS dropped -> 1 -> the Mac holds off.  The inverted first draft
+	// made the ImageWriter report "printer not responding" until RTS was
+	// cleared by hand (docs/perf/p262_trial_hw_20260929).  DCD stays 0.
+	reg cts_s1 = 1'b1, cts_s2 = 1'b1;
+	always @(posedge clk) begin
+		cts_s1 <= cts;
+		cts_s2 <= cts_s1;
+	end
+	wire rr0_cts_a = cts_s2;
 	wire rr0_dcd_a = 1'b0;
 	wire rr0_cts_b = 1'b0;
 	wire rr0_dcd_b = 1'b0;
@@ -1649,7 +1663,12 @@ wr_3_a[7:6]  -- bits per char
                         // Special case: For the ROM selftest which sets WR12=5E, WR13=00
                         // with WR4=44 or 4C (x1 or x16 clock mode, async), we need a much faster rate
                         // The selftest expects TX to complete very quickly
-                        if (wr13_a == 8'h00 && wr12_a == 8'h5E && (wr4_a == 8'h44 || wr4_a == 8'h4C)) begin
+                        // Only in LOCAL LOOPBACK (WR14 bit 4), which is how the ROM runs its
+                        // selftest: WR12=$5E / WR4=$44 is also the Serial Driver's ordinary
+                        // 1200-baud 8N1 setting (TC = 3.6864 MHz / (32 x 1200) - 2 = 94), and
+                        // an ungated shortcut ran real 1200-baud sessions at 4 clocks per bit
+                        // (quadra_scc_review.md finding 3, 2026-09-29).
+                        if (wr14_a[4] && wr13_a == 8'h00 && wr12_a == 8'h5E && (wr4_a == 8'h44 || wr4_a == 8'h4C)) begin
                             // Use a very fast baud rate for the ROM selftest case
                             // WR12=5E, WR13=00 would normally give a slow rate, but
                             // the test expects it to complete within ~255 polls
@@ -1657,12 +1676,15 @@ wr_3_a[7:6]  -- bits per char
                             if (baud_divid_speed_a != 24'd4)
                                 $display("SCC_BRG_FAST: Applying fast baud for WR4=%02x WR12=%02x WR13=%02x WR14=%02x", wr4_a, wr12_a, wr13_a, wr14_a);
                             baud_divid_speed_a <= 24'd4;  // Fast but not instant - about 88 cycles for full TX
+`ifdef SIMULATION
                         end else if (wr13_a == 8'h00 && wr12_a == 8'hBE && wr4_a == 8'h4C) begin
                             // Special case: Diagnostic disk external loopback test uses WR12=BE, WR13=00 (600 baud)
-                            // This is too slow for simulation - use faster rate
+                            // This is too slow for simulation - use faster rate.  Simulation only:
+                            // on hardware $BE / $4C is a real 600-baud 8N2 port (review finding 3).
                             if (baud_divid_speed_a != 24'd100)
                                 $display("SCC_BRG_FAST: Applying fast baud for diagnostic WR4=%02x WR12=%02x WR13=%02x WR14=%02x", wr4_a, wr12_a, wr13_a, wr14_a);
                             baud_divid_speed_a <= 24'd100;  // ~1200 clocks for 10-bit frame
+`endif
                         end else if (wr12_a == 8'h00 && wr13_a == 8'h00 && wr4_a[7:6] == 2'b00) begin
                             // Completely-uninitialized default: BRG enabled but WR4
                             // still 0 (x1 clock) and WR12/WR13 zero. Qualified on the
@@ -1834,15 +1856,17 @@ always @(posedge clk) begin
         reg [31:0] cpb_b;
         n_b = {wr13_b, wr12_b} + 16'd2;
         // Fast selftest special case for B, matching channel A behavior
-        if (wr13_b == 8'h00 && wr12_b == 8'h5E && (wr4_b == 8'h44 || wr4_b == 8'h4C)) begin
+        if (wr14_b[4] && wr13_b == 8'h00 && wr12_b == 8'h5E && (wr4_b == 8'h44 || wr4_b == 8'h4C)) begin   // loopback only, see channel A
             if (baud_divid_speed_b != 24'd4)
                 $display("SCC_BRG_FAST(B): WR4=%02x WR12=%02x WR13=%02x WR14=%02x", wr4_b, wr12_b, wr13_b, wr14_b);
             baud_divid_speed_b <= 24'd4;
+`ifdef SIMULATION
         end else if (wr13_b == 8'h00 && wr12_b == 8'hBE && wr4_b == 8'h4C) begin
-            // Special case: Diagnostic disk external loopback test (600 baud)
+            // Special case: Diagnostic disk external loopback test (600 baud), simulation only
             if (baud_divid_speed_b != 24'd100)
                 $display("SCC_BRG_FAST(B): diagnostic WR4=%02x WR12=%02x WR13=%02x WR14=%02x", wr4_b, wr12_b, wr13_b, wr14_b);
             baud_divid_speed_b <= 24'd100;
+`endif
         end else if (wr12_b == 8'h00 && wr13_b == 8'h00 && wr4_b[7:6] == 2'b00) begin
             // x1-clock qualifier — see channel A note (don't steal 57600's image)
             baud_divid_speed_b <= 24'd4;

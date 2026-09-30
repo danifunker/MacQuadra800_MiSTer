@@ -1,0 +1,18 @@
+--- scratch/native_fpu_kernel_20260928/prepare_image.py
++++ scratch/native_fpu_matrix_20260928/prepare_image.py
+@@ -44,7 +44,7 @@
+  fmovem.x fp4-fp7,($625100).l
+  move.l a7,($625088).l
+  move.w #1,($f108).l
+- move.w #1,-(a7)
++ move.w #3,-(a7)
+  jsr (a4)
+  addq.w #2,a7
+  move.w #2,($f108).l
+@@ -62,5 +62,5 @@
+ assert ram[0x600ea0:0x600ec8]==code[0xea0:0xec8]
+ for lo,hi in [(0,0x600000),(0x600ec8,0x625000),(0x625200,0x630000),(0x630000+len(entry),len(ram))]:assert ram[lo:hi]==original[lo:hi]
+ (D/'ram.bin').write_bytes(ram)
+-identity={'scope':'native tEsT12000 selector1 baseline fixture; no numerical oracle','input_image':str(source),'input_sha256':hashlib.sha256(original).hexdigest(),'output_sha256':hashlib.sha256(ram).hexdigest(),'resource':meta,'resource_sha256':hashlib.sha256(code).hexdigest(),'fork_sha256':hashlib.sha256(fork.read_bytes()).hexdigest(),'entry_sha256':hashlib.sha256(entry).hexdigest(),'entry_bytes':len(entry),'resource_base':'0x600000','a4_anchor':'0x608ea0','globals':'0x600ea0..0x600ec7','entry':'0x630000','stack':'0x640000','abi_area':'0x625000..0x6251ff','selector':1,'fpcr':'unchanged; monitor reports starting value','preserved_ranges_checked':True,'vector11':hex(int.from_bytes(ram[44:48],'big'))}
++identity={'scope':'native tEsT12000 selector3 baseline fixture; no numerical oracle','input_image':str(source),'input_sha256':hashlib.sha256(original).hexdigest(),'output_sha256':hashlib.sha256(ram).hexdigest(),'resource':meta,'resource_sha256':hashlib.sha256(code).hexdigest(),'fork_sha256':hashlib.sha256(fork.read_bytes()).hexdigest(),'entry_sha256':hashlib.sha256(entry).hexdigest(),'entry_bytes':len(entry),'resource_base':'0x600000','a4_anchor':'0x608ea0','globals':'0x600ea0..0x600ec7','entry':'0x630000','stack':'0x640000','abi_area':'0x625000..0x6251ff','selector':3,'fpcr':'unchanged; monitor reports starting value','preserved_ranges_checked':True,'vector11':hex(int.from_bytes(ram[44:48],'big'))}
+ (D/'image_identity.json').write_text(json.dumps(identity,indent=2)+'\n');print(json.dumps(identity,indent=2))

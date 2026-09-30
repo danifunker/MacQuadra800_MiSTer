@@ -1,0 +1,21 @@
+{
+  "all_RTL_and_nonmonitor_sources_match_previous_baseline": true,
+  "image_ROM_flags_romlat_identical": true,
+  "only_source_content_change": "tb_platform_whet.sv",
+  "flags": [
+    "-DAP040_EXPERIMENTAL_XSTORE",
+    "-DAP040_EXPERIMENTAL_LEA",
+    "-DAP040_EXPERIMENTAL_PIPELINE",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6",
+    "-DAP040_PIPELINE_MEMORY_ENTRY",
+    "-DAP040_PIPELINE_COMPARE",
+    "-DAP040_PIPELINE_EARLY_DRAIN",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "previous_loop_cycles": 17641650
+}

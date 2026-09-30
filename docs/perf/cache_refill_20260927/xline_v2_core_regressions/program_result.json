@@ -1,0 +1,197 @@
+{
+  "simulation_status": "PASS",
+  "scope": "five existing fullcore AP040 program regressions (FPU, FP frames, prepared FPSP resume, MMU, exceptions), CPU bus model only; no normalization unit, direct cache XSTORE/posted/phase benches, full machine, Quartus, or hardware",
+  "input_manifest_sha256": "9462419b0f13e9cdf173caef70f12abd5b24865af0bfcbe08aecfbc6563a9d81",
+  "input_count": 101,
+  "fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "cache_sha256": {
+    "baseline": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+    "candidate": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481"
+  },
+  "flags": [
+    "-g2012",
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "sim_flags": [
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "tools": {
+    "iverilog": {
+      "path": "/usr/bin/iverilog",
+      "sha256": "a6071e4b4a68feafca0c8ee0e6aa275eee9a43a108c62801cfd1eca6eab6d8a3"
+    },
+    "vvp": {
+      "path": "/usr/bin/vvp",
+      "sha256": "a10bd7d4a0850308ac8c2c98115b6a3084f9be978307610f2a521190c28f4023"
+    },
+    "assembler": {
+      "path": "/home/alans/mister/MacQuadra800_fixtures/wombat-vasm/vasmm68k_mot",
+      "sha256": "de9e4aa58e19078f6eb219d549159395211248e3ebfdd87be96effd84b800057"
+    }
+  },
+  "targets": {
+    "baseline": {
+      "fpu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 103656,
+          "1": 148700,
+          "2": 148700
+        },
+        "log_sha256": "1e7a6bf2b2eb5d1cea4a9be104a90e5f821a624af491f945a69fa155306c98f2",
+        "wall_seconds": 25.347,
+        "simulation_binary_sha256": "0c8ab3d3ab3d8acf2694b83395a49f8397edac6664a622bdf69f1b336666633d",
+        "program_binary_sha256": "90573314abd954c60f01bdd9131ea944c64c1e5f6d007f62e75ebd60b8440509",
+        "program_hex_sha256": "7cebbcef910fd0ade30af40c72de53ac3497b3c08e7cc3bcc849c2564c34d5b9"
+      },
+      "fpu_frames": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 8488,
+          "1": 12820,
+          "2": 12820
+        },
+        "log_sha256": "09d7f93b33428ffeb8a8c0abb3d27528cb4abef4e6d2ef2380bc968518a639b6",
+        "wall_seconds": 1.585,
+        "simulation_binary_sha256": "0c8ab3d3ab3d8acf2694b83395a49f8397edac6664a622bdf69f1b336666633d",
+        "program_binary_sha256": "5c968fe83e7ab588441754444cc0a2b794747832733f58832b1e74b1daddadfb",
+        "program_hex_sha256": "e29aa1b47ea1a4219385418e3053950f1110b1b21e08e063f642aebacbeab9ae"
+      },
+      "fpu_resume": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 14090,
+          "1": 21162,
+          "2": 21162
+        },
+        "log_sha256": "b8cbe828a1e2fcd23d6c47673c5bc30eaffb40ea2f6be1be14c5ac1582905012",
+        "wall_seconds": 2.286,
+        "simulation_binary_sha256": "0c8ab3d3ab3d8acf2694b83395a49f8397edac6664a622bdf69f1b336666633d",
+        "program_binary_sha256": "91469b73d3869ed01e9adecc963812588b508e7e834374fc10898ecc535ba788",
+        "program_hex_sha256": "cf4535c35b4f731325fc03f86b29b513416f22c2bc7b60210e05f9839c893a49"
+      },
+      "mmu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 340160,
+          "1": 505494,
+          "2": 505494
+        },
+        "log_sha256": "b81dfe6b32942d3ea330a4988cdb8f3731e489bb52e39d0313b29bbc24a10f39",
+        "wall_seconds": 63.572,
+        "simulation_binary_sha256": "0c8ab3d3ab3d8acf2694b83395a49f8397edac6664a622bdf69f1b336666633d",
+        "program_binary_sha256": "67164b48ce0f046e33a12c762888fc74cdfb1f03746b4bbe419caffe7d295fea",
+        "program_hex_sha256": "672b5250ce7b6da7a4241d8dd29d82ef61253eb543c3f3b3a1631d5468de69ed"
+      },
+      "exceptions": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 140688,
+          "1": 213186,
+          "2": 213182
+        },
+        "log_sha256": "32d9050845554a4a040d46d0d77008fe135de262c052f9bf61694a3e4a6d951a",
+        "wall_seconds": 24.971,
+        "simulation_binary_sha256": "0c8ab3d3ab3d8acf2694b83395a49f8397edac6664a622bdf69f1b336666633d",
+        "program_binary_sha256": "14ce53bae2d90af4363ca9b33b55f71f7a114e90cf31d13de86968b3e3ef5ecf",
+        "program_hex_sha256": "8c3cbfb050469821fcae1bbd9a3fa965a997148621902fb2aa9756ef20333264"
+      }
+    },
+    "candidate": {
+      "fpu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 103656,
+          "1": 148700,
+          "2": 148700
+        },
+        "log_sha256": "1e7a6bf2b2eb5d1cea4a9be104a90e5f821a624af491f945a69fa155306c98f2",
+        "wall_seconds": 25.453,
+        "simulation_binary_sha256": "6d88285e324c50618b9326562495be5c0aa46b533bbb7e9a29cf47f35c061dbe",
+        "program_binary_sha256": "90573314abd954c60f01bdd9131ea944c64c1e5f6d007f62e75ebd60b8440509",
+        "program_hex_sha256": "7cebbcef910fd0ade30af40c72de53ac3497b3c08e7cc3bcc849c2564c34d5b9"
+      },
+      "fpu_frames": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 8488,
+          "1": 12820,
+          "2": 12820
+        },
+        "log_sha256": "09d7f93b33428ffeb8a8c0abb3d27528cb4abef4e6d2ef2380bc968518a639b6",
+        "wall_seconds": 1.586,
+        "simulation_binary_sha256": "6d88285e324c50618b9326562495be5c0aa46b533bbb7e9a29cf47f35c061dbe",
+        "program_binary_sha256": "5c968fe83e7ab588441754444cc0a2b794747832733f58832b1e74b1daddadfb",
+        "program_hex_sha256": "e29aa1b47ea1a4219385418e3053950f1110b1b21e08e063f642aebacbeab9ae"
+      },
+      "fpu_resume": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 14090,
+          "1": 21162,
+          "2": 21162
+        },
+        "log_sha256": "b8cbe828a1e2fcd23d6c47673c5bc30eaffb40ea2f6be1be14c5ac1582905012",
+        "wall_seconds": 2.336,
+        "simulation_binary_sha256": "6d88285e324c50618b9326562495be5c0aa46b533bbb7e9a29cf47f35c061dbe",
+        "program_binary_sha256": "91469b73d3869ed01e9adecc963812588b508e7e834374fc10898ecc535ba788",
+        "program_hex_sha256": "cf4535c35b4f731325fc03f86b29b513416f22c2bc7b60210e05f9839c893a49"
+      },
+      "mmu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 340160,
+          "1": 505494,
+          "2": 505494
+        },
+        "log_sha256": "b81dfe6b32942d3ea330a4988cdb8f3731e489bb52e39d0313b29bbc24a10f39",
+        "wall_seconds": 63.316,
+        "simulation_binary_sha256": "6d88285e324c50618b9326562495be5c0aa46b533bbb7e9a29cf47f35c061dbe",
+        "program_binary_sha256": "67164b48ce0f046e33a12c762888fc74cdfb1f03746b4bbe419caffe7d295fea",
+        "program_hex_sha256": "672b5250ce7b6da7a4241d8dd29d82ef61253eb543c3f3b3a1631d5468de69ed"
+      },
+      "exceptions": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 140688,
+          "1": 213186,
+          "2": 213182
+        },
+        "log_sha256": "32d9050845554a4a040d46d0d77008fe135de262c052f9bf61694a3e4a6d951a",
+        "wall_seconds": 24.979,
+        "simulation_binary_sha256": "6d88285e324c50618b9326562495be5c0aa46b533bbb7e9a29cf47f35c061dbe",
+        "program_binary_sha256": "14ce53bae2d90af4363ca9b33b55f71f7a114e90cf31d13de86968b3e3ef5ecf",
+        "program_hex_sha256": "8c3cbfb050469821fcae1bbd9a3fa965a997148621902fb2aa9756ef20333264"
+      }
+    }
+  },
+  "workers": 2,
+  "command_timeout_seconds": 240,
+  "global_timeout_seconds": 3600,
+  "immutable_inputs_revalidated": 101,
+  "wall_seconds": 117.95
+}

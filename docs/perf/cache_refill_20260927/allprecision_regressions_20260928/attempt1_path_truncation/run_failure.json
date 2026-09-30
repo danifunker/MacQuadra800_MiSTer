@@ -1,0 +1,12 @@
+{
+  "run_session_id": 99386,
+  "exit_status": 1,
+  "preflight": "PASS; immutable manifest and tools checked; no suite output existed before run",
+  "completed_terminal_tests": ["baseline/fpu PASS"],
+  "failed_at": "baseline/fpu_frames",
+  "no_candidate_tests_started": true,
+  "root_cause": "runner passed a 130-byte absolute +prog path to the existing TB's 128-byte prog_file buffer; vvp dropped the leading /h and $readmemh could not open the image",
+  "rtl_or_testbench_modified": false,
+  "raw_program_log": "outputs/baseline/fpu_frames.log",
+  "failed_runner_manifest_sha256": "7ef899379c29ca757b4edfbe6ddd865355e3803e2775ef1ed3af6b755193e3ba"
+}

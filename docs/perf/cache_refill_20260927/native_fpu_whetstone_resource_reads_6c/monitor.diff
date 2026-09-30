@@ -1,0 +1,36 @@
+--- qualified_profile/next_monitor.svh
++++ resource_profile/next_monitor.svh
+@@ -18,6 +18,7 @@
+  longint unsigned start_edge,window_edges;
+ } np_episode_t;
+ np_episode_t np_e[2];
++`include "resource_read_monitor.svh"
+ function automatic int np_pc_region(input logic [31:0] a);
+  if(a>=32'h40800000 && a<32'h40900000)return 0;
+  if(a>=32'h60029a && a<32'h6006a2)return 1;
+@@ -72,6 +73,7 @@
+   np_e[p].pc_region=pc_bucket;np_e[p].addr_region=np_address_region(addr);
+   np_e[p].kind=instr?0:(write?2:1);np_e[p].policy=policy;np_e[p].bypassed=bypassed;
+   np_e[p].start_edge=np_tick;np_e[p].first_window=in_loop;np_starts[p]++;
++  if(p==1)rr_begin();
+  end
+  if(np_e[p].active)begin
+   if(req && {addr,instr,write,size,fc}!=={np_e[p].addr,np_e[p].instr,np_e[p].write,np_e[p].size,np_e[p].fc})
+@@ -82,9 +84,11 @@
+    np_e[p].window_edges++;np_occ[p]++;np_wait[p][pc_bucket][cpu_bucket][fst_bucket]++;
+    np_e[p].busy_seen|=(fst_bucket!=0);np_e[p].dec_seen|=(cpu_bucket==1);
+   end
++  if(p==1)rr_sample();
+   if(ack || fault)begin
+    if(ack && fault)$fatal(1,"NEXT ack and wrapper fault coincide plane=%0d",p);
+    np_ends[p]++;latency=np_tick-np_e[p].start_edge+1;
++   if(p==1 && !fault)rr_end(latency);
+    if(np_e[p].touched)begin
+     if(fault)begin np_faults[p]++;$fatal(1,"NEXT wrapper fault during measured episode plane=%0d",p);end
+     if(np_e[p].first_window && np_e[p].window_edges==latency)begin
+@@ -172,4 +176,5 @@
+   for(int a=0;a<2;a++)$display("NEXT_BYPASS plane=%0d bit=%0d n=%0d",p,a,np_bypass[p][a]);
+  end
+  $display("NEXT_TOTAL edges=%0d joint=%0d busy_op=%0d",np_edges,s,op_s);
++ rr_finish();
+ endtask

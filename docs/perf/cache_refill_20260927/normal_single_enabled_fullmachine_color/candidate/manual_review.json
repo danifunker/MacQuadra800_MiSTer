@@ -1,0 +1,25 @@
+{
+  "reviewer": "/root",
+  "finding": "Final frame5525 shows tests done; Eightbit9.878seconds, rating1.072, iteration1; othercoloriterations0. Setup4277 reviewed with onlyEightbit selected, iteration1. Same displayed9.878 as originalbaseline and prior73bc.",
+  "guest_seconds": 9.878,
+  "rating": 1.072,
+  "iterations": 1,
+  "baseline_seconds": 9.878,
+  "screens": {
+    "screenshot_f4277.png": "92082dbb64531d12b08550b9861840f7c48f034cbd143afed3bdd6c994794810",
+    "screenshot_f5525.png": "a810f0be5774f5dd6abcf147839992c19f3cb6e2b59f3c9da30fc1d044060e67"
+  },
+  "baseline_screens": {
+    "screenshot_f4277.png": "92082dbb64531d12b08550b9861840f7c48f034cbd143afed3bdd6c994794810",
+    "screenshot_f5525.png": "a810f0be5774f5dd6abcf147839992c19f3cb6e2b59f3c9da30fc1d044060e67"
+  },
+  "byte_exact_baseline_screens": {
+    "screenshot_f4277.png": true,
+    "screenshot_f5525.png": true
+  },
+  "independent_source_manifest_check": "PASS all223",
+  "independent_binary_sha256": "2f16b5f63372788b8dc1b63ae8d657cdaad67c3e5232524e9be1edb0d14e6ebf",
+  "independent_refill_check": "PASS",
+  "independent_observer_check": "PASS allow_empty; raw273, normal0, allguards0, mismatch0",
+  "scope": "Displayed guest time comparison; fixed-window profile totals do not measure guest speed."
+}

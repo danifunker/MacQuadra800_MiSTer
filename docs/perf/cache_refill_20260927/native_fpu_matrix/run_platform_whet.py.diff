@@ -1,0 +1,26 @@
+--- scratch/native_fpu_kernel_20260928/run_platform_whet.py
++++ scratch/native_fpu_matrix_20260928/run_platform_whet.py
+@@ -25,7 +25,7 @@
+ a = p.parse_args()
+ 
+ native_identity=json.loads((HERE/'image_identity.json').read_text())
+-assert native_identity['selector']==1 and native_identity['resource_sha256']=='34ee511807b66d2360c505b352d0946c01730d764843ed815cfd49bab2fa8aa0'
++assert native_identity['selector']==3 and native_identity['resource_sha256']=='34ee511807b66d2360c505b352d0946c01730d764843ed815cfd49bab2fa8aa0'
+ assert hashlib.sha256(a.image.read_bytes()).hexdigest()==native_identity['output_sha256'],'native image identity'
+ tree = Path(os.environ['TREE']).resolve()
+ rtl = tree/'rtl'
+@@ -79,7 +79,7 @@
+ 
+ def run(cmd, log):
+     with (d/log).open('w') as f:
+-        r = subprocess.run(list(map(str, cmd)), cwd=d, stdout=f, stderr=subprocess.STDOUT, timeout=300)
++        r = subprocess.run(list(map(str, cmd)), cwd=d, stdout=f, stderr=subprocess.STDOUT, timeout=600)
+     text = (d/log).read_text(errors='replace')
+     if r.returncode:
+         sys.exit(f'{log} failed:\n' + text[-4000:])
+@@ -117,4 +117,5 @@
+ print('NATIVE_ABI D3_D7_A2_A6=match FP4_FP7=match SP=640000 A4=600000 D0=608EA0 code=unchanged')
+ assert 'SDRAM_PROTOCOL_ERRORS 0' in text, 'chip errors'
+ assert re.search(r'BERR 0\s+IPL_ASSERTED_CYCLES 0',text), 'bus error or IRQ'
++assert 'MATRIX_TRAPS alloc_calls=123 alloc_returns=123 free_calls=123 free_returns=123' in text, 'Matrix trap lifecycle'
+ print('NATIVE_QUALIFIED native_FPSP_coverage=1 ABI_match=1 guest_600D=1 chip_errors=0 numerical_oracle=none')

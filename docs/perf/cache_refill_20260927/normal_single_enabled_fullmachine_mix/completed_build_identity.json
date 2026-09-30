@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "binary_sha256": "2f16b5f63372788b8dc1b63ae8d657cdaad67c3e5232524e9be1edb0d14e6ebf",
+  "candidate_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "source_manifest_sha256": "6ce6d46953c97a8de7c4944d189ef5af62dcfcdb712a896f8164e99bb03c3094",
+  "sim_v_sha256": "372f1a1988c55a900d45132bfde6e251e439143c299464081886c39dbf878c36",
+  "sim_main_sha256": "3a1902f3d4076dfbcce62265cb5da34c9ebcba57cb4e73216c577d502326f634",
+  "observer_sha256": "10d57ba74f446d4e91815cf7f24baf9551370eabe326f93b83e6282d514e8be1",
+  "ROM_sha256": "045c02746b5f15f83132d33c5414f806e7b049f3bfe53a7bd0ecacb8e072d673",
+  "tool_version": "Verilator 5.050 2026-07-01 rev v5.050",
+  "generated_verFiles_sha256": "1daae347cc07bc4cd7c85ec80f897984181c4e01011f917fd8cc37d1ba0c8196",
+  "build_log_sha256": "90dc6da62181e8ca04d5feb7cefed127980fee325b516e66bf66460be99ef60b",
+  "flags": "all10 releaseCPU plusSCSI_CACHE_OFF;unroll256;8+8cache;model4/2",
+  "supervisor_sha256": "0bee4ba3eaf9c27cdc1e92fee87d794d081997118efef42f81acb31cab2f7471"
+}

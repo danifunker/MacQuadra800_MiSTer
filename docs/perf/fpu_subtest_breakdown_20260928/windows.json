@@ -1,0 +1,2024 @@
+[
+ {
+  "name": "Whetstone",
+  "segments": [
+   95,
+   139
+  ],
+  "start_cycle": 18751498,
+  "end_cycle": 27298914,
+  "start_trap": "Microseconds",
+  "start_pc": "007597F6",
+  "cycles": 8547416,
+  "seconds_at_32.90112MHz": 0.2597910344693433,
+  "dispatches": 1377173,
+  "fpu_not_idle": 1266996,
+  "fst": {
+   "F_SRC": 78186,
+   "F_NORM": 7983,
+   "F_EXEC": 117425,
+   "F_WB": 258832,
+   "F_SHR": 56789,
+   "F_PACKI": 3489,
+   "F_BIN": 174259,
+   "F_ADDX": 82096,
+   "F_MULT": 127442,
+   "F_DIVL": 53040,
+   "F_SQRTL": 21390,
+   "F_NORM2": 23749,
+   "F_ROUND": 258827,
+   "F_STDONE": 3489
+  },
+  "fpdec_cycles": 877585,
+  "fpdec_wait_bg": 487215,
+  "fp_waited_instrs": 230837,
+  "fpu_bg_cycles": 825375,
+  "fpu_busy_while_bg": 566544,
+  "fpcc_wait_bg": 0,
+  "fsave_wait_bg": 0,
+  "exc0_wait_bg": 71,
+  "fp_read_states": {
+   "S_FPU_RD": 123057,
+   "S_FPU_RD2": 0,
+   "S_FPU_IMM": 12522,
+   "S_FPU_EA": 156537,
+   "S_FPU_AN": 0,
+   "S_FPU_DREG": 6060,
+   "S_MRD->S_FPU_RD": 673204,
+   "S_MRD->S_FPU_RD2": 0
+  },
+  "fp_store_states": {
+   "S_FPU_WR": 154623,
+   "S_MWR->S_FPU_WR": 156600
+  },
+  "fp_go": 1077759,
+  "fp_other_states": {
+   "S_FPU_CR": 70840,
+   "S_FPU_CR2": 20240,
+   "S_FPU_MVM": 88948,
+   "S_FPU_MVM2": 229960,
+   "S_FPU_CRD": 10119,
+   "S_FPU_CRI": 15180
+  },
+  "fp_instructions": 390370,
+  "cpgen_dispatch": 390370,
+  "fbcc_dispatch": 0,
+  "fscc_dispatch": 0,
+  "fsave_dispatch": 10120,
+  "frestore_dispatch": 0,
+  "fp_by_opmode": {
+   "FMOVE": 83613,
+   "FMUL": 76189,
+   "FADD": 75092,
+   "FMOVE out": 54177,
+   "FMOVE ea->cr": 25299,
+   "FMOVEM FP->ea": 20971,
+   "FMOVEM ea->FP": 15911,
+   "FDIV": 11200,
+   "FSUB": 10848,
+   "FMOVE cr->ea": 10120,
+   "FCOS": 1920,
+   "FNEG": 960,
+   "FSQRT": 930,
+   "FETOX": 930,
+   "FLOGN": 930,
+   "FATAN": 640,
+   "FSIN": 640
+  },
+  "fp_by_source": {
+   "reg": 128838,
+   "X": 92297,
+   "ctl/multi": 72301,
+   "store.X": 50688,
+   "D": 25360,
+   "S": 11337,
+   "W": 4200,
+   "store.L": 3489,
+   "L": 1860
+  },
+  "fp_by_opmode_source": {
+   "FMOVE out / store.X": 50688,
+   "FMOVE / reg": 41798,
+   "FMUL / reg": 39601,
+   "FADD / reg": 38599,
+   "FMOVE / X": 29061,
+   "FMUL / X": 28739,
+   "FMOVE ea->cr / ctl/multi": 25299,
+   "FMOVEM FP->ea / ctl/multi": 20971,
+   "FADD / X": 17538,
+   "FMOVEM ea->FP / ctl/multi": 15911,
+   "FADD / D": 13897,
+   "FMOVE cr->ea / ctl/multi": 10120,
+   "FDIV / X": 8990,
+   "FSUB / X": 7009,
+   "FMOVE / D": 5764,
+   "FMUL / D": 5059,
+   "FADD / S": 5058,
+   "FMOVE / W": 4200,
+   "FMOVE out / store.L": 3489,
+   "FMUL / S": 2790,
+   "FSUB / S": 2559,
+   "FDIV / reg": 2210,
+   "FCOS / reg": 1920,
+   "FMOVE / L": 1860,
+   "FNEG / X": 960,
+   "FSQRT / reg": 930,
+   "FETOX / reg": 930,
+   "FLOGN / reg": 930,
+   "FMOVE / S": 930,
+   "FATAN / reg": 640,
+   "FSIN / reg": 640,
+   "FSUB / reg": 640,
+   "FSUB / D": 640
+  },
+  "fp_top_forms": [
+   [
+    "FMOVE FPm,FPn",
+    41798,
+    226038
+   ],
+   [
+    "FMUL FPm,FPn",
+    39601,
+    242160
+   ],
+   [
+    "FADD FPm,FPn",
+    38599,
+    225581
+   ],
+   [
+    "FMOVE.X FPn,-(An)",
+    26970,
+    242742
+   ],
+   [
+    "FMUL.X d16(An),FPn",
+    25949,
+    408011
+   ],
+   [
+    "FMOVE.X d16(An),FPn",
+    23070,
+    325603
+   ],
+   [
+    "FMOVE.X FPn,d16(An)",
+    19518,
+    282879
+   ],
+   [
+    "FMOVE(M) #imm,FPcr",
+    15180,
+    45592
+   ],
+   [
+    "FADD.D d16(PC),FPn",
+    13897,
+    255084
+   ],
+   [
+    "FADD.X d16(An),FPn",
+    11490,
+    167677
+   ],
+   [
+    "FMOVEM FPlist,-(An)",
+    10851,
+    190175
+   ],
+   [
+    "FMOVEM (An)+,FPlist",
+    10851,
+    127815
+   ],
+   [
+    "FMOVEM FPlist,d16(An)",
+    10120,
+    253038
+   ],
+   [
+    "FDIV.X d16(An),FPn",
+    8990,
+    305678
+   ],
+   [
+    "FMOVE.D d16(PC),FPn",
+    5758,
+    94128
+   ]
+  ],
+  "fp_form_cpu_cycles_total": 4571816,
+  "exceptions": {
+   "10 A-line": {
+    "count": 5,
+    "rte_matched": 0,
+    "entry_to_rte_cycles": 0,
+    "abandoned": 3
+   },
+   "11 F-line / FP unimplemented instr.": {
+    "count": 5060,
+    "rte_matched": 5060,
+    "entry_to_rte_cycles": 4999384,
+    "abandoned": 0
+   },
+   "25 autovector L1 (VIA1)": {
+    "count": 228,
+    "rte_matched": 228,
+    "entry_to_rte_cycles": 189338,
+    "abandoned": 0
+   },
+   "26 autovector L2 (VIA2/slot)": {
+    "count": 21,
+    "rte_matched": 21,
+    "entry_to_rte_cycles": 34963,
+    "abandoned": 0
+   }
+  },
+  "exception_detail": [
+   [
+    "vec11 FCOS FPm,FPn",
+    1920,
+    1920,
+    1927805
+   ],
+   [
+    "vec11 FETOX FPm,FPn",
+    930,
+    930,
+    907206
+   ],
+   [
+    "vec11 FLOGN FPm,FPn",
+    930,
+    930,
+    971672
+   ],
+   [
+    "vec11 FATAN FPm,FPn",
+    640,
+    640,
+    570803
+   ],
+   [
+    "vec11 FSIN FPm,FPn",
+    640,
+    640,
+    621898
+   ],
+   [
+    "vec25",
+    228,
+    228,
+    189338
+   ],
+   [
+    "vec26",
+    21,
+    21,
+    34963
+   ],
+   [
+    "A-line A055",
+    1,
+    0,
+    0
+   ],
+   [
+    "A-line A193",
+    1,
+    0,
+    0
+   ],
+   [
+    "A-line A829",
+    1,
+    0,
+    0
+   ],
+   [
+    "A-line A851",
+    1,
+    0,
+    0
+   ],
+   [
+    "A-line A924",
+    1,
+    0,
+    0
+   ]
+  ],
+  "exc_stack_drops": 7,
+  "rte_count": 5309,
+  "rte_unmatched": 0,
+  "aline": {
+   "A055": 1,
+   "A193 Microseconds": 1,
+   "A829": 1,
+   "A851": 1,
+   "A924": 1
+  },
+  "cache_state": {
+   "C_IDLE/D": 6994887,
+   "C_IDLE/I": 586686,
+   "C_LOOK/D": 82942,
+   "C_LOOK/I": 44160,
+   "C_FILL/D": 3480,
+   "C_FILL/I": 6673,
+   "C_TAGW/D": 351,
+   "C_TAGW/I": 662,
+   "C_PASS/D": 807262,
+   "C_PASS/I": 9925,
+   "C_XSTORE_LOOK/D": 5194,
+   "C_XSTORE_WRITE/D": 5194
+  },
+  "dcache_fill_cycles": 3480,
+  "icache_fill_cycles": 6673,
+  "dcache_fills": 351,
+  "icache_fills": 662,
+  "fill_by_core_state": {
+   "S_MRD": 5079,
+   "S_FETCH": 1774,
+   "S_MWR": 981,
+   "S_IMMF": 569,
+   "S_DECODE": 318,
+   "S_PIPE_START": 227,
+   "S_FPU_GO": 204,
+   "S_FPU_DEC": 163,
+   "S_EA_D16": 105,
+   "S_PIPE_REGS": 100,
+   "S_EPF_FILL": 74,
+   "S_EA_DISP": 54,
+   "S_FPU_EA": 44,
+   "S_MD_WAIT": 35,
+   "S_FPU_RD": 35,
+   "S_BF_MEM1": 34,
+   "S_BF_EXECM": 34,
+   "S_EXEC": 32,
+   "S_EXC0_F2": 23,
+   "S_PIPE_SRD": 22,
+   "S_EA_ABS": 19,
+   "S_PIPE_DEA": 18,
+   "S_EA_BD": 17,
+   "S_MOVEC2": 12,
+   "S_FPU_IMM": 11,
+   "S_PIPE_DST": 11,
+   "S_MOVEM_SET": 10,
+   "S_MOVEM_SET2": 10,
+   "S_MOVEM_LOOP": 10,
+   "S_LINK2": 9,
+   "S_EXC0": 8,
+   "S_EPF_GAP": 8,
+   "S_PIPE_DDONE": 8,
+   "S_PIPE_SDONE": 7,
+   "S_BCC_EXT": 7,
+   "S_NEXT": 6,
+   "S_EXC1": 5,
+   "S_EA_EXTW2": 5,
+   "S_BF1": 5,
+   "S_BF_MEM0": 5,
+   "S_JSR1": 4,
+   "S_EA_MIND": 4,
+   "S_JMP1": 4,
+   "S_PIPE_SREG": 3,
+   "S_EXPERIMENT_PIPE": 3,
+   "S_BF0": 3,
+   "S_FPU_MVM": 3,
+   "S_FPU_CRD": 3,
+   "S_SROP": 3,
+   "S_EXC_JMP": 2,
+   "S_BF_REG": 2,
+   "S_BF_REGX": 2,
+   "S_BF_M2": 2,
+   "S_BF_M3": 2,
+   "S_FPU_CR2": 2,
+   "S_MOVEM_EA": 2,
+   "S_FPU_CR": 1,
+   "S_FPU_CRI": 1,
+   "S_SHIFT": 1,
+   "S_DBCC1": 1,
+   "S_LEA1": 1,
+   "S_SHIFT_WB": 1,
+   "S_CHK2_C": 1,
+   "S_FPU_DREG": 1,
+   "S_FPU_MVM2": 1,
+   "S_RTE_PC": 1,
+   "S_EXG1": 1
+  },
+  "store_buffer": {
+   "nonempty": 1518462,
+   "full_or_blocked": 0,
+   "read_behind_store": 356,
+   "pushes": 587434
+  },
+  "partition": {
+   "integer execute": 2036990,
+   "fetch/decode/ext words": 1281424,
+   "FP issue/wait (S_FPU_GO)": 1077759,
+   "FP dispatch (S_FPU_DEC)": 877585,
+   "FP operand EA/read [mem read]": 673204,
+   "integer memory read": 562664,
+   "FP control/FMOVEM": 435287,
+   "FP operand EA/read": 298176,
+   "integer memory write": 220331,
+   "FP control/FMOVEM [mem write]": 171429,
+   "FP control/FMOVEM [mem read]": 159042,
+   "FP store (S_FPU_WR) [mem write]": 156600,
+   "FP store (S_FPU_WR)": 154623,
+   "FP branch/FSAVE/FRESTORE": 141680,
+   "FP branch/FSAVE/FRESTORE [mem write]": 131573,
+   "exception entry/RTE": 69145,
+   "exception entry/RTE [mem read]": 52690,
+   "exception entry/RTE [mem write]": 47214
+  },
+  "fpu_foreground_busy": 700452,
+  "rom_pc_cycles": 4987016,
+  "core_states_top": [
+   [
+    "S_MRD",
+    1447600
+   ],
+   [
+    "S_FPU_GO",
+    1077759
+   ],
+   [
+    "S_FPU_DEC",
+    877585
+   ],
+   [
+    "S_MWR",
+    727147
+   ],
+   [
+    "S_DECODE",
+    503719
+   ],
+   [
+    "S_IMMF",
+    404955
+   ],
+   [
+    "S_PIPE_REGS",
+    342437
+   ],
+   [
+    "S_EA_D16",
+    311378
+   ],
+   [
+    "S_PIPE_START",
+    276050
+   ],
+   [
+    "S_FETCH",
+    233364
+   ],
+   [
+    "S_FPU_MVM2",
+    229960
+   ],
+   [
+    "S_EA_DISP",
+    225281
+   ],
+   [
+    "S_MD_WAIT",
+    223495
+   ],
+   [
+    "S_FPU_EA",
+    156537
+   ],
+   [
+    "S_FPU_WR",
+    154623
+   ],
+   [
+    "S_EXEC",
+    152716
+   ],
+   [
+    "S_FPU_RD",
+    123057
+   ],
+   [
+    "S_EPF_FILL",
+    96402
+   ],
+   [
+    "S_FPU_MVM",
+    88948
+   ],
+   [
+    "S_FPU_CR",
+    70840
+   ]
+  ],
+  "mrd_by_return_top": [
+   [
+    "S_FPU_RD",
+    673204
+   ],
+   [
+    "S_PIPE_SDONE",
+    293818
+   ],
+   [
+    "S_FPU_MVM3",
+    128682
+   ],
+   [
+    "S_PIPE_DDONE",
+    108512
+   ],
+   [
+    "S_RET2",
+    47200
+   ],
+   [
+    "S_BF_MEM1",
+    41171
+   ],
+   [
+    "S_FPU_CR",
+    30360
+   ],
+   [
+    "S_PIPE_LOAD_RETURN",
+    25718
+   ],
+   [
+    "S_MOVEM_LD",
+    24416
+   ],
+   [
+    "S_EXC_JMP",
+    20810
+   ],
+   [
+    "S_UNLK3",
+    14204
+   ],
+   [
+    "S_RTE_PC",
+    10641
+   ]
+  ],
+  "pc_top_256B": [
+   [
+    "A0662C00",
+    1951290
+   ],
+   [
+    "4088DB00",
+    1183302
+   ],
+   [
+    "A0662B00",
+    887783
+   ],
+   [
+    "4088DF00",
+    664332
+   ],
+   [
+    "40892000",
+    652278
+   ],
+   [
+    "A0662A00",
+    417584
+   ],
+   [
+    "4088E100",
+    385450
+   ],
+   [
+    "40892700",
+    333603
+   ],
+   [
+    "40893200",
+    306324
+   ],
+   [
+    "40891F00",
+    305584
+   ],
+   [
+    "40891100",
+    231640
+   ],
+   [
+    "40892F00",
+    185025
+   ],
+   [
+    "4088D900",
+    162047
+   ],
+   [
+    "A0662D00",
+    145917
+   ],
+   [
+    "40891000",
+    116918
+   ]
+  ],
+  "opcode_top": [
+   [
+    "F200",
+    140888
+   ],
+   [
+    "F22E",
+    74675
+   ],
+   [
+    "22D8",
+    55440
+   ],
+   [
+    "F227",
+    37821
+   ],
+   [
+    "700C",
+    36960
+   ],
+   [
+    "F23A",
+    32972
+   ],
+   [
+    "F22C",
+    32090
+   ],
+   [
+    "41EE",
+    28670
+   ],
+   [
+    "4E75",
+    25506
+   ],
+   [
+    "D1C0",
+    23610
+   ],
+   [
+    "0C80",
+    23438
+   ],
+   [
+    "D3C0",
+    22609
+   ],
+   [
+    "5244",
+    22210
+   ],
+   [
+    "0280",
+    21227
+   ],
+   [
+    "F23C",
+    21117
+   ],
+   [
+    "0C00",
+    20300
+   ],
+   [
+    "422E",
+    20240
+   ],
+   [
+    "E9EE",
+    20240
+   ],
+   [
+    "43EE",
+    18480
+   ],
+   [
+    "F22A",
+    16800
+   ]
+  ]
+ },
+ {
+  "name": "MatrixMultiply (3 timed runs)",
+  "segments": [
+   156,
+   655
+  ],
+  "start_cycle": 30150647,
+  "end_cycle": 127930350,
+  "start_trap": "Microseconds",
+  "start_pc": "00759980",
+  "cycles": 97779703,
+  "seconds_at_32.90112MHz": 2.971926274850218,
+  "dispatches": 22835687,
+  "fpu_not_idle": 23020908,
+  "fst": {
+   "F_SRC": 4684800,
+   "F_NORM": 38400,
+   "F_EXEC": 3157572,
+   "F_WB": 4646400,
+   "F_SHR": 692832,
+   "F_BIN": 1536000,
+   "F_ADDX": 716916,
+   "F_MULT": 1093464,
+   "F_NORM2": 265620,
+   "F_ROUND": 4614504,
+   "F_STDONE": 1574400
+  },
+  "fpdec_cycles": 12142616,
+  "fpdec_wait_bg": 5921816,
+  "fp_waited_instrs": 3846085,
+  "fpu_bg_cycles": 11305080,
+  "fpu_busy_while_bg": 6690504,
+  "fpcc_wait_bg": 0,
+  "fsave_wait_bg": 0,
+  "exc0_wait_bg": 813,
+  "fp_read_states": {
+   "S_FPU_RD": 3072000,
+   "S_FPU_RD2": 0,
+   "S_FPU_IMM": 0,
+   "S_FPU_EA": 3878400,
+   "S_FPU_AN": 0,
+   "S_FPU_DREG": 38400,
+   "S_MRD->S_FPU_RD": 5800283,
+   "S_MRD->S_FPU_RD2": 0
+  },
+  "fp_store_states": {
+   "S_FPU_WR": 1574400,
+   "S_MWR->S_FPU_WR": 2399605
+  },
+  "fp_go": 24157428,
+  "fp_other_states": {},
+  "fp_instructions": 6220800,
+  "cpgen_dispatch": 6220800,
+  "fbcc_dispatch": 0,
+  "fscc_dispatch": 0,
+  "fsave_dispatch": 0,
+  "frestore_dispatch": 0,
+  "fp_by_opmode": {
+   "FMOVE": 3110400,
+   "FMOVE out": 1574400,
+   "FADD": 768000,
+   "FMUL": 768000
+  },
+  "fp_by_source": {
+   "S": 3072000,
+   "store.S": 1574400,
+   "reg": 1536000,
+   "W": 38400
+  },
+  "fp_by_opmode_source": {
+   "FMOVE / S": 3072000,
+   "FMOVE out / store.S": 1574400,
+   "FADD / reg": 768000,
+   "FMUL / reg": 768000,
+   "FMOVE / W": 38400
+  },
+  "fp_top_forms": [
+   [
+    "FMOVE.S FPn,d16(An)",
+    1574400,
+    21765319
+   ],
+   [
+    "FMOVE.S d8(An,Xn),FPn",
+    1536000,
+    18372354
+   ],
+   [
+    "FADD FPm,FPn",
+    768000,
+    4565663
+   ],
+   [
+    "FMUL FPm,FPn",
+    768000,
+    3888098
+   ],
+   [
+    "FMOVE.S (An),FPn",
+    768000,
+    7399425
+   ],
+   [
+    "FMOVE.S d16(An),FPn",
+    768000,
+    8450383
+   ],
+   [
+    "FMOVE.W Dn,FPn",
+    38400,
+    268827
+   ]
+  ],
+  "fp_form_cpu_cycles_total": 64710069,
+  "exceptions": {
+   "10 A-line": {
+    "count": 802,
+    "rte_matched": 0,
+    "entry_to_rte_cycles": 0,
+    "abandoned": 54
+   },
+   "25 autovector L1 (VIA1)": {
+    "count": 2616,
+    "rte_matched": 2616,
+    "entry_to_rte_cycles": 2375573,
+    "abandoned": 0
+   },
+   "26 autovector L2 (VIA2/slot)": {
+    "count": 233,
+    "rte_matched": 233,
+    "entry_to_rte_cycles": 431310,
+    "abandoned": 0
+   }
+  },
+  "exception_detail": [
+   [
+    "vec25",
+    2616,
+    2616,
+    2375573
+   ],
+   [
+    "A-line A31E",
+    369,
+    0,
+    0
+   ],
+   [
+    "A-line A01F",
+    369,
+    0,
+    0
+   ],
+   [
+    "vec26",
+    233,
+    233,
+    431310
+   ],
+   [
+    "A-line A829",
+    17,
+    0,
+    0
+   ],
+   [
+    "A-line A851",
+    17,
+    0,
+    0
+   ],
+   [
+    "A-line A924",
+    17,
+    0,
+    0
+   ],
+   [
+    "A-line A193",
+    5,
+    0,
+    0
+   ],
+   [
+    "A-line A055",
+    3,
+    0,
+    0
+   ],
+   [
+    "A-line A05A",
+    3,
+    0,
+    0
+   ],
+   [
+    "A-line A975",
+    2,
+    0,
+    0
+   ]
+  ],
+  "exc_stack_drops": 748,
+  "rte_count": 2849,
+  "rte_unmatched": 0,
+  "aline": {
+   "A31E": 369,
+   "A01F": 369,
+   "A829": 17,
+   "A851": 17,
+   "A924": 17,
+   "A193 Microseconds": 5,
+   "A055": 3,
+   "A05A PrimeTime": 3,
+   "A975 TickCount": 2
+  },
+  "cache_state": {
+   "C_IDLE/D": 91027388,
+   "C_IDLE/I": 947286,
+   "C_LOOK/D": 257611,
+   "C_LOOK/I": 81416,
+   "C_FILL/D": 1256728,
+   "C_FILL/I": 161555,
+   "C_TAGW/D": 125644,
+   "C_TAGW/I": 15863,
+   "C_PASS/D": 3717098,
+   "C_PASS/I": 105936,
+   "C_SWEEP/I": 59776,
+   "C_XSTORE_LOOK/D": 11701,
+   "C_XSTORE_WRITE/D": 11701
+  },
+  "dcache_fill_cycles": 1256728,
+  "icache_fill_cycles": 161555,
+  "dcache_fills": 125644,
+  "icache_fills": 15863,
+  "fill_by_core_state": {
+   "S_MRD": 1047999,
+   "S_FPU_GO": 156462,
+   "S_FETCH": 62670,
+   "S_MWR": 43597,
+   "S_DECODE": 32727,
+   "S_IMMF": 17669,
+   "S_EXPERIMENT_PIPE": 17044,
+   "S_PIPE_START": 13370,
+   "S_PIPE_REGS": 4194,
+   "S_EXEC": 2429,
+   "S_PIPE_DST": 1920,
+   "S_EA_DISP": 1769,
+   "S_PIPE_DDONE": 1666,
+   "S_PIPE_SDONE": 1622,
+   "S_PTEST2": 1160,
+   "S_EPF_FILL": 1106,
+   "S_FPU_DEC": 1045,
+   "S_EA_ABS": 806,
+   "S_MOVEM_SET": 778,
+   "S_EA_D16": 771,
+   "S_MOVEM_SET2": 656,
+   "S_EA_MIND": 654,
+   "S_BF_MEM1": 647,
+   "S_BF_EXECM": 647,
+   "S_PIPE_DEA": 645,
+   "S_MOVEM_LOOP": 596,
+   "S_PIPE_SRD": 562,
+   "S_JSR1": 434,
+   "S_BCC_EXT": 349,
+   "S_CINV2": 349,
+   "S_MOVEC1": 259,
+   "S_PIPE_SREG": 203,
+   "S_EXC_JMP": 188,
+   "S_EA_EXTW2": 181,
+   "S_MOVEC2": 156,
+   "S_NEXT": 154,
+   "S_JMP1": 147,
+   "S_EPF_GAP": 102,
+   "S_EXC0": 96,
+   "S_LEA1": 76,
+   "S_EA_BD": 61,
+   "S_SROP": 42,
+   "S_M16_SRC": 34,
+   "S_M16_DST": 34,
+   "S_M16_DST2": 34,
+   "S_M16_RD": 34,
+   "S_MD_WAIT": 33,
+   "S_LINK2": 22,
+   "S_UNLK1": 17,
+   "S_RTE_FMT": 15,
+   "S_BF1": 10,
+   "S_BF_MEM0": 10,
+   "S_POST_EXC": 7,
+   "S_RTE_PC": 6,
+   "S_EXC1": 3,
+   "S_EXG1": 3,
+   "S_DBCC1": 2,
+   "S_MOVEM_EA": 2,
+   "S_FPU_EA": 1,
+   "S_FPU_RD": 1,
+   "S_SHIFT": 1,
+   "S_SHIFT_WB": 1,
+   "S_MD_WB2": 1,
+   "S_EXG2": 1,
+   "S_MDL_RDQ": 1,
+   "S_RTE_FIN": 1,
+   "S_RTE_FIN2": 1
+  },
+  "store_buffer": {
+   "nonempty": 8683478,
+   "full_or_blocked": 0,
+   "read_behind_store": 7060,
+   "pushes": 2934344
+  },
+  "partition": {
+   "integer execute": 27234177,
+   "FP issue/wait (S_FPU_GO)": 24157428,
+   "FP dispatch (S_FPU_DEC)": 12142616,
+   "fetch/decode/ext words": 8570272,
+   "FP operand EA/read": 6988800,
+   "integer memory read": 6268566,
+   "FP operand EA/read [mem read]": 5800283,
+   "integer memory write": 2547320,
+   "FP store (S_FPU_WR) [mem write]": 2399605,
+   "FP store (S_FPU_WR)": 1574400,
+   "exception entry/RTE": 43491,
+   "exception entry/RTE [mem read]": 27709,
+   "exception entry/RTE [mem write]": 25036
+  },
+  "fpu_foreground_busy": 16330404,
+  "rom_pc_cycles": 3402643,
+  "core_states_top": [
+   [
+    "S_FPU_GO",
+    24157428
+   ],
+   [
+    "S_PIPE_REGS",
+    12820161
+   ],
+   [
+    "S_FPU_DEC",
+    12142616
+   ],
+   [
+    "S_MRD",
+    12096558
+   ],
+   [
+    "S_MWR",
+    4971961
+   ],
+   [
+    "S_IMMF",
+    4171642
+   ],
+   [
+    "S_EA_DISP",
+    3945336
+   ],
+   [
+    "S_FPU_EA",
+    3878400
+   ],
+   [
+    "S_DECODE",
+    3535864
+   ],
+   [
+    "S_FPU_RD",
+    3072000
+   ],
+   [
+    "S_EA_D16",
+    2554075
+   ],
+   [
+    "S_MD_WAIT",
+    1766823
+   ],
+   [
+    "S_EXPERIMENT_PIPE",
+    1701131
+   ],
+   [
+    "S_EA_EXTW2",
+    1583798
+   ],
+   [
+    "S_FPU_WR",
+    1574400
+   ],
+   [
+    "S_PIPE_START",
+    1532495
+   ],
+   [
+    "S_FETCH",
+    754267
+   ],
+   [
+    "S_EXEC",
+    337822
+   ],
+   [
+    "S_MOVEM_LOOP",
+    249564
+   ],
+   [
+    "S_PIPE_DEA",
+    100293
+   ]
+  ],
+  "mrd_by_return_top": [
+   [
+    "S_FPU_RD",
+    5800283
+   ],
+   [
+    "S_PIPE_LOAD_RETURN",
+    3247599
+   ],
+   [
+    "S_PIPE_SDONE",
+    2222563
+   ],
+   [
+    "S_PIPE_DDONE",
+    314494
+   ],
+   [
+    "S_MOVEM_LD",
+    238925
+   ],
+   [
+    "S_RET2",
+    123596
+   ],
+   [
+    "S_UNLK3",
+    59258
+   ],
+   [
+    "S_EA_MIND",
+    25921
+   ],
+   [
+    "S_M16_RD2",
+    24703
+   ],
+   [
+    "S_BF_MEM1",
+    11507
+   ],
+   [
+    "S_EXC_JMP",
+    10354
+   ],
+   [
+    "S_RTE_FMT",
+    5851
+   ]
+  ],
+  "pc_top_256B": [
+   [
+    "A0662600",
+    90257068
+   ],
+   [
+    "A0662500",
+    1107042
+   ],
+   [
+    "A0662700",
+    1101765
+   ],
+   [
+    "408B2D00",
+    870221
+   ],
+   [
+    "0006A300",
+    632717
+   ],
+   [
+    "4080E100",
+    566187
+   ],
+   [
+    "40809B00",
+    552458
+   ],
+   [
+    "0006A400",
+    365822
+   ],
+   [
+    "0008B000",
+    246772
+   ],
+   [
+    "4080D400",
+    160560
+   ],
+   [
+    "4080A200",
+    133077
+   ],
+   [
+    "0007B400",
+    121627
+   ],
+   [
+    "0009AD00",
+    107799
+   ],
+   [
+    "40803F00",
+    106314
+   ],
+   [
+    "4080E200",
+    105194
+   ]
+  ],
+  "opcode_top": [
+   [
+    "F22E",
+    2342400
+   ],
+   [
+    "2008",
+    1633827
+   ],
+   [
+    "E588",
+    1594355
+   ],
+   [
+    "E589",
+    1593600
+   ],
+   [
+    "F200",
+    1536000
+   ],
+   [
+    "2208",
+    825600
+   ],
+   [
+    "3044",
+    825600
+   ],
+   [
+    "3045",
+    825600
+   ],
+   [
+    "2270",
+    806632
+   ],
+   [
+    "0C42",
+    788120
+   ],
+   [
+    "2209",
+    768295
+   ],
+   [
+    "5242",
+    768118
+   ],
+   [
+    "2046",
+    768000
+   ],
+   [
+    "2073",
+    768000
+   ],
+   [
+    "24AE",
+    768000
+   ],
+   [
+    "3042",
+    768000
+   ],
+   [
+    "3242",
+    768000
+   ],
+   [
+    "F212",
+    768000
+   ],
+   [
+    "F230",
+    768000
+   ],
+   [
+    "F231",
+    768000
+   ]
+  ]
+ },
+ {
+  "name": "FastFourier (5 timed runs)",
+  "segments": [
+   673,
+   1056
+  ],
+  "start_cycle": 129943460,
+  "end_cycle": 203550100,
+  "start_trap": "Microseconds",
+  "start_pc": "00759B3E",
+  "cycles": 73606640,
+  "seconds_at_32.90112MHz": 2.237207730314348,
+  "dispatches": 17794902,
+  "fpu_not_idle": 18821425,
+  "fst": {
+   "F_SRC": 3809845,
+   "F_NORM": 2680,
+   "F_EXEC": 2602625,
+   "F_WB": 3837955,
+   "F_SHR": 587575,
+   "F_PACKI": 125,
+   "F_BIN": 1293320,
+   "F_ADDX": 746310,
+   "F_MULT": 523950,
+   "F_DIVL": 3000,
+   "F_NORM2": 367870,
+   "F_ROUND": 3760965,
+   "F_STDONE": 1285205
+  },
+  "fpdec_cycles": 9292177,
+  "fpdec_wait_bg": 4164397,
+  "fp_waited_instrs": 2526277,
+  "fpu_bg_cycles": 9163550,
+  "fpu_busy_while_bg": 5402095,
+  "fpcc_wait_bg": 0,
+  "fsave_wait_bg": 0,
+  "exc0_wait_bg": 660,
+  "fp_read_states": {
+   "S_FPU_RD": 2520805,
+   "S_FPU_RD2": 0,
+   "S_FPU_IMM": 24125,
+   "S_FPU_EA": 3802690,
+   "S_FPU_AN": 0,
+   "S_FPU_DREG": 0,
+   "S_MRD->S_FPU_RD": 2973900,
+   "S_MRD->S_FPU_RD2": 0
+  },
+  "fp_store_states": {
+   "S_FPU_WR": 1294310,
+   "S_MWR->S_FPU_WR": 1295734
+  },
+  "fp_go": 19910515,
+  "fp_other_states": {
+   "S_FPU_CR": 1750,
+   "S_FPU_CR2": 500,
+   "S_FPU_MVM": 1345,
+   "S_FPU_MVM2": 3550,
+   "S_FPU_CRD": 250,
+   "S_FPU_CRI": 375
+  },
+  "fp_instructions": 5127780,
+  "cpgen_dispatch": 5127780,
+  "fbcc_dispatch": 0,
+  "fscc_dispatch": 0,
+  "fsave_dispatch": 250,
+  "frestore_dispatch": 0,
+  "fp_by_opmode": {
+   "FMOVE": 2519035,
+   "FMOVE out": 1288240,
+   "FSUB": 514810,
+   "FMUL": 466120,
+   "FADD": 309580,
+   "FNEG": 25600,
+   "FDIV": 2810,
+   "FMOVE ea->cr": 625,
+   "FMOVEM FP->ea": 355,
+   "FMOVE cr->ea": 250,
+   "FMOVEM ea->FP": 230,
+   "FCOS": 125
+  },
+  "fp_by_source": {
+   "S": 2512945,
+   "reg": 1309235,
+   "store.S": 1285080,
+   "D": 8785,
+   "X": 4555,
+   "store.X": 3035,
+   "W": 2560,
+   "ctl/multi": 1460,
+   "store.L": 125
+  },
+  "fp_by_opmode_source": {
+   "FMOVE / S": 2512580,
+   "FMOVE out / store.S": 1285080,
+   "FSUB / reg": 512000,
+   "FMUL / reg": 461925,
+   "FADD / reg": 308710,
+   "FNEG / reg": 25600,
+   "FMUL / X": 3945,
+   "FMOVE / D": 3040,
+   "FMOVE out / store.X": 3035,
+   "FMOVE / W": 2560,
+   "FDIV / D": 2560,
+   "FSUB / D": 2560,
+   "FMOVE / reg": 625,
+   "FMOVE ea->cr / ctl/multi": 625,
+   "FADD / D": 375,
+   "FMOVEM FP->ea / ctl/multi": 355,
+   "FADD / X": 255,
+   "FDIV / reg": 250,
+   "FMOVE cr->ea / ctl/multi": 250,
+   "FMUL / D": 250,
+   "FADD / S": 240,
+   "FMOVE / X": 230,
+   "FMOVEM ea->FP / ctl/multi": 230,
+   "FCOS / reg": 125,
+   "FSUB / S": 125,
+   "FSUB / X": 125,
+   "FMOVE out / store.L": 125
+  },
+  "fp_top_forms": [
+   [
+    "FMOVE.S d8(An,Xn),FPn",
+    1692120,
+    19053923
+   ],
+   [
+    "FMOVE.S FPn,d16(An)",
+    1285080,
+    16976405
+   ],
+   [
+    "FMOVE.S d16(An),FPn",
+    820460,
+    9027945
+   ],
+   [
+    "FSUB FPm,FPn",
+    512000,
+    2959316
+   ],
+   [
+    "FMUL FPm,FPn",
+    461925,
+    2387042
+   ],
+   [
+    "FADD FPm,FPn",
+    308710,
+    1782357
+   ],
+   [
+    "FNEG FPm,FPn",
+    25600,
+    128034
+   ],
+   [
+    "FMOVE.D #imm,FPn",
+    2790,
+    28051
+   ],
+   [
+    "FMOVE.X FPn,(An)",
+    2685,
+    25913
+   ],
+   [
+    "FMUL.X d16(An),FPn",
+    2685,
+    35210
+   ],
+   [
+    "FMOVE.W (An),FPn",
+    2560,
+    20480
+   ],
+   [
+    "FDIV.D #imm,FPn",
+    2560,
+    30720
+   ],
+   [
+    "FSUB.D #imm,FPn",
+    2560,
+    37340
+   ],
+   [
+    "FMUL.X (An),FPn",
+    1260,
+    10177
+   ],
+   [
+    "FMOVE FPm,FPn",
+    625,
+    2875
+   ]
+  ],
+  "fp_form_cpu_cycles_total": 52563292,
+  "exceptions": {
+   "10 A-line": {
+    "count": 89,
+    "rte_matched": 0,
+    "entry_to_rte_cycles": 0,
+    "abandoned": 41
+   },
+   "11 F-line / FP unimplemented instr.": {
+    "count": 125,
+    "rte_matched": 125,
+    "entry_to_rte_cycles": 132227,
+    "abandoned": 0
+   },
+   "25 autovector L1 (VIA1)": {
+    "count": 1972,
+    "rte_matched": 1972,
+    "entry_to_rte_cycles": 1728230,
+    "abandoned": 0
+   },
+   "26 autovector L2 (VIA2/slot)": {
+    "count": 175,
+    "rte_matched": 175,
+    "entry_to_rte_cycles": 295332,
+    "abandoned": 0
+   }
+  },
+  "exception_detail": [
+   [
+    "vec25",
+    1972,
+    1972,
+    1728230
+   ],
+   [
+    "vec26",
+    175,
+    175,
+    295332
+   ],
+   [
+    "vec11 FCOS FPm,FPn",
+    125,
+    125,
+    132227
+   ],
+   [
+    "A-line A11E",
+    15,
+    0,
+    0
+   ],
+   [
+    "A-line A01F",
+    15,
+    0,
+    0
+   ],
+   [
+    "A-line A829",
+    13,
+    0,
+    0
+   ],
+   [
+    "A-line A851",
+    13,
+    0,
+    0
+   ],
+   [
+    "A-line A924",
+    13,
+    0,
+    0
+   ],
+   [
+    "A-line A193",
+    9,
+    0,
+    0
+   ],
+   [
+    "A-line A055",
+    5,
+    0,
+    0
+   ],
+   [
+    "A-line A975",
+    4,
+    0,
+    0
+   ],
+   [
+    "A-line A05A",
+    2,
+    0,
+    0
+   ]
+  ],
+  "exc_stack_drops": 50,
+  "rte_count": 2272,
+  "rte_unmatched": 0,
+  "aline": {
+   "A11E": 15,
+   "A01F": 15,
+   "A829": 13,
+   "A851": 13,
+   "A924": 13,
+   "A193 Microseconds": 9,
+   "A055": 5,
+   "A975 TickCount": 4,
+   "A05A PrimeTime": 2
+  },
+  "cache_state": {
+   "C_IDLE/D": 68215409,
+   "C_IDLE/I": 1751741,
+   "C_LOOK/D": 55586,
+   "C_LOOK/I": 48950,
+   "C_FILL/D": 144036,
+   "C_FILL/I": 31889,
+   "C_TAGW/D": 14447,
+   "C_TAGW/I": 3150,
+   "C_PASS/D": 2827014,
+   "C_PASS/I": 77574,
+   "C_XSTORE_LOOK/D": 218422,
+   "C_XSTORE_WRITE/D": 218422
+  },
+  "dcache_fill_cycles": 144036,
+  "icache_fill_cycles": 31889,
+  "dcache_fills": 14447,
+  "icache_fills": 3150,
+  "fill_by_core_state": {
+   "S_MRD": 126243,
+   "S_MWR": 15061,
+   "S_FPU_GO": 12222,
+   "S_FETCH": 8949,
+   "S_IMMF": 2800,
+   "S_DECODE": 2581,
+   "S_PIPE_START": 1834,
+   "S_PIPE_REGS": 714,
+   "S_EXEC": 525,
+   "S_PIPE_DDONE": 428,
+   "S_FPU_DEC": 371,
+   "S_EPF_FILL": 311,
+   "S_BF_MEM1": 307,
+   "S_BF_EXECM": 307,
+   "S_EA_DISP": 304,
+   "S_PIPE_DST": 271,
+   "S_FPU_EA": 266,
+   "S_PIPE_SDONE": 252,
+   "S_EA_D16": 222,
+   "S_PIPE_SRD": 166,
+   "S_EA_ABS": 164,
+   "S_EA_EXTW2": 160,
+   "S_FPU_RD": 146,
+   "S_MD_WAIT": 108,
+   "S_MOVEC2": 108,
+   "S_PIPE_DEA": 105,
+   "S_EXC0": 98,
+   "S_MOVEM_LOOP": 85,
+   "S_MOVEM_SET2": 77,
+   "S_EA_BD": 70,
+   "S_FPU_IMM": 61,
+   "S_EA_MIND": 60,
+   "S_BCC_EXT": 57,
+   "S_LINK2": 57,
+   "S_MOVEM_SET": 54,
+   "S_NEXT": 38,
+   "S_JSR1": 37,
+   "S_EXC_JMP": 32,
+   "S_EPF_GAP": 31,
+   "S_JMP1": 25,
+   "S_LEA1": 19,
+   "S_MOVEC1": 18,
+   "S_BF1": 15,
+   "S_BF_MEM0": 15,
+   "S_EXC1": 13,
+   "S_SROP": 13,
+   "S_SHIFT": 13,
+   "S_SHIFT_WB": 13,
+   "S_PIPE_SREG": 12,
+   "S_BF0": 10,
+   "S_FPU_CRD": 10,
+   "S_BF_REG": 5,
+   "S_BF_REGX": 5,
+   "S_BF_M2": 5,
+   "S_BF_M3": 5,
+   "S_FPU_CR": 5,
+   "S_FPU_CR2": 5,
+   "S_FPU_MVM": 5,
+   "S_FPU_CRI": 5,
+   "S_DBCC1": 5,
+   "S_EXG1": 5,
+   "S_MOVEM_EA": 4,
+   "S_EXPERIMENT_PIPE": 3,
+   "S_EXC0_F2": 2,
+   "S_MD_WB2": 2,
+   "S_EXG2": 2,
+   "S_MDL_RDQ": 2,
+   "S_RTE_FIN": 1,
+   "S_RTE_FIN2": 1
+  },
+  "store_buffer": {
+   "nonempty": 7895976,
+   "full_or_blocked": 0,
+   "read_behind_store": 3040,
+   "pushes": 2262278
+  },
+  "partition": {
+   "integer execute": 22416973,
+   "FP issue/wait (S_FPU_GO)": 19910515,
+   "FP dispatch (S_FPU_DEC)": 9292177,
+   "FP operand EA/read": 6347620,
+   "fetch/decode/ext words": 6294747,
+   "FP operand EA/read [mem read]": 2973900,
+   "integer memory read": 2157454,
+   "integer memory write": 1535884,
+   "FP store (S_FPU_WR) [mem write]": 1295734,
+   "FP store (S_FPU_WR)": 1294310,
+   "exception entry/RTE": 30947,
+   "exception entry/RTE [mem read]": 21167,
+   "exception entry/RTE [mem write]": 14437,
+   "FP control/FMOVEM": 7770,
+   "FP branch/FSAVE/FRESTORE": 3500,
+   "FP branch/FSAVE/FRESTORE [mem write]": 3315,
+   "FP control/FMOVEM [mem write]": 3169,
+   "FP control/FMOVEM [mem read]": 3021
+  },
+  "fpu_foreground_busy": 13419330,
+  "rom_pc_cycles": 1686875,
+  "core_states_top": [
+   [
+    "S_FPU_GO",
+    19910515
+   ],
+   [
+    "S_PIPE_REGS",
+    10936341
+   ],
+   [
+    "S_FPU_DEC",
+    9292177
+   ],
+   [
+    "S_MRD",
+    5155542
+   ],
+   [
+    "S_IMMF",
+    3895081
+   ],
+   [
+    "S_EA_DISP",
+    3824276
+   ],
+   [
+    "S_FPU_EA",
+    3802690
+   ],
+   [
+    "S_MWR",
+    2852539
+   ],
+   [
+    "S_FPU_RD",
+    2520805
+   ],
+   [
+    "S_PIPE_START",
+    2481213
+   ],
+   [
+    "S_EA_EXTW2",
+    2162948
+   ],
+   [
+    "S_EA_D16",
+    2146300
+   ],
+   [
+    "S_DECODE",
+    2119401
+   ],
+   [
+    "S_FPU_WR",
+    1294310
+   ],
+   [
+    "S_PIPE_DEA",
+    479345
+   ],
+   [
+    "S_FETCH",
+    209107
+   ],
+   [
+    "S_BCC_EXT",
+    134512
+   ],
+   [
+    "S_EPF_FILL",
+    47938
+   ],
+   [
+    "S_MOVEM_LOOP",
+    44032
+   ],
+   [
+    "S_EXEC",
+    38777
+   ]
+  ],
+  "mrd_by_return_top": [
+   [
+    "S_FPU_RD",
+    2973900
+   ],
+   [
+    "S_PIPE_SDONE",
+    1621057
+   ],
+   [
+    "S_PIPE_LOAD_RETURN",
+    220904
+   ],
+   [
+    "S_PIPE_DDONE",
+    204584
+   ],
+   [
+    "S_MOVEM_LD",
+    55466
+   ],
+   [
+    "S_RET2",
+    29021
+   ],
+   [
+    "S_EA_MIND",
+    15255
+   ],
+   [
+    "S_BF_MEM1",
+    8144
+   ],
+   [
+    "S_EXC_JMP",
+    7456
+   ],
+   [
+    "S_RTE_PC",
+    4614
+   ],
+   [
+    "S_RTE_FIN",
+    4553
+   ],
+   [
+    "S_RTE_FMT",
+    4544
+   ]
+  ],
+  "pc_top_256B": [
+   [
+    "A0663000",
+    37735239
+   ],
+   [
+    "A0663100",
+    23393767
+   ],
+   [
+    "A0662F00",
+    9575241
+   ],
+   [
+    "408B2D00",
+    640181
+   ],
+   [
+    "40809B00",
+    406381
+   ],
+   [
+    "A0663200",
+    291186
+   ],
+   [
+    "0008B000",
+    184295
+   ],
+   [
+    "A0662D00",
+    179819
+   ],
+   [
+    "A0663300",
+    175162
+   ],
+   [
+    "A0662E00",
+    92557
+   ],
+   [
+    "0007B400",
+    85069
+   ],
+   [
+    "4080A200",
+    80592
+   ],
+   [
+    "40803F00",
+    77682
+   ],
+   [
+    "4082E800",
+    50528
+   ],
+   [
+    "0008B100",
+    45880
+   ]
+  ],
+  "opcode_top": [
+   [
+    "E788",
+    2566485
+   ],
+   [
+    "F22E",
+    2109450
+   ],
+   [
+    "48C0",
+    1437426
+   ],
+   [
+    "F200",
+    1309360
+   ],
+   [
+    "F232",
+    1282520
+   ],
+   [
+    "2008",
+    924225
+   ],
+   [
+    "3043",
+    924160
+   ],
+   [
+    "3003",
+    822980
+   ],
+   [
+    "5240",
+    413443
+   ],
+   [
+    "2047",
+    409600
+   ],
+   [
+    "22D8",
+    409600
+   ],
+   [
+    "27AE",
+    409600
+   ],
+   [
+    "3004",
+    409600
+   ],
+   [
+    "D045",
+    409600
+   ],
+   [
+    "F230",
+    409600
+   ],
+   [
+    "5243",
+    334180
+   ],
+   [
+    "B66E",
+    230500
+   ],
+   [
+    "D1C0",
+    206185
+   ],
+   [
+    "D044",
+    206060
+   ],
+   [
+    "D3C0",
+    204940
+   ]
+  ]
+ }
+]

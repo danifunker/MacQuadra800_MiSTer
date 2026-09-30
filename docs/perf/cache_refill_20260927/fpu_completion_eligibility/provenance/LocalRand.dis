@@ -1,0 +1,9 @@
+0040 4e560000  link    A6, #$0
+0044 302c8026  move.w  (-$7fda,A4), D0
+0048 c1fc051d  muls.w  #$51d, D0
+004c 06403619  addi.w  #$3619, D0
+0050 02800000ffff  andi.l  #$ffff, D0
+0056 39408026  move.w  D0, (-$7fda,A4)
+005a 302c8026  move.w  (-$7fda,A4), D0
+005e 4e5e  unlk    A6
+0060 4e75  rts

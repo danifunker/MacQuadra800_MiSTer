@@ -1,0 +1,19 @@
+ org $630000
+start:
+ move.w #$2700,sr
+ move.l #$40810000,($0).l
+ move.l #$40810000,($4).l
+ move.l #$1ff6c00,d0
+ movec d0,srp
+ moveq #0,d0
+ movec d0,urp
+ move.l #$c000,d0
+ movec d0,tc
+ move.l #$80008000,d0
+ movec d0,cacr
+ lea ($620000).l,a5
+ move.w #1,($f108).l
+ jsr ($600008).l
+ move.w #2,($f108).l
+ move.w #$600d,($f102).l
+ stop #$2700

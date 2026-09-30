@@ -1,0 +1,65 @@
+META	format	fpu-timed-profile-v1
+META	clock	post_eval_33MHz_rising_edges
+META	timer_bracket	start_trap_return_inclusive_to_stop_trap_call_exclusive
+META	callback_bracket	JSR_call_inclusive_to_return_exclusive
+META	raw_microseconds	A0_D0_at_timer_trap_returns
+META	site_labels	unknown_three_CODE3_sites
+META	invalid_samples	0
+META	raw_cap	4096
+META	raw_dropped	0
+META	diagnostic_dropped	0
+SCHEMA	TOTAL	site	span	status	clocks	dispatches	bg_samples	blocking_decode	go_samples	mrd_fill_overlap	mrd_fill_unacked_overlap
+SCHEMA	HISTOGRAM	kind	site	span	status	id	clocks
+SCHEMA	RAW	site	start_A0D0	stop_A0D0	delta_u64	backwards	start_return_cycle	stop_return_cycle
+SCHEMA	DIAG	site	cycle	kind	reason
+LIFECYCLE	0	identifies=0	unmatched=0	raw_pairs=0	raw_missing=0
+SPAN	0	timer	starts=0	complete=0	aborted=0	open=0
+TOTAL	0	timer	complete	0	0	0	0	0	0	0
+TOTAL	0	timer	partial	0	0	0	0	0	0	0
+SPAN	0	callback	starts=0	complete=0	aborted=0	open=0
+TOTAL	0	callback	complete	0	0	0	0	0	0	0
+TOTAL	0	callback	partial	0	0	0	0	0	0	0
+LIFECYCLE	1	identifies=1	unmatched=0	raw_pairs=0	raw_missing=0
+SPAN	1	timer	starts=1	complete=1	aborted=0	open=0
+TOTAL	1	timer	complete	79	6	0	0	0	0	0
+CORE	1	timer	complete	3	25
+CORE	1	timer	complete	4	6
+CORE	1	timer	complete	8	9
+CORE	1	timer	complete	9	21
+CORE	1	timer	complete	10	5
+CORE	1	timer	complete	11	2
+CORE	1	timer	complete	19	1
+CORE	1	timer	complete	20	2
+CORE	1	timer	complete	23	1
+CORE	1	timer	complete	24	1
+CORE	1	timer	complete	28	2
+CORE	1	timer	complete	55	1
+CORE	1	timer	complete	56	1
+CORE	1	timer	complete	57	1
+CORE	1	timer	complete	190	1
+CACHE	1	timer	complete	0	31
+CACHE	1	timer	complete	6	48
+FPU_FST	1	timer	complete	0	79
+TOTAL	1	timer	partial	0	0	0	0	0	0	0
+SPAN	1	callback	starts=1	complete=1	aborted=0	open=0
+TOTAL	1	callback	complete	39	3	0	0	0	0	0
+CORE	1	callback	complete	3	14
+CORE	1	callback	complete	4	3
+CORE	1	callback	complete	9	14
+CORE	1	callback	complete	10	4
+CORE	1	callback	complete	11	1
+CORE	1	callback	complete	56	1
+CORE	1	callback	complete	57	1
+CORE	1	callback	complete	190	1
+CACHE	1	callback	complete	0	11
+CACHE	1	callback	complete	6	28
+FPU_FST	1	callback	complete	0	39
+TOTAL	1	callback	partial	0	0	0	0	0	0	0
+LIFECYCLE	2	identifies=0	unmatched=0	raw_pairs=0	raw_missing=0
+SPAN	2	timer	starts=0	complete=0	aborted=0	open=0
+TOTAL	2	timer	complete	0	0	0	0	0	0	0
+TOTAL	2	timer	partial	0	0	0	0	0	0	0
+SPAN	2	callback	starts=0	complete=0	aborted=0	open=0
+TOTAL	2	callback	complete	0	0	0	0	0	0	0
+TOTAL	2	callback	partial	0	0	0	0	0	0	0
+DIAG	1	461	identify	

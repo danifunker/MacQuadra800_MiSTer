@@ -1,0 +1,91 @@
+--- scratch/fpu_refill_model_baseline_20260927/verilator/sim_main.cpp	2026-09-27 16:13:59.028342199 -0400
++++ scratch/fpu_timed_profile_20260927/baseline_sim/verilator/sim_main.cpp	2026-09-27 18:48:49.859175099 -0400
+@@ -187,6 +187,34 @@
+ static bool dispatched = false;
+ 
+ #include "../scripts/fixtures/speedometer_timing_observer/adapter.inc"
++#include "../scripts/fixtures/speedometer_timing_observer/fpu_timed_profile.h"
++static std::string fpu_timed_path;
++static std::unique_ptr<FpuTimedProfile> fpu_timed_profile;
++static bool fpu_timed_finished=false;
++static void fpu_timed_finish() {
++    if(!fpu_timed_profile || fpu_timed_finished)return;
++    if(speedometer_observer) {
++        speedometer_observer->finish(main_time/2);
++        speedometer_observer->set_fpu_sink({});
++    }
++    if(!fpu_timed_profile->dump())
++        fprintf(stderr,"[FPU-TIMED] cannot write %s\n",fpu_timed_path.c_str());
++    else printf("[FPU-TIMED] wrote %s\n",fpu_timed_path.c_str());
++    fpu_timed_finished=true;
++}
++static void fpu_timed_step(bool dispatch) {
++    if(!fpu_timed_profile || fpu_timed_finished)return;
++    WindowSample s;
++    s.core_state=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__state;
++    s.cache_state=SIMEMU->__PVT__machine__DOT__cpu__DOT__g_cache__DOT__cache__DOT__cst;
++    s.fpu_state=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__g_fpu__DOT__fpu__DOT__fst;
++    s.fpu_op=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__g_fpu__DOT__fpu__DOT__r_op;
++    s.fpu_bg=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_bg;
++    s.fpu_done=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_done;
++    s.dispatch=dispatch;
++    s.fill_acked=SIMEMU->__PVT__machine__DOT__cpu__DOT__g_cache__DOT__cache__DOT__fill_acked;
++    fpu_timed_profile->sample(s);
++}
+ #include "sim_ram_snapshot.h"
+ #include "sim_refill_profile.h"
+ 
+@@ -362,7 +390,7 @@
+ 		printf("[CPU-PROFILE] started at simulator cycle %llu\n", (unsigned long long)main_time);
+ 		fflush(stdout);
+ 	}
+-	if (action == CpuProfileGate::Stop) { bracket_dump(); return; }
++	if (action == CpuProfileGate::Stop) { fpu_timed_finish(); bracket_dump(); return; }
+ 	if (action == CpuProfileGate::Skip) return;
+ 	uint8_t state=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__state;
+ 	uint16_t ir=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__ir;
+@@ -612,6 +640,7 @@
+ 				machine_events();
+ 				speedometer_after_eval(dispatched);
+ 				bracket_step(dispatched);
++				fpu_timed_step(dispatched);
+ 				if (!cpu_trace_disabled && (main_time >= trace_after ||
+ 				                            (trace_on_ncr && NCR_REGTRACE))) cpu_trace_step();
+ 				// [EXC] every exception entry that is not an A-line trap or an
+@@ -872,6 +901,8 @@
+ 			headless = true;
+ 		} else if (!strcmp(argv[i], "--speedometer-observe") && i + 1 < argc) {
+             speedometer_path = argv[++i];
++        } else if (!strcmp(argv[i], "--fpu-timed-profile") && i + 1 < argc) {
++            fpu_timed_path = argv[++i];
+         } else if (!strcmp(argv[i], "--speedometer-limit") && i + 1 < argc) {
+             speedometer_limit = strtoull(argv[++i], nullptr, 0);
+             if (!speedometer_limit || speedometer_limit > 4096) return 1;
+@@ -917,10 +948,19 @@
+ 		}
+ 	}
+ 
++    if (!fpu_timed_path.empty() && speedometer_path.empty()) {
++        fprintf(stderr,"--fpu-timed-profile requires --speedometer-observe\n"); return 1;
++    }
+     if (!speedometer_path.empty()) {
+         speedometer_file.open(speedometer_path);
+         if (!speedometer_file) { fprintf(stderr, "cannot open observer output\n"); return 1; }
+         speedometer_observer.reset(new speedometer::Observer(speedometer_file, speedometer_limit));
++        if(!fpu_timed_path.empty()) {
++            fpu_timed_profile.reset(new FpuTimedProfile(fpu_timed_path));
++            speedometer_observer->set_fpu_sink([](const speedometer::FpuEvent& e) {
++                fpu_timed_profile->event(e);
++            });
++        }
+     }
+ #ifndef _WIN32
+ 	if (!bracket_file.empty()) {
+@@ -1172,6 +1212,7 @@
+ 		if (headless && Verilated::gotFinish()) done = true;
+ 	}
+ 
++	fpu_timed_finish();
+ 	if (speedometer_observer) speedometer_observer->summary();
+ 	if (bracket_gate.active()) { bracket_dump(); bracket_gate.stop(); }
+ 	if (cpu_trace_file) {

@@ -1,0 +1,3 @@
+PASS fixture: independently checked guest signature/registers, one timer79/callback39, no aborted/unmatched span
+PASS fixture_earlybranch: independently checked guest signature/registers, one timer79/callback39, no aborted/unmatched span
+PASS normal-ROM boot: nonzero fetched instructions, known dispatches and secondary admission coverage

@@ -44,7 +44,10 @@ module ap040_fpu
 	input       [2:0] src_r,       // FPm
 	input       [2:0] dst_r,       // FPn
 	input      [95:0] din,         // memory operand, left aligned
-	output reg        done,
+	// P251: done is combinational in F_WB (a register-destination result
+	// completes in the writeback clock itself), registered everywhere else
+	// (stores, whose dout settles with it).
+	output            done,
 	// the operation has passed operand classification: unimp/unsupp can no
 	// longer occur, only completion or an enabled arithmetic exception.
 	// The core uses this to run register-destination arithmetic in the
@@ -81,13 +84,6 @@ module ap040_fpu
 	// acknowledges it.  FRESTORE can reinstate that pending state.
 	output reg        fpu_used,    // 0: NULL frame, 1: IDLE or exception frame
 	output reg        fstate_unimp,
-	output reg [15:0] fstate_cmd1,
-	output reg [15:0] fstate_cmd3,
-	output reg  [2:0] fstate_stag,
-	output reg  [2:0] fstate_dtag,
-	output reg  [2:0] fstate_flags, // {E1,E3,T}
-	output reg [95:0] fstate_fpt,
-	output reg [95:0] fstate_et,
 	input             fsave_ack,
 	input             frestore_idle,
 	input             frestore_unimp,
@@ -102,26 +98,23 @@ module ap040_fpu
 	output      [7:0] cur_vec,
 	output            frestore_e1_pend,
 	// FPSP requests execution of the normalized BUSY command with CU_SAVEPC=fe.
-	input       [7:0] frestore_cusavepc,
-	input             frestore_et15, frestore_fpt15,
 	output            frestore_resume,
-	output reg  [2:0] fstate_grs,
-	output reg        fstate_wbte15,
 	output reg        fstate_busy,      // the pending frame is $41/$60 BUSY
-	output reg [95:0] fstate_wbt,       // WBTEMP: the internal intermediate
-	output reg [31:0] fstate_fpiar_c,   // FPIARCU
-	input      [95:0] frestore_wbt,
-	input      [31:0] frestore_fpiar,
-	input             frestore_busy,
-	input      [15:0] frestore_cmd1,
-	input      [15:0] frestore_cmd3,
-	input       [2:0] frestore_stag,
-	input       [2:0] frestore_dtag,
-	input       [2:0] frestore_flags,
-	input      [95:0] frestore_fpt,
-	input      [95:0] frestore_et,
-	input       [2:0] frestore_grs,
-	input             frestore_wbte15,
+	input             frestore_busy,    // with frestore_unimp: install as BUSY
+	input             frestore_nocmd3,  // with frestore_unimp: the frame had no CMDREG3B
+	// FRESTORE frame write port: each UNIMP/BUSY frame longword is written
+	// straight into the frame registers (fstate_*, and sh_src/sh_dst for
+	// ETEMP/FPTEMP) as the core reads it, indexed by its position in the
+	// 100-byte BUSY frame (the UNIMP frame is that frame's tail).  Nothing
+	// becomes visible until frestore_unimp installs the frame; the first
+	// word hides any prepared frame (fstate_unimp=0), so a bus fault part-way
+	// leaves the IDLE state, never a mixed frame.  FSAVE reads the prepared
+	// frame through the same index: frame_rd is payload longword frame_idx
+	// (reserved words and the header slots read zero).
+	input             frame_we,
+	input       [4:0] frame_idx,
+	input      [31:0] frame_wd,
+	output reg [31:0] frame_rd,
 	input             fp_reset     // FRESTORE of a NULL frame
 );
 
@@ -271,14 +264,27 @@ localparam F_RESTORE_B = 5'd19; // finish FPTE15 denormalization
 localparam F_RESTORE_N = 5'd20; // normalize the prepared destination
 
 reg  [4:0] fst;
+reg        done_r;
+// P251: F_WB completes without an enabled exception in its own clock; the
+// core sees done while the register write lands, one clock earlier than
+// the registered pulse.  F_WB never sets an exception status bit itself, so
+// the predicate is the same one that selects exc_req there.
+wire       round_wb_now;   // P252: F_ROUND writes the common result back itself
+wire       wb_done_now = ((fst == F_WB) && !(|(fpsr[15:8] & fpcr[15:8]))) ||
+                         round_wb_now;
+assign done = done_r | wb_done_now;
 // unimp/unsupp decisions are made in the dispatch cycle (register
 // sources, still F_IDLE), during source conversion (F_SRC), and by the
 // destination-operand checks in F_EXEC and F_BIN.  Only the arithmetic
 // and rounding states are strictly past every such decision: from here
 // on nothing but done or an enabled-exception exc_req can follow.
-assign accepted = (fst == F_ADDX) || (fst == F_MULT) ||
-                  (fst == F_DIVL) || (fst == F_SQRTL) ||
-                  (fst == F_NORM2) || (fst == F_ROUND);
+// P252: a clock in which F_ROUND completes the instruction (round_wb_now,
+// done high) must not also offer it for release: the core takes accepted
+// ahead of done and would set its background flag for an op that has
+// already retired, with nothing left to clear it.
+assign accepted = ((fst == F_ADDX) || (fst == F_MULT) ||
+                   (fst == F_DIVL) || (fst == F_SQRTL) ||
+                   (fst == F_NORM2) || (fst == F_ROUND)) && !round_wb_now;
 
 reg  [2:0] r_fmt, r_dst;
 reg        r_ae7;           // accrued-IOP before this instruction (fault backout)
@@ -297,6 +303,13 @@ reg   [1:0] a_t;
 // staged shifter: mantissa with 3 rounding bits {G,R,S}, count up to 127
 reg [66:0] sh_v;              // {m[63:0], G, R, S}
 reg  [6:0] sh_cnt;
+// The one right shifter with sticky collection (P193): {int, G, R} shift
+// right by sh_cnt and S ORs every bit shifted out.  F_SHR registers it back
+// into sh_v; F_ADDX consumes it directly (P251).  A zero count passes sh_v.
+wire [66:0] shr_shifted = sh_v >> sh_cnt;
+wire [66:0] shr_gone    = sh_v & ((67'd1 << sh_cnt) - 67'd1);
+wire [66:0] shr_out     = (sh_cnt != 7'd0) ?
+                          {shr_shifted[66:1], shr_shifted[0] | (|shr_gone)} : sh_v;
 
 // second (destination) operand and arithmetic scratch
 reg         b_s;
@@ -367,6 +380,26 @@ reg  [1:0] pk_isz;            // 0 byte, 1 word, 2 long
 // nests until the stack faults during exception processing -- a double
 // fault, which halts the core silently.
 reg        fstate_resig;
+// The prepared/restored exception frame (FSAVE reads it via frame_rd).
+reg [15:0] fstate_cmd1;
+reg [15:0] fstate_cmd3;
+reg  [2:0] fstate_stag;
+reg  [2:0] fstate_dtag;
+reg  [2:0] fstate_flags;   // {E1,E3,T}
+// FPTEMP and ETEMP have no registers of their own: they are the operand
+// shadows sh_dst and sh_src (declared below), which the frame captures and
+// the FRESTORE write port load directly.  Every other writer of the shadows
+// runs only while no frame is visible (fstate_unimp == 0: a new dispatch
+// clears it in the same clock, the resume path cleared it at install), so
+// an FSAVE always reads exactly what the capture or FRESTORE left there.
+reg  [2:0] fstate_grs;
+reg        fstate_wbte15;
+// WBTEMP has no register of its own either: it is F_ROUND's wb_s/wb_e/wb_m
+// capture (declared below), which only an operation in flight rewrites --
+// never while a frame is visible.  wbt_zero is a datatype frame's all-zero
+// WBTEMP; the FRESTORE write port loads wb_* directly.
+reg        wbt_zero;
+reg [31:0] fstate_fpiar_c; // FPIARCU
 
 // hardware subset at this stage: move/abs/neg/tst/cmp families
 function op_in_hw;
@@ -405,6 +438,58 @@ function [1:0] fast_bin_kind;
 	end
 endfunction
 
+// P253: the move class F_EXEC only forwards to F_ROUND for a normal source:
+// 1 FMOVE/FSMOVE/FDMOVE, 2 FABS family, 3 FNEG family, 0 for anything else.
+function [1:0] fp_move_kind;
+	input [6:0] op;
+	begin
+		case (op)
+			7'h00, 7'h40, 7'h44: fp_move_kind = 2'd1;
+			7'h18, 7'h58, 7'h5C: fp_move_kind = 2'd2;
+			7'h1A, 7'h5A, 7'h5E: fp_move_kind = 2'd3;
+			default:             fp_move_kind = 2'd0;
+		endcase
+	end
+endfunction
+
+// P253: a normal memory source of format X, D or S, unpacked to the working
+// format in the dispatch clock (what F_SRC's normal arms do a clock later).
+// X counts the pseudo-denormal (exponent 0, integer bit set) as normal, as
+// P221 did; D and S exclude zero, denormal, infinity and NaN encodings.
+wire        din_norm_x = (src_fmt == 3'd2) && din[63] && (din[94:80] != 15'h7FFF);
+wire        din_norm_d = (src_fmt == 3'd5) && (din[94:84] != 11'd0) && (din[94:84] != 11'h7FF);
+wire        din_norm_s = (src_fmt == 3'd1) && (din[94:87] != 8'd0) && (din[94:87] != 8'hFF);
+wire        din_norm   = din_norm_x | din_norm_d | din_norm_s;
+wire [16:0] din_e = din_norm_x ? {2'd0, din[94:80]} :
+                    din_norm_d ? ({6'd0, din[94:84]} + 17'd15360) :   // -1023 + 16383
+                                 ({9'd0, din[94:87]} + 17'd16256);    // -127 + 16383
+wire [63:0] din_m = din_norm_x ? din[63:0] :
+                    din_norm_d ? {1'b1, din[83:32], 11'd0} :
+                                 {1'b1, din[86:64], 40'd0};
+
+// P255: a single or double store of a normal register value, packed in the
+// dispatch clock (F_SRC's pk_s / pk_d normal arms).  Used only when the value
+// is in that format's normal range and an inexact result would not trap; the
+// tiny, overflowing, special and trapping cases keep the F_SRC / F_STDONE path.
+wire        st_norm = fr_src_m[63] && (fr_src_e != 15'h7FFF);
+wire signed [17:0] st_sE = $signed({3'd0, fr_src_e}) - 18'sd16383;
+wire        st_s_up  = round_up_m(fr_src_m[40], fr_src_m[39], fr_src_m[38:0] != 0, fr_src_s, fpcr[5:4]);
+wire        st_s_inx = fr_src_m[39:0] != 0;
+wire [24:0] st_s_mr  = {1'b0, fr_src_m[63:40]} + {24'd0, st_s_up};
+wire [16:0] st_s_eun = fr_src_e + {16'd0, st_s_mr[24]};
+wire [16:0] st_s_enc = st_s_eun - 17'd16256;           // -16383 + 127
+wire [22:0] st_s_frac = st_s_mr[24] ? 23'd0 : st_s_mr[22:0];
+wire        st_s_ok  = st_norm && (st_sE >= -18'sd126) &&
+                       ($signed({1'b0, st_s_eun}) - 18'sd16383 <= 18'sd127);
+wire        st_d_up  = round_up_m(fr_src_m[11], fr_src_m[10], fr_src_m[9:0] != 0, fr_src_s, fpcr[5:4]);
+wire        st_d_inx = fr_src_m[10:0] != 0;
+wire [53:0] st_d_mr  = {1'b0, fr_src_m[63:11]} + {53'd0, st_d_up};
+wire [16:0] st_d_eun = fr_src_e + {16'd0, st_d_mr[53]};
+wire [16:0] st_d_enc = st_d_eun - 17'd15360;           // -16383 + 1023
+wire [51:0] st_d_frac = st_d_mr[53] ? 52'd0 : st_d_mr[51:0];
+wire        st_d_ok  = st_norm && (st_sE >= -18'sd1022) &&
+                       ($signed({1'b0, st_d_eun}) - 18'sd16383 <= 18'sd1023);
+
 // result precision for an opmode: 0 extended (per FPCR), 1 single, 2 double
 function [1:0] prec_of;
 	input [6:0] op;
@@ -431,6 +516,34 @@ function op_sgl;
 	input [6:0] op;
 	begin
 		op_sgl = (op == 7'h24) || (op == 7'h27);
+	end
+endfunction
+
+// P252: the same two decisions with FPCR's fields as explicit inputs, for
+// the continuous rounding logic (a function reading module state from a
+// continuous assignment is not re-evaluated when that state changes).
+function [1:0] prec_sel;
+	input [6:0] op;
+	input [1:0] fprec;
+	begin
+		if (op == 7'h24 || op == 7'h27) prec_sel = 2'd1;
+		else if (op >= 7'h40) prec_sel = op[2] ? 2'd2 : 2'd1;
+		else prec_sel = (fprec == 2'b01) ? 2'd1 :
+		                (fprec == 2'b00) ? 2'd0 : 2'd2;
+	end
+endfunction
+
+function round_up_m;
+	input       lsb, g, rs;
+	input       sign;
+	input [1:0] mode;
+	begin
+		case (mode)
+			2'b00:   round_up_m = g && (rs || lsb);
+			2'b01:   round_up_m = 1'b0;
+			2'b10:   round_up_m = sign && (g || rs);
+			default: round_up_m = !sign && (g || rs);
+		endcase
 	end
 endfunction
 
@@ -485,14 +598,50 @@ reg        fstate_e1;    // the prepared/restored frame is an arithmetic
 // single physical write port.  The core cannot dispatch FMOVEM while the FPU
 // is in F_WB; keeping the explicit priority also matches the old procedural
 // assignment order if that invariant is ever violated.
-wire fr_wb_we = (fst == F_WB) && !(|(fpsr[15:8] & fpcr[15:8])) &&
-                (r_op != 7'h38) && (r_op != 7'h3A);
+// P252: F_ROUND's rounding and range check as continuous logic.  F_ROUND
+// itself uses these, and when the result is an ordinary in-range number with
+// no enabled exception it also does F_WB's work in the same clock
+// (round_wb_now): the register write, the condition codes and done.
+// Range control: the rounding precision narrows the exponent range as well
+// as the significand (softfloat's SOFTFLOAT_68K roundAndPackFloatx80
+// expOffset, 0x3F80 single / 0x3C00 double), EXCEPT for FSGLMUL/FSGLDIV,
+// which round through roundSigAndPackFloatx80 and keep the extended range.
+// Extended (and the sgl class) use the RAW exponent convention: a working
+// exponent of ZERO still packs as a normal result with exponent field 0 (the
+// pseudo-denormal encoding) and no flags; tininess only starts below that.
+wire  [1:0] rnd_pr  = prec_sel(r_op, fpcr[7:6]);
+wire        rnd_up  = (rnd_pr == 2'd1) ? round_up_m(a_m[40], a_m[39], (a_m[38:0] != 0) || (grs != 0), a_s, fpcr[5:4]) :
+                      (rnd_pr == 2'd2) ? round_up_m(a_m[11], a_m[10], (a_m[9:0]  != 0) || (grs != 0), a_s, fpcr[5:4]) :
+                                         round_up_m(a_m[0], grs[2], grs[1:0] != 0, a_s, fpcr[5:4]);
+wire        rnd_inx = (rnd_pr == 2'd1) ? ((a_m[39:0] != 0) || (grs != 0)) :
+                      (rnd_pr == 2'd2) ? ((a_m[10:0] != 0) || (grs != 0)) : (grs != 0);
+wire [64:0] rnd_sum = (rnd_pr == 2'd1) ? ({1'b0, a_m & 64'hFFFF_FF00_0000_0000} + (rnd_up ? 65'h100_0000_0000 : 65'd0)) :
+                      (rnd_pr == 2'd2) ? ({1'b0, a_m & 64'hFFFF_FFFF_FFFF_F800} + (rnd_up ? 65'h800 : 65'd0)) :
+                                         ({1'b0, a_m} + (rnd_up ? 65'd1 : 65'd0));
+wire signed [17:0] rnd_er = e_w + (rnd_sum[64] ? 18'sd1 : 18'sd0);
+wire [64:0] rnd_mr = rnd_sum[64] ? {2'b01, 63'd0} : rnd_sum;
+wire signed [17:0] rnd_emax = op_sgl(r_op) ? 18'sd32766 :
+                              (rnd_pr == 2'd1) ? 18'sd16510 :
+                              (rnd_pr == 2'd2) ? 18'sd17406 : 18'sd32766;
+wire signed [17:0] rnd_emin = op_sgl(r_op) ? 18'sd0 :
+                              (rnd_pr == 2'd1) ? 18'sd16257 :
+                              (rnd_pr == 2'd2) ? 18'sd15361 : 18'sd0;
+wire        rnd_ovf = (rnd_er > rnd_emax);
+wire        rnd_unf = (rnd_er < rnd_emin);
+// the status byte as F_ROUND's normal branch leaves it (INEX2 is bit 9)
+wire  [7:0] rnd_status = fpsr[15:8] | (rnd_inx ? 8'h02 : 8'h00);
+assign round_wb_now = (fst == F_ROUND) && (a_t == T_NUM) && !rnd_ovf && !rnd_unf &&
+                      !(|(rnd_status & fpcr[15:8]));
+
+wire fr_wb_we = ((fst == F_WB) && !(|(fpsr[15:8] & fpcr[15:8])) &&
+                 (r_op != 7'h38) && (r_op != 7'h3A)) || round_wb_now;
 wire [14:0] fr_wb_e = (a_t == T_ZERO) ? 15'd0 :
                        (a_t == T_INF || a_t == T_NAN) ? 15'h7FFF : a_e[14:0];
 wire [63:0] fr_wb_m = (a_t == T_ZERO) ? 64'd0 : a_m;
 wire        fr_bank_we = fm_we || fr_wb_we;
 wire  [2:0] fr_bank_wa = fr_wb_we ? r_dst : fm_sel;
-wire [79:0] fr_bank_wd = fr_wb_we ? {a_s, fr_wb_e, fr_wb_m} :
+wire [79:0] fr_bank_wd = round_wb_now ? {a_s, rnd_er[14:0], rnd_mr[63:0]} :
+                         fr_wb_we ? {a_s, fr_wb_e, fr_wb_m} :
                                     {fm_wdata[95], fm_wdata[94:80],
                                      fm_wdata[63:0]};
 
@@ -541,11 +690,15 @@ function arith5;
 	end
 endfunction
 
-wire [6:0] fr_cmd_op = (frestore_cmd1[6:0] == 7'h05) ? 7'h04
-                                                     : frestore_cmd1[6:0];
-assign frestore_resume = frestore_busy && frestore_cusavepc == 8'hfe &&
-                         (frestore_cmd1[15:13] == 3'd0 ||
-                          frestore_cmd1[15:13] == 3'd2) && op_in_hw(fr_cmd_op);
+// Frame fields the FRESTORE write port loads that FSAVE never stores:
+// CU_SAVEPC (only whether it is $fe matters) and the ETE15/FPTE15 bits.
+reg        frame_cusave_fe;
+reg        frame_et15, frame_fpt15;
+wire [6:0] fr_cmd_op = (fstate_cmd1[6:0] == 7'h05) ? 7'h04
+                                                   : fstate_cmd1[6:0];
+assign frestore_resume = frestore_busy && frame_cusave_fe &&
+                         (fstate_cmd1[15:13] == 3'd0 ||
+                          fstate_cmd1[15:13] == 3'd2) && op_in_hw(fr_cmd_op);
 
 // FPSP get_op (mk_norm/fix_stag) and bugfix set ETE15/FPTE15 for normal
 // operands whose exponent is below $4000 too: e.g. 0.1 has e=$3ffb,
@@ -555,8 +708,8 @@ assign frestore_resume = frestore_busy && frestore_cusavepc == 8'hfe &&
 // counts above 63 produce signed zero. WinUAE's unconditional esign test
 // also loses ordinary FPSP operands; do not reproduce that behavior here.
 // Reuse F_SHR for both operands instead of adding two 64-bit barrel shifters.
-wire restore_et_negative = frestore_et15 && frestore_et[94];
-wire restore_fpt_negative = frestore_fpt15 && frestore_fpt[94];
+wire restore_et_negative = frame_et15 && sh_src[94];
+wire restore_fpt_negative = frame_fpt15 && sh_dst[94];
 function [6:0] restore_shift;
 	input esign;
 	input [14:0] e;
@@ -565,9 +718,31 @@ function [6:0] restore_shift;
 		                (e < 15'h7fc1) ? 7'd64 : (7'd0 - e[6:0]);
 	end
 endfunction
-assign frestore_e1_pend = (frestore_flags[2] || frestore_flags[1]) &&
+assign frestore_e1_pend = (fstate_flags[2] || fstate_flags[1]) &&
                           op_in_hw(fr_cmd_op) &&
                           (|(fpsr[15:8] & fpcr[15:8]));
+
+always @* begin
+	case (frame_idx)
+		5'd6:  frame_rd = wbt_zero ? 32'd0 : {wb_s, wb_e[14:0], 16'd0};
+		5'd7:  frame_rd = wbt_zero ? 32'd0 : wb_m[63:32];
+		5'd8:  frame_rd = wbt_zero ? 32'd0 : wb_m[31:0];
+		5'd10: frame_rd = fstate_fpiar_c;
+		5'd13: frame_rd = {fstate_cmd3, 16'd0};
+		5'd15: frame_rd = {fstate_stag, 3'd0, fstate_grs, 23'd0};
+		5'd16: frame_rd = {fstate_cmd1, 16'd0};
+		5'd17: frame_rd = {fstate_dtag, 8'd0, fstate_wbte15, 20'd0};
+		5'd18: frame_rd = {5'd0, fstate_flags[2], fstate_flags[1], 4'd0,
+		                   fstate_flags[0], 20'd0};
+		5'd19: frame_rd = sh_dst[95:64];
+		5'd20: frame_rd = sh_dst[63:32];
+		5'd21: frame_rd = sh_dst[31:0];
+		5'd22: frame_rd = sh_src[95:64];
+		5'd23: frame_rd = sh_src[63:32];
+		5'd24: frame_rd = sh_src[31:0];
+		default: frame_rd = 32'd0;
+	endcase
+end
 
 function [15:0] frame_cmd1;
 	input [15:0] cmd;
@@ -609,8 +784,8 @@ task capture_unimp;
 		// claiming one sends its dispatch down the arithmetic path.
 		fstate_flags <= 3'b000; // E1=E3=T=0
 
-		fstate_fpt   <= dst;
-		fstate_et    <= src;
+		sh_dst       <= dst;   // FPTEMP
+		sh_src       <= src;   // ETEMP
 		fstate_e1    <= 0;
 		fstate_grs   <= 0;
 		fstate_wbte15 <= 0;
@@ -649,11 +824,11 @@ task capture_datatype;
 		fstate_stag  <= stag;
 		fstate_dtag  <= dtag;
 		fstate_flags <= {e1_flag, 1'b0, t_flag};   // {E1,E3,T}
-		fstate_fpt   <= dst;
-		fstate_et    <= src;
+		sh_dst       <= dst;   // FPTEMP
+		sh_src       <= src;   // ETEMP
 		fstate_grs   <= 0;
 		fstate_wbte15 <= 0;
-		fstate_wbt   <= 0;
+		wbt_zero     <= 1;     // WBTEMP reads as zero
 		// Stores can dispatch on the same edge as the FPIAR side-port
 		// update.  Capture this instruction, not the previous FPIAR value.
 		fstate_fpiar_c <= ia_we ? ia_wdata : fpiar;
@@ -671,16 +846,16 @@ endtask
 always @(posedge clk) begin
 	if (!nreset) begin
 		fst <= F_IDLE;
-		done <= 0; unimp <= 0; unsupp <= 0; exc_req <= 0; exc_vec <= 0;
+		done_r <= 0; unimp <= 0; unsupp <= 0; exc_req <= 0; exc_vec <= 0;
 		fpcr <= 0; fpsr <= 0; fpiar <= 0;
 		fpu_used <= 0;
 		fstate_unimp <= 0;
 		fstate_resig <= 0;
 		fstate_cmd1 <= 0; fstate_cmd3 <= 0;
 		fstate_stag <= 0; fstate_dtag <= 0; fstate_flags <= 0;
-		fstate_fpt <= 0; fstate_et <= 0;
 		fstate_e1 <= 0; fstate_grs <= 0; fstate_wbte15 <= 0;
-		fstate_busy <= 0; fstate_wbt <= 0; fstate_fpiar_c <= 0;
+		fstate_busy <= 0; wbt_zero <= 0; fstate_fpiar_c <= 0;
+		frame_cusave_fe <= 0; frame_et15 <= 0; frame_fpt15 <= 0;
 		sh_cmd <= 0; sh_src <= 0; sh_stag <= 0;
 		sh_dst <= 0; sh_dtag <= 0;
 		wb_s <= 0; wb_e <= 0; wb_m <= 0; wb_grs <= 0;
@@ -699,7 +874,7 @@ always @(posedge clk) begin
 		fr_valid <= 0;
 	end
 	else if (ce) begin
-		done <= 0;
+		done_r <= 0;
 		unimp <= 0;
 		unsupp <= 0;
 		exc_req <= 0;
@@ -742,8 +917,7 @@ always @(posedge clk) begin
 				fstate_stag  <= sh_stag;
 				fstate_dtag  <= 0;
 				fstate_flags <= 3'b100;   // E1
-				fstate_fpt   <= 0;
-				fstate_et    <= sh_src;
+				sh_dst       <= 0;        // FPTEMP; ETEMP is sh_src itself
 				fstate_grs   <= (pv == `AP040_VEC_FP_SNAN) ? 3'd7 : 3'd1;
 				fstate_wbte15 <= (pv == `AP040_VEC_FP_SNAN);
 				fstate_busy  <= 0;
@@ -759,19 +933,18 @@ always @(posedge clk) begin
 				fstate_cmd1  <= frame_cmd1(sh_cmd);
 				fstate_cmd3  <= frame_cmd3(frame_cmd1(sh_cmd));
 				fstate_stag  <= sh_stag;
-				fstate_et    <= sh_src;
+				// ETEMP is sh_src itself; a dyadic op keeps sh_dst as FPTEMP
 				if ((sh_cmd[5:4] == 2'b10)) begin  // dyadic: 0x20-0x2F range
-					fstate_fpt  <= sh_dst;
 					fstate_dtag <= sh_dtag;
 				end
 				else begin
-					fstate_fpt  <= 0;
+					sh_dst      <= 0;
 					fstate_dtag <= 0;
 				end
 				fstate_flags <= 3'b010;   // E3
 				fstate_grs   <= wb_grs;
 				fstate_wbte15 <= (pv == `AP040_VEC_FP_UNFL);
-				fstate_wbt   <= {wb_s, wb_e[14:0], 16'd0, wb_m};
+				wbt_zero     <= 0;        // WBTEMP is wb_* itself
 				fstate_fpiar_c <= fpiar;
 				fstate_busy  <= 1;
 				fstate_e1    <= 1;        // arithmetic E-state (either tier)
@@ -818,26 +991,51 @@ always @(posedge clk) begin
 			// AP040 already models that separately through fstate_e1 and
 			// frestore_e1_pend below, so nothing is lost here.
 			fstate_resig <= 0;
-			fstate_cmd1 <= frestore_cmd1;
-			fstate_cmd3 <= frestore_cmd3;
-			fstate_stag <= frestore_stag;
-			fstate_dtag <= frestore_dtag;
-			fstate_flags <= frestore_flags;
-			fstate_fpt <= frestore_fpt;
-			fstate_et <= frestore_et;
-			fstate_grs <= frestore_grs;
-			fstate_wbte15 <= frestore_wbte15;
+			// the frame's fields were written by the frame port as the
+			// core read them; only the format is left to install
 			fstate_busy <= frestore_busy;
-			fstate_wbt <= frestore_wbt;
-			fstate_fpiar_c <= frestore_fpiar;
+			if (frestore_nocmd3) fstate_cmd3 <= 0;
 			// an E1 frame whose command the hardware implements is a
 			// deferred ARITHMETIC exception, not an unimplemented
 			// instruction: the core re-arms the pend (frestore_e1_pend)
 			// and delivery happens at the next dispatch; if the enables
 			// were cleared before the restore, the state simply executes
 			// through (see the F_IDLE dispatch gate)
-			fstate_e1 <= (frestore_flags[2] || frestore_flags[1]) &&
+			fstate_e1 <= (fstate_flags[2] || fstate_flags[1]) &&
 			             op_in_hw(fr_cmd_op);
+		end
+		if (frame_we) begin
+			fstate_unimp <= 0;
+			case (frame_idx)
+				5'd2:  frame_cusave_fe <= (frame_wd[31:24] == 8'hfe);
+				5'd6:  begin
+					{wb_s, wb_e[14:0]} <= frame_wd[31:16];
+					wbt_zero <= 0;
+				end
+				5'd7:  wb_m[63:32] <= frame_wd;
+				5'd8:  wb_m[31:0]  <= frame_wd;
+				5'd10: fstate_fpiar_c <= frame_wd;
+				5'd13: fstate_cmd3 <= frame_wd[31:16];
+				5'd15: begin
+					fstate_stag <= frame_wd[31:29];
+					frame_et15  <= frame_wd[28];
+					fstate_grs  <= frame_wd[25:23];
+				end
+				5'd16: fstate_cmd1 <= frame_wd[31:16];
+				5'd17: begin
+					fstate_dtag   <= frame_wd[31:29];
+					frame_fpt15   <= frame_wd[28];
+					fstate_wbte15 <= frame_wd[20];
+				end
+				5'd18: fstate_flags <= {frame_wd[26], frame_wd[25], frame_wd[20]};
+				5'd19: sh_dst[95:64] <= frame_wd;
+				5'd20: sh_dst[63:32] <= frame_wd;
+				5'd21: sh_dst[31:0]  <= frame_wd;
+				5'd22: sh_src[95:64]  <= frame_wd;
+				5'd23: sh_src[63:32]  <= frame_wd;
+				5'd24: sh_src[31:0]   <= frame_wd;
+				default: ;
+			endcase
 		end
 
 		case (fst)
@@ -855,15 +1053,15 @@ always @(posedge clk) begin
 				r_ae7 <= fpsr[7];
 				r_op <= fr_cmd_op;
 				r_fmt <= 3'd2; // already converted to extended, even opclass 0
-				r_dst <= frestore_cmd1[9:7];
-				sh_cmd <= frestore_cmd1;
-				{a_s, a_e, a_m, a_t} <= unpack_x(frestore_et[95],
-				    restore_et_negative ? 15'd0 : frestore_et[94:80], frestore_et[63:0]);
-				{b_s, b_e, b_m, b_t} <= unpack_x(frestore_fpt[95],
-				    restore_fpt_negative ? 15'd0 : frestore_fpt[94:80], frestore_fpt[63:0]);
-				sh_v <= {frestore_et[63:0], 3'd0};
-				sh_cnt <= restore_shift(frestore_et15, frestore_et[94:80]);
-				loop_n <= restore_shift(frestore_fpt15, frestore_fpt[94:80]);
+				r_dst <= fstate_cmd1[9:7];
+				sh_cmd <= fstate_cmd1;
+				{a_s, a_e, a_m, a_t} <= unpack_x(sh_src[95],
+				    restore_et_negative ? 15'd0 : sh_src[94:80], sh_src[63:0]);
+				{b_s, b_e, b_m, b_t} <= unpack_x(sh_dst[95],
+				    restore_fpt_negative ? 15'd0 : sh_dst[94:80], sh_dst[63:0]);
+				sh_v <= {sh_src[63:0], 3'd0};
+				sh_cnt <= restore_shift(frame_et15, sh_src[94:80]);
+				loop_n <= restore_shift(frame_fpt15, sh_dst[94:80]);
 				sh_ret <= F_RESTORE_A;
 				fst <= F_SHR;
 			end
@@ -932,7 +1130,21 @@ always @(posedge clk) begin
 						// P222: the raw extended store F_SRC would make next
 						// clock (it sets no status bits and needs no trap check)
 						dout <= {fr_src_s, fr_src_e, 16'd0, fr_src_m};
-						done <= 1; fpu_used <= 1;
+						done_r <= 1; fpu_used <= 1;
+						r_op <= 7'h7F;
+					end
+					else if (src_fmt == 3'd1 && st_s_ok && !(st_s_inx && fpcr[9])) begin
+						// P255: normal single store packed here, done now
+						dout <= {fr_src_s, st_s_enc[7:0], st_s_frac, 64'd0};
+						if (st_s_inx) begin fpsr[9] <= 1; fpsr[3] <= 1; end
+						done_r <= 1; fpu_used <= 1;
+						r_op <= 7'h7F;
+					end
+					else if (src_fmt == 3'd5 && st_d_ok && !(st_d_inx && fpcr[9])) begin
+						// P255: normal double store packed here, done now
+						dout <= {fr_src_s, st_d_enc[10:0], st_d_frac, 32'd0};
+						if (st_d_inx) begin fpsr[9] <= 1; fpsr[3] <= 1; end
+						done_r <= 1; fpu_used <= 1;
 						r_op <= 7'h7F;
 					end
 					else begin
@@ -995,6 +1207,18 @@ always @(posedge clk) begin
 						e_w <= $signed({3'd0, fr_src_e});
 						fst <= F_BIN;
 					end
+					else if (fr_src_m[63] && fr_src_e != 15'h7FFF && fp_move_kind(opmode) != 2'd0) begin
+						// P253: a normal source of FMOVE/FABS/FNEG goes straight to
+						// F_ROUND, with F_EXEC's shadow capture and sign work done here
+						sh_cmd  <= {3'b010, src_fmt, dst_r, opmode};
+						sh_src  <= {fr_src_s, fr_src_e, 16'd0, fr_src_m};
+						sh_stag <= 3'd0;
+						a_s <= (fp_move_kind(opmode) == 2'd2) ? 1'b0 :
+						       (fp_move_kind(opmode) == 2'd3) ? ~fr_src_s : fr_src_s;
+						grs <= 3'd0;
+						e_w <= $signed({3'd0, fr_src_e});
+						fst <= F_ROUND;
+					end
 					else fst <= F_EXEC;
 					end
 				end
@@ -1013,17 +1237,30 @@ always @(posedge clk) begin
 						    {32'd0, din[63:32], din[95:64]}, 3'd0,
 						    1'b0, 1'b1);   // packed -> E1, stag 7
 					end
-					else if (src_fmt == 3'd2 && din[63] && din[94:80] != 15'h7FFF &&
-					         fast_bin_kind(opmode) != 2'd0) begin
-						// P221: a normal extended memory source of a binary op
-						// is unpacked here (what F_SRC would do next clock; it
+					else if (din_norm && fast_bin_kind(opmode) != 2'd0) begin
+						// P221/P253: a normal X, D or S memory source of a binary
+						// op is unpacked here (what F_SRC would do next clock; it
 						// cannot be an unsupported type) and goes to F_BIN
-						{a_s, a_e, a_m, a_t} <= unpack_x(din[95], din[94:80], din[63:0]);
-						r_stag  <= frame_tag_x(din[94:80], din[63:0]);
+						a_s <= din[95]; a_e <= din_e; a_m <= din_m; a_t <= T_NUM;
+						r_stag  <= 3'd0;
 						op_kind <= {2'd0, fast_bin_kind(opmode)};
 						grs     <= 3'd0;
-						e_w     <= $signed({3'd0, din[94:80]});
+						e_w     <= $signed({1'b0, din_e});
 						fst     <= F_BIN;
+					end
+					else if (din_norm && fp_move_kind(opmode) != 2'd0) begin
+						// P253: a normal memory source of FMOVE/FABS/FNEG goes
+						// straight to F_ROUND (F_EXEC's shadow and sign work here)
+						a_s <= (fp_move_kind(opmode) == 2'd2) ? 1'b0 :
+						       (fp_move_kind(opmode) == 2'd3) ? ~din[95] : din[95];
+						a_e <= din_e; a_m <= din_m; a_t <= T_NUM;
+						r_stag  <= 3'd0;
+						sh_cmd  <= {op_class, src_fmt, dst_r, opmode};
+						sh_src  <= {din[95], din_e[14:0], 16'd0, din_m};
+						sh_stag <= 3'd0;
+						grs     <= 3'd0;
+						e_w     <= $signed({1'b0, din_e});
+						fst     <= F_ROUND;
 					end
 					else begin
 						a_t <= T_NUM;   // provisional; F_SRC classifies
@@ -1042,7 +1279,7 @@ always @(posedge clk) begin
 							// raw X pass-through can set no status bits, so
 							// it alone skips the F_STDONE enabled-trap check
 							dout <= {a_s, a_e[14:0], 16'd0, a_m};
-							done <= 1; fpu_used <= 1;
+							done_r <= 1; fpu_used <= 1;
 							fst <= F_IDLE;
 						end
 						3'd1: begin : pk_s
@@ -1627,8 +1864,9 @@ always @(posedge clk) begin
 							sh_v <= {aswap ? b_m : a_m, 3'd0};
 							sh_cnt <= (d > 17'd66) ? 7'd67 : d[6:0];
 							sh_ret <= F_ADDX;
-							// P206: equal exponents need no alignment clock
-							fst <= (d == 17'd0) ? F_ADDX : F_SHR;
+							// P206: equal exponents need no alignment clock;
+							// P251: unequal ones align inside F_ADDX (shr_out)
+							fst <= F_ADDX;
 						end
 					end
 					4'd2: begin : bin_mul
@@ -1681,9 +1919,11 @@ always @(posedge clk) begin
 								fst <= F_ROUND;
 							end
 							else begin
-								acc_hi <= 0;
-								acc_lo <= 0;
-								loop_n <= 0;
+								// P251: the DSP product is registered here, in
+								// the dispatch clock, so F_MULT only finishes
+								// (one clock instead of two per FMUL)
+								mul_pd <= am_eff * bm_eff;
+								loop_n <= 7'd1;
 								fst <= F_MULT;
 							end
 						end
@@ -1773,8 +2013,11 @@ always @(posedge clk) begin
 			F_ADDX: begin : f_addx
 				reg [67:0] sum;
 				reg [66:0] diff;
+				// P251: the alignment shift F_SHR used to take a clock for
+				// is folded in here through the shared shr_out (sh_cnt is
+				// zero when F_SHR did run, and shr_out is then sh_v itself)
 				if (!eff_sub) begin
-					sum = {1'b0, b_m, 3'd0} + {1'b0, sh_v};
+					sum = {1'b0, b_m, 3'd0} + {1'b0, shr_out};
 					if (sum[67]) begin
 						a_m <= sum[67:4];
 						grs <= {sum[3], sum[2], sum[1] | sum[0]};
@@ -1789,7 +2032,7 @@ always @(posedge clk) begin
 					fst <= F_ROUND;
 				end
 				else begin
-					diff = {b_m, 3'd0} - sh_v;
+					diff = {b_m, 3'd0} - shr_out;
 					if (diff == 67'd0) begin
 						a_t <= T_ZERO;
 						a_s <= (rnd_mode == 2'b10);
@@ -1825,7 +2068,10 @@ always @(posedge clk) begin
 			end
 
 			F_MULT: begin : f_mult
-				if (loop_n == 7'd1) begin : mul_fin
+				// P254: F_BIN registered the one 64x64 DSP product (P251); this
+				// state only finishes.  The former second multiply here was
+				// unreachable but still synthesized: nine extra DSP blocks.
+				begin : mul_fin
 					// mul_pd is the registered full 128-bit product, exactly
 					// the value the former 32-cycle radix-4 loop accumulated.
 					if (mul_pd[127]) begin
@@ -1839,13 +2085,6 @@ always @(posedge clk) begin
 					end
 					a_t <= T_NUM;
 					fst <= F_ROUND;
-				end
-				else begin
-					// One registered 64x64 DSP-tree multiply replaces the
-					// 32-cycle serial radix-4 loop.  At this clock (34.8 ns
-					// budget) the cascade closes in a single cycle.
-					mul_pd <= a_m * b_m;
-					loop_n <= 7'd1;
 				end
 			end
 
@@ -1905,53 +2144,19 @@ always @(posedge clk) begin
 				reg        inx, up, ovf, unf, tomax;
 				reg [1:0]  pr;
 				reg signed [17:0] er, emin, emax;
-				pr = prec_of(r_op);
+				pr = rnd_pr;
 				if (a_t != T_NUM) fst <= F_WB;
 				else begin
-					case (pr)
-						2'd1: begin
-							up = round_up(a_m[40], a_m[39],
-							              (a_m[38:0] != 0) || (grs != 0), a_s);
-							inx = (a_m[39:0] != 0) || (grs != 0);
-							mr = {1'b0, a_m & 64'hFFFF_FF00_0000_0000} +
-							     (up ? 65'h100_0000_0000 : 65'd0);
-						end
-						2'd2: begin
-							up = round_up(a_m[11], a_m[10],
-							              (a_m[9:0] != 0) || (grs != 0), a_s);
-							inx = (a_m[10:0] != 0) || (grs != 0);
-							mr = {1'b0, a_m & 64'hFFFF_FFFF_FFFF_F800} +
-							     (up ? 65'h800 : 65'd0);
-						end
-						default: begin
-							up = round_up(a_m[0], grs[2], grs[1:0] != 0, a_s);
-							inx = (grs != 0);
-							mr = {1'b0, a_m} + (up ? 65'd1 : 65'd0);
-						end
-					endcase
-					er = e_w + (mr[64] ? 18'sd1 : 18'sd0);
-					if (mr[64]) mr = {2'b01, 63'd0};
-					// Range control: the rounding precision narrows the
-					// exponent range as well as the significand (softfloat's
-					// SOFTFLOAT_68K roundAndPackFloatx80 expOffset, 0x3F80
-					// single / 0x3C00 double), EXCEPT for FSGLMUL/FSGLDIV,
-					// which round through roundSigAndPackFloatx80 and keep
-					// the extended range.
-					// Extended (and the sgl class) use the RAW exponent
-					// convention: a working exponent of ZERO still packs as
-					// a normal result with exponent field 0 (the
-					// pseudo-denormal encoding) and no flags; tininess only
-					// starts below that, shifting by -er (softfloat probes:
-					// (0001-8000)/2 -> 0000-8000 clean, /4 -> 0000-4000
-					// UNFL, 2^-16380*2^-13 -> 0000-0020.. shift 10).
-					emax = op_sgl(r_op) ? 18'sd32766 :
-					       (pr == 2'd1) ? 18'sd16510 :
-					       (pr == 2'd2) ? 18'sd17406 : 18'sd32766;
-					emin = op_sgl(r_op) ? 18'sd0 :
-					       (pr == 2'd1) ? 18'sd16257 :
-					       (pr == 2'd2) ? 18'sd15361 : 18'sd0;
-					ovf = (er > emax);
-					unf = (er < emin);
+					// P252: the rounding is the continuous rnd_* logic beside the
+					// register file (shared with the same-clock writeback)
+					up   = rnd_up;
+					inx  = rnd_inx;
+					mr   = rnd_mr;
+					er   = rnd_er;
+					emax = rnd_emax;
+					emin = rnd_emin;
+					ovf  = rnd_ovf;
+					unf  = rnd_unf;
 					// WBTEMP capture for a possible BUSY frame: rounded for
 					// OVFL and the plain inexact path, unrounded for UNFL
 					wb_s   <= a_s;
@@ -2076,7 +2281,16 @@ always @(posedge clk) begin
 						end
 						a_m <= mr[63:0];
 						a_e <= er[16:0];
-						fst <= F_WB;
+						if (round_wb_now) begin
+							// P252: F_WB's work for this, the common case, in
+							// this clock: the register write (fr_wb_we), the
+							// condition codes of a nonzero finite number, done
+							fr_valid[r_dst] <= 1;
+							fpsr[27:24] <= {a_s, 3'b000};
+							fpu_used <= 1;
+							fst <= F_IDLE;
+						end
+						else fst <= F_WB;
 					end
 				end
 			end
@@ -2157,7 +2371,7 @@ always @(posedge clk) begin
 					                (a_t == T_NAN)};
 				end
 				fpu_used <= 1;
-				if (!(|(fpsr[15:8] & fpcr[15:8]))) done <= 1;
+				// P251: done is wb_done_now in this clock (see its wire)
 				fst <= F_IDLE;
 			end
 
@@ -2167,11 +2381,10 @@ always @(posedge clk) begin
 				// clocks per add alignment (Whetstone's polynomial FADD.X
 				// averaged 8.3 FPU clocks).  Same result: {int, G, R} shift
 				// right by sh_cnt, S ORs every bit shifted out (and itself).
-				reg [66:0] shifted, gone;
-				shifted = sh_v >> sh_cnt;
-				gone    = sh_v & ((67'd1 << sh_cnt) - 67'd1);
+				// P251: the shifter itself is the shared shr_out wire, which
+				// F_ADDX also reads, so there is one barrel shifter
 				if (sh_cnt != 0) begin
-					sh_v   <= {shifted[66:1], shifted[0] | (|gone)};
+					sh_v   <= shr_out;
 					sh_cnt <= 7'd0;
 				end
 				fst <= sh_ret;
@@ -2336,7 +2549,7 @@ always @(posedge clk) begin
 				// result already in dout: AP040 runs without FPSP, so the
 				// real 040's nonmaskable store set is served by the same
 				// defaults FPSP would have stored.
-				done <= 1;
+				done_r <= 1;
 				if (|(fpsr[15:8] & fpcr[15:8])) begin
 					exc_req <= 1;
 					exc_vec <= fp_exception_vector(fpsr[15:8] & fpcr[15:8]);

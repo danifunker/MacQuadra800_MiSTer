@@ -1,0 +1,30 @@
+--- Makefile
++++ Makefile
+@@ -20,6 +20,18 @@
+ 	-Wno-COMBDLY -Wno-INITIALDLY -Wno-SYNCASYNCNET -Wno-BLKLOOPINIT \
+ 	-Wno-MULTIDRIVEN -Wno-GENUNNAMED
+ V_DEFINE += --trace-fst --timing
++# fpu_subtest_breakdown_20260928: match every CPU macro in the release QSF.
++V_DEFINE += +define+AP040_EXPERIMENTAL_XSTORE=1 \
++	+define+AP040_EXPERIMENTAL_LEA=1 \
++	+define+AP040_EXPERIMENTAL_PIPELINE=1 \
++	+define+AP040_EXPERIMENTAL_PIPELINE_LOADS=1 \
++	+define+AP040_EXPERIMENTAL_PIPELINE_STORES=1 \
++	+define+AP040_EXPERIMENTAL_PIPELINE_PEA=1 \
++	+define+AP040_EXPERIMENTAL_PIPELINE_P6=1 \
++	+define+AP040_PIPELINE_MEMORY_ENTRY=1 \
++	+define+AP040_PIPELINE_COMPARE=1 \
++	+define+AP040_PIPELINE_EARLY_DRAIN=1 \
++	+define+SCSI_CACHE_OFF=1
+ 
+ UNAME_S := $(shell uname -s)
+ ifeq ($(UNAME_S), Linux)
+@@ -108,7 +120,7 @@
+ 	xxd -p -c4 .fastboot.tmp.rom > $@
+ 	rm .fastboot.tmp.rom
+ 
+-SIM_HEADERS = sim_control.h cpu_dispatch_observer.h sim_refill_profile.h sim_ram_snapshot.h ../scripts/fixtures/speedometer_timing_observer/adapter.inc ../scripts/fixtures/speedometer_timing_observer/speedometer_observer.h
++SIM_HEADERS = fpu_window_monitor.h sim_control.h cpu_dispatch_observer.h sim_refill_profile.h sim_ram_snapshot.h ../scripts/fixtures/speedometer_timing_observer/adapter.inc ../scripts/fixtures/speedometer_timing_observer/speedometer_observer.h
+ $(VOUT): $(V_SRC) $(C_SRC) $(SIM_HEADERS) Makefile
+ 	$V -cc $(V_OPT) -LDFLAGS "$(LDFLAGS)" -exe --trace --Mdir ./obj_dir \
+ 		$(V_DEFINE) $(V_INC) $(TOP) -CFLAGS "$(CFLAGS)" $(V_SRC) $(C_SRC)

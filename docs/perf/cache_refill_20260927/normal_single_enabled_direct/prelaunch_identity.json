@@ -1,0 +1,15 @@
+{
+  "status": "frozen before execution",
+  "inputs": {
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_refill_platform_workload_20260927/baseline/rtl/ap68040/rtl/ap040_fpu.v": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_candidate_20260928/ap040_fpu.v": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+    "/home/alans/mister/MacQuadra800_MiSTer/MacQuadra800.qsf": "75c69f933515f05c729076108b26515f3f6aff84a36692fdd58d2f95077fe1fd",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_refill_platform_workload_20260927/baseline/rtl/ap68040/rtl/ap040_defs.svh": "195c37afb9961a1baf8c6ebbdba8df53da97d93c5cb4924cf673a3e9dc065a81",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_tests_20260928/tb_normal_single_move.sv": "22e4ab0b75705871e5a3d050b4e43e56b94fbd86903a20a268ff1845de7f53a8",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_tests_20260928/tests.inc": "3ccdd1e5b4e6a3a08e33b34073fdb06c65b2adf5c17c393e2d2ca1d9f6cc31a7",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_tests_20260928/prepare.py": "e5058cee072fce2e9f8769a62d3d0e6b33649bfc20d0362195467efbad3328ef",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_tests_20260928/run.py": "87c998733bddf12197010e87ce8c8d8f3ac7c2ce92222e7167c4e67e39649af5"
+  },
+  "planned_command": "python3 scratch/fpu_normal_single_enabled_tests_20260928/run.py",
+  "test_runs": "production2d53 then candidate6c157b3, sequential"
+}

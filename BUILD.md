@@ -42,9 +42,12 @@ That is all that is required **to build**. (Deploy additionally needs `MISTER_HO
 bash scripts/build_only.sh
 ```
 
-A full compile takes roughly **35-40 minutes** on this design (it fits at ~81 % of the
-5CSEBA6 and closes 33 MHz with well under a nanosecond to spare, so the fitter works
-hard). Run it in a terminal you can leave open, or as a background task.
+Compile time depends on host, candidate and seed. Earlier builds took 35–40
+minutes at about 81% ALMs; the 2026-09-28 experimental seed31 fit took about
+18 minutes at 92% ALMs, with positive timing on every clock. See the
+[current handoff](HANDOFF-20260928.md) for its exact identity. On the current
+Linux host use a durable supervised process with captured exit status/logs,
+and preserve its inputs until completion. Only one Quartus flow may run globally.
 
 | command | what it does |
 |---|---|
@@ -227,13 +230,10 @@ The pre-hardware gate is the Verilator testbench in `verilator/` — see
 - **The same core twice at once — don't.** Both compiles share `db/`, `incremental_db/`,
   and `output_files/`, so they would corrupt each other. `build_only.sh` prevents this:
   the second invocation waits (30 s poll) until the first Quartus finishes.
-- **Two *different* cores** (e.g. MacQuadra800 and MacLC, in separate repo directories):
-  Quartus *can* build them in parallel — they share no working state, and Lite has no
-  concurrency license lock. **But** `build_only.sh`'s wait-gate is host-global (it matches
-  *any* running `quartus_*` process), so by default the second build **waits** and they run
-  sequentially. To force them to run at the same time, launch the second with `--no-wait`.
-  Note that two full compiles contend for RAM/CPU, so each becomes slower — running them
-  sequentially is often nearly as fast and is safer.
+- **Different cores or isolated copies:** the current project policy still allows
+  only one Quartus flow globally. Keep the host-global wait gate enabled; do
+  not use `--no-wait` to bypass it. Check for any running `quartus_*` process
+  before launching, including flows owned by other work.
 
 ## Portability to other cores
 

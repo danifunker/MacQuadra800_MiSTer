@@ -1,0 +1,25 @@
+{
+  "unit": "codex-fpu-normal-single-allprecision-quartus-20260928-seed27-cross.service",
+  "invocation_id": "8f2853501ec74e27a7b0931f5ed27c0b",
+  "tool_session_id": 36351,
+  "quartus_sta_pid": 2378435,
+  "quartus_sta_executable": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_sta",
+  "quartus_sta_executable_sha256": "3e5b6469769824667c28dcad237a4ad5f46aad67c3ccd76ec3c0824e7094fe78",
+  "command": "quartus_sta -t scripts/cpu/timequest_cross_domain.tcl fpu_normal_single_allprecision_seed27_20260928",
+  "exit_status": 0,
+  "errors": 0,
+  "warnings": 8,
+  "reports": {
+    "sys_to_ram": {
+      "path": "tree/scratch/cross_sys2ram_fpu_normal_single_allprecision_seed27_20260928.txt",
+      "sha256": "1c162d1462c03be640c30779197cf8c68d2f99da2c3bb01ff4498a7063011c33",
+      "worst_reported_slack_ns": 0.726
+    },
+    "ram_to_sys": {
+      "path": "tree/scratch/cross_ram2sys_fpu_normal_single_allprecision_seed27_20260928.txt",
+      "sha256": "3f23933f1e8d08c6def96a5cca45431ce323cdc6d9a5b7f894409faed8187db8",
+      "worst_reported_slack_ns": 0.036
+    }
+  },
+  "status": "complete"
+}

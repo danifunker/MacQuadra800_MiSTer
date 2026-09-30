@@ -1,0 +1,15 @@
+{
+  "source_commit": "708c12542a74c0b92872910d330a6e989b6a2181",
+  "source_method": "git archive of pinned 708c125, then exact seed27 QSF copied from reviewed candidate seed27 tree",
+  "tracked_file_count": 1892,
+  "baseline_fpu_sha256": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "candidate_fpu_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "qsf_sha256": "9b6fa7c352dd7667339e6e6ec4f03a00d1894b7e7fce14908f8b57b99c059ec4",
+  "sdc_sha256": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062",
+  "qsf_seed": 27,
+  "local_env_mode": "0600",
+  "local_env_excluded_from_manifest": true,
+  "generated_outputs_copied": false,
+  "quartus_launched": false,
+  "intended_flow": "one full compile via bash scripts/build_only.sh (default wait gate), then $QUARTUS_BIN/quartus_sta -t scripts/cpu/timequest_cross_domain.tcl with unique tag after successful route"
+}

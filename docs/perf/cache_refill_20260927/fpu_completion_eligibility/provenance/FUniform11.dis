@@ -1,0 +1,15 @@
+07de 4e560000  link    A6, #$0
+07e2 2f0a  move.l  A2, -(A7)
+07e4 246e0008  movea.l ($8,A6), A2
+07e8 3012  move.w  (A2), D0
+07ea c1fc12f7  muls.w  #$12f7, D0
+07ee 064006c3  addi.w  #$6c3, D0
+07f2 02401fff  andi.w  #$1fff, D0
+07f6 3480  move.w  D0, (A2)
+07f8 f2125000  fmove.w   (A2), FP0
+07fc f23c542040c0000000000000  fdiv.d   #$40c00000, FP0
+0808 206e000c  movea.l ($c,A6), A0
+080c f2106800  fmove.x   FP0, (A0)
+0810 245f  movea.l (A7)+, A2
+0812 4e5e  unlk    A6
+0814 4e75  rts

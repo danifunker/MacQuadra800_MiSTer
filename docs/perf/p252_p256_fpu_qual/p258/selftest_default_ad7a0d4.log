@@ -1,0 +1,32 @@
+  pass  reset
+  pass  regfile
+  pass  regfile_poison
+  pass  regfile_bypass_control  (control: failed as required)
+  pass  regfile_extra_bypass_control  (control: failed as required)
+  pass  regfile_fifth_bypass_control  (control: failed as required)
+  pass  alu_arithmetic
+  pass  fpu_normalize
+  pass  double_fault
+  pass  walker_cdc
+  pass  bus16_gap
+  pass  bus_timeout
+  pass  cache_snoop
+  pass  cache_xstore
+  pass  integer
+  pass  exceptions
+  pass  mmu
+  pass  bitfield_mmu
+  pass  bitfield_cache
+  pass  moves_fc
+  pass  movem_restart
+  pass  atcprobe
+  pass  fpu_frames
+  pass  fpu_resume
+  pass  cache
+  pass  fpu
+  pass  branch_early
+  pass  loops_irq
+  pass  refill_load
+  pass  lea_d16
+  pass  lea_fault
+AP68040: ALL TESTS PASSED

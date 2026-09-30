@@ -1,0 +1,7 @@
+# Seed-31 TimeQuest constraint-scope comparison
+
+The current cache-v2 full STA report was compared with the matched 6c FPU-only seed-31 baseline report at `scratch/fpu_normal_single_enabled_quartus_20260928_seed31/tree/output_files/MacQuadra800.sta.rpt`. Both reports show zero illegal clocks and zero unconstrained clocks, but each reports 26 unconstrained input ports / 145 input paths and 90 unconstrained output ports / 157 output paths. The sorted input and output port lists are byte-identical after extraction (SHA-256 `0e6deca2b6da599d4a4058a9c6771c850fae7dc47b3018ded6aee261e54be1f5` for the input list; `e412194780d090374078fe6caa59de712a3bd8b1980da349716119194479240d` for the output list).
+
+The shared unconstrained inputs include `SDRAM_DQ[0..15]`; outputs include SDRAM and HDMI signals. Eight normalized SDC warnings are identical in both reports: unmatched `spi|sclk_out` filter and empty `create_clock`, missing `spi_sck` clock group, unmatched `acx*`, `acy*`, `aflt_*`, and `*mon_meta*` filters. The full candidate STA report is preserved in `reports/full_sta.rpt`; its raw source path differs from the baseline as expected.
+
+Therefore the positive setup/hold slack values are under the unchanged release SDC and its existing constraint scope. They do not constitute board-level external I/O or SDRAM timing signoff. This scope is shared with the seed-31 baseline, not a change caused by the cache candidate.

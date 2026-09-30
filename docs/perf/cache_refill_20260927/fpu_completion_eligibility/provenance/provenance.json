@@ -1,0 +1,54 @@
+{
+  "raw_fork": {
+    "path": "scratch/speedo_kernel_profile_20260919/raw.rsrc",
+    "bytes": 498911,
+    "sha256": "9dd34c045a5637fc3a894c8d9e945629b3236eb183ba1a838946a0023b1fe111"
+  },
+  "wrapped_fork": {
+    "path": "/home/alans/mister/MacQuadra800_fixtures/Speedometer 4.02.rsrc",
+    "bytes": 498993,
+    "sha256": "af67113bceb4eb906e973a9b747a0b1925b9d64c62f0f9a84bc6f0578839ca80",
+    "envelope_bytes": 82,
+    "payload_equals_raw": true
+  },
+  "CODE3": {
+    "bytes": 39228,
+    "sha256": "02123c6cb020961c79cbb66cbadef9247a1add4c480b421645d2a4a4c3fefc31"
+  },
+  "tEsT12000": {
+    "id": 12000,
+    "name": "\u0000FPUTests.rsrc",
+    "len": 3784,
+    "body": 161401,
+    "sha256": "34ee511807b66d2360c505b352d0946c01730d764843ed815cfd49bab2fa8aa0"
+  },
+  "native_sites": [
+    {
+      "site": 0,
+      "CODE3_call": "0x4f80",
+      "selector": 1,
+      "resource_entry": "0x29a",
+      "embedded_name": "FPUWStone"
+    },
+    {
+      "site": 1,
+      "CODE3_call": "0x510a",
+      "selector": 3,
+      "resource_entry": "0x17a",
+      "embedded_name": "FPMm"
+    },
+    {
+      "site": 2,
+      "CODE3_call": "0x52c8",
+      "selector": 2,
+      "resource_entry": "0xc84",
+      "embedded_name": "FPUFFT"
+    }
+  ],
+  "fixture": {
+    "image_sha256": "6822b7289bc21c7472c3e1f6d1661140a68aaf7338cfddf693f4a22df330ad00",
+    "entry_call": "0x600008",
+    "kernel": "CODE3 WStone",
+    "native_tEsT_kernel": false
+  }
+}

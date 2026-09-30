@@ -1,0 +1,14 @@
+{
+  "baseline_tree": "scratch/native_whet_next_measurement_20260928/profile/tree",
+  "candidate_tree": "scratch/native_whet_cache_v2_comparison_20260928/candidate/tree",
+  "tree_file_count": 113,
+  "deltas": [
+    {
+      "path": "rtl/ap68040/rtl/ap040_cache.v",
+      "baseline_sha256": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+      "candidate_sha256": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481"
+    }
+  ],
+  "candidate_fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "candidate_cache_sha256": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481"
+}

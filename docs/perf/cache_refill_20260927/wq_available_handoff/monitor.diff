@@ -1,0 +1,130 @@
+--- shared/tb_sdram.sv
++++ supplement/tb_sdram_handoff.sv
+@@ -462,6 +462,39 @@
+ 	         {SDRAM_nRAS, SDRAM_nCAS, SDRAM_nWE}, dut.rd, dut.wr);
+ 	$fatal(1);
+ end
++
++// Passive scratch-only decision monitor. Inputs are observed before NBA.
++reg [3:0] observed_wp=0, observed_rp=0;
++reg observed_available=0;
++integer eq_edges=0, eq_true=0, eq_consumes=0, eq_init=0, eq_full=0;
++always @(negedge clk_ram) begin
++    observed_wp <= dut.wq_wp;
++    observed_rp <= dut.wq_rp;
++    observed_available <= (dut.wq_wp != dut.wq_rp);
++end
++always @(posedge clk_ram) begin
++    eq_edges=eq_edges+1;
++    if (dut.wq_rp !== observed_rp) $fatal(1,"HANDOFF rp changed between falling/rising edges");
++    if (observed_available !== (observed_wp != dut.wq_rp)) $fatal(1,"HANDOFF shadow decisions differ");
++`ifdef CANDIDATE
++    if (dut.wq_available_handoff !== observed_available) $fatal(1,"HANDOFF candidate differs from shadow");
++`else
++    if (dut.wq_wp_handoff !== observed_wp) $fatal(1,"HANDOFF baseline differs from shadow");
++`endif
++    if(observed_available) eq_true=eq_true+1;
++    if(!dut.rd_burst && !dut.busy_r && observed_available) eq_consumes=eq_consumes+1;
++    if(init) eq_init=eq_init+1;
++    if(dut.wq_full) eq_full=eq_full+1;
++end
++final begin
++    $display("HANDOFF_EQ edges=%0d true=%0d consume=%0d init=%0d full=%0d",eq_edges,eq_true,eq_consumes,eq_init,eq_full);
++    if(eq_edges<10000 || eq_consumes<300 || eq_init==0 || eq_full==0) $fatal(1,"HANDOFF insufficient coverage");
++end
++wq_slot_guard #(.RAM_PERIOD_PS(10100)) queue_guard (
++ .clk_sys(clk_sys),.clk_ram(clk_ram),.init(init),
++ .push(dut.wq_push),.wp(dut.wq_wp),.rp(dut.wq_rp),
++ .published_wp(observed_wp),.busy_r(dut.busy_r),.rd_burst(dut.rd_burst),
++ .used(dut.wq_used),.push_data(dut.wq_push_data),.q(dut.wq_q));
+ 
+ endmodule
+ 
+@@ -691,3 +724,87 @@
+ end
+ 
+ endmodule
++
++// Independent monitor: records every accepted queue slot write and checks
++// the candidate's clk_ram consume against the exact published entry.
++module wq_slot_guard #(
++    parameter integer RAM_PERIOD_PS = 10100
++)(
++    input wire clk_sys, clk_ram, init, push,
++    input wire [3:0] wp, rp, published_wp, used,
++    input wire busy_r, rd_burst,
++    input wire [60:0] push_data, q
++);
++    reg [60:0] payload [0:7];
++    time written_at [0:7];
++    reg pending [0:7];
++    integer i;
++    integer pushes = 0;
++    integer consumes = 0;
++    integer pops = 0;
++    integer wraps = 0;
++    integer max_used = 0;
++    time min_age = 64'h7fffffffffffffff;
++    time max_age = 0;
++    integer push_slot;
++    integer consume_slot;
++    integer old_rp;
++    integer consume_event;
++    reg [60:0] consume_data;
++
++    initial begin
++        for (i = 0; i < 8; i = i + 1) begin
++            payload[i] = 61'd0;
++            written_at[i] = 0;
++            pending[i] = 0;
++        end
++    end
++
++    always @(posedge clk_sys) begin
++        if (!init && push) begin
++            push_slot = wp[2:0];
++            if (pending[push_slot])
++                $fatal(1, "WQ_GUARD overwrite before pop slot=%0d time=%0t", push_slot, $time);
++            payload[push_slot] = push_data;
++            written_at[push_slot] = $time;
++            pending[push_slot] = 1'b1;
++            pushes = pushes + 1;
++            if (wp[2:0] == 3'd7) wraps = wraps + 1;
++            #1ps;
++            if (used > max_used) max_used = used;
++        end
++    end
++
++    always @(posedge clk_ram) begin
++        consume_event = !init && !rd_burst && !busy_r && (published_wp != rp);
++        consume_slot = rp[2:0];
++        consume_data = q;
++        old_rp = rp[2:0];
++        #2ps;
++        if (consume_event) begin
++            if (!pending[consume_slot])
++                $fatal(1, "WQ_GUARD consumed unwritten/already-popped slot=%0d time=%0t", consume_slot, $time);
++            if (($time - written_at[consume_slot]) < RAM_PERIOD_PS)
++                $fatal(1, "WQ_GUARD consume too soon slot=%0d age=%0t min=%0d", consume_slot, $time - written_at[consume_slot], RAM_PERIOD_PS);
++            if (consume_data !== payload[consume_slot])
++                $fatal(1, "WQ_GUARD stale/corrupt consume slot=%0d got=%h expected=%h", consume_slot, consume_data, payload[consume_slot]);
++            if (($time - written_at[consume_slot]) < min_age) min_age = $time - written_at[consume_slot];
++            if (($time - written_at[consume_slot]) > max_age) max_age = $time - written_at[consume_slot];
++            consumes = consumes + 1;
++        end
++        if (rp[2:0] != old_rp) begin
++            if (!pending[old_rp])
++                $fatal(1, "WQ_GUARD pop without pending entry slot=%0d time=%0t", old_rp, $time);
++            pending[old_rp] = 1'b0;
++            pops = pops + 1;
++        end
++    end
++
++    final begin
++        $display("WQ_GUARD pushes=%0d consume-starts=%0d pops=%0d wraps=%0d max-used=%0d age-ps=[%0t,%0t]", pushes, consumes, pops, wraps, max_used, min_age, max_age);
++        if (pushes != pops)
++            $fatal(1, "WQ_GUARD unfinished entries pushes=%0d pops=%0d", pushes, pops);
++        for (integer j = 0; j < 8; j = j + 1)
++            if (pending[j]) $fatal(1, "WQ_GUARD pending at end slot=%0d", j);
++    end
++endmodule

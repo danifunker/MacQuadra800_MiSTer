@@ -1,0 +1,21 @@
+{
+  "status": "prepared only; seed28 Quartus not launched; awaiting root review",
+  "source": "clean copy of completed seed27 6c candidate, copying only 1892 frozen source-manifest entries",
+  "seed27_manifest_sha256": "7f0ccc88ab128bf2d994c036ce6307572ed617e3c26b761a7357b5b217f6cbe4",
+  "seed28_manifest_sha256": "9493062f5db90790d3a86360c5b80c0b077b2e7d23a634dc52fa6bca0025bc11",
+  "input_count": 1892,
+  "changed_inputs": [
+    "MacQuadra800.qsf"
+  ],
+  "unchanged_non_qsf_inputs": 1891,
+  "non_qsf_mismatch_count": 0,
+  "qsf_seed27_sha256": "9b6fa7c352dd7667339e6e6ec4f03a00d1894b7e7fce14908f8b57b99c059ec4",
+  "qsf_seed28_sha256": "aefaa8767b19a86d7924534d2fbac69575a6789611946df9ef95c81445f87a3d",
+  "sdc_sha256": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062",
+  "fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "cache_8plus8_sha256": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+  "source_manifest_status": "all copied files match candidate6c manifest except intentionally edited QSF seed field",
+  "previous_seed27_tree_preserved": true,
+  "generated_outputs_copied": false,
+  "local_env": "mode 0600, minimal local Quartus settings, excluded from manifest"
+}

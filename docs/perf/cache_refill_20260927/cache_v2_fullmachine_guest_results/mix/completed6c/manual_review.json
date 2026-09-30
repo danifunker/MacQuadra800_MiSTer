@@ -1,0 +1,47 @@
+{
+  "reviewer": "/root",
+  "tests_done": true,
+  "setup_all10_selected_iteration1": true,
+  "aggregate": 1.798,
+  "baseline_aggregate": 1.798,
+  "visible_absolute_values": {
+    "Whetstones": 1762.139,
+    "Dhrystones": 17932.324,
+    "Towers": 0.479,
+    "QuickSort": 0.507,
+    "BubbleSort": 0.602,
+    "Queens": 0.362,
+    "Puzzle": 0.756,
+    "Permutations": 0.712,
+    "IntMatrix": 0.495,
+    "Sieve": 0.845
+  },
+  "hidden_middle_ratings_and_iterations": "occluded by modal; not read or inferred from final frame",
+  "screens": {
+    "screenshot_f4277.png": "c494076aac7cb6cf960b6258ef41b43068133f03ee3f40c29a2fa6a3a8300b93",
+    "screenshot_f7382.png": "faacda0e9b2427cfb918be947e95cd1d01f83ca2958fa802d56c03f6c216c9a1"
+  },
+  "byte_exact_baseline_screens": {
+    "screenshot_f4277.png": true,
+    "screenshot_f7382.png": false
+  },
+  "standard_profile_byte_exact_baseline_after_removing_added_guard_rows": false,
+  "independent223source_binary_refill_v2checks": "PASS",
+  "child_absent": true,
+  "scope": "Guest displayed Mix comparison; fullwindow profile totals are not speed.",
+  "baseline_visible_absolute_values": {
+    "Whetstones": 1762.002,
+    "Dhrystones": 17931.816,
+    "Towers": 0.479,
+    "QuickSort": 0.507,
+    "BubbleSort": 0.602,
+    "Queens": 0.362,
+    "Puzzle": 0.755,
+    "Permutations": 0.712,
+    "IntMatrix": 0.495,
+    "Sieve": 0.845
+  },
+  "prior73bc_final_png_byte_exact": true,
+  "prior73bc_standard_profile_byte_exact": true,
+  "prior_archive_transcription_note": "Old73bc comparison.json omitted leading7 fromDhrystones values; baseline17931.816 and current17932.324 are read from PNG. Olderarchive remains unchanged."
+}

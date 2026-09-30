@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_fullmachine_20260928/verilator/tests/check_refill_report.py", line 90, in <module>
+    print(check(args.profile, args.allow_empty))
+          ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_fullmachine_20260928/verilator/tests/check_refill_report.py", line 74, in check
+    assert fill > 0 and complete > 0, ("unqualified empty refill profile", fill, complete)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('unqualified empty refill profile', 0, 0)

@@ -1,0 +1,263 @@
+{
+  "unit": "codex-fpu-normal-single-enabled-quartus-20260928-seed27.service",
+  "invocation_id": "bab7cbe105154a4e8240da4ff6e18fd5",
+  "tool_session_id": 48284,
+  "systemd_main_pid": 2446908,
+  "run_full_compile_child_pid": 2446908,
+  "build_only_shell_pid": 2446910,
+  "exit_status": 1,
+  "started_utc": "2026-09-28T06:50:53Z",
+  "ended_utc": "2026-09-28T07:10:34Z",
+  "compile_elapsed": "19m36s",
+  "build_log": "tree/output_files/build_20260928_025053.log",
+  "process_identity_file": "full_quartus_processes.json",
+  "source_manifest_sha256": "7f0ccc88ab128bf2d994c036ce6307572ed617e3c26b761a7357b5b217f6cbe4",
+  "quartus_processes": [
+    {
+      "pid": 2446923,
+      "comm": "quartus_sh",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_sh",
+      "exe_sha256": "bdfda93ce02a5e802194d1f001446ac333ac1c039898f1a12843fca32afaf917",
+      "cmdline": "quartus_sh --flow compile MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:50:53.775908+00:00",
+      "last_seen_utc": "2026-09-28T07:10:29.701178+00:00"
+    },
+    {
+      "pid": 2446960,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_flow=15 --ipc_mode --smart --read_settings_files=on --write_settings_files=off MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:50:54.788297+00:00",
+      "last_seen_utc": "2026-09-28T06:56:09.681730+00:00"
+    },
+    {
+      "pid": 2447733,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=2 --helper_type=rtl --helper_step=1 --dl_named_pipe=dl_pipertl2awI4RI --ul_named_pipe=ul_pipertl2zEiVEG MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:51:54.021020+00:00",
+      "last_seen_utc": "2026-09-28T06:51:55.039175+00:00"
+    },
+    {
+      "pid": 2447734,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:51:54.021464+00:00",
+      "last_seen_utc": "2026-09-28T06:51:55.039211+00:00"
+    },
+    {
+      "pid": 2447735,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=5 --helper_type=rtl --helper_step=1 --dl_named_pipe=dl_pipertl5NAWEhP --ul_named_pipe=ul_pipertl5TV5BnC MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:51:54.528164+00:00",
+      "last_seen_utc": "2026-09-28T06:51:55.039247+00:00"
+    },
+    {
+      "pid": 2447736,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=1 --helper_type=rtl --helper_step=1 --dl_named_pipe=dl_pipertl1E1Z7Iq --ul_named_pipe=ul_pipertl1SW5XUF MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:51:54.528495+00:00",
+      "last_seen_utc": "2026-09-28T06:51:55.039281+00:00"
+    },
+    {
+      "pid": 2447737,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=0 --helper_type=rtl --helper_step=1 --dl_named_pipe=dl_pipertl04GFVim --ul_named_pipe=ul_pipertl0VJzsHH MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:51:54.528762+00:00",
+      "last_seen_utc": "2026-09-28T06:53:17.081548+00:00"
+    },
+    {
+      "pid": 2447738,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=4 --helper_type=rtl --helper_step=1 --dl_named_pipe=dl_pipertl4EEk2HI --ul_named_pipe=ul_pipertl4cEJjBx MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:51:54.529018+00:00",
+      "last_seen_utc": "2026-09-28T06:51:55.546581+00:00"
+    },
+    {
+      "pid": 2447742,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=3 --helper_type=rtl --helper_step=1 --dl_named_pipe=dl_pipertl3fuqU5s --ul_named_pipe=ul_pipertl3NG2ue5 MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:51:54.529275+00:00",
+      "last_seen_utc": "2026-09-28T06:51:55.039378+00:00"
+    },
+    {
+      "pid": 2447743,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=7 --helper_type=rtl --helper_step=1 --dl_named_pipe=dl_pipertl7qXJWjP --ul_named_pipe=ul_pipertl7Mcg4E9 MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:51:54.529526+00:00",
+      "last_seen_utc": "2026-09-28T06:51:55.039411+00:00"
+    },
+    {
+      "pid": 2448768,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=0 --helper_type=mls --helper_step=1 --dl_named_pipe=dl_pipemls0jxsCoR --ul_named_pipe=ul_pipemls0ppIcDR MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:53:43.902485+00:00",
+      "last_seen_utc": "2026-09-28T06:54:44.159218+00:00"
+    },
+    {
+      "pid": 2448769,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=2 --helper_type=mls --helper_step=1 --dl_named_pipe=dl_pipemls2KHJWBt --ul_named_pipe=ul_pipemls2ISCeUJ MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:53:43.902913+00:00",
+      "last_seen_utc": "2026-09-28T06:53:45.434900+00:00"
+    },
+    {
+      "pid": 2448770,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=4 --helper_type=mls --helper_step=1 --dl_named_pipe=dl_pipemls4NhI8C5 --ul_named_pipe=ul_pipemls4Ltnm2z MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:53:43.903245+00:00",
+      "last_seen_utc": "2026-09-28T06:53:45.434934+00:00"
+    },
+    {
+      "pid": 2448771,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=1 --helper_type=mls --helper_step=1 --dl_named_pipe=dl_pipemls1InldRb --ul_named_pipe=ul_pipemls1c9YLWZ MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:53:43.903555+00:00",
+      "last_seen_utc": "2026-09-28T06:53:45.434967+00:00"
+    },
+    {
+      "pid": 2448772,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=5 --helper_type=mls --helper_step=1 --dl_named_pipe=dl_pipemls5Etmuvx --ul_named_pipe=ul_pipemls5skjnna MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:53:43.903862+00:00",
+      "last_seen_utc": "2026-09-28T06:53:44.924993+00:00"
+    },
+    {
+      "pid": 2448773,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=6 --helper_type=mls --helper_step=1 --dl_named_pipe=dl_pipemls6DoiI0Z --ul_named_pipe=ul_pipemls6l6XwVf MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:53:43.904165+00:00",
+      "last_seen_utc": "2026-09-28T06:53:44.925025+00:00"
+    },
+    {
+      "pid": 2448774,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=3 --helper_type=mls --helper_step=1 --dl_named_pipe=dl_pipemls3dUKrk9 --ul_named_pipe=ul_pipemls3p5AmVA MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:53:43.904465+00:00",
+      "last_seen_utc": "2026-09-28T06:53:44.925055+00:00"
+    },
+    {
+      "pid": 2448775,
+      "comm": "quartus_map",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b",
+      "cmdline": "quartus_map --ipc_mode --parallel=1 --disable_all_banners --helper=7 --helper_type=mls --helper_step=1 --dl_named_pipe=dl_pipemls7zHgQMy --ul_named_pipe=ul_pipemls79Wwc4A MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:53:43.904769+00:00",
+      "last_seen_utc": "2026-09-28T06:53:46.954310+00:00"
+    },
+    {
+      "pid": 2450401,
+      "comm": "quartus_fit",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_fit",
+      "exe_sha256": "a6d5b3172ddaa1cd1846fbcfd8ae87b7cce154df247575a717863b521744f714",
+      "cmdline": "quartus_fit --ipc_flow=15 --ipc_mode --smart --read_settings_files=off --write_settings_files=off MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T06:56:10.693697+00:00",
+      "last_seen_utc": "2026-09-28T07:10:01.344563+00:00"
+    },
+    {
+      "pid": 2461824,
+      "comm": "quartus_asm",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_asm",
+      "exe_sha256": "2b200a85d22520557b4a725171de513a02a405517e959aa8b2141b03e441ca2a",
+      "cmdline": "quartus_asm --ipc_flow=15 --ipc_mode --smart --read_settings_files=off --write_settings_files=off MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T07:10:02.863953+00:00",
+      "last_seen_utc": "2026-09-28T07:10:15.515181+00:00"
+    },
+    {
+      "pid": 2461944,
+      "comm": "quartus_sta",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_sta",
+      "exe_sha256": "3e5b6469769824667c28dcad237a4ad5f46aad67c3ccd76ec3c0824e7094fe78",
+      "cmdline": "quartus_sta --ipc_flow=15 --ipc_mode --smart MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_quartus_20260928_seed27/tree",
+      "first_seen_utc": "2026-09-28T07:10:16.527464+00:00",
+      "last_seen_utc": "2026-09-28T07:10:28.689190+00:00"
+    }
+  ],
+  "result": {
+    "device": "5CSEBA6U23I7",
+    "quartus_version": "17.0.2",
+    "alms_used": 38590,
+    "alms_total": 41910,
+    "registers": 24632,
+    "ram_blocks_used": 468,
+    "ram_blocks_total": 553,
+    "block_memory_bits": 3389411,
+    "dsp_blocks": 36,
+    "plls": 4,
+    "setup_slacks_ns": {
+      "cpu_emu_clk": -0.449,
+      "hdmi": 0.267,
+      "ram_clock": 0.443
+    },
+    "setup_tns_ns": {
+      "cpu_emu_clk": -3.294,
+      "other_reported_setup_clocks": 0
+    },
+    "worst_hold_slack_ns": 0.24,
+    "hold_tns_ns": 0,
+    "rbf": {
+      "path": "tree/output_files/MacQuadra800.rbf",
+      "size_bytes": 4441088,
+      "sha256": "5c0c19e72e7af9332e96dd58c73dd6075949b74b202d36967ad46eb17f9c106c"
+    },
+    "sof": {
+      "path": "tree/output_files/MacQuadra800.sof",
+      "size_bytes": 6690368,
+      "sha256": "d0a3951971a08fc2dcb7b5f5fc935c929c0d4714bbd9a9e4fb3c76c334b56db6"
+    },
+    "fit_summary_sha256": "d170ebe9c7a1155af9e1def75437ff6886acc685ce8acc3c8101f31e1aca92d1",
+    "sta_summary_sha256": "7811ca4d9fff0f4275d82c52dd4c4f30280c8d622f71b6e304c0caeda00f0b56",
+    "flow_status": "fit/assembler/TimeQuest completed; timing gate FAILED at CPU slack -0.449 ns; do not deploy"
+  }
+}

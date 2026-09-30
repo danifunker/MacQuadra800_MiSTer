@@ -23,7 +23,7 @@ SRC="$RTL/ap040_tg68k_compat.v $RTL/ap040_core.v $RTL/ap040_bus16_adapter.v \
      $RTL/ap040_walker_cdc.v $RTL/primitives/dpram.v"
 
 echo "== assembling test programs =="
-for t in t_integer t_exceptions t_mmu t_bitfield_mmu t_bitfield_cache t_moves_fc t_movem_restart t_atcprobe t_fpu_frames t_fpu_resume t_cache t_fpu t_branch_early t_loops_irq t_refill_load t_lea_d16 t_lea_fault bench_loop pipe_bench branch_bench; do
+for t in t_integer t_exceptions t_mmu t_bitfield_mmu t_bitfield_cache t_moves_fc t_movem_restart t_atcprobe t_fpu_frames t_fpu_resume t_cache t_fpu t_fpu_addr t_branch_early t_loops_irq t_refill_load t_lea_d16 t_lea_fault bench_loop pipe_bench branch_bench; do
 	$VASM -Fbin -m68040 -no-opt -o "$WORK/$t.bin" "asm/$t.s" >/dev/null
 	python3 bin2hex.py "$WORK/$t.bin" "$WORK/$t.hex"
 done
@@ -91,7 +91,7 @@ run bus16_gap    "$WORK/tb_bus16.vvp"
 run bus_timeout  "$WORK/tb_timeout.vvp"
 run cache_snoop  "$WORK/tb_snoop.vvp"
 run cache_xstore "$WORK/tb_xstore.vvp"
-for t in integer exceptions mmu bitfield_mmu bitfield_cache moves_fc movem_restart atcprobe fpu_frames fpu_resume cache fpu branch_early loops_irq refill_load lea_d16 lea_fault; do
+for t in integer exceptions mmu bitfield_mmu bitfield_cache moves_fc movem_restart atcprobe fpu_frames fpu_resume cache fpu fpu_addr branch_early loops_irq refill_load lea_d16 lea_fault; do
 	run "$t" "$WORK/tb_prog.vvp" "+prog=$WORK/t_$t.hex"
 done
 

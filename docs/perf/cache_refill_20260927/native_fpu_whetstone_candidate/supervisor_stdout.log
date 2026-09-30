@@ -1,0 +1,3 @@
+PASS native baseline: return, ABI, code, native/FPSP coverage, histogram totals, zero chip/bus/IRQ errors; numerical oracle NONE
+loop 8724166 ROUNDguard 141674 STDONEedge 3489 FPU_nonidle 1265136
+PASS candidate native Whet runtime gates; numerical oracle NONE

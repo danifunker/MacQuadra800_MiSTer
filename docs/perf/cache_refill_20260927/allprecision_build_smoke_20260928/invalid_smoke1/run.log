@@ -1,0 +1,13 @@
+[CPU-PROFILE] SIGUSR1 starts; SIGUSR2 writes refill.tsv
+[SIM-CONTROL] reading control.txt (nonblocking, simulated-cycle pacing)
+[RAM-LINE-MODEL] abstract first_latency=4 publish_delay=2 clk_sys edges
+%Warning: lans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_fullmachine_20260928/verilator/quadra800-fastboot.rom.hex:0: $readmem file not found
+[SIM-CONTROL] wait 10000 rising edges cycle=49
+[NCR 0] housekeeping: rst=1 bus=0 probe=1
+[NCR 12] forward op=ff -> lba=7dff0000
+[CPU-PROFILE] started at simulator cycle 20051
+[SIM-CONTROL] wait 100000 rising edges cycle=20053
+SCC_SERIAL_OUT: ch=B byte=00 time=27827
+SCC_SERIAL_OUT: ch=A byte=00 time=27827
+[CPU-PROFILE] wrote refill.tsv: 100002 cycles, 15385 opcode dispatches, 6.500 clocks/dispatch
+PC histogram (top 15 of 0 256-byte buckets):

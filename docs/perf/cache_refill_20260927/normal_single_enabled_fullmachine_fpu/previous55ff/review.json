@@ -1,0 +1,8 @@
+{
+  "status": "PASS_VISUALLY_REVIEWED",
+  "reviewer": "primary/root",
+  "screenshot": "fpu_done.png",
+  "observed": "completion alert and FPU result table; all three iteration fields are 1; displayed Whetstone, Matrix, FFT and aggregate match comparison.json",
+  "performed_at_checkpoint": "2026-09-28",
+  "method": "manual visual review; archive checker does not OCR screenshots"
+}

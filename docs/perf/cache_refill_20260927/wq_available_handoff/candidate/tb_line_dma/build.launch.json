@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "/home/alans/verilator5/bin/verilator",
+    "--binary",
+    "--timing",
+    "-j",
+    "2",
+    "-Wno-fatal",
+    "-Wno-WIDTH",
+    "-Wno-WIDTHEXPAND",
+    "-Wno-WIDTHTRUNC",
+    "-Wno-UNSIGNED",
+    "-Wno-CMPCONST",
+    "-Wno-DECLFILENAME",
+    "+define+SIMULATION=1",
+    "--top-module",
+    "tb_line_dma",
+    "--Mdir",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/candidate/tb_line_dma/obj",
+    "-o",
+    "tb_line_dma",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/shared/tb_line_dma.sv",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/shared/tb_sdram.sv",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/shared/wombat_bus32.sv",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/candidate/rtl/sdram_beat32.sv",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/shared/sdram.sv",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/shared/altddio_out_stub.v"
+  ],
+  "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/candidate/tb_line_dma",
+  "pid": 189,
+  "start": 1790583687.3704717
+}

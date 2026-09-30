@@ -1,0 +1,12 @@
+{
+  "candidate_tree": "scratch/fpu_normal_single_move_quartus_20260928_seed27/tree",
+  "baseline_tree": "scratch/fpu_normal_single_baseline_quartus_20260928/tree",
+  "compared_tracked_paths": 1892,
+  "different_paths": [
+    "rtl/ap68040/rtl/ap040_fpu.v"
+  ],
+  "qsf_sha256_candidate": "9b6fa7c352dd7667339e6e6ec4f03a00d1894b7e7fce14908f8b57b99c059ec4",
+  "qsf_sha256_baseline": "9b6fa7c352dd7667339e6e6ec4f03a00d1894b7e7fce14908f8b57b99c059ec4",
+  "sdc_sha256_candidate": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062",
+  "sdc_sha256_baseline": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062"
+}

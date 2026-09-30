@@ -1,0 +1,11 @@
+{
+  "pid": 2324454,
+  "ppid": 2324453,
+  "start_epoch": 1790567119.9187722,
+  "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_baseline_quartus_20260928/tree",
+  "argv": [
+    "bash",
+    "scripts/build_only.sh"
+  ],
+  "flow": "one full compile, default wait gate"
+}

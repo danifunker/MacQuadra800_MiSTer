@@ -1,0 +1,19 @@
+{
+  "base_manifest_sha256": "2a09ab93d2ba9b92d448eb07be0717061a3912ce23dea8418cbb5a169ec58747",
+  "candidate_manifest_sha256": "0ed13641e5adf221c6b72b531bfd881b065ef1e3bb30a0af8a43810916042458",
+  "source_entries": 1892,
+  "changed_paths": [
+    "rtl/ap68040/rtl/ap040_cache.v"
+  ],
+  "baseline_cache_sha256": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+  "candidate_cache_sha256": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481",
+  "candidate_fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "qsf_sha256": "711a64565e5aeaf4c8be9cb5606f142322c0ffd6434b0f2f85e710805e3951b4",
+  "sdc_sha256": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062",
+  "original_bridge_sha256": {
+    "rtl/sdram_beat32.sv": "6b49355a45b6e3d81d603d0542139a45854223c71c295ac8515c26cf5f9937ba",
+    "rtl/wombat_bus32.sv": "898a632694536423c799a33ef560480fb3368ccfe1290c2d91f6448ac621082f",
+    "rtl/wombat_store_buffer.sv": "e54b27d6b4c8e009807327bc9076e33f3e490dd117940038efb46f16cb01d72b"
+  },
+  "qsf_seed": 31
+}

@@ -1,0 +1,32 @@
+--- scratch/fpu_refill_platform_workload_20260927/baseline/rtl/ap68040/rtl/ap040_fpu.v
++++ candidate/ap040_fpu.v
+@@ -1013,6 +1013,29 @@
+ 						    {32'd0, din[63:32], din[95:64]}, 3'd0,
+ 						    1'b0, 1'b1);   // packed -> E1, stag 7
+ 					end
++					else if (src_fmt == 3'd1 && opmode == 7'h00 &&
++                        din[94:87] != 8'd0 && din[94:87] != 8'hFF &&
++                        fpcr[7:6] == 2'b00 && fpcr[15:8] == 8'd0 &&
++                        !cr_we && !fm_we && !bsun_req && !fp_reset &&
++                        !frestore_idle && !frestore_unimp && !fsave_ack &&
++                        !pend_capture) begin : fast_normal_single_move
++                        // Exact normal single-to-extended conversion. Retain
++                        // F_ROUND/F_WB and their existing admission/status logic.
++                        // These assignments reproduce cv_s followed by F_EXEC
++                        // for FMOVE, including deferred-frame source shadows.
++                        a_s <= din[95];
++                        a_e <= {9'd0, din[94:87]} + 17'd16256;
++                        a_m <= {1'b1, din[86:64], 40'd0};
++                        a_t <= T_NUM;
++                        r_stag <= 3'd0;
++                        grs <= 3'd0;
++                        e_w <= $signed({10'd0, din[94:87]} + 18'd16256);
++                        sh_cmd <= {3'b010, src_fmt, dst_r, opmode};
++                        sh_src <= {din[95], ({7'd0, din[94:87]} + 15'd16256),
++                                   16'd0, 1'b1, din[86:64], 40'd0};
++                        sh_stag <= 3'd0;
++                        fst <= F_ROUND;
++                    end
+ 					else if (src_fmt == 3'd2 && din[63] && din[94:80] != 15'h7FFF &&
+ 					         fast_bin_kind(opmode) != 2'd0) begin
+ 						// P221: a normal extended memory source of a binary op

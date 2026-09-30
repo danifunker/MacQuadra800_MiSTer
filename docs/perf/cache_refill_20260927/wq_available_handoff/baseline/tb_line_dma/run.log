@@ -1,0 +1,11 @@
+tb_line_dma: FIX=1 ROUNDS=4000
+tb_line_dma: 4096 back-to-back stores took 9712 clocks
+tb_line_dma: 848 device beats parked the FSM for 120015 clocks; 5346 DMA beats ran beside them
+tb_line_dma: line ack with FSM busy 400, adapter request under a line ack 0
+tb_line_dma: 20512 reads, 5381 stores, 15374 line acks, 11423 DMA beats, 0 errors
+tb_line_dma: 9408 direct pushes, 1434 spanning stores
+tb_line_dma: PASS
+- /home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/shared/tb_line_dma.sv:585: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01
+- Verilator: $finish at 9ms; walltime 0.325 s; speed 28.772 ms/s
+- Verilator: cpu 0.325 s on 1 threads; allocated 7 MB

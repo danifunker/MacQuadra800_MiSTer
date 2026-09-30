@@ -1,0 +1,99 @@
+READ addr=0000120c size=2 instr=0 hint=0 no_bus=0 data=818af5e5 bus_reads=4 PASS
+READ addr=0000120d size=2 instr=0 hint=1 no_bus=1 data=8af5e580 bus_reads=0 PASS
+READ addr=00001210 size=2 instr=0 hint=1 no_bus=1 data=8089fee8 bus_reads=0 PASS
+READ addr=00001214 size=2 instr=0 hint=1 no_bus=1 data=838ce7f3 bus_reads=0 PASS
+READ addr=00001218 size=2 instr=0 hint=1 no_bus=1 data=8293e886 bus_reads=0 PASS
+READ addr=0000121c size=2 instr=0 hint=1 no_bus=1 data=8596d189 bus_reads=0 PASS
+CROSS base=00001200 offset=13 size=2 set_wrap=0 PASS
+READ addr=0000124c size=2 instr=0 hint=0 no_bus=0 data=b1fb0415 bus_reads=4 PASS
+READ addr=0000124e size=2 instr=0 hint=1 no_bus=1 data=0415b0fe bus_reads=0 PASS
+READ addr=00001250 size=2 instr=0 hint=1 no_bus=1 data=b0fe0d18 bus_reads=0 PASS
+READ addr=00001254 size=2 instr=0 hint=1 no_bus=1 data=b3fd7623 bus_reads=0 PASS
+READ addr=00001258 size=2 instr=0 hint=1 no_bus=1 data=b2c07f36 bus_reads=0 PASS
+READ addr=0000125c size=2 instr=0 hint=1 no_bus=1 data=b5c76039 bus_reads=0 PASS
+CROSS base=00001240 offset=14 size=2 set_wrap=0 PASS
+READ addr=0000128c size=2 instr=0 hint=0 no_bus=0 data=a02b9b45 bus_reads=4 PASS
+READ addr=0000128f size=2 instr=0 hint=1 no_bus=1 data=45a32e9c bus_reads=0 PASS
+READ addr=00001290 size=2 instr=0 hint=1 no_bus=1 data=a32e9c48 bus_reads=0 PASS
+READ addr=00001294 size=2 instr=0 hint=1 no_bus=1 data=a22d8553 bus_reads=0 PASS
+READ addr=00001298 size=2 instr=0 hint=1 no_bus=1 data=a5308e66 bus_reads=0 PASS
+READ addr=0000129c size=2 instr=0 hint=1 no_bus=1 data=a437f769 bus_reads=0 PASS
+CROSS base=00001280 offset=15 size=2 set_wrap=0 PASS
+READ addr=000012cc size=2 instr=0 hint=0 no_bus=0 data=d0182bf5 bus_reads=4 PASS
+READ addr=000012cf size=1 instr=0 hint=1 no_bus=1 data=0000f5d3 bus_reads=0 PASS
+READ addr=000012d0 size=2 instr=0 hint=1 no_bus=1 data=d31f2cf8 bus_reads=0 PASS
+READ addr=000012d4 size=2 instr=0 hint=1 no_bus=1 data=d2621583 bus_reads=0 PASS
+READ addr=000012d8 size=2 instr=0 hint=1 no_bus=1 data=d5611e96 bus_reads=0 PASS
+READ addr=000012dc size=2 instr=0 hint=1 no_bus=1 data=d4640799 bus_reads=0 PASS
+CROSS base=000012c0 offset=15 size=1 set_wrap=0 PASS
+READ addr=000017fc size=2 instr=0 hint=0 no_bus=0 data=000509b1 bus_reads=4 PASS
+READ addr=000017fd size=2 instr=0 hint=1 no_bus=1 data=0509b103 bus_reads=0 PASS
+READ addr=00001800 size=2 instr=0 hint=1 no_bus=1 data=03087144 bus_reads=0 PASS
+READ addr=00001804 size=2 instr=0 hint=1 no_bus=1 data=020f7a4f bus_reads=0 PASS
+READ addr=00001808 size=2 instr=0 hint=1 no_bus=1 data=05126352 bus_reads=0 PASS
+READ addr=0000180c size=2 instr=0 hint=1 no_bus=1 data=04116465 bus_reads=0 PASS
+CROSS base=000017f0 offset=13 size=2 set_wrap=1 PASS
+READ addr=00003000 size=2 instr=0 hint=0 no_bus=1 data=3576b744 bus_reads=0 PASS
+READ addr=00003000 size=0 instr=0 hint=1 no_bus=1 data=00000035 bus_reads=0 PASS
+READ addr=00003000 size=1 instr=0 hint=1 no_bus=1 data=00003576 bus_reads=0 PASS
+READ addr=00003000 size=2 instr=0 hint=1 no_bus=1 data=3576b744 bus_reads=0 PASS
+READ addr=00003001 size=0 instr=0 hint=1 no_bus=1 data=00000076 bus_reads=0 PASS
+READ addr=00003001 size=1 instr=0 hint=1 no_bus=1 data=000076b7 bus_reads=0 PASS
+READ addr=00003001 size=2 instr=0 hint=1 no_bus=1 data=76b74434 bus_reads=0 PASS
+READ addr=00003002 size=0 instr=0 hint=1 no_bus=1 data=000000b7 bus_reads=0 PASS
+READ addr=00003002 size=1 instr=0 hint=1 no_bus=1 data=0000b744 bus_reads=0 PASS
+READ addr=00003002 size=2 instr=0 hint=1 no_bus=1 data=b7443475 bus_reads=0 PASS
+READ addr=00003003 size=0 instr=0 hint=1 no_bus=1 data=00000044 bus_reads=0 PASS
+READ addr=00003003 size=1 instr=0 hint=1 no_bus=1 data=00004434 bus_reads=0 PASS
+READ addr=00003003 size=2 instr=0 hint=1 no_bus=1 data=443475b8 bus_reads=0 PASS
+READ addr=00003004 size=0 instr=0 hint=1 no_bus=1 data=00000034 bus_reads=0 PASS
+READ addr=00003004 size=1 instr=0 hint=1 no_bus=1 data=00003475 bus_reads=0 PASS
+READ addr=00003004 size=2 instr=0 hint=1 no_bus=1 data=3475b84f bus_reads=0 PASS
+READ addr=00003005 size=0 instr=0 hint=1 no_bus=1 data=00000075 bus_reads=0 PASS
+READ addr=00003005 size=1 instr=0 hint=1 no_bus=1 data=000075b8 bus_reads=0 PASS
+READ addr=00003005 size=2 instr=0 hint=1 no_bus=1 data=75b84f37 bus_reads=0 PASS
+READ addr=00003006 size=0 instr=0 hint=1 no_bus=1 data=000000b8 bus_reads=0 PASS
+READ addr=00003006 size=1 instr=0 hint=1 no_bus=1 data=0000b84f bus_reads=0 PASS
+READ addr=00003006 size=2 instr=0 hint=1 no_bus=1 data=b84f3778 bus_reads=0 PASS
+READ addr=00003007 size=0 instr=0 hint=1 no_bus=1 data=0000004f bus_reads=0 PASS
+READ addr=00003007 size=1 instr=0 hint=1 no_bus=1 data=00004f37 bus_reads=0 PASS
+READ addr=00003007 size=2 instr=0 hint=1 no_bus=1 data=4f3778a1 bus_reads=0 PASS
+READ addr=00003008 size=0 instr=0 hint=1 no_bus=1 data=00000037 bus_reads=0 PASS
+READ addr=00003008 size=1 instr=0 hint=1 no_bus=1 data=00003778 bus_reads=0 PASS
+READ addr=00003008 size=2 instr=0 hint=1 no_bus=1 data=3778a152 bus_reads=0 PASS
+READ addr=00003009 size=0 instr=0 hint=1 no_bus=1 data=00000078 bus_reads=0 PASS
+READ addr=00003009 size=1 instr=0 hint=1 no_bus=1 data=000078a1 bus_reads=0 PASS
+READ addr=00003009 size=2 instr=0 hint=1 no_bus=1 data=78a15236 bus_reads=0 PASS
+READ addr=0000300a size=0 instr=0 hint=1 no_bus=1 data=000000a1 bus_reads=0 PASS
+READ addr=0000300a size=1 instr=0 hint=1 no_bus=1 data=0000a152 bus_reads=0 PASS
+READ addr=0000300a size=2 instr=0 hint=1 no_bus=1 data=a152367f bus_reads=0 PASS
+READ addr=0000300b size=0 instr=0 hint=1 no_bus=1 data=00000052 bus_reads=0 PASS
+READ addr=0000300b size=1 instr=0 hint=1 no_bus=1 data=00005236 bus_reads=0 PASS
+READ addr=0000300b size=2 instr=0 hint=1 no_bus=1 data=52367faa bus_reads=0 PASS
+READ addr=0000300c size=0 instr=0 hint=1 no_bus=1 data=00000036 bus_reads=0 PASS
+READ addr=0000300c size=1 instr=0 hint=1 no_bus=1 data=0000367f bus_reads=0 PASS
+READ addr=0000300c size=2 instr=0 hint=1 no_bus=1 data=367faa65 bus_reads=0 PASS
+READ addr=0000300d size=0 instr=0 hint=1 no_bus=1 data=0000007f bus_reads=0 PASS
+READ addr=0000300d size=1 instr=0 hint=1 no_bus=1 data=00007faa bus_reads=0 PASS
+READ addr=0000300e size=0 instr=0 hint=1 no_bus=1 data=000000aa bus_reads=0 PASS
+READ addr=0000300e size=1 instr=0 hint=1 no_bus=1 data=0000aa65 bus_reads=0 PASS
+READ addr=0000300f size=0 instr=0 hint=1 no_bus=1 data=00000065 bus_reads=0 PASS
+OFFSETS byte=16 word=15 long=13 PASS
+READ addr=00003400 size=2 instr=1 hint=0 no_bus=1 data=3679bc44 bus_reads=0 PASS
+READ addr=00003420 size=2 instr=1 hint=0 no_bus=0 data=3e51f41c bus_reads=4 PASS
+READ addr=00003400 size=2 instr=1 hint=1 no_bus=1 data=3679bc44 bus_reads=0 PASS
+READ addr=00003404 size=2 instr=1 hint=1 no_bus=1 data=397ca54f bus_reads=0 PASS
+READ addr=00003408 size=2 instr=1 hint=1 no_bus=1 data=3843ae52 bus_reads=0 PASS
+READ addr=0000340c size=2 instr=1 hint=1 no_bus=1 data=3b469765 bus_reads=0 PASS
+INSTRUCTION mirror_offer=7 fast_ihit=4 PASS
+RESET_PHASE state=5 fill_cnt=3 candidate_bulk=8
+READ addr=00003800 size=2 instr=0 hint=0 no_bus=0 data=3b40a944 bus_reads=4 PASS
+RESET interrupted_fill=PASS refetched=PASS
+READ addr=40004020 size=2 instr=0 hint=0 no_bus=0 data=2c6a3eb8 bus_reads=4 PASS
+READ addr=00004040 size=2 instr=0 hint=0 no_bus=0 data=518313f4 bus_reads=4 PASS
+READ addr=40004020 size=2 instr=0 hint=1 no_bus=1 data=2c6a3eb8 bus_reads=0 PASS
+READ addr=00004040 size=2 instr=0 hint=1 no_bus=1 data=518313f4 bus_reads=0 PASS
+RAM_ROM stale_sideband_tag_mismatch=26 PASS
+COVERAGE xline=5 xline_before_ack=5 xline_bulk=5 bulk=8 reset_bulk=1 mismatch=26 iline=10 fast_pair=12 fast_ihit=4
+ALL EDGE CASES PASSED
+/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_refill_edge_cases_20260927/tb_edge_cases.sv:643: $finish called at 6700000 (1ps)

@@ -1,0 +1,40 @@
+{
+  "status": "Analysis & Synthesis successful; 0 errors; 179 warnings",
+  "quartus": "17.0.2 Build 602 07/19/2017 SJ Lite Edition",
+  "top": "sys_top",
+  "family": "Cyclone V",
+  "logic_utilization_alms": "N/A in map.summary",
+  "estimated_logic_utilization_alms": 37598,
+  "total_registers": 24790,
+  "total_block_memory_bits": 3389411,
+  "total_dsp_blocks": 36,
+  "total_plls": 4,
+  "ram_inference_instances": {
+    "AUTO": 69,
+    "M10K block": 17,
+    "MLAB": 12
+  },
+  "ap040_cache_ram_instances": {
+    "cdata": 16,
+    "idata": 16,
+    "pairdata": 12,
+    "tag": 2
+  },
+  "ap040_cache_ram_type_counts": {
+    "AUTO": 44,
+    "M10K block": 2
+  },
+  "ap040_fpu_regfile_instances": [
+    {
+      "type": "MLAB",
+      "size_bits": 640,
+      "name": "emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_fpu:g_fpu.fpu|ap040_fp_regfile:fpregs|altdpram:bank_a_rtl_0|dpram_rlo1:auto_generated|ALTDPRAM_INSTANCE"
+    },
+    {
+      "type": "MLAB",
+      "size_bits": 640,
+      "name": "emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_fpu:g_fpu.fpu|ap040_fp_regfile:fpregs|altdpram:bank_b_rtl_0|dpram_rlo1:auto_generated|ALTDPRAM_INSTANCE"
+    }
+  ],
+  "interpretation": "A&S inference/estimate only; AUTO RAM technology selection and final placed resource use are not established without fitting."
+}

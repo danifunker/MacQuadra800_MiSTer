@@ -1,0 +1,57 @@
+rtl=3c3ade8  latency=1  empty block=26 clocks
+key          test                                                        c16    c32    c64 c64cold   32-16   64-32   per16 |    b16    b32    b64    body
+fmove_i      FMOVE.X FPm,FPn  indep                                       90    154    282     405    4.00    4.00    4.00 |     64    128    256    4.00
+fmove_d      FMOVE.X FPm,FPn  dep                                         90    154    282     405    4.00    4.00    4.00 |     64    128    256    4.00
+faddeq_i     FADD.X equal exp  indep                                     106    186    346     406    5.00    5.00    5.00 |     79    159    319    5.00
+faddeq_d     FADD.X equal exp  dep                                       106    186    346     406    5.00    5.00    5.00 |     79    159    319    5.00
+fadd5_i      FADD.X exp diff 5  indep                                    106    186    346     406    5.00    5.00    5.00 |     79    159    319    5.00
+fadd5_d      FADD.X exp diff 5  dep                                      106    186    346     406    5.00    5.00    5.00 |     79    159    319    5.00
+fadd40_i     FADD.X exp diff 40  indep                                   106    186    346     406    5.00    5.00    5.00 |     79    159    319    5.00
+fadd40_d     FADD.X exp diff 40  dep                                     106    186    346     406    5.00    5.00    5.00 |     79    159    319    5.00
+fsubc_i      FSUB.X cancel/FADD d60 pairs  indep                         114    202    378     407    5.50    5.50    5.50 |     87    175    351    5.50
+fsubc_d      FSUB.X cancel/FADD d60 pairs  dep                           114    202    378     423    5.50    5.50    5.50 |     87    175    351    5.50
+fsubn_i      FSUB.X no cancel  indep                                     122    218    410     412    6.00    6.00    6.00 |     94    190    382    6.00
+fsubn_d      FSUB.X no cancel  dep                                       122    218    410     412    6.00    6.00    6.00 |     94    190    382    6.00
+fmul_i       FMUL.X FPm,FPn  indep                                       106    186    346     406    5.00    5.00    5.00 |     79    159    319    5.00
+fmul_d       FMUL.X FPm,FPn  dep                                         106    186    346     406    5.00    5.00    5.00 |     79    159    319    5.00
+fmul2_i      FMUL.X by 2.0 (fast path)  indep                             90    154    282     405    4.00    4.00    4.00 |     64    128    256    4.00
+fdiv_i       FDIV.X FPm,FPn  indep                                       455    903   1799    1818   28.00   28.00   26.81 |    424    872   1768   28.00
+fdiv_d       FDIV.X FPm,FPn  dep                                         455    903   1799    1818   28.00   28.00   26.81 |    424    872   1768   28.00
+fsqrt_i      FSQRT.X FPm,FPn  indep                                      455    903   1799    1818   28.00   28.00   26.81 |    425    873   1769   28.00
+fsqrt_d      FSQRT.X FPn  dep                                            455    903   1799    1818   28.00   28.00   26.81 |    425    873   1769   28.00
+fmulmx_i     FMUL.X (A0),FPn  indep                                      136    264    520     875    8.00    8.00    6.88 |    128    256    512    8.00
+fmulmx_d     FMUL.X (A0),FPn  dep                                        136    264    520     873    8.00    8.00    6.88 |    128    256    512    8.00
+fmulmd_i     FMUL.D (A0),FPn  indep                                      152    296    584     937    9.00    9.00    7.88 |    144    288    576    9.00
+fmulmd_d     FMUL.D (A0),FPn  dep                                        152    296    584     930    9.00    9.00    7.88 |    144    288    576    9.00
+fmulms_i     FMUL.S (A0),FPn  indep                                      136    264    520     873    8.00    8.00    6.88 |    128    256    512    8.00
+fmulms_d     FMUL.S (A0),FPn  dep                                        136    264    520     879    8.00    8.00    6.88 |    128    256    512    8.00
+faddpi_i     FADD.D (A0)+,FPn  indep                                     152    296    584    1279    9.00    9.00    7.88 |    144    288    576    9.00
+faddpi_d     FADD.D (A0)+,FPn  dep                                       152    296    584     939    9.00    9.00    7.88 |    144    288    576    9.00
+fstx_i       FMOVE.X FPn,(A0)  indep                                     213    405    772    1061   12.00   11.47   11.69 |    181    373    757   12.00
+fstx_d       FADD.X + FMOVE.X of its result (pair)                       231    455    903    1498   14.00   14.00   12.81 |    224    448    896   14.00
+fstd_i       FMOVE.D FPn,(A0)  indep                                     151    295    583     905    9.00    9.00    7.81 |    144    288    576    9.00
+fstd_d       FADD.X + FMOVE.D of its result (pair)                       231    455    903    1371   14.00   14.00   12.81 |    224    448    896   14.00
+fsts_i       FMOVE.S FPn,(A0)  indep                                     119    231    455     744    7.00    7.00    5.81 |    112    224    448    7.00
+fsts_d       FADD.X + FMOVE.S of its result (pair)                       199    391    775    1268   12.00   12.00   10.81 |    192    384    768   12.00
+fstl_i       FMOVE.L FPn,(A0)  indep                                     151    295    583     839    9.00    9.00    7.81 |    144    288    576    9.00
+fstl_d       FADD.X + FMOVE.L of its result (pair)                       231    455    903    1246   14.00   14.00   12.81 |    224    448    896   14.00
+fld_i        FMOVE.D (A0),FPn  different dest                            135    263    519     874    8.00    8.00    6.81 |    128    256    512    8.00
+fld_d        FMOVE.D (A0),FP0  same dest                                 135    263    519     872    8.00    8.00    6.81 |    128    256    512    8.00
+fcmp_i       FCMP.X FPm,FPn                                               88    152    280     406    4.00    4.00    3.88 |     64    128    256    4.00
+fcmpb_d      FCMP.X + FBEQ.W not taken (pair)                            120    216    408     808    6.00    6.00    5.88 |     96    192    384    6.00
+fbnt         FBEQ.W not taken                                             43     79    170     402    2.25    2.84    1.06 |     36     71    144    2.28
+fbt          FBNE.W taken (to next insn)                                  60     79    151     424    1.19    2.25    2.12 |     36     72    143    2.22
+add_i        ADD.L D0,Dn  (integer only)                                  23     58     90     206    2.19    1.00   -0.19 |     16     32     64    1.00
+mulint1      FMUL.X FP7,FPn + 1 ADD.L (pair)                             120    199    391     632    4.94    6.00    5.88 |     96    192    384    6.00
+mulint1d     FMUL.X FP7,FP0 dep + 1 ADD.L (pair)                         103    199    391     616    6.00    6.00    4.81 |     96    192    384    6.00
+mulint4      FMUL.X FP7,FPn + 4 ADD.L (group)                            170    314    600    1212    9.00    8.94    9.00 |    144    288    576    9.00
+mulint8      FMUL.X FP7,FPn + 8 ADD.L (group)                            215    423    839    2041   13.00   13.00   11.81 |    208    416    832   13.00
+divint8      FDIV.X FP7,FPn + 8 ADD.L (group)                            455    903   1818    2006   28.00   28.59   26.81 |    433    881   1777   28.00
+divint24     FDIV.X FP7,FPn + 24 ADD.L (group)                           490    954   1863    5242   29.00   28.41   29.00 |    464    930   1856   28.94
+fintrz_rte   FINTRZ.X FP1,FP0 -> vec 11, handler RTE                    1050   2096   4182    4411   65.38   65.19   64.00 |   1039   2082   4171   65.28
+fintrz_fs    FINTRZ.X FP1,FP0 -> vec 11, handler FSAVE/FRESTORE/RTE     2620   5230  10456   10696  163.12  163.31  162.12 |   2606   5219  10442  163.22
+fmovecr_rte  FMOVECR #0,FP0 -> vec 11, handler RTE                      1050   2096   4182    4406   65.38   65.19   64.00 |   1039   2082   4171   65.28
+fmovecr_fs   FMOVECR #0,FP0 -> vec 11, handler FSAVE/FRESTORE/RTE       2620   5230  10456   10696  163.12  163.31  162.12 |   2606   5219  10442  163.22
+trap         TRAP #0 -> handler RTE                                      936   1867   3720    3819   58.19   57.91   56.88 |    925   1853   3709   58.00
+aline        A-line $A000 -> handler ADDQ.L #2,2(SP); RTE               1003   1992   3979    4100   61.81   62.09   61.06 |    989   1981   3965   62.00
+nop_rte      handler-only reference: BSR to RTS (not a trap)             168    328    648     953   10.00   10.00    8.88 |    156    316    636   10.00

@@ -1,0 +1,17 @@
+{
+  "base_commit": "708c12542a74c0b92872910d330a6e989b6a2181",
+  "tracked_input_count": 1892,
+  "fpu_sha256": "55ff9b3cd1d59069ec0b94ca17e4dc3a8c87ac031317902285444d92643724a2",
+  "prior_73bc_fpu_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "qsf_sha256": "9b6fa7c352dd7667339e6e6ec4f03a00d1894b7e7fce14908f8b57b99c059ec4",
+  "qsf_seed": 27,
+  "sdc_sha256": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062",
+  "changed_from_prior_seed27_project": [
+    "rtl/ap68040/rtl/ap040_fpu.v"
+  ],
+  "unchanged_non_fpu_inputs": 1891,
+  "non_fpu_mismatch_count": 0,
+  "local_env_mode": "0600; private and excluded from tracked manifest",
+  "generated_build_outputs_copied": false,
+  "status": "compiled and cross-domain STA complete; not deployed"
+}

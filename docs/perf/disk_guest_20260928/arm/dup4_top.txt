@@ -1,0 +1,24 @@
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  45% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+26248 26242 root     S     3200   1%   5% sh /tmp/armfine.sh 200
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  50% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+  762     1 root     SN    761m 155%   5% /tmp/remote.sh -service exec &
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  48% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+   11     2 root     IW       0   0%   5% [rcu_sched]
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  45% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+26609 26249 root     R     2512   0%   9% top -b -n 1
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  50% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+  762     1 root     SN    761m 155%   0% /tmp/remote.sh -service exec &
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  52% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+26845 26249 root     R     2512   0%   5% top -b -n 1
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  48% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+26248 26242 root     S     3200   1%   4% sh /tmp/armfine.sh 200
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  45% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+26248 26242 root     S     3200   1%   5% sh /tmp/armfine.sh 200

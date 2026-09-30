@@ -1,0 +1,4 @@
+Warning: Cyclone V device family does not have read control (rden). Parameter rdcontrol_aclr will be ignored.
+Time: 0  Instance: altdpram_wrap_tb.dut
+PASS actual altdpram model: 256 posedge writes, 32 slot wraps; no early writes, captured address/data retained, async reads valid immediately and 10.1ns later
+/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/supplement/altdpram_wrap_tb.sv:71: $finish called at 5125200 (1ps)

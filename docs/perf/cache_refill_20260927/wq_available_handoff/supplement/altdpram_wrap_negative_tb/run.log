@@ -1,0 +1,4 @@
+Warning: Cyclone V device family does not have read control (rden). Parameter rdcontrol_aclr will be ignored.
+Time: 0  Instance: altdpram_wrap_tb.dut
+FATAL: /home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/supplement/altdpram_wrap_negative_tb.sv:48: captured write missing iter=0 slot=0 got=0000000000000000 expected=0123456789abcdef
+       Time: 15100  Scope: altdpram_wrap_tb

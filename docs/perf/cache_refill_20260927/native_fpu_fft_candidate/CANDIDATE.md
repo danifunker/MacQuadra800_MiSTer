@@ -1,0 +1,3 @@
+# Native FFT candidate runtime/timing screen
+
+One separatelyauthorized provisional candidate run using exact completed baseline image/TB/checker/allflags/ROMlat6, FPU73bc only RTLchange. Runner differs only baselineFPU pin→candidatepin and guardlabel. Baselinechecker and image/provenance notes are copied unchanged and retain baseline wording internally; actualvariant/scoping is this receipt and comparison_identity.json, not that inherited wording.40M/300sec timeout, noautoretry; processgroups supervised. Runtime/ABI/stateprofile only, no buffer/numericaloracle. Four fullguest services and completed baseline inputs unchanged. No moreinputedits aftersource freeze.

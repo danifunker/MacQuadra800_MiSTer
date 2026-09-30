@@ -1,0 +1,3 @@
+META format=speedometer-observer-v1 clock_unit=33MHz_rising_edges limit=512 resource_sha256=af67113bceb4eb906e973a9b747a0b1925b9d64c62f0f9a84bc6f0578839ca80
+FPU_SUMMARY starts=0 stops=0 callbacks=0 returns=0 aborts=0 unmatched=0 prefix_aborts=0 timer_open=0 callback_open=0 raw_stop_pending=0
+SUMMARY records=0 identities=0 micro_starts=0 micro_stops=0 contexts=218374 capped=0

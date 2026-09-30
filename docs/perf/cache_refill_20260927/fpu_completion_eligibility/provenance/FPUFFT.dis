@@ -1,0 +1,122 @@
+0c84 4e56ffe2  link    A6, #-$1e
+0c88 48e71830  movem.l D3-D4/A2-A3, -(A7)
+0c8c 7800  moveq   #$0, D4
+0c8e 97cb  suba.l  A3, A3
+0c90 203c00000808  move.l  #$808, D0
+0c96 a11e  dc.w    $a11e; opcode 1010
+0c98 2448  movea.l A0, A2
+0c9a 200a  move.l  A2, D0
+0c9c 6628  bne     $cc6
+0c9e 486c8000  pea     (-$8000,A4)
+0ca2 42a7  clr.l   -(A7)
+0ca4 42a7  clr.l   -(A7)
+0ca6 42a7  clr.l   -(A7)
+0ca8 a98b  dc.w    $a98b; opcode 1010
+0caa 554f  subq.w  #2, A7
+0cac 3f3c270f  move.w  #$270f, -(A7)
+0cb0 42a7  clr.l   -(A7)
+0cb2 a985  dc.w    $a985; opcode 1010
+0cb4 301f  move.w  (A7)+, D0
+0cb6 2f0b  move.l  A3, -(A7)
+0cb8 2f04  move.l  D4, -(A7)
+0cba 2f0a  move.l  A2, -(A7)
+0cbc 4eba015e  jsr     ($15e,PC); ($e1c)
+0cc0 a9f4  dc.w    $a9f4; opcode 1010
+0cc2 4fef000c  lea     ($c,A7), A7
+0cc6 203c00000808  move.l  #$808, D0
+0ccc a11e  dc.w    $a11e; opcode 1010
+0cce 2808  move.l  A0, D4
+0cd0 4a84  tst.l   D4
+0cd2 6628  bne     $cfc
+0cd4 486c8000  pea     (-$8000,A4)
+0cd8 42a7  clr.l   -(A7)
+0cda 42a7  clr.l   -(A7)
+0cdc 42a7  clr.l   -(A7)
+0cde a98b  dc.w    $a98b; opcode 1010
+0ce0 554f  subq.w  #2, A7
+0ce2 3f3c270f  move.w  #$270f, -(A7)
+0ce6 42a7  clr.l   -(A7)
+0ce8 a985  dc.w    $a985; opcode 1010
+0cea 301f  move.w  (A7)+, D0
+0cec 2f0b  move.l  A3, -(A7)
+0cee 2f04  move.l  D4, -(A7)
+0cf0 2f0a  move.l  A2, -(A7)
+0cf2 4eba0128  jsr     ($128,PC); ($e1c)
+0cf6 a9f4  dc.w    $a9f4; opcode 1010
+0cf8 4fef000c  lea     ($c,A7), A7
+0cfc 203c00000410  move.l  #$410, D0
+0d02 a11e  dc.w    $a11e; opcode 1010
+0d04 2648  movea.l A0, A3
+0d06 200b  move.l  A3, D0
+0d08 6628  bne     $d32
+0d0a 486c8000  pea     (-$8000,A4)
+0d0e 42a7  clr.l   -(A7)
+0d10 42a7  clr.l   -(A7)
+0d12 42a7  clr.l   -(A7)
+0d14 a98b  dc.w    $a98b; opcode 1010
+0d16 554f  subq.w  #2, A7
+0d18 3f3c270f  move.w  #$270f, -(A7)
+0d1c 42a7  clr.l   -(A7)
+0d1e a985  dc.w    $a985; opcode 1010
+0d20 301f  move.w  (A7)+, D0
+0d22 2f0b  move.l  A3, -(A7)
+0d24 2f04  move.l  D4, -(A7)
+0d26 2f0a  move.l  A2, -(A7)
+0d28 4eba00f2  jsr     ($f2,PC); ($e1c)
+0d2c a9f4  dc.w    $a9f4; opcode 1010
+0d2e 4fef000c  lea     ($c,A7), A7
+0d32 2f0b  move.l  A3, -(A7)
+0d34 3f3c0100  move.w  #$100, -(A7)
+0d38 4ebafaea  jsr     (-$516,PC); ($824)
+0d3c 3d7c1687fffe  move.w  #$1687, (-$2,A6)
+0d42 7601  moveq   #$1, D3
+0d44 5c4f  addq.w  #6, A7
+0d46 60000080  bra     $dc8
+0d4a 486effe6  pea     (-$1a,A6)
+0d4e 486efffe  pea     (-$2,A6)
+0d52 4ebafa8a  jsr     (-$576,PC); ($7de)
+0d56 486efff2  pea     (-$e,A6)
+0d5a 486efffe  pea     (-$2,A6)
+0d5e 4ebafa7e  jsr     (-$582,PC); ($7de)
+0d62 f23c54004034000000000000  fmove.d   #$40340000, FP0
+0d6e f22e4823ffe6  fmul.x   (-$1a,A6), FP0
+0d74 f23c54284024000000000000  fsub.d   #$40240000, FP0
+0d80 f22e6400ffe2  fmove.s   FP0, (-$1e,A6)
+0d86 3043  movea.w D3, A0
+0d88 2008  move.l  A0, D0
+0d8a e788  lsl.l   #3, D0
+0d8c 25aeffe20800  move.l  (-$1e,A6), (A2,D0.l)
+0d92 f23c54004034000000000000  fmove.d   #$40340000, FP0
+0d9e f22e4823fff2  fmul.x   (-$e,A6), FP0
+0da4 f23c54284024000000000000  fsub.d   #$40240000, FP0
+0db0 f22e6400ffe2  fmove.s   FP0, (-$1e,A6)
+0db6 3043  movea.w D3, A0
+0db8 2008  move.l  A0, D0
+0dba e788  lsl.l   #3, D0
+0dbc 25aeffe20804  move.l  (-$1e,A6), ($4,A2,D0.l)
+0dc2 5243  addq.w  #1, D3
+0dc4 4fef0010  lea     ($10,A7), A7
+0dc8 0c430100  cmpi.w  #$100, D3
+0dcc 6f00ff7c  ble     $d4a
+0dd0 7601  moveq   #$1, D3
+0dd2 6024  bra     $df8
+0dd4 f23c54003fb0000000000000  fmove.d   #$3fb00000, FP0
+0de0 f2276800  fmove.x   FP0, -(A7)
+0de4 2f0b  move.l  A3, -(A7)
+0de6 2f04  move.l  D4, -(A7)
+0de8 2f0a  move.l  A2, -(A7)
+0dea 3f3c0100  move.w  #$100, -(A7)
+0dee 4ebafbee  jsr     (-$412,PC); ($9de)
+0df2 5243  addq.w  #1, D3
+0df4 4fef001a  lea     ($1a,A7), A7
+0df8 0c430014  cmpi.w  #$14, D3
+0dfc 6fd6  ble     $dd4
+0dfe 204a  movea.l A2, A0
+0e00 a01f  dc.w    $a01f; opcode 1010
+0e02 2044  movea.l D4, A0
+0e04 a01f  dc.w    $a01f; opcode 1010
+0e06 204b  movea.l A3, A0
+0e08 a01f  dc.w    $a01f; opcode 1010
+0e0a 4cdf0c18  movem.l (A7)+, D3-D4/A2-A3
+0e0e 4e5e  unlk    A6
+0e10 4e75  rts

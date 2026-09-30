@@ -1,0 +1,21 @@
+--- uninstrumented/tb_platform_whet.sv
++++ profile/tb_platform_whet.sv
+@@ -266,7 +266,10 @@
+ 	if (sdr.sdram.state == 5 && (sdr.sdram.refresh ^ sdr.sdram.refresh_old)) sd_refresh++;
+ end
+ 
++`include "next_monitor.svh"
++
+ always @(posedge clk_sys) if (nreset) begin
++    np_sample();
+ 	cycles++;
+ 	if (debug_fault || debug_halted) $fatal(1, "CPU fault/halt pc=%h", dut.cpu.core.pc_i);
+ 	if (cycles > 40000000) $fatal(1, "timeout pc=%h", dut.cpu.core.pc_i);
+@@ -390,6 +393,7 @@
+ 
+ task finish_up;
+ 	begin
++        np_finish();
+ 		$display("WHETSTONE RETURNED cycles=%0d loop=%0d", cycles, loop_cycles);
+ 		// let the bridge FIFO drain before reading the chip back
+ 		repeat (400) @(posedge clk_sys);

@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "excluded_and_restore_signatures": 40,
+  "baseline": "PASS normal_single checks=65069 fast=0 slow=65066",
+  "candidate": "PASS normal_single checks=65069 fast=65027 slow=39"
+}

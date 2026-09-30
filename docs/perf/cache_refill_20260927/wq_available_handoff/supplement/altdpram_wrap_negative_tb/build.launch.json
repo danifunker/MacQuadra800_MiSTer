@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "iverilog",
+    "-g2012",
+    "-s",
+    "altdpram_wrap_tb",
+    "-o",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/supplement/altdpram_wrap_negative_tb/test.vvp",
+    "/home/alans/intelFPGA_lite/quartus/eda/sim_lib/altera_mf.v",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/supplement/altdpram_wrap_negative_tb.sv"
+  ],
+  "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/supplement/altdpram_wrap_negative_tb",
+  "pid": 80,
+  "start": 1790583778.7575104
+}

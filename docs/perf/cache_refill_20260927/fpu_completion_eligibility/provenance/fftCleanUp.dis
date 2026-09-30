@@ -1,0 +1,20 @@
+0e1c 4e560000  link    A6, #$0
+0e20 48e71030  movem.l D3/A2-A3, -(A7)
+0e24 262e0008  move.l  ($8,A6), D3
+0e28 266e000c  movea.l ($c,A6), A3
+0e2c 246e0010  movea.l ($10,A6), A2
+0e30 4a83  tst.l   D3
+0e32 6704  beq     $e38
+0e34 2043  movea.l D3, A0
+0e36 a01f  dc.w    $a01f; opcode 1010
+0e38 200b  move.l  A3, D0
+0e3a 6704  beq     $e40
+0e3c 204b  movea.l A3, A0
+0e3e a01f  dc.w    $a01f; opcode 1010
+0e40 200a  move.l  A2, D0
+0e42 6704  beq     $e48
+0e44 204a  movea.l A2, A0
+0e46 a01f  dc.w    $a01f; opcode 1010
+0e48 4cdf0c08  movem.l (A7)+, D3/A2-A3
+0e4c 4e5e  unlk    A6
+0e4e 4e75  rts

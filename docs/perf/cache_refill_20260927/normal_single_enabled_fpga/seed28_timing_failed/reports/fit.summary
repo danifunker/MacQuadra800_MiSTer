@@ -1,0 +1,20 @@
+Fitter Status : Successful - Mon Sep 28 03:42:42 2026
+Quartus Prime Version : 17.0.2 Build 602 07/19/2017 SJ Lite Edition
+Revision Name : MacQuadra800
+Top-level Entity Name : sys_top
+Family : Cyclone V
+Device : 5CSEBA6U23I7
+Timing Models : Final
+Logic utilization (in ALMs) : 38,650 / 41,910 ( 92 % )
+Total registers : 24667
+Total pins : 145 / 314 ( 46 % )
+Total virtual pins : 0
+Total block memory bits : 3,389,411 / 5,662,720 ( 60 % )
+Total RAM Blocks : 468 / 553 ( 85 % )
+Total DSP Blocks : 36 / 112 ( 32 % )
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 4 / 6 ( 67 % )
+Total DLLs : 0 / 4 ( 0 % )

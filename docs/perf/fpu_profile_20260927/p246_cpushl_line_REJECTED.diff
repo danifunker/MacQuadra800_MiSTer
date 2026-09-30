@@ -1,0 +1,262 @@
+diff --git a/rtl/ap68040/rtl/ap040_cache.v b/rtl/ap68040/rtl/ap040_cache.v
+index 0659c6b..0558d8d 100644
+--- a/rtl/ap68040/rtl/ap040_cache.v
++++ b/rtl/ap68040/rtl/ap040_cache.v
+@@ -35,6 +35,8 @@ module ap040_cache
+ 	input             cinv_req,
+ 	input             cinv_ic,
+ 	input             cinv_dc,
++	input             cinv_line,   // P246: only the set of cinv_addr (and its pair)
++	input      [31:4] cinv_addr,
+ 	output reg        cinv_done,
+ 
+ 	// slave side (from the MMU)
+@@ -440,6 +442,7 @@ wire cross_lookup = 1'b0, cross_second = 1'b0, cross_accept = 1'b0;
+ `endif
+ reg   [ROWIW-1:0] sweep_cnt;
+ reg         sweep_all;   // reset sweep clears both banks
++reg         sweep_line;  // P246: a line-form CINV/CPUSH clears one row pair per bank
+ reg         winv_pend;   // a store still owes its second-line invalidate
+ reg   [SETW-1:0] winv_set2;
+ reg         store_inv_lost;  // a store invalidate that a snoop displaced
+@@ -855,8 +858,9 @@ wire ci_inv = ci_inv_pend && !snoop_wr && !store_inv && !store_inv_lost &&
+ // 4 KB geometry's one-row-per-cycle walk did.
+ wire sweep_b    = (cst == C_SWEEP) && sweep_hit && !snoop_wr &&
+                   !store_inv_lost && !ci_inv_pend;
+-wire sweep_last = (&sweep_cnt[SETW-1:1]) &&
+-                  (sweep_cnt[ROWIW-1] || !(sweep_all || cinv_ic));
++wire sweep_last = sweep_line ? (sweep_cnt[ROWIW-1] || !cinv_ic) :
++                  ((&sweep_cnt[SETW-1:1]) &&
++                   (sweep_cnt[ROWIW-1] || !(sweep_all || cinv_ic)));
+ 
+ assign inv_we   = snoop_wr || store_inv || store_inv_lost || fill_err_inv ||
+                   ci_inv || sweep_b;
+@@ -1342,6 +1346,7 @@ always @(posedge clk) begin
+ 		cst <= C_SWEEP;
+ 		sweep_cnt <= 0;
+ 		sweep_all <= 1;
++		sweep_line <= 0;
+ 		winv_pend <= 0;
+ 		winv_set2 <= 0;
+ 		err_hold <= 0;
+@@ -1424,8 +1429,12 @@ always @(posedge clk) begin
+ 					iline_valid <= 0;
+ 					// start at the selected bank (the data bank first
+ 					// when both are selected)
+-					sweep_cnt <= (cinv_ic && !cinv_dc) ? {1'b1, {SETW{1'b0}}}
++					// P246: the line form walks only the row pair holding
++					// its set (its neighbour set is cleared too: safe)
++					sweep_cnt <= cinv_line ? {(cinv_ic && !cinv_dc), cinv_addr[SETW+3:5], 1'b0} :
++					             (cinv_ic && !cinv_dc) ? {1'b1, {SETW{1'b0}}}
+ 					                                   : {ROWIW{1'b0}};
++					sweep_line <= cinv_line;
+ 					sweep_all <= 0;   // honour the cinv_ic/cinv_dc selects
+ 					cst <= C_SWEEP;
+ 				end
+@@ -1713,7 +1722,8 @@ always @(posedge clk) begin
+ 				// sweep_hit), port B the odd one (sweep_b); the step
+ 				// holds while port B is busy elsewhere
+ 				if (sweep_b) begin
+-					sweep_cnt <= sweep_cnt + {{(ROWIW-2){1'b0}}, 2'b10};
++					sweep_cnt <= sweep_line ? {1'b1, sweep_cnt[SETW-1:0]}
++					                        : sweep_cnt + {{(ROWIW-2){1'b0}}, 2'b10};
+ 					if (sweep_last) begin
+ 						if (!sweep_all) cinv_done <= 1;
+ 						sweep_all <= 0;
+diff --git a/rtl/ap68040/rtl/ap040_core.v b/rtl/ap68040/rtl/ap040_core.v
+index 88caf6b..e236f28 100644
+--- a/rtl/ap68040/rtl/ap040_core.v
++++ b/rtl/ap68040/rtl/ap040_core.v
+@@ -100,6 +100,8 @@ module ap040_core
+ 	output reg        cinv_req,
+ 	output reg        cinv_ic,
+ 	output reg        cinv_dc,
++	output reg        cinv_line,   // P246: CINVL/CPUSHL -- only the line at cinv_addr
++	output reg [31:4] cinv_addr,
+ 	input             cinv_done,
+ 
+ 	input       [2:0] ipl,
+@@ -782,6 +784,7 @@ localparam S_BF_M2     = 8'd130;
+ localparam S_BF_M3     = 8'd131;
+ localparam S_BF_M4     = 8'd132;
+ localparam S_CINV2     = 8'd133;
++localparam S_CINV1     = 8'd251;   // P246: the line form reads An
+ localparam S_CHK2_A    = 8'd134;
+ localparam S_CHK2_B    = 8'd135;
+ localparam S_CHK2_C    = 8'd136;
+@@ -5454,7 +5457,7 @@ always @(posedge clk) begin
+ 		u0_reg <= 0; u1_reg <= 0; u0_old <= 0; u1_old <= 0;
+ 		pt_req <= 0; pt_write <= 0; pt_addr <= 0;
+ 		pf_req <= 0; pf_mode <= 0; pf_addr <= 0;
+-		cinv_req <= 0; cinv_ic <= 0; cinv_dc <= 0;
++		cinv_req <= 0; cinv_ic <= 0; cinv_dc <= 0; cinv_line <= 0; cinv_addr <= 0;
+ 		tr_t1 <= 0; tr_t0 <= 0; t0_force <= 0;
+ 	end
+ 	else if (ce) begin
+@@ -7516,6 +7519,13 @@ always @(posedge clk) begin
+ 				fetch_next;
+ 			end
+ 
++			S_CINV1: begin
++				cinv_addr <= rf_rdata_a[31:4];
++				cinv_line <= 1;
++				cinv_req  <= 1;
++				state <= S_CINV2;
++			end
++
+ 			S_CINV2: if (cinv_done) begin
+ 				cinv_req <= 0;
+ 				fetch_next;
+@@ -9961,8 +9971,18 @@ always @(posedge clk) begin
+ 										cinv_ic <= ir[7];
+ 										cinv_dc <= ir[6];
+ 										epf_flush;
+-										cinv_req <= 1;
+-										state <= S_CINV2;
++										// P246: CINVL/CPUSHL invalidate only their line's
++										// set (An holds its physical address); the page and
++										// all forms still clear the whole selected cache(s)
++										if (ir[4:3] == 2'b01) begin
++											rr_a <= {1'b1, ir[2:0]};
++											state <= S_CINV1;
++										end
++										else begin
++											cinv_line <= 0;
++											cinv_req <= 1;
++											state <= S_CINV2;
++										end
+ 									end
+ 							end
+ 							else
+diff --git a/rtl/ap68040/rtl/ap040_tg68k_compat.v b/rtl/ap68040/rtl/ap040_tg68k_compat.v
+index 90c3470..bd1a4ee 100644
+--- a/rtl/ap68040/rtl/ap040_tg68k_compat.v
++++ b/rtl/ap68040/rtl/ap040_tg68k_compat.v
+@@ -220,7 +220,8 @@ wire        b_ack;
+ wire [31:0] b_rdata;
+ 
+ // CINV sideband
+-wire        cinv_req, cinv_ic, cinv_dc, cinv_done;
++wire        cinv_req, cinv_ic, cinv_dc, cinv_done, cinv_line;
++wire [31:4] cinv_addr;
+ 
+ // control registers and PTEST/PFLUSH sideband
+ wire [31:0] w_tc, w_urp, w_srp, w_itt0, w_itt1, w_dtt0, w_dtt1;
+@@ -285,6 +286,8 @@ ap040_core #(
+ 	.cinv_req(cinv_req),
+ 	.cinv_ic(cinv_ic),
+ 	.cinv_dc(cinv_dc),
++	.cinv_line(cinv_line),
++	.cinv_addr(cinv_addr),
+ 	.cinv_done(cinv_done),
+ 
+ 	.ipl(ipl),
+@@ -460,6 +463,8 @@ if (AP040_ENABLE_CACHE != 0) begin : g_cache
+ 		.cinv_req(cinv_req),
+ 		.cinv_ic(cinv_ic),
+ 		.cinv_dc(cinv_dc),
++		.cinv_line(cinv_line),
++		.cinv_addr(cinv_addr),
+ 		.cinv_done(cinv_done),
+ 
+ 		.c_req(mm_req),
+diff --git a/rtl/ap68040/tb/asm/t_cache.s b/rtl/ap68040/tb/asm/t_cache.s
+index 3eaae30..0804f7e 100644
+--- a/rtl/ap68040/tb/asm/t_cache.s
++++ b/rtl/ap68040/tb/asm/t_cache.s
+@@ -51,6 +51,19 @@ start:
+ 	jsr	($2000).l
+ 	chkl	d0,2,4			; after CINV the new code runs
+ 
++	; P246: the line forms touch only their own line's set.  A CPUSHL of
++	; another line leaves the stale copy in place (as on a 68040); a CPUSHL
++	; of the stub's own line drops it.
++	move.w	#$7003,($2000).l	; memory now says moveq #3
++	lea	($2400).l,a0		; a different set
++	cpushl	ic,(a0)
++	jsr	($2000).l
++	chkl	d0,2,20			; the stub's line survived
++	lea	($2000).l,a0
++	cpushl	bc,(a0)
++	jsr	($2000).l
++	chkl	d0,3,21			; ... and its own CPUSHL dropped it
++
+ ;----------------------------------------------- D-cache and stale data
+ 	move.l	#$0D0D0001,($3500).l	; write-through (invalidates the set)
+ 	move.l	($3500).l,d0		; fills the D-cache line
+@@ -62,6 +75,17 @@ start:
+ 	move.l	($3500).l,d0
+ 	chkl	d0,$BEEF0000,7		; fresh after invalidation
+ 
++	; P246: CINVL on the data line drops a DMA-stale copy too
++	move.w	#$D00D,(POKEREG).l	; TB pokes $3500 = $D00D0000
++	move.l	($3500).l,d0
++	chkl	d0,$BEEF0000,22		; still the cached copy
++	lea	($3500).l,a1
++	cinvl	dc,(a1)
++	move.l	($3500).l,d0
++	chkl	d0,$D00D0000,23		; fresh after the line invalidate
++	move.w	#$BEEF,(POKEREG).l	; restore what the tests below expect
++	cinva	dc
++
+ 	; CPU writes stay coherent: write-through invalidates the line
+ 	move.l	($3508).l,d0		; cache the neighbouring longword
+ 	move.l	#$0D0D0002,($3508).l
+diff --git a/rtl/ap68040/tb/tb_ap040_cache_snoop.v b/rtl/ap68040/tb/tb_ap040_cache_snoop.v
+index 0dffbf4..38ad458 100644
+--- a/rtl/ap68040/tb/tb_ap040_cache_snoop.v
++++ b/rtl/ap68040/tb/tb_ap040_cache_snoop.v
+@@ -92,7 +92,7 @@ ap040_cache dut
+ (
+ 	.clk(clk), .nreset(nreset), .ce(ce),
+ 	.ie(1'b1), .de(1'b1),
+-	.cinv_req(cinv_req), .cinv_ic(cinv_ic), .cinv_dc(cinv_dc),
++	.cinv_req(cinv_req), .cinv_ic(cinv_ic), .cinv_dc(cinv_dc), .cinv_line(1'b0), .cinv_addr(28'd0),
+ 	.cinv_done(cinv_done),
+ 	.c_req(c_req), .c_write(c_write), .c_instr(c_instr),
+ 	.c_size(c_size), .c_addr(c_addr), .c_wdata(c_wdata),
+diff --git a/rtl/ap68040/tb/tb_ap040_cache_xstore.sv b/rtl/ap68040/tb/tb_ap040_cache_xstore.sv
+index c2d3ebf..679a77c 100644
+--- a/rtl/ap68040/tb/tb_ap040_cache_xstore.sv
++++ b/rtl/ap68040/tb/tb_ap040_cache_xstore.sv
+@@ -20,7 +20,7 @@ module tb_ap040_cache_xstore;
+     reg [31:0] value, wanted;
+     ap040_cache dut(
+         .clk(clk),.nreset(reset_n),.ce(ce),.ie(1'b1),.de(1'b1),
+-        .cinv_req(1'b0),.cinv_ic(1'b0),.cinv_dc(1'b0),.cinv_done(),
++        .cinv_req(1'b0),.cinv_ic(1'b0),.cinv_dc(1'b0),.cinv_line(1'b0),.cinv_addr(28'd0),.cinv_done(),
+         .c_req(req),.c_write(wr),.c_instr(1'b0),.c_size(size),
+         .c_addr(addr),.c_wdata(wdata),.c_fc(3'd5),.c_nocache(1'b0),
+         .c_hint_addr(addr),.c_hint_instr(1'b0),.c_hint_ptag(addr[31:10]),
+diff --git a/rtl/wombat_cpu.sv b/rtl/wombat_cpu.sv
+index ad6e29d..c25738c 100644
+--- a/rtl/wombat_cpu.sv
++++ b/rtl/wombat_cpu.sv
+@@ -210,7 +210,8 @@ wire [31:0] cpu_bus_rdata;
+ wire        buffered_store_pending;
+ 
+ // CINV sideband
+-wire        cinv_req, cinv_ic, cinv_dc, cinv_done;
++wire        cinv_req, cinv_ic, cinv_dc, cinv_done, cinv_line;
++wire [31:4] cinv_addr;
+ 
+ // control registers and PTEST/PFLUSH sideband
+ wire [31:0] w_tc, w_urp, w_srp, w_itt0, w_itt1, w_dtt0, w_dtt1;
+@@ -275,6 +276,8 @@ ap040_core #(
+ 	.cinv_req(cinv_req),
+ 	.cinv_ic(cinv_ic),
+ 	.cinv_dc(cinv_dc),
++	.cinv_line(cinv_line),
++	.cinv_addr(cinv_addr),
+ 	.cinv_done(cinv_done),
+ 
+ 	.ipl(ipl),
+@@ -421,6 +424,8 @@ if (AP040_ENABLE_CACHE != 0) begin : g_cache
+ 		.cinv_req(cinv_req),
+ 		.cinv_ic(cinv_ic),
+ 		.cinv_dc(cinv_dc),
++		.cinv_line(cinv_line),
++		.cinv_addr(cinv_addr),
+ 		.cinv_done(cinv_done),
+ 
+ 		.c_req(mm_req),

@@ -1,0 +1,30 @@
+{
+  "source": "/home/alans/mister/MacQuadra800_MiSTer/scratch/native_whet_next_measurement_20260928/profile",
+  "source_manifest_sha256": "e5393d16e3281cef14d365fd7a421db1e27e358aa47782d51d42a4f1dcde9d9a",
+  "completed_log_sha256": "1a564e5dfb727d824dfaabc9682185e9764e3a002badfd0a81fde8bbb790c557",
+  "supervisor_sha256": "2e5339b97957b34308cd8413f492c29f60b6a78d4b37bed7aa8242adaff0f21c",
+  "native_exe_sha256": "e195f0c026d2298820b639fbe18f9e2ee1a1b6e90e830978448dec9385a0dfae",
+  "candidate_fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "original_reports_prefixes": [
+    "WHETSTONE",
+    "BUS32",
+    "SDRAM",
+    "BERR",
+    "CORE_LAT",
+    "EXT",
+    "WALKER",
+    "STOREBUF",
+    "BRIDGE",
+    "FPU_ELIG",
+    "NATIVE"
+  ],
+  "loop_cycles": 8724166,
+  "copied_files": {
+    "native_code.hex": "d4c36779374ad69ddeca5f0b7e77cf1db0647620dfd89bf3f600f4f08d569845",
+    "native_stack.hex": "f81f08d870a4d6d2256d0a7da7ef9026b4c11f657d97ba842c0fbfd33576366b",
+    "native_globals.hex": "2560b04ce38ac3b9262fc43af88cc1dc89522b60aec4bb67972013d3d6d197cd",
+    "joint_reports.txt": "56e5bb23040d436754cd6ab42e792786a56421c8bc7e5f82ed4834ccf959a761",
+    "native_abi.hex": "3236221c2b42617a6eafa578cde3fdf10f590b5cc58d7bd48aa1174cc60eccd2",
+    "original_reports.txt": "75e8699e7a067dc19831d1bd71e79032e770fdab7dfad29d01ae87198b19ca59"
+  }
+}

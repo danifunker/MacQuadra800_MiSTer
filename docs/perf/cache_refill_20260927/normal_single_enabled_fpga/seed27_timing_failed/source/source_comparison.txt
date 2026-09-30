@@ -1,0 +1,13 @@
+Base: 55ff seed-27 project under scratch/fpu_normal_single_allprecision_quartus_20260928_seed27/tree
+Base commit: 708c12542a74c0b92872910d330a6e989b6a2181
+Base manifest SHA-256: 4e4942ab6c19518764bb88d8a5b7ffce43fe7b553734ae541af5b72bb83500f1
+Base input count: 1892
+Only differing input: rtl/ap68040/rtl/ap040_fpu.v
+Base FPU SHA-256: 55ff9b3cd1d59069ec0b94ca17e4dc3a8c87ac031317902285444d92643724a2
+Candidate FPU SHA-256: 6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b
+Unchanged non-FPU inputs: 1891 / 1891 exact matches
+QSF SHA-256: 9b6fa7c352dd7667339e6e6ec4f03a00d1894b7e7fce14908f8b57b99c059ec4
+SDC SHA-256: b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062
+8+8 KB cache source, rtl/ap68040/rtl/ap040_cache.v: 7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747
+No generated Quartus db, incremental_db, output_files, RBF, or SOF copied.
+Quartus launch status: NOT LAUNCHED.

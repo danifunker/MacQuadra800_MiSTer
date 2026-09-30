@@ -1,0 +1,22 @@
+{
+  "/home/alans/verilator5/bin/verilator": {
+    "path": "/home/alans/verilator5/bin/verilator",
+    "sha256": "fb2cc573b1055cf096c90e1efc9966fe56bdb4b265c83590cf2a49f7a0defcdf"
+  },
+  "/home/alans/verilator5/bin/verilator_bin": {
+    "path": "/home/alans/verilator5/bin/verilator_bin",
+    "sha256": "87f10d1fd9e2926adffa069143675ce6b52db32caf51796c3bb5b307e6d0ca16"
+  },
+  "/usr/bin/iverilog": {
+    "path": "/usr/bin/iverilog",
+    "sha256": "a6071e4b4a68feafca0c8ee0e6aa275eee9a43a108c62801cfd1eca6eab6d8a3"
+  },
+  "/usr/bin/vvp": {
+    "path": "/usr/bin/vvp",
+    "sha256": "a10bd7d4a0850308ac8c2c98115b6a3084f9be978307610f2a521190c28f4023"
+  },
+  "/home/alans/intelFPGA_lite/quartus/eda/sim_lib/altera_mf.v": {
+    "path": "/home/alans/intelFPGA_lite/quartus/eda/sim_lib/altera_mf.v",
+    "sha256": "e7bc6f0200f8236986c4b255a4ce7937596946bdb646a93551057edc1e08ca69"
+  }
+}

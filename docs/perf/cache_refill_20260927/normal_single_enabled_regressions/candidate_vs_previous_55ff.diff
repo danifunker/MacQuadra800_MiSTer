@@ -1,0 +1,15 @@
+--- allprecision55ff/ap040_fpu.v
++++ enabled6c157/ap040_fpu.v
+@@ -1015,10 +1015,11 @@
+ 					end
+ 					else if (src_fmt == 3'd1 && opmode == 7'h00 &&
+                         din[94:87] != 8'd0 && din[94:87] != 8'hFF &&
+-                        fpcr[15:8] == 8'd0 &&
+                         !cr_we && !fm_we && !bsun_req && !fp_reset &&
+                         !frestore_idle && !frestore_unimp && !fsave_ack &&
+                         !pend_capture) begin : fast_normal_single_move
++                        // Exact normal single conversion cannot raise an exception.
++                        // Enables remain active in the unchanged F_WB check.
+                         // Exact normal single-to-extended conversion. Retain
+                         // F_ROUND/F_WB and their existing admission/status logic.
+                         // These assignments reproduce cv_s followed by F_EXEC

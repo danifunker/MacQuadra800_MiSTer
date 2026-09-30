@@ -1,0 +1,44 @@
+{
+  "initial_pattern": "(i*13 + (i>>8)*37 + (i>>11)*53 + 7)&255",
+  "victim_sets": [
+    {
+      "base": "0x1000",
+      "tags_0_through": 7,
+      "offset0_bytes": [
+        193,
+        30,
+        123,
+        216,
+        53,
+        146,
+        239,
+        76
+      ],
+      "all_16_same_offsets_distinct": true
+    },
+    {
+      "base": "0x5000",
+      "tags_0_through": 4,
+      "offset0_bytes": [
+        169,
+        6,
+        99,
+        192,
+        29
+      ],
+      "all_16_same_offsets_distinct": true
+    },
+    {
+      "base": "0x8000",
+      "tags_0_through": 4,
+      "offset0_bytes": [
+        215,
+        52,
+        145,
+        238,
+        75
+      ],
+      "all_16_same_offsets_distinct": true
+    }
+  ]
+}

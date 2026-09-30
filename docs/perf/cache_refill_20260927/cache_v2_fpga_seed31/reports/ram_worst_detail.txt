@@ -1,0 +1,251 @@
+----------------
+; Command Info ;
+----------------
+Report Timing: Found 3 setup paths (0 violated).  Worst case slack is 0.693 
+
+Tcl Command:
+    report_timing -setup -file scratch/ram_timing_6c_seed31_20260928/worst_detail.txt -to_clock [get_clocks {emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk}] -npaths 3 -detail path_only
+
+Options:
+    -to_clock [get_clocks {emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk}] 
+    -setup 
+    -npaths 3 
+    -detail path_only 
+    -file {scratch/ram_timing_6c_seed31_20260928/worst_detail.txt} 
+
+Delay Model:
+    Slow 1100mV 100C Model
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Summary of Paths                                                                                                                                                                                                                                                                                              ;
++-------+-----------------------------------------------+----------------------------------------------------------+-------------------------------------------------------------------------+-------------------------------------------------------------------------+--------------+------------+------------+
+; Slack ; From Node                                     ; To Node                                                  ; Launch Clock                                                            ; Latch Clock                                                             ; Relationship ; Clock Skew ; Data Delay ;
++-------+-----------------------------------------------+----------------------------------------------------------+-------------------------------------------------------------------------+-------------------------------------------------------------------------+--------------+------------+------------+
+; 0.693 ; emu:emu|sdram_beat32:sdr|sdram:sdram|saved_wr ; emu:emu|sdram_beat32:sdr|sdram:sdram|dq_oe~_Duplicate_10 ; emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; 10.101       ; 0.995      ; 10.243     ;
+; 0.695 ; emu:emu|sdram_beat32:sdr|sdram:sdram|saved_wr ; emu:emu|sdram_beat32:sdr|sdram:sdram|dq_oe~_Duplicate_13 ; emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; 10.101       ; 1.000      ; 10.246     ;
+; 0.712 ; emu:emu|sdram_beat32:sdr|wq_wp[0]             ; emu:emu|sdram_beat32:sdr|wq_wp_handoff[0]                ; emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; 5.050        ; -1.096     ; 3.082      ;
++-------+-----------------------------------------------+----------------------------------------------------------+-------------------------------------------------------------------------+-------------------------------------------------------------------------+--------------+------------+------------+
+
+Path #1: Setup slack is 0.693 
+===============================================================================
++----------------------------------------------------------------------------------------------+
+; Path Summary                                                                                 ;
++--------------------+-------------------------------------------------------------------------+
+; Property           ; Value                                                                   ;
++--------------------+-------------------------------------------------------------------------+
+; From Node          ; emu:emu|sdram_beat32:sdr|sdram:sdram|saved_wr                           ;
+; To Node            ; emu:emu|sdram_beat32:sdr|sdram:sdram|dq_oe~_Duplicate_10                ;
+; Launch Clock       ; emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ;
+; Latch Clock        ; emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ;
+; Data Arrival Time  ; 18.857                                                                  ;
+; Data Required Time ; 19.550                                                                  ;
+; Slack              ; 0.693                                                                   ;
++--------------------+-------------------------------------------------------------------------+
+
++---------------------------------------------------------------------------------------+
+; Statistics                                                                            ;
++---------------------------+--------+-------+-------------+------------+-------+-------+
+; Property                  ; Value  ; Count ; Total Delay ; % of Total ; Min   ; Max   ;
++---------------------------+--------+-------+-------------+------------+-------+-------+
+; Setup Relationship        ; 10.101 ;       ;             ;            ;       ;       ;
+; Clock Skew                ; 0.995  ;       ;             ;            ;       ;       ;
+; Data Delay                ; 10.243 ;       ;             ;            ;       ;       ;
+; Number of Logic Levels    ;        ; 1     ;             ;            ;       ;       ;
+; Physical Delays           ;        ;       ;             ;            ;       ;       ;
+;  Arrival Path             ;        ;       ;             ;            ;       ;       ;
+;   Clock                   ;        ;       ;             ;            ;       ;       ;
+;    Clock Network (Lumped) ;        ; 1     ; 8.614       ; 100        ; 8.614 ; 8.614 ;
+;   Data                    ;        ;       ;             ;            ;       ;       ;
+;    IC                     ;        ; 2     ; 8.674       ; 85         ; 0.777 ; 7.897 ;
+;    Cell                   ;        ; 3     ; 1.569       ; 15         ; 0.000 ; 0.981 ;
+;    uTco                   ;        ; 1     ; 0.000       ; 0          ; 0.000 ; 0.000 ;
+;  Required Path            ;        ;       ;             ;            ;       ;       ;
+;   Clock                   ;        ;       ;             ;            ;       ;       ;
+;    Clock Network (Lumped) ;        ; 1     ; 8.707       ; 100        ; 8.707 ; 8.707 ;
++---------------------------+--------+-------+-------------+------------+-------+-------+
+Note: Negative delays are omitted from totals when calculating percentages
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Data Arrival Path                                                                                                         ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location             ; Element                                                  ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+; 0.000    ; 0.000   ;    ;      ;        ;                      ; launch edge time                                         ;
+; 8.614    ; 8.614   ;    ;      ;        ;                      ; clock path                                               ;
+;   8.614  ;   8.614 ; R  ;      ;        ;                      ; clock network delay                                      ;
+; 18.857   ; 10.243  ;    ;      ;        ;                      ; data path                                                ;
+;   8.614  ;   0.000 ;    ; uTco ; 1      ; FF_X87_Y15_N52       ; emu:emu|sdram_beat32:sdr|sdram:sdram|saved_wr            ;
+;   8.614  ;   0.000 ; FF ; CELL ; 4      ; FF_X87_Y15_N52       ; emu|sdr|sdram|saved_wr|q                                 ;
+;   9.391  ;   0.777 ; FF ; IC   ; 1      ; MLABCELL_X82_Y15_N9  ; emu|sdr|sdram|Selector18~1|datac                         ;
+;   9.979  ;   0.588 ; FF ; CELL ; 34     ; MLABCELL_X82_Y15_N9  ; emu|sdr|sdram|Selector18~1|combout                       ;
+;   17.876 ;   7.897 ; FF ; IC   ; 1      ; DDIOOECELL_X8_Y0_N56 ; emu|sdr|sdram|dq_oe~_Duplicate_10|d                      ;
+;   18.857 ;   0.981 ; FR ; CELL ; 1      ; DDIOOECELL_X8_Y0_N56 ; emu:emu|sdram_beat32:sdr|sdram:sdram|dq_oe~_Duplicate_10 ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Data Required Path                                                                                                        ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location             ; Element                                                  ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+; 10.101   ; 10.101  ;    ;      ;        ;                      ; latch edge time                                          ;
+; 19.710   ; 9.609   ;    ;      ;        ;                      ; clock path                                               ;
+;   18.808 ;   8.707 ; R  ;      ;        ;                      ; clock network delay                                      ;
+;   19.710 ;   0.902 ;    ;      ;        ;                      ; clock pessimism removed                                  ;
+; 19.550   ; -0.160  ;    ;      ;        ;                      ; clock uncertainty                                        ;
+; 19.550   ; 0.000   ;    ; uTsu ; 1      ; DDIOOECELL_X8_Y0_N56 ; emu:emu|sdram_beat32:sdr|sdram:sdram|dq_oe~_Duplicate_10 ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+
+----------------------------
+; Extra Fitter Information ;
+----------------------------
+HTML report is unavailable in plain text report export.
+
+
+Path #2: Setup slack is 0.695 
+===============================================================================
++----------------------------------------------------------------------------------------------+
+; Path Summary                                                                                 ;
++--------------------+-------------------------------------------------------------------------+
+; Property           ; Value                                                                   ;
++--------------------+-------------------------------------------------------------------------+
+; From Node          ; emu:emu|sdram_beat32:sdr|sdram:sdram|saved_wr                           ;
+; To Node            ; emu:emu|sdram_beat32:sdr|sdram:sdram|dq_oe~_Duplicate_13                ;
+; Launch Clock       ; emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ;
+; Latch Clock        ; emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ;
+; Data Arrival Time  ; 18.860                                                                  ;
+; Data Required Time ; 19.555                                                                  ;
+; Slack              ; 0.695                                                                   ;
++--------------------+-------------------------------------------------------------------------+
+
++---------------------------------------------------------------------------------------+
+; Statistics                                                                            ;
++---------------------------+--------+-------+-------------+------------+-------+-------+
+; Property                  ; Value  ; Count ; Total Delay ; % of Total ; Min   ; Max   ;
++---------------------------+--------+-------+-------------+------------+-------+-------+
+; Setup Relationship        ; 10.101 ;       ;             ;            ;       ;       ;
+; Clock Skew                ; 1.000  ;       ;             ;            ;       ;       ;
+; Data Delay                ; 10.246 ;       ;             ;            ;       ;       ;
+; Number of Logic Levels    ;        ; 1     ;             ;            ;       ;       ;
+; Physical Delays           ;        ;       ;             ;            ;       ;       ;
+;  Arrival Path             ;        ;       ;             ;            ;       ;       ;
+;   Clock                   ;        ;       ;             ;            ;       ;       ;
+;    Clock Network (Lumped) ;        ; 1     ; 8.614       ; 100        ; 8.614 ; 8.614 ;
+;   Data                    ;        ;       ;             ;            ;       ;       ;
+;    IC                     ;        ; 2     ; 8.677       ; 85         ; 0.777 ; 7.900 ;
+;    Cell                   ;        ; 3     ; 1.569       ; 15         ; 0.000 ; 0.981 ;
+;    uTco                   ;        ; 1     ; 0.000       ; 0          ; 0.000 ; 0.000 ;
+;  Required Path            ;        ;       ;             ;            ;       ;       ;
+;   Clock                   ;        ;       ;             ;            ;       ;       ;
+;    Clock Network (Lumped) ;        ; 1     ; 8.712       ; 100        ; 8.712 ; 8.712 ;
++---------------------------+--------+-------+-------------+------------+-------+-------+
+Note: Negative delays are omitted from totals when calculating percentages
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Data Arrival Path                                                                                                         ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location             ; Element                                                  ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+; 0.000    ; 0.000   ;    ;      ;        ;                      ; launch edge time                                         ;
+; 8.614    ; 8.614   ;    ;      ;        ;                      ; clock path                                               ;
+;   8.614  ;   8.614 ; R  ;      ;        ;                      ; clock network delay                                      ;
+; 18.860   ; 10.246  ;    ;      ;        ;                      ; data path                                                ;
+;   8.614  ;   0.000 ;    ; uTco ; 1      ; FF_X87_Y15_N52       ; emu:emu|sdram_beat32:sdr|sdram:sdram|saved_wr            ;
+;   8.614  ;   0.000 ; FF ; CELL ; 4      ; FF_X87_Y15_N52       ; emu|sdr|sdram|saved_wr|q                                 ;
+;   9.391  ;   0.777 ; FF ; IC   ; 1      ; MLABCELL_X82_Y15_N9  ; emu|sdr|sdram|Selector18~1|datac                         ;
+;   9.979  ;   0.588 ; FF ; CELL ; 34     ; MLABCELL_X82_Y15_N9  ; emu|sdr|sdram|Selector18~1|combout                       ;
+;   17.879 ;   7.900 ; FF ; IC   ; 1      ; DDIOOECELL_X8_Y0_N39 ; emu|sdr|sdram|dq_oe~_Duplicate_13|d                      ;
+;   18.860 ;   0.981 ; FR ; CELL ; 1      ; DDIOOECELL_X8_Y0_N39 ; emu:emu|sdram_beat32:sdr|sdram:sdram|dq_oe~_Duplicate_13 ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Data Required Path                                                                                                        ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location             ; Element                                                  ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+; 10.101   ; 10.101  ;    ;      ;        ;                      ; latch edge time                                          ;
+; 19.715   ; 9.614   ;    ;      ;        ;                      ; clock path                                               ;
+;   18.813 ;   8.712 ; R  ;      ;        ;                      ; clock network delay                                      ;
+;   19.715 ;   0.902 ;    ;      ;        ;                      ; clock pessimism removed                                  ;
+; 19.555   ; -0.160  ;    ;      ;        ;                      ; clock uncertainty                                        ;
+; 19.555   ; 0.000   ;    ; uTsu ; 1      ; DDIOOECELL_X8_Y0_N39 ; emu:emu|sdram_beat32:sdr|sdram:sdram|dq_oe~_Duplicate_13 ;
++----------+---------+----+------+--------+----------------------+----------------------------------------------------------+
+
+----------------------------
+; Extra Fitter Information ;
+----------------------------
+HTML report is unavailable in plain text report export.
+
+
+Path #3: Setup slack is 0.712 
+===============================================================================
++---------------------------------------------------------------------------------------------------------+
+; Path Summary                                                                                            ;
++--------------------+------------------------------------------------------------------------------------+
+; Property           ; Value                                                                              ;
++--------------------+------------------------------------------------------------------------------------+
+; From Node          ; emu:emu|sdram_beat32:sdr|wq_wp[0]                                                  ;
+; To Node            ; emu:emu|sdram_beat32:sdr|wq_wp_handoff[0]                                          ;
+; Launch Clock       ; emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk            ;
+; Latch Clock        ; emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk (INVERTED) ;
+; Data Arrival Time  ; 11.716                                                                             ;
+; Data Required Time ; 12.428                                                                             ;
+; Slack              ; 0.712                                                                              ;
++--------------------+------------------------------------------------------------------------------------+
+
++---------------------------------------------------------------------------------------+
+; Statistics                                                                            ;
++---------------------------+--------+-------+-------------+------------+-------+-------+
+; Property                  ; Value  ; Count ; Total Delay ; % of Total ; Min   ; Max   ;
++---------------------------+--------+-------+-------------+------------+-------+-------+
+; Setup Relationship        ; 5.050  ;       ;             ;            ;       ;       ;
+; Clock Skew                ; -1.096 ;       ;             ;            ;       ;       ;
+; Data Delay                ; 3.082  ;       ;             ;            ;       ;       ;
+; Number of Logic Levels    ;        ; 0     ;             ;            ;       ;       ;
+; Physical Delays           ;        ;       ;             ;            ;       ;       ;
+;  Arrival Path             ;        ;       ;             ;            ;       ;       ;
+;   Clock                   ;        ;       ;             ;            ;       ;       ;
+;    Clock Network (Lumped) ;        ; 1     ; 8.634       ; 100        ; 8.634 ; 8.634 ;
+;   Data                    ;        ;       ;             ;            ;       ;       ;
+;    IC                     ;        ; 1     ; 2.483       ; 81         ; 2.483 ; 2.483 ;
+;    Cell                   ;        ; 2     ; 0.599       ; 19         ; 0.000 ; 0.599 ;
+;    uTco                   ;        ; 1     ; 0.000       ; 0          ; 0.000 ; 0.000 ;
+;  Required Path            ;        ;       ;             ;            ;       ;       ;
+;   Clock                   ;        ;       ;             ;            ;       ;       ;
+;    Clock Network (Lumped) ;        ; 1     ; 6.992       ; 100        ; 6.992 ; 6.992 ;
++---------------------------+--------+-------+-------------+------------+-------+-------+
+Note: Negative delays are omitted from totals when calculating percentages
+
++------------------------------------------------------------------------------------------------------+
+; Data Arrival Path                                                                                    ;
++----------+---------+----+------+--------+----------------+-------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location       ; Element                                   ;
++----------+---------+----+------+--------+----------------+-------------------------------------------+
+; 0.000    ; 0.000   ;    ;      ;        ;                ; launch edge time                          ;
+; 8.634    ; 8.634   ;    ;      ;        ;                ; clock path                                ;
+;   8.634  ;   8.634 ; R  ;      ;        ;                ; clock network delay                       ;
+; 11.716   ; 3.082   ;    ;      ;        ;                ; data path                                 ;
+;   8.634  ;   0.000 ;    ; uTco ; 1      ; FF_X79_Y30_N31 ; emu:emu|sdram_beat32:sdr|wq_wp[0]         ;
+;   8.634  ;   0.000 ; FF ; CELL ; 68     ; FF_X79_Y30_N31 ; emu|sdr|wq_wp[0]|q                        ;
+;   11.117 ;   2.483 ; FF ; IC   ; 1      ; FF_X85_Y16_N11 ; emu|sdr|wq_wp_handoff[0]|asdata           ;
+;   11.716 ;   0.599 ; FF ; CELL ; 1      ; FF_X85_Y16_N11 ; emu:emu|sdram_beat32:sdr|wq_wp_handoff[0] ;
++----------+---------+----+------+--------+----------------+-------------------------------------------+
+
++------------------------------------------------------------------------------------------------------+
+; Data Required Path                                                                                   ;
++----------+---------+----+------+--------+----------------+-------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location       ; Element                                   ;
++----------+---------+----+------+--------+----------------+-------------------------------------------+
+; 5.050    ; 5.050   ;    ;      ;        ;                ; latch edge time                           ;
+; 12.588   ; 7.538   ;    ;      ;        ;                ; clock path                                ;
+;   12.042 ;   6.992 ; F  ;      ;        ;                ; clock network delay                       ;
+;   12.588 ;   0.546 ;    ;      ;        ;                ; clock pessimism removed                   ;
+; 12.428   ; -0.160  ;    ;      ;        ;                ; clock uncertainty                         ;
+; 12.428   ; 0.000   ;    ; uTsu ; 1      ; FF_X85_Y16_N11 ; emu:emu|sdram_beat32:sdr|wq_wp_handoff[0] ;
++----------+---------+----+------+--------+----------------+-------------------------------------------+
+
+----------------------------
+; Extra Fitter Information ;
+----------------------------
+HTML report is unavailable in plain text report export.
+
+

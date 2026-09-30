@@ -1,0 +1,23 @@
+{
+  "whet_globals.hex": {
+    "checked_bytes": 20,
+    "capture_sha256": "0c53bbdd1c8b8a9cf4ce4ef2e99a1d9df12a92d1dd75ecefb6648a58a62b5de3",
+    "reference_sha256": "0c53bbdd1c8b8a9cf4ce4ef2e99a1d9df12a92d1dd75ecefb6648a58a62b5de3",
+    "reference_original_path": "scratch/p198_ret/wl_p205_1/whet_globals.hex",
+    "byte_exact_equal_after_original_hex_normalization": true
+  },
+  "whet_code.hex": {
+    "checked_bytes": 2894,
+    "capture_sha256": "3749b3dfd69b7990a88e7f86aa116e5825fdb6561ad1c21a8b1448112847b330",
+    "reference_sha256": "3749b3dfd69b7990a88e7f86aa116e5825fdb6561ad1c21a8b1448112847b330",
+    "reference_original_path": "scratch/p198_ret/wl_p205_1/whet_code.hex",
+    "byte_exact_equal_after_original_hex_normalization": true
+  },
+  "whet_stack.hex": {
+    "checked_bytes": 1024,
+    "capture_sha256": "cd55cd53a6c251ce84c1eac12d627510e5b405ad788e1e5de311ad883d4d10a6",
+    "reference_sha256": "cd55cd53a6c251ce84c1eac12d627510e5b405ad788e1e5de311ad883d4d10a6",
+    "reference_original_path": "scratch/p198_ret/wl_p205_1/whet_stack.hex",
+    "byte_exact_equal_after_original_hex_normalization": true
+  }
+}

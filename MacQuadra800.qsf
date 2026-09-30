@@ -29,7 +29,8 @@ set_global_assignment -name OPTIMIZE_POWER_DURING_FITTING OFF
 set_global_assignment -name FINAL_PLACEMENT_OPTIMIZATION ALWAYS
 set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
 # Sep24: effort 3.0 still failed routing; restore baseline for RTL area trials.
-set_global_assignment -name PLACEMENT_EFFORT_MULTIPLIER 1.0
+set_global_assignment -name PLACEMENT_EFFORT_MULTIPLIER 2.0
+set_global_assignment -name ROUTER_TIMING_OPTIMIZATION_LEVEL MAXIMUM
 # Speed-first fitting (the stock MiSTer template values).  These were
 # briefly flipped to AGGRESSIVE AREA / TECHNIQUE AREA / duplication OFF as
 # a hedge while the design was over capacity; the block-RAM conversions
@@ -373,7 +374,70 @@ set_global_assignment -name ALM_REGISTER_PACKING_EFFORT MEDIUM
 # address again, and a redirect replaces a speculative fetch the platform has not accepted yet (ifr_avail).
 # Sim vs P170: Permute -7.0 %, Whetstone -1.9 %, Queens -1.5 %, Dhrystone -2.3 %.
 # Sep24 common-ALU design fits capacity but seed28 cannot route; isolate seed21 trial.
-set_global_assignment -name SEED 21
+# 2026-09-25 night: the pipeline back in (P243/P244 in the core, the store buffer's read ack
+# without buffer_req), SCSI_CACHE_OFF=1 (needs the Main write buffer), and the release-lite trims
+# MISTER_BYPASS_AUDIO_FILTER / MISTER_DISABLE_VIDEO_CALC / VIDEO_512_OFF.  Seeds: 21 CPU +0.224 but
+# HDMI -0.091 / SDRAM -0.010; 23 CPU +0.483, HDMI -0.143 (ascal o_vcpt_pre3); 25, 26 router failed;
+# 24 MET on every clock: CPU +1.141, HDMI +0.158, SDRAM +0.791, crossings +1.120/+1.202, 38,487 ALMs,
+# 469 M10K, RBF md5 8481fce4.  Mix median 1.778 on hardware.  SEED 24 kept.
+# 2026-09-26: the VRAM fast path (direct VRAM writes and reads beside wombat_bus32, the
+# combinational VRAM read ack).  Seed 24 MET: CPU +0.074, HDMI +0.123, SDRAM +0.247, 38,445 ALMs,
+# 469 M10K, RBF md5 ce04f1c6; Color 8-bit 13.967 -> 12.61 s, Mix 1.776.  Seed 23 router failed;
+# 21 CPU -0.155 / HDMI -0.206; 25 router failed.
+# 2026-09-26: + P245 (MOVE16 chained at the acknowledge).  Seeds: 24 CPU -0.350 / HDMI -0.445;
+# 22 CPU -2.328; 26 CPU +0.135 / HDMI +0.133 but h2f_user0_clk -0.293 (ascal avl_dw -> o_dpram,
+# the scaler's DDR side), 38,819 ALMs, RBF md5 4b623bd0: Color 8-bit 11.42 s, Mix 1.777.
+# Seed 21 MET on every clock: CPU +0.461, HDMI +0.441, SDRAM +0.155, crossings +1.434/+0.732,
+# 38,592 ALMs, 468 M10K, RBF md5 9355b638; hardware Color 8-bit 11.42 s, Mix 1.777.  Seed 23 also MET
+# (CPU +0.427, HDMI +0.302, SDRAM +0.896, 38,550 ALMs; not run on hardware); seed 25 not finished.
+# SEED 21 kept.
+# 2026-09-26: + the ROM's retained line (every ROM read a 2-beat DDR3 line burst; the other
+# longwords from the line).  Seed 21 MET: CPU +0.357, HDMI +0.249, SDRAM +0.102, crossings
+# +1.661/+0.357, 38,733 ALMs, 468 M10K, RBF md5 7bcd182d; hardware Color 8-bit 9.87 s, Mix 1.781.
+# Seed 23 router failed.
+# 2026-09-27: + Dani's prefetch-fault fix (6f0f159).  Seeds: 21, 23, 26 router failed; 24 CPU -1.096;
+# 22 CPU -1.179 / SDRAM -2.264 / HDMI -0.967; 25 CPU -1.341; 27 CPU +0.193, SDRAM +0.295, HDMI -0.025
+# (RBF md5 85924646; hardware: Mix 1.781/1.781, Color 8-bit 9.944 s, FPU 0.684, clean shutdown).
+# 28 CPU -0.065 only; 29, 30 router failed; 31 HDMI -0.455 only (CPU +0.823, SDRAM +0.548); 32-35 router failed.  Walk stopped.
+# 2026-09-28: FPU issue/latency work P250..P258 (ad7a0d4; docs/perf/fpu_p254_seed_walk,
+# fpu_p258_nopipels_builds, fpu_p258_fitter_settings).  With the old fitter settings: seed 21
+# CPU -0.381/HDMI -0.947 (P253); on ad7a0d4 seeds 24, 27, 23 router failed, 31 CPU -0.226/HDMI -0.116
+# (RBF md5 19beb5b2; hardware trial: FPU 0.978, Mix 1.793, Bubble Sort 12 % slower, clean shutdown);
+# dropping PIPELINE_LOADS/STORES saved nothing (seed 21 CPU -0.317).  PHYSICAL_SYNTHESIS_REGISTER_
+# DUPLICATION ON is a no-op on this flow (seed 31 rbf byte-identical).  PLACEMENT_EFFORT_MULTIPLIER
+# 2.0 + ROUTER_TIMING_OPTIMIZATION_LEVEL MAXIMUM (FITTER_EFFORT stays STANDARD FIT) at seed 31: all
+# clocks met -- CPU +0.103 (ifr_addr -> ATC -> s_ack -> brf_seed_a -> epf_data), SDRAM +0.612,
+# HDMI +0.006, hold +0.220, crossings +1.432/+0.586, 39,191 ALMs (94 %), 468 M10K, 36 DSP, fitter
+# 13m14s, RBF md5 b7e88b81.  These two settings are now the recipe.
+# 2026-09-29: + the IOSB interrupt fix (f9f6da6: VIA2 IFR write keeps the live 53C96 INT/DRQ and a
+# same-clock ASC edge; PDMA watchdog frozen through the ack).  Seed 31, same recipe, MET: CPU +0.864,
+# SDRAM +0.409, HDMI +0.110, hold +0.250, crossings +1.128/+0.867, 39,102 ALMs (93 %), 468 M10K, 36 DSP,
+# RBF md5 dc281d64.  Hardware: 30/30 Finder duplicates over two boots, 0 hangs (docs/perf/iosbfix_hw_20260929).  SEED 31 kept.
+# 2026-09-29: P260 (2b30d64, two-half sector buffer, ncr_sbuf 512x16 still 1 M10K).  Seeds 31, 22 router
+# failed / 21 CPU -0.253 on 583a98c; on 2b30d64 seed 31 HDMI -0.384, 24 HDMI -0.360, 27 MET: CPU +0.299,
+# SDRAM +0.678, HDMI +0.299, hold +0.207, crossings +0.707/+0.600, 39,246 ALMs (94 %), 468 M10K, 36 DSP,
+# RBF md5 f769b9e1 (docs/perf/p260_fpga_20260929).  SEED 27.
+# 2026-09-29: hardware, f769b9e1 (Main 75e00b65, 32 MB): PR Disk 2.462 median (dc281d64 1.699, +45 %);
+# Photoshop 3.0.1 Finder duplicate 4.95 s median over 30 (6.68 s, -26 %), read phase 2.06-2.36 MiB/s
+# (1.65), write 1.37-1.53 (1.01); CPU 0.896, FPU 0.951 cold / 0.976 warm, Mix 1.807 unchanged; 30/30
+# duplicates, 0 hangs; idle clock and Shut Down clean (docs/perf/p260_hw_20260929).  SEED 27 kept.
+# 2026-09-29: P261/P262 integer scaling + 512x384 back (b40acdd, then 0063c59 SCC CTS; ~39,440-39,800 ALMs 94-95 %, ~25,200 regs,
+#   468 M10K, 36 DSP; pll_video_cfg + video_freak logic only, ncr_sbuf still 1 M10K): b40acdd seed 27 CPU +0.502 / SDRAM +0.854 /
+#   HDMI -0.210; b40acdd seed 31 stopped (90 min in placement prep); 0063c59 seed 24, 25, 26 FITTER FAILED (routing congestion);
+#   seed 23 CPU +0.081 / SDRAM +0.347 / HDMI -0.339 (hardware trial 48a23a78: Scale modes, 512x384, ImageWriter print OK,
+#   docs/perf/p262_trial_hw_20260929); seed 28 CPU -0.264 / SDRAM +0.534 / HDMI +0.098; seed 29 CPU -0.663 / SDRAM +0.606 /
+#   HDMI +0.064 -- no clean seed (docs/perf/p261_fpga_20260929).
+# 2026-09-30: P263 one FPU state frame (6ce38c8; ~39,230-39,470 ALMs 94 %, ~24,600-24,700 regs routed, -250 ALMs / -500 regs
+#   against 0063c59 at the same seed; 468 M10K, 36 DSP; ncr_sbuf 1 M10K, pll_video_cfg + video_freak logic only): seed 23
+#   CPU +0.073 / SDRAM +0.943 / HDMI -0.157 (fallback, rbf 920ffa2a); seed 27, 28 FITTER FAILED (routing congestion); seed 31
+#   CPU -0.117 / SDRAM +0.567 / HDMI +0.429; seed 24 CLEAN: CPU +0.507 / SDRAM +0.834 / HDMI +0.310, hold +0.219, crossings
+#   +1.201/+0.507, 39,300 ALMs (94 %), 24,668 regs, rbf md5 49951492d3576add9470bc1d1ef28e5d (docs/perf/p263_fpga_20260930).  SEED 24.
+# 2026-09-30: hardware, 49951492 (seed 24; Main 75e00b65, 32 MB): PR 1.267, CPU 0.896, Disk 2.488 median of 5; FPU 0.953 cold /
+#   0.961-0.968 warm, Mix 1.808; Photoshop duplicate 5.24 s median of 10, 0 hangs; Scale 960x720 / 640x480, 512x384 through an
+#   OSD reset and back; ImageWriter prints at 9600 with RTS asserted (seed 23 trial: "not responding" with RTS dropped,
+#   resumes when restored); idle clock and Shut Down clean (docs/perf/p263_release_hw_20260930, p263_hw_20260930).
+#   Released as releases/MacQuadra800_20260930.rbf.  SEED 24 kept.
+set_global_assignment -name SEED 24
 # 2026-09-24: NEVER grew the full BRF fit by398 ALMs; retain the better ALWAYS setting.
 set_global_assignment -name FITTER_AGGRESSIVE_ROUTABILITY_OPTIMIZATION ALWAYS
 #
@@ -507,18 +571,23 @@ set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_XSTORE=1"
 # Overlap LEA displacement fetch with base selection; checked independently.
 set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_LEA=1"
 # P6 candidate: broaden the resident integer/memory stream at authentic 33 MHz.
-#set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE=1"
 # Seqmem full fit cost 30 more ALMs; restore pipeline loads/stores.
-#set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_LOADS=1"
-#set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_STORES=1"
-#set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_PEA=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_LOADS=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_STORES=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_PEA=1"
 # P6 memory-entry trial: avoid unrestricted entry's measured Mix regression.
-#set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_P6=1"
-#set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_MEMORY_ENTRY=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_P6=1"
+set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_MEMORY_ENTRY=1"
 # P7 compare trial: indexed CMP/TST plus final-WB legacy handoff.
-#set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_COMPARE=1"
-#set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_EARLY_DRAIN=1"
+set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_COMPARE=1"
+set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_EARLY_DRAIN=1"
 set_global_assignment -name VERILOG_MACRO "MISTER_DISABLE_SHADOWMASK=1"
+set_global_assignment -name VERILOG_MACRO "SCSI_CACHE_OFF=1"
+set_global_assignment -name VERILOG_MACRO "MISTER_BYPASS_AUDIO_FILTER=1"
+set_global_assignment -name VERILOG_MACRO "MISTER_DISABLE_VIDEO_CALC=1"
+# 2026-09-29: VIDEO_512_OFF dropped for the release: the 12in 512x384 monitor option is back (pll_cfg ~360 ALMs).
+#set_global_assignment -name VERILOG_MACRO "VIDEO_512_OFF=1"
 set_global_assignment -name VERILOG_MACRO "CACHE_CD_OFF=1"
 #set_global_assignment -name VERILOG_MACRO "VIDEO_512_OFF=1"
 set_global_assignment -name VERILOG_MACRO "CACHE_SMALL=1"

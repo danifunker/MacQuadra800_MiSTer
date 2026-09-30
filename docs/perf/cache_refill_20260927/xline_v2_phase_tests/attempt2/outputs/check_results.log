@@ -1,0 +1,37 @@
+{
+  "status": "PASS_XFIRST_PHASE_PAIR",
+  "results": {
+    "baseline": {
+      "candidate": 0,
+      "cases": 73,
+      "phase_entries": 0,
+      "critical_issued": 0,
+      "local_words": 0,
+      "publications": 0,
+      "local_fallbacks": 0,
+      "poisoned_publications": 0,
+      "phase_errors": 0,
+      "operand_acks": 838,
+      "external_tail_requests": 0,
+      "held_faults": 4,
+      "error_ack_overlaps": 1,
+      "cinv_completions": 1
+    },
+    "candidate": {
+      "candidate": 1,
+      "cases": 73,
+      "phase_entries": 55,
+      "critical_issued": 51,
+      "local_words": 132,
+      "publications": 36,
+      "local_fallbacks": 9,
+      "poisoned_publications": 6,
+      "phase_errors": 3,
+      "operand_acks": 841,
+      "external_tail_requests": 0,
+      "held_faults": 4,
+      "error_ack_overlaps": 1,
+      "cinv_completions": 1
+    }
+  }
+}

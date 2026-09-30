@@ -124,6 +124,33 @@ integer stat_reads = 0;                      // $CC status-window reads (the eng
 integer poke_stbs = 0;                       // fwd_stb pulses: one per forwarded transport command
 integer collisions = 0;                      // cycles in which the nexus and the audio engine both hold a request while nobody owns the channel
 
+// Per-request random latency (T22).  dev_lat_jit = 0 (the default) keeps the
+// fixed dev_lat round trip every other test was written against; N > 0 adds
+// 0..N clocks per request from dev_lcg, which a test seeds.  +lat_seed=S is
+// XORed into T22's seeds for soak runs (0, the default, is the recorded run).
+integer dev_lat_jit = 0;
+reg  [31:0] dev_lcg = 32'h2600_0001;
+integer lat_seed = 0;
+initial if (!$value$plusargs("lat_seed=%d", lat_seed)) lat_seed = 0;
+reg  [63:0] cyc = 0;                         // free-running clock count, for ordering platform events against guest-visible ones
+always @(posedge clk) cyc <= cyc + 1;
+// Platform-side accounting for the two-half sector buffer (T21/T22); it
+// reads nothing inside the DUT, so the same checks run on any engine.
+integer disk_rd_reqs = 0;                    // disk-slot block reads requested (windows not counted)
+reg         rd_track = 0;                    // the test arms the overlap count below
+integer rd_base = 0;                         // disk_rd_reqs at the start of the command under test (the test sets it)
+integer rd_drained = 0;                      // bytes of that command the guest has taken (the test keeps it)
+integer rd_ovl = 0;                          // reads raised with more than a FIFO's worth of the previous sector undrained
+integer rd_ovl_max = 0;                      // ...the most bytes left to drain at one
+integer wr_lba_log [0:255];                  // LBA of each accepted disk write block, indexed by wr_blocks mod 256
+reg  [63:0] wr_ackfall = 0;                  // cyc at the last accepted disk write block's ack fall
+reg  [63:0] stat_cyc = 0;                    // cyc the bus phase last turned STATUS
+reg   [2:0] ph_d = 0;
+always @(posedge clk) begin
+	ph_d <= dut.phase;
+	if (dut.phase == PH_STAT && ph_d != PH_STAT) stat_cyc <= cyc;
+end
+
 always @(posedge clk) if (dut.ca_fwd_stb) poke_stbs <= poke_stbs + 1;
 always @(posedge clk) if (dut.nexus_req && dut.ca_io_rd && !dut.eng_owns) collisions <= collisions + 1;
 
@@ -138,12 +165,25 @@ always @(posedge clk) begin
 			d_slot  = (io_rd_v[0] | io_wr_v[0]) ? 0 : (io_rd_v[1] | io_wr_v[1]) ? 1 : 2;
 			d_lba   <= io_lba;
 			d_lat   <= dev_lat;              // short but non-zero round trip (default 40)
+			if (dev_lat_jit != 0) begin
+				dev_lcg = dev_lcg * 1103515245 + 12345;
+				d_lat <= dev_lat + ((dev_lcg >> 8) % (dev_lat_jit + 1));
+			end
 			d_win   = (d_slot == 2) && (io_lba >= 32'h4000_0000);
 			d_words = (io_rd_v[d_slot] && d_win) ? (io_blk_cnt + 1) * 256 : 256;
 			if (d_slot != 2 && (io_lba >= NBLK || io_blk_cnt != 0)) bad_disk_req <= bad_disk_req + 1;
 			if (d_win && io_rd_v[d_slot]) d_r = cdwin_dpi_read(io_lba, (io_blk_cnt + 1) * 512);
 			if (d_win && io_rd_v[d_slot] && io_lba == 32'h7C00_0000) begin frame_reads <= frame_reads + 1; frame_blk <= io_blk_cnt; end
 			if (d_win && io_rd_v[d_slot] && io_lba == 32'h7ECC_0000) stat_reads <= stat_reads + 1;
+			if (io_rd_v[d_slot] && d_slot != 2) begin
+				disk_rd_reqs <= disk_rd_reqs + 1;
+				// request n of the command (n >= 1) while sector n-1 still has
+				// more than the 16-byte FIFO (plus slack) left for the guest
+				if (rd_track && (disk_rd_reqs - rd_base) * 512 - rd_drained > 32) begin
+					rd_ovl <= rd_ovl + 1;
+					if ((disk_rd_reqs - rd_base) * 512 - rd_drained > rd_ovl_max) rd_ovl_max <= (disk_rd_reqs - rd_base) * 512 - rd_drained;
+				end
+			end
 			d_state <= io_rd_v[d_slot] ? 1 : 3;
 		end
 	end
@@ -200,7 +240,11 @@ always @(posedge clk) begin
 		else begin
 			io_ack <= 3'b000; d_state <= 0;
 			if (d_win) begin cdwin_dpi_write(d_lba); win_writes <= win_writes + 1; end
-			else wr_blocks <= wr_blocks + 1;
+			else begin
+				wr_blocks <= wr_blocks + 1;
+				wr_lba_log[wr_blocks % 256] <= d_lba;
+				wr_ackfall <= cyc;
+			end
 		end
 	end
 	endcase
@@ -2428,6 +2472,279 @@ initial begin
 	guard = 0;
 	while (dut.g_cd_audio.cd_audio_i.ast != 8'd5 && guard < 20000) begin @(negedge clk); guard = guard + 1; end
 	expect8("T20 engine idle after STOP", dut.g_cd_audio.cd_audio_i.ast, 8'h05);
+	sel_id = 8'h00;
+
+	//------------------------------------------------------------------
+	$display("-- T21 ROM boot read shape: 2 PIO bytes + 510 DMA per sector, next PIO TI issued before the sector lands");
+	//------------------------------------------------------------------
+	// READ(10) of 4 blocks on a slow device (3000-clock round trip).  Per
+	// sector the ROM driver takes 2 bytes by non-DMA TI ($10), then 510 by
+	// DMA TI, flushes the FIFO twice and issues the next sector's first
+	// non-DMA TI BEFORE the prefetched sector has landed.  Every byte must
+	// be handed over, and STATUS only after the last one.  The two-half
+	// buffer as first committed (583a98c) ended the command here with the
+	// last sector unread, which hung the boot at the happy Mac.
+	begin : t21
+		integer fails0, sec, kk, g, lb, nb;
+		reg [7:0] bb, want;
+		fails0 = fails; lb = 48; nb = 4;
+		dev_lat = 3000;
+		sel_id = 8'h00;
+		reg_wr(R_CMD, 8'h02); repeat (4) @(negedge clk);
+		cdb[0]=8'h28; cdb[1]=0; cdb[2]=0; cdb[3]=0; cdb[4]=0; cdb[5]=lb[7:0]; cdb[6]=0; cdb[7]=0; cdb[8]=nb[7:0]; cdb[9]=0;
+		unix_select(8'h42, 10, 1);
+		wait_irq(4000, ok);
+		read_regs(st, sp, it2);
+		expect8("T21 phase DATA IN", {5'd0, st[2:0]}, {5'd0, PH_DIN});
+		for (sec = 0; sec < nb && fails == fails0; sec = sec + 1) begin
+			for (kk = 0; kk < 2; kk = kk + 1) begin
+				g = sec * 512 + kk;
+				reg_wr(R_CMD, 8'h10);
+				wait_irq(40000, ok);
+				read_regs(st, sp, it2);
+				reg_rd(R_FIFO, bb);
+				want = disk[lb*512 + g];
+				checks = checks + 1;
+				if (bb !== want || (st[2:0] != PH_DIN && st[2:0] != PH_STAT)) begin
+					fails = fails + 1;
+					$display("  FAIL T21 sector %0d PIO byte %0d: got %02X want %02X, phase %0d intr %02X (blocks_left=%0d buf_valid=%0d sbuf_pos=%0d)",
+					         sec, kk, bb, want, st[2:0], it2, dut.blocks_left, dut.buf_valid, dut.sbuf_pos);
+				end
+				if (st[2:0] == PH_STAT) begin
+					fails = fails + 1;
+					$display("  FAIL T21 STATUS after PIO byte %0d of sector %0d (of %0d): the command ended with %0d bytes unread", kk, sec, nb, nb*512 - g - 1);
+					kk = 2; sec = nb;
+				end
+			end
+			if (sec < nb) begin
+				set_tc(16'd510);
+				reg_wr(R_CMD, 8'h90);
+				for (kk = 2; kk < 512; kk = kk + 1) begin
+					g = sec * 512 + kk;
+					pdma_rd(bb);
+					want = disk[lb*512 + g];
+					checks = checks + 1;
+					if (bb !== want) begin
+						fails = fails + 1;
+						if (fails < fails0 + 6) $display("  FAIL T21 sector %0d DMA byte %0d: got %02X want %02X", sec, kk, bb, want);
+					end
+				end
+				wait_irq(200000, ok);
+				read_regs(st, sp, it2);
+				expect8("T21 phase after the sector", {5'd0, st[2:0]}, {5'd0, (sec == nb - 1) ? PH_STAT : PH_DIN});
+				reg_wr(R_CMD, 8'h01); reg_wr(R_CMD, 8'h01);
+			end
+		end
+		if (st[2:0] != PH_STAT) begin
+			guard = 0;
+			while (st[2:0] != PH_STAT && guard < 100000) begin @(negedge clk); guard = guard + 1; read_regs(st, sp, it2); end
+		end
+		reg_wr(R_CMD, 8'h11); wait_irq(4000, ok);
+		reg_rd(R_FIFO, bb); reg_rd(R_FIFO, bb);
+		reg_wr(R_CMD, 8'h12); wait_irq(4000, ok); read_regs(st, sp, it2);
+		dev_lat = 40;
+		$display("   T21 failures added: %0d", fails - fails0);
+	end
+	sel_id = 8'h00;
+
+	//------------------------------------------------------------------
+	$display("-- T22 two-half buffer: READ(10)/WRITE(10) of 8 blocks x 6 rounds, random 200-2000-clock acks, random guest pauses");
+	//------------------------------------------------------------------
+	// Even rounds: one TI for all 8 blocks (TC=4096).  Odd rounds: one TI
+	// per sector with the interrupt taken between sectors (the System 7.5.5
+	// SCSI Manager's shape).  Each round: READ(10) of 8 blocks at lba 48
+	// (every byte checked, 8 requests), then WRITE(10) of 8 blocks at lba 24
+	// (the data, the LBA order, and the last chunk's interrupt and the
+	// status byte only after the last flush's ack fell).  Every platform
+	// request is acked after dev_lat + 0..dev_lat_jit clocks; each sector
+	// gets a random guest pause profile (none; 1/64 bytes 10-210 clk; 1/16
+	// bytes 50-650 clk).  Across the six READs at least one request must be
+	// raised while the guest is still draining the previous sector -- the
+	// overlap the two halves exist for, which the single-buffer engine
+	// (703b22a) never makes.
+	begin : t22
+		integer rep, mode, kk, g, sec, nsec, tcn, nb, lb, rnd, pmode, fails0, ovl0, wcc, wccfp, nw0, j, req0, ovl_tot, phase_early;
+		reg [7:0] bb, want;
+		reg [63:0] irq_cyc;
+		fails0 = fails; ovl_tot = 0; phase_early = 0;
+		nb = 8;
+		rnd = 32'h0260_2929;
+		for (rep = 0; rep < 6; rep = rep + 1) begin
+			mode = rep % 2;
+			nsec = mode ? nb : 1;
+			tcn  = mode ? 512 : nb * 512;
+			// ---- READ(10) of 8 blocks at lba 48
+			lb = 48;
+			dev_lcg = (32'h0000_1000 + rep * 977) ^ lat_seed;
+			dev_lat = 200; dev_lat_jit = 1800;
+			sel_id = 8'h00;
+			reg_wr(R_CMD, 8'h02); repeat (4) @(negedge clk);
+			ovl0 = rd_ovl; req0 = disk_rd_reqs;
+			rd_base = disk_rd_reqs; rd_drained = 0; rd_track = 1;
+			cdb[0]=8'h28; cdb[1]=0; cdb[2]=0; cdb[3]=0; cdb[4]=0; cdb[5]=lb[7:0]; cdb[6]=0; cdb[7]=0; cdb[8]=nb[7:0]; cdb[9]=0;
+			unix_select(8'h42, 10, 1);
+			wait_irq(4000, ok);
+			read_regs(st, sp, it2);
+			expect8("T22 read phase DATA IN", {5'd0, st[2:0]}, {5'd0, PH_DIN});
+			for (sec = 0; sec < nsec; sec = sec + 1) begin
+				set_tc(tcn[15:0]);
+				reg_wr(R_CMD, 8'h90);
+				for (kk = 0; kk < tcn; kk = kk + 1) begin
+					g = mode ? sec * 512 + kk : kk;
+					if (g % 512 == 0) begin rnd = rnd * 1103515245 + 12345; pmode = (rnd >> 16) % 3; end
+					pdma_rd(bb);
+					rd_drained = rd_drained + 1;
+					want = disk[lb*512 + g];
+					checks = checks + 1;
+					if (bb !== want) begin
+						fails = fails + 1;
+						if (fails < fails0 + 8) $display("  FAIL T22 rep=%0d read byte %0d (block %0d): got %02X want %02X", rep, g, g/512, bb, want);
+					end
+					rnd = rnd * 1103515245 + 12345;
+					if (pmode == 1 && ((rnd >> 16) % 64) == 0) repeat (10 + ((rnd >> 22) % 200)) @(negedge clk);
+					if (pmode == 2 && ((rnd >> 16) % 16) == 0) repeat (50 + ((rnd >> 22) % 600)) @(negedge clk);
+				end
+				wait_irq(200000, ok);
+				read_regs(st, sp, it2);
+				if (sec < nsec - 1) expect8("T22 read mid phase DATA IN", {5'd0, st[2:0]}, {5'd0, PH_DIN});
+			end
+			rd_track = 0;
+			expect8("T22 read phase STATUS", {5'd0, st[2:0]}, {5'd0, PH_STAT});
+			reg_wr(R_CMD, 8'h11); wait_irq(4000, ok);
+			reg_rd(R_FIFO, bb); expect8("T22 read status GOOD", bb, 8'h00);
+			reg_rd(R_FIFO, bb);
+			reg_wr(R_CMD, 8'h12); wait_irq(4000, ok); read_regs(st, sp, it2);
+			$display("   T22 rep %0d (%0s) READ : requests %0d, raised while the guest was still draining %0d",
+			         rep, mode ? "TI per sector" : "one TI", disk_rd_reqs - req0, rd_ovl - ovl0);
+			checks = checks + 1;
+			if (disk_rd_reqs - req0 != nb) begin fails = fails + 1; $display("  FAIL T22 rep=%0d read made %0d requests (want %0d)", rep, disk_rd_reqs - req0, nb); end
+			ovl_tot = ovl_tot + (rd_ovl - ovl0);
+
+			// ---- WRITE(10) of 8 blocks at lba 24
+			lb = 24;
+			dev_lcg = (32'h0000_7000 + rep * 1231) ^ lat_seed;
+			nw0 = wr_blocks; wcc = 0; wccfp = 0;
+			reg_wr(R_CMD, 8'h02); repeat (4) @(negedge clk);
+			cdb[0]=8'h2A; cdb[1]=0; cdb[2]=0; cdb[3]=0; cdb[4]=0; cdb[5]=lb[7:0]; cdb[6]=0; cdb[7]=0; cdb[8]=nb[7:0]; cdb[9]=0;
+			unix_select(8'h42, 10, 1);
+			wait_irq(4000, ok);
+			read_regs(st, sp, it2);
+			expect8("T22 write phase DATA OUT", {5'd0, st[2:0]}, {5'd0, PH_DOUT});
+			reg_wr(R_CMD, 8'h01);
+			irq_cyc = 0;
+			for (sec = 0; sec < nsec; sec = sec + 1) begin
+				set_tc(tcn[15:0]);
+				reg_wr(R_CMD, 8'h90);
+				for (kk = 0; kk < tcn; kk = kk + 1) begin
+					g = mode ? sec * 512 + kk : kk;
+					if (g % 512 == 0) begin rnd = rnd * 1103515245 + 12345; pmode = (rnd >> 16) % 3; end
+					guard = 0;
+					while (!drq && guard < 200000) begin @(negedge clk); guard = guard + 1; end
+					if (guard >= 200000) begin
+						fails = fails + 1;
+						$display("  FAIL T22 rep=%0d WRITE DREQ never returned at byte %0d", rep, g);
+						kk = tcn; sec = nsec;
+					end
+					else begin
+						pdma_wr((g*13 + rep*29 + (g >> 9)) & 8'hFF);
+						rnd = rnd * 1103515245 + 12345;
+						if (pmode == 1 && ((rnd >> 16) % 64) == 0) repeat (10 + ((rnd >> 22) % 200)) @(negedge clk);
+						if (pmode == 2 && ((rnd >> 16) % 16) == 0) repeat (50 + ((rnd >> 22) % 600)) @(negedge clk);
+					end
+				end
+				wait_irq(200000, ok);
+				irq_cyc = cyc;
+				wcc = wcc + 1;
+				if (io_wr || d_state == 3 || d_state == 4) wccfp = wccfp + 1;   // a flush still with the platform
+				read_regs(st, sp, it2);
+				if (sec < nsec - 1) expect8("T22 write mid phase DATA OUT", {5'd0, st[2:0]}, {5'd0, PH_DOUT});
+			end
+			// the last chunk's interrupt must follow the last flush's ack fall
+			checks = checks + 1;
+			if (!(irq_cyc > wr_ackfall) || wr_blocks - nw0 != nb) begin
+				fails = fails + 1;
+				$display("  FAIL T22 rep=%0d last chunk interrupt at %0d, last flush ack fell at %0d, flushes done %0d",
+				         rep, irq_cyc, wr_ackfall, wr_blocks - nw0);
+			end
+			guard = 0;
+			while (st[2:0] != PH_STAT && guard < 400000) begin @(negedge clk); guard = guard + 1; read_regs(st, sp, it2); end
+			expect8("T22 write phase STATUS", {5'd0, st[2:0]}, {5'd0, PH_STAT});
+			// the phase bits read STATUS from the moment the last flush is
+			// RAISED (for the ROM's PIO write loop); informational
+			if (stat_cyc < wr_ackfall) phase_early = phase_early + 1;
+			reg_wr(R_CMD, 8'h11); wait_irq(4000, ok);
+			// the status byte is delivered (I_FC) only after the last flush's ack fell, all 8 accepted
+			checks = checks + 1;
+			if (!(cyc > wr_ackfall) || wr_blocks - nw0 != nb) begin
+				fails = fails + 1;
+				$display("  FAIL T22 rep=%0d status delivered at %0d, last flush ack fell at %0d, flushes done %0d", rep, cyc, wr_ackfall, wr_blocks - nw0);
+			end
+			reg_rd(R_FIFO, bb); expect8("T22 write status GOOD", bb, 8'h00);
+			reg_rd(R_FIFO, bb);
+			reg_wr(R_CMD, 8'h12); wait_irq(4000, ok); read_regs(st, sp, it2);
+			dev_lat = 40; dev_lat_jit = 0;
+			// the LBA sequence the device accepted, in order
+			for (j = 0; j < nb; j = j + 1) begin
+				checks = checks + 1;
+				if (wr_lba_log[(nw0 + j) % 256] != lb + j) begin
+					fails = fails + 1;
+					$display("  FAIL T22 rep=%0d flush %0d went to lba %0d (want %0d)", rep, j, wr_lba_log[(nw0 + j) % 256], lb + j);
+				end
+			end
+			// the flushed data
+			for (g = 0; g < nb * 512; g = g + 1) begin
+				checks = checks + 1;
+				if (disk[lb*512 + g] !== ((g*13 + rep*29 + (g >> 9)) & 8'hFF)) begin
+					fails = fails + 1;
+					if (fails < fails0 + 16) $display("  FAIL T22 rep=%0d disk byte %0d (block %0d): got %02X want %02X", rep, g, g/512, disk[lb*512 + g], (g*13 + rep*29 + (g >> 9)) & 8'hFF);
+				end
+			end
+			$display("   T22 rep %0d (%0s) WRITE: flushes %0d (lba %0d..%0d), chunk completions %0d, with a flush in flight %0d; last-chunk INT %0d clk after the last ack fell",
+			         rep, mode ? "TI per sector" : "one TI", wr_blocks - nw0, wr_lba_log[nw0 % 256], wr_lba_log[(nw0 + nb - 1) % 256],
+			         wcc, wccfp, irq_cyc - wr_ackfall);
+		end
+		checks = checks + 1;
+		if (ovl_tot == 0) begin fails = fails + 1; $display("  FAIL T22 no read request overlapped a guest drain (single-buffer behaviour)"); end
+		$display("   T22 prefetches overlapping a drain: %0d (most bytes left to drain at one: %0d)", ovl_tot, rd_ovl_max);
+		$display("   T22 info: the phase bits turned STATUS while the last flush was outstanding in %0d of 6 writes", phase_early);
+		// ---- informational: a POLLING initiator (watches the phase bits,
+		// never waits for the chunk INT) issues ICCS as soon as it sees
+		// STATUS.  ICCS is not held for a flush in flight, so the status
+		// byte can arrive before the last block is accepted; reported, not
+		// checked.
+		begin : t22_poll
+			integer nwp;
+			reg [63:0] fc_cyc;
+			lb = 24; dev_lcg = 32'h0000_9999 ^ lat_seed; dev_lat = 200; dev_lat_jit = 1800; nwp = wr_blocks;
+			reg_wr(R_CMD, 8'h02); repeat (4) @(negedge clk);
+			cdb[0]=8'h2A; cdb[1]=0; cdb[2]=0; cdb[3]=0; cdb[4]=0; cdb[5]=lb[7:0]; cdb[6]=0; cdb[7]=0; cdb[8]=nb[7:0]; cdb[9]=0;
+			unix_select(8'h42, 10, 1);
+			wait_irq(4000, ok); read_regs(st, sp, it2);
+			reg_wr(R_CMD, 8'h01); set_tc(16'd4096); reg_wr(R_CMD, 8'h90);
+			for (g = 0; g < nb * 512; g = g + 1) begin
+				guard = 0;
+				while (!drq && guard < 200000) begin @(negedge clk); guard = guard + 1; end
+				pdma_wr((g*7 + 5) & 8'hFF);
+			end
+			guard = 0; reg_peek(R_STAT, st);
+			while (st[2:0] != PH_STAT && guard < 400000) begin guard = guard + 1; reg_peek(R_STAT, st); end
+			reg_wr(R_CMD, 8'h11);
+			guard = 0;
+			while (!(irq && dut.istatus[3]) && guard < 400000) begin @(negedge clk); guard = guard + 1; end
+			fc_cyc = cyc;
+			$display("   T22 info (polling initiator): I_FC with %0d of 8 flushes accepted -> status %0s the data was accepted",
+			         wr_blocks - nwp, (wr_blocks - nwp == nb && fc_cyc > wr_ackfall) ? "AFTER" : "BEFORE");
+			// finish the command and let the last flush land before the summary
+			read_regs(st, sp, it2);
+			reg_rd(R_FIFO, bb); reg_rd(R_FIFO, bb);
+			reg_wr(R_CMD, 8'h12);
+			guard = 0;
+			while ((!irq || wr_blocks - nwp != nb) && guard < 400000) begin @(negedge clk); guard = guard + 1; end
+			read_regs(st, sp, it2);
+			dev_lat = 40; dev_lat_jit = 0;
+		end
+		$display("   T22 failures added: %0d", fails - fails0);
+	end
 	sel_id = 8'h00;
 
 	$display("== tb_ncr53c96: %0d checks, %0d failures ==", checks, fails);

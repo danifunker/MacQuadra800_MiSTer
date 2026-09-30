@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "stdbuf",
+    "-oL",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/native_fft_buffers_20260928/baseline/run/obj/Vtb_platform_whet",
+    "+prog=/home/alans/mister/MacQuadra800_MiSTer/scratch/native_fft_buffers_20260928/baseline/ram.bin",
+    "+rom=/home/alans/mister/MacQuadra800_MiSTer/releases/quadra800.rom",
+    "+romlat=6"
+  ],
+  "status": "EXIT0",
+  "started_utc": "2026-09-28T03:30:54.869469+00:00",
+  "child_pid": 2314312,
+  "binary_sha256": "35505f8071feeff39a358a4d882cbf5437cb719fa6db187b75b5ffb07b6bdf78",
+  "exit_status": 0,
+  "finished_utc": "2026-09-28T03:31:46.767144+00:00"
+}

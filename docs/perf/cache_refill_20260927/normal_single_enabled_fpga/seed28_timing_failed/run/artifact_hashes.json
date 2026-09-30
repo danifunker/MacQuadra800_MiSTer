@@ -1,0 +1,12 @@
+{
+  "MacQuadra800.rbf": {
+    "size_bytes": 4448892,
+    "sha256": "366a7633d6737a47cca1a60f4a0aa6494792050fbcae52c7e062dd3f36d4e333",
+    "included": false
+  },
+  "MacQuadra800.sof": {
+    "size_bytes": 6690368,
+    "sha256": "6c201428341a86f6bb8d84960b2aaff34fdd84eab55382490081583b9707be91",
+    "included": false
+  }
+}

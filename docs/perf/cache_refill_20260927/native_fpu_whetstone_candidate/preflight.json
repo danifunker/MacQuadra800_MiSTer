@@ -1,0 +1,37 @@
+{
+  "scope": "prepared candidate native selector1 runtime replay, no numerical oracle",
+  "baseline_loop": 8726508,
+  "only_RTL_delta": [
+    "ap68040/rtl/ap040_fpu.v"
+  ],
+  "baseline_FPU": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "candidate_FPU": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "exact_copied_inputs": {
+    "ram.bin": "9e58e9b226e03acbee4e1ae690a8b67500328dfb5933df55e1b832c926c653e9",
+    "entry.s": "d421500be7e7a2e5e0c36e6d01dae66a105becbc639622484d2572d4e9666759",
+    "entry.bin": "371904fc0e40ae04e6990274555e12a38ec7f56a672c11cc0cf3bf6044ffa930",
+    "image_identity.json": "7523d3268f8db57a7653b21cc8a76e68be8b42bc5a7a6631864f2cb2eb1cadd8",
+    "tb_platform_whet.sv": "9a2433989a4379837dc0e7f0ac98240a3ac56fde1b3f2b026f0e7049efb0ddd8",
+    "check_result.py": "451f4eda0a93b6d1a71f396437084b528c92bb92982b548da84cb1e156c78786",
+    "run_platform_whet.py": "4b4c2cf11a685b3ad2730abc27f5275f7b526e9651b6919b881c5f127b36b2a1"
+  },
+  "baseline_consumed_identity_sha256": "2d6fcb671411997fddd8150a832ab6258263112c230b8cfc8e76b01597d0e74b",
+  "baseline_binary_sha256": "ed9c26974b10eaad037fd24b32838ba5e69c996128d3ddc41961238634acb7d2",
+  "flags": [
+    "-DAP040_EXPERIMENTAL_XSTORE",
+    "-DAP040_EXPERIMENTAL_LEA",
+    "-DAP040_EXPERIMENTAL_PIPELINE",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6",
+    "-DAP040_PIPELINE_MEMORY_ENTRY",
+    "-DAP040_PIPELINE_COMPARE",
+    "-DAP040_PIPELINE_EARLY_DRAIN",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "ROMlat": 6,
+  "ROM_sha256": "7d9cb8c3bae0e26171adf9f24bedf10bf6371ae3c9bdbcdfd3b94e5350099fb6"
+}

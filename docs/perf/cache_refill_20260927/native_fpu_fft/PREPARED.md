@@ -1,0 +1,7 @@
+# Frozen native FFT baseline screen
+
+Selector2 newimage04d33e7f..., pinnedresource34ee5118/base600000/globaltailpreserved/A055entry0; readonlybaselineFPU2d53/cache7cba/core82601e, actualSDRAM model,all10releaseCPUflags/unroll256/ROMlat6. ExistingMatrix TB counters retaincore256/cache16/FST32 bounds+sumchecks andCORE_LAT/fill/bridge paths. No data-buffer capture or FFT numericaloracle. Natural CPU timing unchanged.
+
+Exactsource-site/ABI rationale is in PLAN.md. Newfft_monitor.inc records exact3allocation/free pairs and order;20actualFFftentry events/1actualFExptabcall, twentyN/pointerchecks atcalleea00 and twentyFP4 .0625both-bankchecks atfirstmemory-opa1c of eachcall. CalleeA2=input/A3=scratch/D7=twiddle; wrapperA2/D4/A3 are allocatedblocks. No chipbackdoorstack reads are used to infer undrainedargument writes. The scalar check occurs after the scalarload and integer setup, before firstmathinput; no pending-write masking.
+
+Runner retains freshout guard,40Mcycle TB/300sec phase caps,twojobbuild; on timeout it terminates/waits actual child processgroup, preserveslogs, never retries. It pins baselineFPU/cache and reportsactualchildPID/binaryhash inrun/run.log.process.json. Hostcheck_result requires600D plus integer/FPsentinel/code/stack/heap+limitneighborhood,histograms,FPSP/nativecoverage and exact20/1/20/20counts, not merely3trap prefix. Numericaloutputunqualified. Frozen inputs are source_manifest.sha256; generatedmodels/outputs are excluded. No edits after this freeze; no other completed/livefixture inputs touched.

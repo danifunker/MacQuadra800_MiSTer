@@ -1,0 +1,3 @@
+XSTORE PASS cases=100 posted/unposted residency lanes wrap CE snoops partial-error
+ALL TESTS PASSED
+/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/common/tb_ap040_cache_xstore.sv:198: $finish called at 701270000 (1ps)

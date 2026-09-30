@@ -281,7 +281,22 @@ reg  [9:0] sbuf_pos;               // next byte index
 reg        data_dir_in;            // 1 = target->initiator
 reg  [7:0] scsi_status;            // 0 good, 2 check condition
 reg        buf_valid;              // sbuf holds data ready to stream
-reg        flush_pending;          // io_wr outstanding, sbuf owned by platform
+reg        flush_pending;          // io_wr outstanding, the flushing half owned by the platform
+// P260: the sector buffer is two 256-word halves.  The engine streams from
+// or drains into the ACTIVE half (act_half); the platform's transfer in
+// flight uses plat_half.  A READ prefetches the next sector into the idle
+// half while the guest drains the active one (pf_valid: it holds a sector
+// of pf_len bytes; pf_fill: its fetch is out), and the halves swap when the
+// active one is spent.  A WRITE flushes a full half while the guest fills
+// the other.  Before this the engine raised the next request only after
+// the guest had drained or filled its single buffer, so every sector cost
+// the SPI transfer plus the guest's whole drain in series
+// (docs/perf/disk_tightloop_20260928: 108 + 111 us per read sector).
+reg        act_half;
+reg        plat_half;
+reg        pf_valid;
+reg        pf_fill;
+reg  [9:0] pf_len;
 reg        io_ack_d;               // for the ack falling edge = transfer done
 
 // A block-device transfer is in flight from the io_rd/io_wr strobe until
@@ -318,7 +333,7 @@ wire ca_grant = tgt_mounted[2] && !io_rd_i && !io_wr_i && !io_rd_fwd && !io_wr_f
 // notice, the capability probe) may use the CD slot and the sector buffer
 wire bus_free = (phase == PH_DOUT) && !cdb_active && !exec_pending &&
                 !xfer_out && !xfer_pio_out && !xfer_msg_out && !xfer_in && !xfer_pio_in &&
-                blocks_left == 0 && dout_len == 0 && !msel_pend &&
+                blocks_left == 0 && dout_len == 0 && !msel_pend && !pf_valid && !pf_fill &&
                 !flush_pending && !io_busy && fwd_st == 0 && !fwd_q && synth_len == 0;
 
 `ifdef VERILATOR
@@ -449,7 +464,7 @@ wire no_dma_arm  = !arm_pop && !arm_rd_idle && !arm_cdb_dma && !arm_out_dma &&
 wire arm_cdb_ff  = !fifo_ext && no_dma_arm && cdb_active && fifo_cnt != 0;
 wire arm_drain   = !fifo_ext && no_dma_arm && !arm_cdb_ff &&
                    (xfer_out || xfer_pio_out) && fifo_cnt != 0 &&
-                   !flush_pending && sbuf_pos < 10'd512;
+                   sbuf_pos < 10'd512;   // P260: a flush in flight owns the other half
 wire arm_fill    = !fifo_ext && no_dma_arm && !arm_cdb_ff && !arm_drain &&
                    xfer_in && dma_active && !tc_zero && fifo_cnt < 5'd16 &&
                    byte_avail && sbuf_rd_ok;
@@ -584,8 +599,9 @@ endfunction
 // unchanged).  Completion logic keeps the pure byte_avail.
 wire        we_e    = synth_on || arm_drain;
 // SY_CDB lands at bytes 496..507 (word 248)
-wire  [7:0] addr_e  = synth_on ? ((synth_kind == SY_CDB) ? (8'd248 + synth_idx[8:1]) : synth_idx[8:1]) :
+wire  [7:0] addr_e7 = synth_on ? ((synth_kind == SY_CDB) ? (8'd248 + synth_idx[8:1]) : synth_idx[8:1]) :
                       (msel_st != 0) ? msel_addr : sbuf_pos[8:1];
+wire  [8:0] addr_e  = {act_half, addr_e7};          // P260: always the active half
 wire  [7:0] wbyte_e = synth_on ? synth_byte(synth_kind, synth_idx) : fifo[0];
 // MODE SELECT parse: word 1 (block descriptor length), word 5 (block
 // length), then the page at word 2 or 6 -- its code, and the $0E output
@@ -607,7 +623,7 @@ ncr_sbuf sbuf
 	.be_e   (wodd_e ? 2'b01 : 2'b10),
 	.we_e   (we_e),
 	.q_e    (q_e),
-	.addr_s (sd_buff_addr[7:0]),
+	.addr_s ({plat_half, sd_buff_addr[7:0]}),       // P260: the half the transfer in flight owns
 	.din_s  (plat_din_s),
 	.we_s   (sd_buff_wr && !eng_owns && !probe_act),   // the audio engine's transfers are its own; the probe's block never lands
 	.q_s    (q_s)
@@ -640,13 +656,13 @@ assign sd_buff_din = {q_s[7:0], q_s[15:8]};
 // held address many cycles after driving it, so the registered read is
 // transparent to them.  The lane mapping is applied above.
 
-reg  [7:0] eq_addr;                // address q_e currently reflects
+reg  [8:0] eq_addr;                // address q_e currently reflects
 reg        eq_wr;
 always @(posedge clk) begin
 	eq_addr <= addr_e;
 	eq_wr   <= we_e;
 end
-wire       sbuf_rd_ok = (eq_addr == sbuf_pos[8:1]) && !eq_wr;
+wire       sbuf_rd_ok = (eq_addr == {act_half, sbuf_pos[8:1]}) && !eq_wr;
 wire [7:0] sbuf_byte  = sbuf_pos[0] ? q_e[7:0] : q_e[15:8];
 
 always @(posedge clk) begin
@@ -678,6 +694,7 @@ always @(posedge clk) begin
 		chunk_irq_armed <= 0;
 		lba <= 0; blocks_left <= 0;
 		sbuf_len <= 0; sbuf_pos <= 0; buf_valid <= 0; flush_pending <= 0;
+		act_half <= 0; plat_half <= 0; pf_valid <= 0; pf_fill <= 0; pf_len <= 0;
 		flush_tgt <= 0;
 		io_ack_d <= 0;
 		data_dir_in <= 0; scsi_status <= 0;
@@ -822,10 +839,15 @@ always @(posedge clk) begin
 				fwd_st  <= 0;
 				fwd_fin <= 1;
 			end
-			else if (!flush_pending && !io_discard) begin
-				buf_valid <= 1;
-				sbuf_len <= rd_len;
-				sbuf_pos <= 0;
+			else if (!flush_pending) begin
+				// P260: the sector is in the idle half; the swap arm below
+				// publishes it once the active half is spent (at once if it
+				// is empty).  A discarded read lands nowhere.
+				pf_fill <= 0;
+				if (!io_discard) begin
+					pf_valid <= 1;
+					pf_len   <= rd_len;
+				end
 			end
 			if (fwd_st != 2'd2) rd_len <= 10'd512;
 			flush_pending <= 0;
@@ -839,15 +861,29 @@ always @(posedge clk) begin
 `endif
 
 		//---------------------------------------------------- block prefetch
-		// data-in: fetch the next sector whenever the current one is spent
+		// data-in: fetch the next sector into the idle half as soon as the
+		// channel and that half are free (P260) -- while the guest is still
+		// draining the active one
 		if (phase == PH_DIN && data_dir_in && blocks_left != 0 &&
-		    !io_busy && (!buf_valid || sbuf_pos >= sbuf_len)) begin
-			buf_valid <= 0;
+		    !io_busy && !pf_valid && !pf_fill) begin
+			plat_half <= ~act_half;
+			pf_fill <= 1;
 			io_lba_e <= lba;
 			lba <= lba + 1'b1;
 			blocks_left <= blocks_left - 1'b1;
 			io_rd_i <= 1;
 			flush_tgt <= cur_tgt;
+		end
+		// P260: the active half is spent (or empty) and the idle half holds
+		// the next sector: swap.  The fill arm waits one clock for q_e to
+		// follow the new address (sbuf_rd_ok).  Never during a synthesized
+		// response, which streams into the active half.
+		if (pf_valid && !synth_on && (!buf_valid || sbuf_pos >= sbuf_len)) begin
+			act_half  <= ~act_half;
+			buf_valid <= 1;
+			sbuf_len  <= pf_len;
+			sbuf_pos  <= 0;
+			pf_valid  <= 0;
 		end
 
 		//---------------------------------------------------- ARM housekeeping
@@ -932,7 +968,7 @@ always @(posedge clk) begin
 			fifo_push(sbuf_byte);
 			sbuf_pos <= sbuf_pos + 1'b1;
 			xfer_pio_in <= 0;
-			if (sbuf_pos == sbuf_len - 1'b1 && blocks_left == 0 && !nexus_io)
+			if (sbuf_pos == sbuf_len - 1'b1 && blocks_left == 0 && !nexus_io && !pf_valid)
 				phase <= PH_STAT;
 			raise(I_BUS);
 		end
@@ -957,6 +993,7 @@ always @(posedge clk) begin
 				if (synth_kind == SY_CDB) begin
 					// the CDB is in the buffer: write the block to the ARM
 					io_lba_e      <= WIN_CMD | {8'd0, fwd_op, 16'd0};
+					plat_half     <= act_half;   // P260: the CDB was written to the active half
 					io_wr_fwd     <= 1;
 					flush_tgt     <= 2'd2;
 					fwd_st        <= 2'd2;          // in flight: not a flush, not the nexus's
@@ -994,13 +1031,13 @@ always @(posedge clk) begin
 		if (xfer_in && chunk_irq_armed && tc_zero && fifo_cnt < 5'd2) begin
 			chunk_irq_armed <= 0;
 			xfer_in <= 0;
-			if (!byte_avail && blocks_left == 0 && !nexus_io && !synth_on)
+			if (!byte_avail && blocks_left == 0 && !nexus_io && !synth_on && !pf_valid)
 				phase <= PH_STAT;
 			raise(I_BUS);
 		end
 		// data-in underflow: source exhausted before TC — go to status
 		if (xfer_in && chunk_irq_armed && !tc_zero && !byte_avail &&
-		    blocks_left == 0 && !nexus_io && !synth_on) begin
+		    blocks_left == 0 && !nexus_io && !synth_on && !pf_valid) begin
 			chunk_irq_armed <= 0;
 			xfer_in <= 0;
 			phase <= PH_STAT;
@@ -1022,6 +1059,9 @@ always @(posedge clk) begin
 			io_wr_i <= 1;
 			flush_pending <= 1;
 			flush_tgt <= cur_tgt;
+			// P260: the platform reads this half; the guest fills the other
+			plat_half <= act_half;
+			act_half  <= ~act_half;
 			sbuf_pos <= 0;
 		end
 		// parameter-list DATA OUT (MODE SELECT, AUDIO CONTROL): the bytes
@@ -1109,8 +1149,14 @@ always @(posedge clk) begin
 		// ...nor while a full sector still waits for the channel (the flush
 		// is raised on !io_busy, which the audio engine's transfer holds):
 		// completing then would drop xfer_out and the flush would never go.
+		// P260: a flush in flight no longer holds an intermediate chunk open
+		// -- the guest fills the other half meanwhile; a full half still
+		// waiting for the channel does (the last term), so xfer_out cannot
+		// drop before it.  The command's LAST chunk still waits for its flush
+		// to complete: STATUS GOOD means the data has been accepted.
 		if (xfer_out && chunk_irq_armed && tc_zero && fifo_cnt == 0 &&
-		    !flush_pending && !nexus_io && !(sbuf_pos == 10'd512 && dout_len == 0)) begin
+		    (blocks_left != 0 || (!flush_pending && !nexus_io)) &&
+		    !(sbuf_pos == 10'd512 && dout_len == 0)) begin
 			chunk_irq_armed <= 0;
 			xfer_out <= 0;
 			// A judged CD MODE SELECT list that has fully arrived gets its
@@ -1186,8 +1232,13 @@ always @(posedge clk) begin
 		// 02a3ce56a7 notes that this is precisely what makes EMILE boot on
 		// m68k -- i.e. a Mac bootloader hitting the identical stall.
 		// docs/scsi/qemu-esp-behavior.md:357-369.
+		// P260: a sector waiting in the idle half (pf_valid, one clock before
+		// the swap) is not an underflow either -- the ROM issues the next
+		// sector's first PIO TI before that sector has landed, and without
+		// this term the boot's last block ended at STATUS with 511 bytes
+		// unread (docs/perf/p260_pingpong_sim_20260929).
 		if (xfer_pio_in && !byte_avail && blocks_left == 0 && !nexus_io &&
-		    !synth_on) begin
+		    !synth_on && !pf_valid) begin
 			xfer_pio_in <= 0;
 			phase <= PH_STAT;
 			raise(I_BUS);
@@ -1474,6 +1525,7 @@ task exec_cdb;
 	begin
 		scsi_status <= 8'h00;
 		buf_valid <= 0;
+		pf_valid <= 0;
 		sbuf_pos <= 0;
 		blocks_left <= 0;
 		data_dir_in <= 1;
@@ -1739,7 +1791,7 @@ task abort_nexus;
 	xfer_in <= 0; xfer_out <= 0; xfer_pio_in <= 0; xfer_pio_out <= 0;
 	xfer_msg_out <= 0; msg_first_seen <= 0; msgin_reject <= 0;
 	chunk_irq_armed <= 0;
-	buf_valid <= 0; sbuf_pos <= 0; blocks_left <= 0; dout_len <= 0;
+	buf_valid <= 0; pf_valid <= 0; sbuf_pos <= 0; blocks_left <= 0; dout_len <= 0;
 	synth_len <= 0; msel_pend <= 0; msel_st <= 0; msel_bd <= 0;
 	rd_len <= 10'd512;
 	// a CDB copy not yet written is abandoned with its nexus (a write in
@@ -1821,7 +1873,8 @@ end endgenerate
 endmodule
 
 //============================================================================
-//  ncr_sbuf — the 53c96 target's sector buffer as 256 x 16 block RAM.
+//  ncr_sbuf — the 53c96 target's sector buffer as 512 x 16 block RAM: two
+//  256-word halves (P260), still one M10K.
 //  Port E: engine side, byte-lane writes (be_e[1] = high byte = even
 //  byte address).  Port S: platform side, full-word writes.  Both reads
 //  registered (M10K semantics).  The two ports never write the same
@@ -1834,12 +1887,12 @@ endmodule
 module ncr_sbuf
 (
 	input         clk,
-	input   [7:0] addr_e,
+	input   [8:0] addr_e,
 	input  [15:0] din_e,
 	input   [1:0] be_e,
 	input         we_e,
 	output [15:0] q_e,
-	input   [7:0] addr_s,
+	input   [8:0] addr_s,
 	input  [15:0] din_s,
 	input         we_s,
 	output [15:0] q_s
@@ -1847,7 +1900,7 @@ module ncr_sbuf
 
 `ifdef VERILATOR
 
-	reg [15:0] mem [0:255];
+	reg [15:0] mem [0:511];
 	reg [15:0] q_e_r, q_s_r;
 	always @(posedge clk) begin
 		if (we_e) begin
@@ -1892,12 +1945,12 @@ module ncr_sbuf
 		.rden_b(1'b1)
 	);
 	defparam
-		ram.numwords_a = 256,
-		ram.widthad_a  = 8,
+		ram.numwords_a = 512,
+		ram.widthad_a  = 9,
 		ram.width_a    = 16,
 		ram.width_byteena_a = 2,
-		ram.numwords_b = 256,
-		ram.widthad_b  = 8,
+		ram.numwords_b = 512,
+		ram.widthad_b  = 9,
 		ram.width_b    = 16,
 		ram.width_byteena_b = 1,
 		ram.address_reg_b = "CLOCK0",

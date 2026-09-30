@@ -1,0 +1,1 @@
+FAIL: site 0 timer: require at least one complete span

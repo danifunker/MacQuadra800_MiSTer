@@ -1,0 +1,11 @@
+--- frozen_attempt2/tb_xfirst_sideband.sv
++++ attempt3/tb_xfirst_sideband.sv
+@@ -207,7 +207,7 @@
+  integer base,residency,form,way,mode,stage,start_phase,start_pub,start_fallback,start_errors,start_cinv,start_critical;
+  initial begin
+   for(integer c=0;c<16;c++)coverage[c]=0;
+-  for(integer i=0;i<65536;i++)begin memory[i]=(i*13+7)&255;oracle[i]=memory[i];end
++  for(integer i=0;i<65536;i++)begin memory[i]=(i*13 + (i>>8)*37 + (i>>11)*53 + 7)&255;oracle[i]=memory[i];end
+   // Residency, crossing offset/size, set/tag wrap and both hint modes.
+   for(mode=0;mode<2;mode++)for(residency=0;residency<4;residency++)for(form=0;form<4;form++)begin
+    base=form==3?16'h1ff0:16'h4000;hint_fast=mode;cold(base,residency);

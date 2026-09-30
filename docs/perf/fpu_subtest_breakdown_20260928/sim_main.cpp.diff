@@ -1,0 +1,91 @@
+--- sim_main.cpp
++++ sim_main.cpp
+@@ -189,6 +189,7 @@
+ #include "../scripts/fixtures/speedometer_timing_observer/adapter.inc"
+ #include "sim_ram_snapshot.h"
+ #include "sim_refill_profile.h"
++#include "fpu_window_monitor.h"
+ 
+ // Simulation-only exact-workload profiler. SIGUSR1 resets/starts the
+ // bracket; SIGUSR2 stops it and writes the report.
+@@ -197,6 +198,36 @@
+ static std::string bracket_file;
+ static volatile sig_atomic_t bracket_start_req = 0, bracket_stop_req = 0;
+ static CpuProfileGate bracket_gate;
++// fpu_subtest_breakdown_20260928: passive segment monitor inside the bracket
++static std::string fwm_file;
++static uint64_t fwm_period = 500000;
++static FpuWindowMonitor fwm;
++#define FWM_CPU(x) (SIMEMU->__PVT__machine__DOT__cpu__DOT__##x)
++static void fwm_sample(bool dispatch) {
++	if (!fwm.enabled()) return;
++	FwmInputs in;
++	in.state   = FWM_CPU(core__DOT__state);
++	in.fst     = FWM_CPU(core__DOT__g_fpu__DOT__fpu__DOT__fst);
++	in.fpop    = FWM_CPU(core__DOT__g_fpu__DOT__fpu__DOT__r_op);
++	in.cst     = FWM_CPU(g_cache__DOT__cache__DOT__cst);
++	in.r_bank  = FWM_CPU(g_cache__DOT__cache__DOT__r_bank);
++	in.m_ret   = FWM_CPU(core__DOT__r_m_ret);
++	in.exc_vec = FWM_CPU(core__DOT__exc_vec);
++	in.ir      = FWM_CPU(core__DOT__ir);
++	in.imm     = FWM_CPU(core__DOT__imm);
++	in.pc_i    = FWM_CPU(core__DOT__pc_i);
++	in.a7      = VERTOPINTERN->debug_a7;
++	in.dispatch = dispatch;
++	in.fpu_bg   = FWM_CPU(core__DOT__fpu_bg);
++	in.fpu_done = FWM_CPU(core__DOT__fpu_done);
++	in.sb_count = FWM_CPU(store_buffer__DOT__count);
++	in.sb_req   = FWM_CPU(store_buffer__DOT__buffer_req);
++	in.sb_push  = FWM_CPU(store_buffer__DOT__push);
++	in.sb_ack   = FWM_CPU(store_buffer__DOT__accept_ack);
++	in.bus_req  = FWM_CPU(cpu_bus_req);
++	in.bus_wr   = FWM_CPU(cpu_bus_write);
++	fwm.sample(in);
++}
+ static bool bracket_prev_valid = false;
+ static uint8_t bracket_prev_state = 0;
+ static uint64_t bracket_dispatches = 0;
+@@ -361,9 +392,11 @@
+ 		bracket_reset();
+ 		printf("[CPU-PROFILE] started at simulator cycle %llu\n", (unsigned long long)main_time);
+ 		fflush(stdout);
++		fwm.start(main_time);
+ 	}
+-	if (action == CpuProfileGate::Stop) { bracket_dump(); return; }
++	if (action == CpuProfileGate::Stop) { fwm.stop(); bracket_dump(); return; }
+ 	if (action == CpuProfileGate::Skip) return;
++	fwm_sample(dispatch);
+ 	uint8_t state=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__state;
+ 	uint16_t ir=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__ir;
+ 	uint8_t cst=SIMEMU->__PVT__machine__DOT__cpu__DOT__g_cache__DOT__cache__DOT__cst;
+@@ -879,6 +912,10 @@
+ 			control_file = argv[++i];
+ 		} else if (!strcmp(argv[i], "--cpu-profile") && i + 1 < argc) {
+ 			bracket_file = argv[++i];
++		} else if (!strcmp(argv[i], "--fpu-window") && i + 1 < argc) {
++			fwm_file = argv[++i];
++		} else if (!strcmp(argv[i], "--fpu-window-period") && i + 1 < argc) {
++			fwm_period = strtoull(argv[++i], nullptr, 0);
+ 		} else if (!strcmp(argv[i], "--no-cpu-trace")) {
+ 			cpu_trace_disabled = true;
+ 		} else if (!strcmp(argv[i], "--trace-on-ncr")) {
+@@ -917,6 +954,10 @@
+ 		}
+ 	}
+ 
++	if (!fwm_file.empty()) {
++		if (!fwm.open(fwm_file.c_str(), fwm_period)) { fprintf(stderr, "cannot open %s\n", fwm_file.c_str()); return 1; }
++		printf("[FWM] segment monitor -> %s period=%llu\n", fwm_file.c_str(), (unsigned long long)fwm_period);
++	}
+     if (!speedometer_path.empty()) {
+         speedometer_file.open(speedometer_path);
+         if (!speedometer_file) { fprintf(stderr, "cannot open observer output\n"); return 1; }
+@@ -1173,7 +1214,7 @@
+ 	}
+ 
+ 	if (speedometer_observer) speedometer_observer->summary();
+-	if (bracket_gate.active()) { bracket_dump(); bracket_gate.stop(); }
++	if (bracket_gate.active()) { fwm.stop(); bracket_dump(); bracket_gate.stop(); }
+ 	if (cpu_trace_file) {
+ 		printf("CPU trace: %ld instructions, last pc=%08X (%s)\n",
+ 		       cpu_trace_count, cpu_trace_last_pc, cpu_trace_filename);

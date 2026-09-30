@@ -1,0 +1,91 @@
+{
+  "qualified": true,
+  "loop_clocks": 17641650,
+  "returned_clocks": 17642118,
+  "guest_600D": "TB accepts only600D beforefinish",
+  "memory_oracles": "all3byteexactmatch",
+  "chip_errors": 0,
+  "bus_errors": 0,
+  "IRQ_samples": 0,
+  "window": {
+    "clocks": 17641650
+  },
+  "round": {
+    "samples": 236066,
+    "eligible": 66688,
+    "bg": 8759,
+    "decode_wait": 4351,
+    "cpu_go": 57929
+  },
+  "round_by_op": {
+    "00": {
+      "samples": 50086,
+      "eligible": 44953
+    },
+    "04": {
+      "samples": 930,
+      "eligible": 0
+    },
+    "18": {
+      "samples": 642,
+      "eligible": 642
+    },
+    "1a": {
+      "samples": 2532,
+      "eligible": 2532
+    },
+    "20": {
+      "samples": 20969,
+      "eligible": 930
+    },
+    "22": {
+      "samples": 76084,
+      "eligible": 5427
+    },
+    "23": {
+      "samples": 71827,
+      "eligible": 7298
+    },
+    "28": {
+      "samples": 12996,
+      "eligible": 4906
+    }
+  },
+  "round_rejection_counts_independent": {
+    "0": 933,
+    "1": 933,
+    "2": 119568,
+    "3": 0,
+    "4": 3,
+    "5": 0,
+    "6": 80475,
+    "7": 0,
+    "8": 0,
+    "9": 0
+  },
+  "fst_samples": {
+    "0": 16276447,
+    "1": 45548,
+    "2": 10424,
+    "3": 71234,
+    "4": 242356,
+    "5": 61557,
+    "6": 930,
+    "7": 182817,
+    "9": 87506,
+    "10": 109794,
+    "11": 265176,
+    "12": 21390,
+    "13": 29475,
+    "14": 236066,
+    "17": 930
+  },
+  "stdone_edge_observation_NOT_prior_conversion_exit_eligibility": {
+    "samples": 930,
+    "enables_zero": 930,
+    "eligible": 930,
+    "enabled": 0,
+    "sideport": 0,
+    "not_ce_reset": 0
+  }
+}

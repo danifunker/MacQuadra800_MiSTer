@@ -1,0 +1,92 @@
+{
+  "scope": "related-clock digital baseline/candidate queue handoff tests; no STA or FPGA qualification",
+  "variants": {
+    "baseline": {
+      "bridge_sha256": "6b49355a45b6e3d81d603d0542139a45854223c71c295ac8515c26cf5f9937ba",
+      "handoff": [
+        22320,
+        2707,
+        373,
+        11,
+        150
+      ],
+      "ownership": [
+        373,
+        373,
+        373,
+        46,
+        8,
+        10102,
+        515102
+      ],
+      "dma": [
+        20512,
+        5381,
+        15374,
+        11423,
+        0
+      ],
+      "metrics": [
+        "  cold read / critical  6 clk_sys (181 ns)",
+        "  page-hit read         4 clk_sys (121 ns)",
+        "  buffered line read    1 clk_sys (30 ns)",
+        "  isolated write beat   1 clk_sys (30 ns)  [posted]",
+        "  64 sequential reads   5847 ns = 43.7 MB/s",
+        "  64 sequential writes  4757 ns = 53.8 MB/s (to drained)",
+        "  integrated 64 reads  4878 ns = 52.4 MB/s",
+        "  average 16-byte fill 304 ns",
+        "tb_line_dma: FIX=1 ROUNDS=4000",
+        "tb_line_dma: 4096 back-to-back stores took 9712 clocks",
+        "tb_line_dma: 848 device beats parked the FSM for 120015 clocks; 5346 DMA beats ran beside them",
+        "tb_line_dma: line ack with FSM busy 400, adapter request under a line ack 0",
+        "tb_line_dma: 20512 reads, 5381 stores, 15374 line acks, 11423 DMA beats, 0 errors",
+        "tb_line_dma: 9408 direct pushes, 1434 spanning stores",
+        "tb_line_dma: PASS"
+      ]
+    },
+    "candidate": {
+      "bridge_sha256": "5f24b115c01105d376a763c5eee84a45728587eab9a146072b97fc4d364f2ddf",
+      "handoff": [
+        22320,
+        2707,
+        373,
+        11,
+        150
+      ],
+      "ownership": [
+        373,
+        373,
+        373,
+        46,
+        8,
+        10102,
+        515102
+      ],
+      "dma": [
+        20512,
+        5381,
+        15374,
+        11423,
+        0
+      ],
+      "metrics": [
+        "  cold read / critical  6 clk_sys (181 ns)",
+        "  page-hit read         4 clk_sys (121 ns)",
+        "  buffered line read    1 clk_sys (30 ns)",
+        "  isolated write beat   1 clk_sys (30 ns)  [posted]",
+        "  64 sequential reads   5847 ns = 43.7 MB/s",
+        "  64 sequential writes  4757 ns = 53.8 MB/s (to drained)",
+        "  integrated 64 reads  4878 ns = 52.4 MB/s",
+        "  average 16-byte fill 304 ns",
+        "tb_line_dma: FIX=1 ROUNDS=4000",
+        "tb_line_dma: 4096 back-to-back stores took 9712 clocks",
+        "tb_line_dma: 848 device beats parked the FSM for 120015 clocks; 5346 DMA beats ran beside them",
+        "tb_line_dma: line ack with FSM busy 400, adapter request under a line ack 0",
+        "tb_line_dma: 20512 reads, 5381 stores, 15374 line acks, 11423 DMA beats, 0 errors",
+        "tb_line_dma: 9408 direct pushes, 1434 spanning stores",
+        "tb_line_dma: PASS"
+      ]
+    }
+  }
+}
+PASS saved paired runtime/ownership/equivalence/primitive evidence

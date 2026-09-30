@@ -1,0 +1,87 @@
+--- tracked/tb_cache_posted_read_matrix.sv
++++ isolated/tb_cache_posted_read_matrix.sv
+@@ -1,6 +1,7 @@
+ // Posted store/read overlap against an independent byte oracle.
+ // 216 warm-cache cases: size, address relation, latency, snoop/CE, admission.
+-// No following read may acknowledge while the posted store is pending.
++// An early cached read under a pending store must touch disjoint words;
++// returned bytes are scored against the independent oracle at its ACK edge.
+ `timescale 1ns/1ps
+ module tb_posted_read_matrix;
+     reg clk=0; always #5 clk=~clk;
+@@ -26,6 +27,7 @@
+         .c_req(req),.c_write(wr),.c_instr(1'b0),.c_size(size),
+         .c_addr(addr),.c_wdata(wdata),.c_fc(3'd5),.c_nocache(1'b0),
+         .c_hint_addr(addr),.c_hint_instr(1'b0),.c_hint_ptag(addr[31:10]),
++        .c_ihint_addr(addr),.c_ihint_ptag(addr[31:10]),.c_ihint_match(1'b0),.c_ihold(1'b0),
+         .c_hint_match(req && hint==addr),.c_hint_wmatch(fast_mode != 0 && req && wr),
+         .c_post_ok_hint(post && fast_mode != 0),.c_post_ok(post),.c_ack(done),.c_rdata(data),
+         .m_req(mreq),.m_write(mwr),.m_instr(),.m_size(ms),.m_addr(ma),
+@@ -114,20 +116,29 @@
+     endtask
+ 
+     integer szcase, relation, latency_case, injection, overlap_cases=0;
+-    integer observed_pending=0, observed_prepared=0, case_pending=0;
++    integer observed_pending=0, observed_prepared=0, case_pending=0, early_read_acks=0;
++    reg [31:0] expected_read_at_ack;
++    reg [31:0] captured_store_address; integer captured_store_bytes;
+     integer start_writes, q, bytes_written;
+     reg [31:0] read_address, read_result, expected_result;
+     reg [31:0] dma_address;
+     always @(posedge clk) if(reset_n && ce && req && !wr && dut.post_active) begin
+         observed_pending=observed_pending+1;
+         case_pending=case_pending+1;
+-        if(done) $fatal(1,"read acknowledged before posted store left PASS");
++        if(done) begin
++            // Independent address/word overlap, not the cache fast_hit/pp_clash predicate.
++            if((addr>>2)<=((captured_store_address+captured_store_bytes-1)>>2) &&
++               ((addr+3)>>2)>=(captured_store_address>>2))
++                $fatal(1,"pending-store read acknowledged on overlapping word");
++            early_read_acks=early_read_acks+1;
++        end
+         if(dut.cd_rd_en && !dut.iline_read) observed_prepared=observed_prepared+1;
+     end
+     task post_and_read;
+         integer guard;
+         begin
+-            @(negedge clk);req=1;wr=1;addr='h5004;size=szcase;wdata='ha1b2c3d4;
++            @(negedge clk);captured_store_address='h5004;captured_store_bytes=szcase==0?1:szcase==1?2:4;
++            req=1;wr=1;addr='h5004;size=szcase;wdata='ha1b2c3d4;
+             guard=0;
+             begin : store_wait
+                 forever begin
+@@ -141,7 +152,13 @@
+             begin : read_wait
+                 forever begin
+                     @(posedge clk);guard=guard+1;
+-                    if(done && ce) begin read_result=data;disable read_wait;end
++                    if(done && ce) begin
++                        read_result=data;
++                        // DMA writes use negedge, so this pre-NBA ACK snapshot is atomic.
++                        expected_read_at_ack={oracle[read_address],oracle[read_address+1],oracle[read_address+2],oracle[read_address+3]};
++                        if(read_result!==expected_read_at_ack)$fatal(1,"read bytes mismatch at ACK");
++                        disable read_wait;
++                    end
+                     if(guard>1000) $fatal(1,"read timeout");
+                 end
+             end
+@@ -196,8 +213,8 @@
+             join
+             idle;
+             expected_result={oracle[read_address],oracle[read_address+1],oracle[read_address+2],oracle[read_address+3]};
+-            if(read_result!==expected_result)
+-                $fatal(1,"read mismatch size=%0d relation=%0d latency=%0d injection=%0d got=%h expected=%h",szcase,relation,delay_cycles,injection,read_result,expected_result);
++            if(read_result!==expected_read_at_ack)
++                $fatal(1,"saved ACK oracle mismatch size=%0d relation=%0d latency=%0d injection=%0d got=%h expected=%h",szcase,relation,delay_cycles,injection,read_result,expected_read_at_ack);
+             if(writes-start_writes!=1) $fatal(1,"store did not reach memory exactly once");
+             for(q='h5000;q<'h5020;q=q+1)
+                 if(memory[q]!==oracle[q]) $fatal(1,"RAM store/guard mismatch at %h",q);
+@@ -213,7 +230,7 @@
+             overlap_cases=overlap_cases+1;
+         end
+         if(overlap_cases!=216) $fatal(1,"matrix incomplete");
+-        $display("POSTED_MATRIX PASS cases=%0d pending=%0d prepared=%0d",overlap_cases,observed_pending,observed_prepared);
++        $display("POSTED_MATRIX PASS cases=%0d pending=%0d prepared=%0d early_disjoint_acks=%0d",overlap_cases,observed_pending,observed_prepared,early_read_acks);
+         $finish;
+     end
+     initial begin #10000000; $fatal(1,"global timeout");end

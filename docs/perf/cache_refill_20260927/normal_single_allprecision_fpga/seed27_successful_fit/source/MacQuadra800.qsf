@@ -1,0 +1,891 @@
+# --------------------------------------------------------------------------
+#
+# MiSTer project
+#
+# WARNING WARNING WARNING:
+# Do not add files to project in Quartus IDE! It will mess this file!
+# Add the files manually to files.qip file.
+#
+# --------------------------------------------------------------------------
+
+set_global_assignment -name TOP_LEVEL_ENTITY sys_top
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+
+set_global_assignment -name LAST_QUARTUS_VERSION "17.0.2 Lite Edition"
+
+set_global_assignment -name GENERATE_RBF_FILE ON
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
+set_global_assignment -name SAVE_DISK_SPACE OFF
+set_global_assignment -name SMART_RECOMPILE ON
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP "-40"
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 100
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS OFF
+set_global_assignment -name OPTIMIZE_POWER_DURING_FITTING OFF
+set_global_assignment -name FINAL_PLACEMENT_OPTIMIZATION ALWAYS
+set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
+# Sep24: effort 3.0 still failed routing; restore baseline for RTL area trials.
+set_global_assignment -name PLACEMENT_EFFORT_MULTIPLIER 1.0
+# Speed-first fitting (the stock MiSTer template values).  These were
+# briefly flipped to AGGRESSIVE AREA / TECHNIQUE AREA / duplication OFF as
+# a hedge while the design was over capacity; the block-RAM conversions
+# turned out to shed 26k ALMs on their own (143% -> 81%), so the hedge was
+# unnecessary — and area mode costs Fmax, which the 2026-08-29 compile
+# needed: it fit at 81% but missed setup by 0.947 ns (Fmax 32.0 vs the
+# 33.0 MHz clock).  Do not re-apply the area knobs without a fit that
+# actually needs them.
+set_global_assignment -name OPTIMIZATION_MODE BALANCED
+set_global_assignment -name ALLOW_POWER_UP_DONT_CARE ON
+set_global_assignment -name QII_AUTO_PACKED_REGISTERS NORMAL
+set_global_assignment -name ROUTER_LCELL_INSERTION_AND_LOGIC_DUPLICATION ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_DUPLICATION OFF
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_RETIMING ON
+# 2026-09-24: full-peripheral baseline needs 42,617 ALMs (device 41,910).
+# Measure AREA synthesis; timing and crossings remain acceptance gates.
+set_global_assignment -name OPTIMIZATION_TECHNIQUE BALANCED
+set_global_assignment -name MUX_RESTRUCTURE ON
+set_global_assignment -name REMOVE_REDUNDANT_LOGIC_CELLS ON
+set_global_assignment -name AUTO_DELAY_CHAINS_FOR_HIGH_FANOUT_INPUT_PINS ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC_FOR_AREA ON
+set_global_assignment -name ADV_NETLIST_OPT_SYNTH_WYSIWYG_REMAP ON
+set_global_assignment -name SYNTH_GATED_CLOCK_CONVERSION ON
+set_global_assignment -name PRE_MAPPING_RESYNTHESIS ON
+set_global_assignment -name ROUTER_CLOCKING_TOPOLOGY_ANALYSIS ON
+set_global_assignment -name ECO_OPTIMIZE_TIMING ON
+set_global_assignment -name PERIPHERY_TO_CORE_PLACEMENT_AND_ROUTING_OPTIMIZATION ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_ASYNCHRONOUS_SIGNAL_PIPELINING ON
+set_global_assignment -name ALM_REGISTER_PACKING_EFFORT MEDIUM
+# Fitter seed. At 82% ALM utilisation the placement is marginal enough that the
+# 99 MHz clk_ram (SDRAM) domain's HOLD slack swings with the netlist: seed 1 gave
+# +0.449 and +0.464 ns on two builds, then -0.122 ns on 2026-08-30 after an
+# unrelated clk_sys change. Hold slack is a placement artifact, so reseeding is
+# the right lever; if a future build violates again, try another value rather
+# than assuming the RTL change caused it. Check the STA summary, not just the
+# Fitter status -- scripts/deploy_screenshot.sh now refuses a violated build.
+# 2026-08-30: seed 2 gave -0.283 ns hold on clk_ram after the via6522 shift-clock
+# fix -- a clk_sys-domain change that cannot reach the 99 MHz domain, so it was
+# the placement swinging again, not the RTL. Seed 3 fits.
+# 2026-08-31: seed 3 then gave SETUP -0.435 ns and -0.165 ns on clk_sys for a
+# one-line easc.sv change that REMOVES logic (the fifo_stat full flag), while
+# the same tree had fitted at +0.201..+0.246 ns minutes earlier. Placement
+# again, not the RTL. Seed 4 also missed (-0.393 ns setup on clk_sys, one
+# endpoint, 1.3% of the 30.303 ns period). clk_sys sits at roughly 0 +/- 0.4 ns
+# and flips sign with placement; the ASC does not appear in any failing path.
+# Seed 5 was worse still (-1.643 ns), i.e. four straight misses trending the
+# wrong way -- outside the +/-0.4 ns band this design normally swings in. Two
+# fitter runs had been killed with taskkill /F mid-fit that morning and db/ +
+# incremental_db/ were carried through every build after, so the state was
+# suspect. Wiping both dirs changed nothing: a clean seed-3 fit reproduced
+# -0.165 ns exactly, so Quartus is deterministic here and db/ was never the
+# problem. report_timing names the path: ap040_core|ir[7] -> |exc_fmt[0], i.e.
+# INSIDE THE CPU CORE on clk_sys -- nothing to do with whatever RTL you just
+# touched. The design has ~0 ns margin there and any netlist perturbation
+# flips it, so walk seeds and do not go hunting in your own diff. Tried:
+# 3 -> -0.165, 4 -> -0.393, 5 -> -1.643. Seed 6 then met at +0.062 ns.
+#
+# 2026-09-01, after the SDRAM fast path (rtl/sdram_beat32.sv): seed 6 went
+# from +0.062 to -0.952 ns. That is the same lottery, not the diff -- the
+# change is 97 ALMs SMALLER than the tree it replaced (35,244 vs 35,436), and
+# report_timing still names ap040_core|ir[3..4] -> |exc_fmt[0] with the loss
+# sitting in clock skew (-0.538 vs -0.126). Walked again:
+# 6 -> -0.952, 7 -> -1.029, 8 -> -0.501, 9 -> -1.235, 10 -> -1.008,
+# 11 -> -0.176, 12 -> -0.056, 13 -> +0.132.
+# Seed 13 has MORE margin than the design had before the change. Candidate
+# bitstreams for every seed above are kept in scratch/seeds/ (gitignored) with
+# their reports; scratch/seeds/restore_seed.sh <n> stages one for deploy.
+#
+# 2026-09-01, related-clock SDRAM handoff (151 ns reads in tb_sdram): the
+# SDRAM paths had ample margin, but the same unrelated clk_sys CPU path moved
+# again.  Seed 13 -> -0.068 ns, 14 -> -0.669 ns, 15 -> +0.270 ns setup and
+# +0.241 ns hold overall.  The 99 MHz domain at seed 15 is +1.353 ns setup and
+# +0.431 ns hold.  The BL8/open-page netlist could not route at seed 13.  Its
+# hardware-validated stock-machine build at seed 17 routed at +0.185 ns setup
+# and +0.244 ns hold. The hardware-validated registered-line build at the same
+# seed routed at +0.289 ns setup and +0.252 ns hold. The registered pre-adapter
+# line-hit build also passed hardware at seed 17 and routed at +0.139 ns setup
+# and +0.183 ns hold. The registered first-miss build passed the full hardware
+# PR suite at seed 17 and routed at +0.143 ns setup and +0.250 ns hold. The AP040
+# retained-line cache-fill build also passed the full hardware PR suite at seed
+# 17, routing at +0.348 ns setup and +0.244 ns hold. Use seed 17 for this family
+# of netlists and re-check after any RTL change.
+# The two-entry CPU store-buffer netlist moved the critical path to the known
+# seed-sensitive SDRAM open_row -> command[0] crossing at seed 17 (-0.323 ns
+# setup, +0.197 ns hold); the store buffer was not present in the failing path.
+# Seed 18 meets timing at +0.165 ns setup and +0.248 ns hold and passed the full
+# Mac OS 7.5.5 Speedometer 3.23 PR suite in hardware.
+# The cache store-hit update candidate moved placement enough that its
+# unrelated ir -> exc_fmt instruction-decode path missed setup at seeds 18
+# (-0.610 ns, +0.243 ns hold), 19 (-1.740 ns, +0.206 ns hold), and 20
+# (-2.223 ns, +0.216 ns hold). The exception format is now loaded from a
+# registered entry-state decode, removing that 50-level path. Re-check the
+# refactored netlist at the known-good seed 18. That build removed the CPU
+# path; its only failure was the known seed-sensitive three-level SDRAM
+# open_row -> command[0] crossing (-1.030 ns setup, +0.239 ns hold), with
+# 5.572 ns of routing delay. Seed 19 meets timing at +0.378 ns setup and
+# +0.251 ns hold and passed the full Mac OS 7.5.5 Speedometer 3.23 PR suite.
+# 2026-09-08 (build M, MacQuadra800_20260908_3): seed 21 on the release recipe
+# fits at 98 % and meets timing at +0.444 ns setup (HDMI PLL domain; clk_sys
+# +0.797, clk_ram +0.927), the best margin since the recipe; seed 19 gave
+# +0.171 on the previous head.
+# 2026-09-08 (branch alan-perf-20260908, bffbd3b): the same recipe with the AP68040
+# submodule at Alan's 299cb36 (wombat-upstream-fixes: I-cache lookahead, queued-
+# opcode retire, resident immediates, DBcc refill dispatch, FPU regbank in MLABs)
+# fits at seed 21 first try: 41,060 ALMs (98 %), setup +0.579 (HDMI), clk_sys
+# +0.753, clk_ram +0.943, hold +0.225; 20-minute flow. md5 512cd4f8.
+# 2026-09-12 (4404a15): Alan's 164a376 (early data issue) with his NCR/CD BCD
+# reciprocal fits at seed 21 in 40,265 ALMs (96 %) but MISSES the HDMI PLL
+# domain by 0.164 ns (clk_sys +0.508, clk_ram +1.189, hold +0.198); not
+# deployable, a seed walk is owed if that head is wanted. md5 6d6a6daf.
+# 2026-09-12 (7d8569d, the lookup read-ahead on top of it): seed 21 fits in
+# 40,584 ALMs (97 %) and MEETS timing: HDMI +0.256, clk_sys +0.307, clk_ram
+# +0.884, hold +0.208. 477 RAM blocks, 64 DSPs. md5 0018d4a9. (Quartus
+# rewrote this file when a comment was edited mid-fit and dropped the notes
+# once; the STA/asm were re-run by hand on the finished db.)
+# 2026-09-12 (c9219a8, + fill hold, branch-target hint, one-state MOVE store):
+# seed 21 placed but FAILED TO ROUTE (congestion, hold-repair delay). Seed 22
+# fits in 41,096 ALMs (98 %) and meets timing: clk_sys +0.256, HDMI +0.409,
+# clk_ram +0.593. Seed 22 is the current seed for this head.
+# Seed 23 (built in ../MacQuadra800_wt2) fits in 41,049 ALMs but misses the HDMI
+# domain by 0.092 ns (clk_sys +0.530, clk_ram +0.651): rejected, seed 22 stays.
+# Store head + posted VRAM writes (800a94f): seed 22 fits in 41,109 ALMs but misses
+# the HDMI domain by 0.036 ns (clk_sys +0.743, clk_ram +0.789, hold +0.246);
+# walking seed 23 here and seed 24 in ../MacQuadra800_wt2.
+# Both met: seed 23 41,116 ALMs (HDMI +0.463, clk_sys +0.766, clk_ram +0.966,
+# hold +0.246; rbf 469a8936), seed 24 41,115 ALMs (HDMI +0.236, clk_sys +0.660,
+# clk_ram +0.639; rbf 03492463).  Neither went to hardware: the CPU moved on.
+# 2026-09-15: Alan's checkpoint 15 (AP68040 167c5e8) + the six task hoistings
+# (wombat-area-diet R1..R6, docs/cpu-area-consolidation.md): synthesis est.
+# 41,919 -> ~37,700 ALMs on this recipe; seed walk from 21.
+# R1..R6 seed 21: fits in 37,189 ALMs (89 %) but the CPU clock misses by 4.063 ns
+# (rr_a -> hint adder -> MMU -> cache/store-buffer ack -> finish_bcc -> the
+# hoisted go_pc/decode_dbcc_brf seed loop -> epf_ftail: the carrier put the
+# refill-seed cone behind the acknowledge).  Next fit: R1..R4 (8778213).
+# R1..R4 (8778213) seed 21: MET -- 38,325 ALMs (91 %), 497 M10K, CPU clock +0.361,
+# HDMI +0.429, clk_ram +0.757, hold +0.248; rbf 8c6d48b5 (the hardware candidate).
+# R1..R6 early-data form (923c544) seed 21, in ../MacQuadra800_wt2: 36,961 ALMs
+# (88 %), CPU clock -0.269 ns (HDMI +0.656, clk_ram +0.818): the 4 ns hole is
+# gone; seed walk 22.. there.
+# R1..R6 (923c544) seed 22, in ../MacQuadra800_wt2: MET -- 36,982 ALMs, CPU clock
+# +0.126, HDMI +0.183, clk_ram +0.910; rbf 2f739338.  Not gated: the R1..R4
+# candidate hung the 8.1 boot, traced in the sim to a 53C96 model window (a CD
+# MODE SELECT's bus service raised ~12 cycles before the phase moved to STATUS;
+# the faster CPU's poll read the stale phase).  The ncr53c96 fix is in this build:
+# seed 22 here, seed 23 in ../MacQuadra800_wt2.
+# Seed 22 with the fix: MISSED, CPU clock -0.619 ns (TNS -10.9), HDMI +0.513; walking 24 here.
+# Seed 24 (R1..R6 + fix) MISSED too: CPU clock -1.669 ns (TNS -85.4).  Three misses in a row
+# (22/23/24 = -0.6/-1.4/-1.7 ns) after the pre-fix +0.126 at 22: the R1..R6 CPU path is parked.
+# The main tree now fits R1..R4 (8778213) + fix at seed 22, the hedge for wt2 at seed 21.
+# R1..R4 + fix seed 21 (wt2): CPU +0.267, HDMI -0.766.  Seed 22 (here): CPU +0.712, HDMI -0.095
+# (one endpoint, 38,7xx ALMs).  The HDMI endpoint is the usual seed lottery: 23 in wt2, 24 here.
+# Seed 24 (R1..R4 + fix): the fitter could not place the design at all (Error 11802). Seed 25 next.
+# Seed 25: fitter took 2.5 h and gave up on timing (CPU clock -9.159 ns); 26 and 27 did not place.
+# RELEASED 2026-09-16 as MacQuadra800_20260915.rbf: seed 22 (clk_sys +0.712, clk_ram +0.998, HDMI
+# -0.095 on sys_top hdmi_dv_hs -> hs), shipped marginal by policy (CLAUDE.md), both gates pass,
+# Speedometer Mix 0.858.  Seed 22 is the recipe for this head.
+# 2026-09-16 (optimize-SCSI phase 1, 3d5e32d + docs): the CD responses now come
+# from Main; 38,070 ALMs at seed 22 but clk_sys MISSED by 0.931 ns (all 40 worst
+# paths inside ap040_core: the placement lottery). Seed 21 (../MacQuadra800_wt2):
+# 38,012 ALMs, clk_sys +0.712, clk_ram +0.914, HDMI -0.076 (one sys_top video
+# register) -- the hardware candidate (rbf 58653a0c). Seed 21 is the default.
+# f612084 (forwards serialized): seed 21 MEETS TIMING -- 38,128 ALMs (91 %),
+# worst +0.247, HDMI +0.442, clk_sys +0.729, clk_ram +0.732, RAM 491, DSP 59;
+# rbf 1eae0fb7, staged on .143 as _Unstable/MacQuadra800_phase1_s21b.rbf.
+# 2026-09-16 phase 2 (d5442fe, playback on the ARM): seed 21 FAILED in routing (congestion,
+# placement fine, the design 1,400 ALUTs smaller); seed 22 MEETS TIMING -- 37,155 ALMs (89 %),
+# clk_sys +0.232, clk_ram +0.452, HDMI +0.638, 490 RAM, 43 DSP; rbf c2a902cb (built in wt2).
+# Seed 22 is the default for this head.
+# 2026-09-16 19:57 phase 2b (3ec22e4: owner register + the io_discard fix): seed 22 FAILED in routing (congestion, placement fine, 18 min). Seed 23 next.
+# Seed 23 (phase 2b): fits (25 min, rbf 0d374d4a) but clk_sys MISSES by 0.752 ns, TNS -37 ns (HDMI +0.254, clk_ram +0.555) -- a CPU-clock miss, tried on hardware only as a fix probe. Seed 24 next.
+# Seed 24 (phase 2b, 3ec22e4): MEETS TIMING -- worst +0.244 ns (HDMI +0.255, clk_sys +0.762, clk_ram +0.605), 37,056 / 41,910 ( 88 % ) ALMs, rbf 4bf9629c (18 min). Seed 24 is the default for this head.
+# 2026-09-16 22:32 phase 2c (2922294: + the data-phase completion fix): seed 24 fits (37,152 ALMs, 62 min) but clk_sys MISSES by 0.727 ns, TNS -3.9 (HDMI +0.015, clk_ram +1.162), rbf a719e24f = the fix probe on hardware. Seed 21 next.
+# Seed 21 (phase 2c): fits (37,197 ALMs, 15 min) but clk_sys MISSES by 0.231 ns, TNS -0.246 (one path; HDMI +0.076, clk_ram +1.130), rbf ab1da889. Seed 22 next (queued behind another session's sgiindy flow via the wait-gate).
+# Seed 22 (phase 2c): fits (37,216 ALMs, 30 min alongside a sgiindy fit) but clk_sys MISSES by 1.413 ns, TNS -108 (HDMI -0.209), rbf e7e3280c. Seed 23 next (wait-gated); after it the routability switch.
+# Seed 23 (phase 2c): fits (37,305 ALMs, 114 min) but HDMI -7.533, clk_sys -2.921, clk_ram -0.024 -- the worst of the walk; rbf e32dd5b4 not kept. Walk closed: RELEASED 2026-09-17 as MacQuadra800_20260916_2.rbf = seed 21 (ab1da889, clk_sys -0.231 on one path, the full gate passed). Seed 21 is the default; the next lever if a clean fit is wanted is FITTER_AGGRESSIVE_ROUTABILITY_OPTIMIZATION ALWAYS (scratch/edit_qsf_routability.py on).
+# 2026-09-17 13:21 add-CPU-fixes (6de9473: CPU vendored, Adam Polkosnik's fixes -- bitfield sizing, FPSP BUSY resume,
+# MOVEM CM continuation, nonresident ATC, ALU/FPU normalizer sharing, integer regfile in MLABs): seed 21 MEETS
+# TIMING first try -- 37,144 ALMs (89 %), worst +0.244 (HDMI +0.255, clk_sys +0.442, clk_ram +0.851), 31 min,
+# rbf 8552a409 (scratch/MacQuadra800_cpufixes_6de9473.rbf). Hardware gate owed; revert 6de9473 first if it misbehaves.
+# 2026-09-17 15:45 CPU-pipeline step 1 (86b6b04: Alan's one-clock data-cache hit on a dedicated hint bus, 6e65192,
+# +308 ALUTs): seed 21 MEETS TIMING first try -- 37,439 ALMs (89 %), worst +0.036 (clk_sys +0.036, HDMI +0.056,
+# clk_ram +0.775, hold +0.187), 491 RAM, 30 min in ../MacQuadra800_wt3; rbf d157f555
+# (scratch/pipeline_step1/MacQuadra800_step1_s21_d157f555.rbf). Alan never closed a seed on this RTL at 92-93 %.
+# Speedometer run by the Opus operator (scratch/pipeline_step1/). Build 2 (77aa72a: + R5/R6 hoists, redirect hints,
+# in-place pops/MOVEM, forward taken Bcc at the lookahead) at seed 21 next.
+# Step 1 HARDWARE (Opus operator, scratch/pipeline_step1/report.md): 8.1 boots <=123 s, Speedometer Mix 0.875/0.878/0.879
+# = 0.877 (+2.6 % over 0.855), CQD 0.643, FPU 0.464, clean 45 s shutdown, no artefacts.
+# 2026-09-17 16:16 build 2 (77aa72a: + R5/R6 hoists, redirect hints, in-place pops/MOVEM, forward taken Bcc): seed 21
+# FAILED IN ROUTING (congestion; placement fine; 36,330 ALMs = 87 %, -1,109 vs step 1; 42 min). No rbf.
+# 2026-09-17 17:03 build 3 (5206845: + MOVEM loads on the ack, pushes in place, MOVEM stores from the loop, LINK/PEA
+# on the ack; synthesis 55,210 ALUTs vs the release's 56,965): seed 21 WITH FITTER_AGGRESSIVE_ROUTABILITY_OPTIMIZATION
+# ALWAYS set in the build tree only (scratch/edit_qsf_routability.py on), the lever Quartus names for that failure.
+# Build 3 result (17:26): ROUTED with the switch, 36,010 ALMs (86 %), but the CPU clock MISSES by 3.760 ns (TNS -576;
+# HDMI +0.078, clk_ram +0.429). TimeQuest on the fitted db (scripts/cpu/timequest_worst_paths.tcl, matches the flow's
+# -3.760): state -> the hint mux (mem_hint_addr) -> the cache's fast-hit word select -> c_rdata -> ALU -> flags ->
+# lookahead Bcc -> refill seed count -> epf_ftail, 33.4 ns. A false path: in the request cycle the hint bus carries
+# the registered request, but the analyzer follows the combinational hint side. Fix: the cache qualifies and selects
+# the fast hit from its own registered copy of the hint address (build 4). rbf 2f... not deployable (CPU-clock miss).
+# 2026-09-17 17:40 build 4 (31445e5: + the cache's fast hit qualified from its registered hint copy), seed 21 + the
+# switch: routed, 36,326 ALMs (87 %), CPU clock -2.362 (HDMI +0.135, clk_ram +0.950). Worst path now sr[13] -> A7
+# bank -> port A -> shift count -> the ALU's ROXx count modulo (a 33-bit DIVIDER from n % (nbits+1)) -> shifter ->
+# flags -> lookahead -> the carriers selecting between the two hoisted redirect targets -> seed cone -> epf_ftail,
+# 32 ns. Build 5: constant-modulus count (9/17/33 by size) and one shared state-selected target for go_pc_now and
+# decode_dbcc_brf_now (dbrf_a_early = go_pc_t_early), both cycle-identical.
+# 2026-09-17 18:49 build 5 (24579aa: + constant-modulus ROXx count, one shared redirect target), seed 21 + the switch:
+# routed, 35,926 ALMs (86 %), CPU clock -1.042 (HDMI +0.341, clk_ram +0.408). Worst path now: ATC RAM -> hit -> pipe
+# entry -> walk decision -> the cache's inv_wren (its store term carries c_req) -> fast_hit -> c_rdata -> ALU ->
+# lookahead -> seed cone -> epf_ftail, 29.7 ns. rbf 595297fb = scratch/pipeline_b5/, run on hardware as a labelled
+# TIMING PROBE (try-builds policy). Build 6: fast_hit uses !snoop_wr instead of !inv_wren (exact under its own guards).
+# Build 5 probe HARDWARE (Opus operator, scratch/pipeline_b5/report.md): 8.1 boots <= 84 s, liveness OK, Speedometer Mix
+# 0.900/0.902/0.902 (+2.8 % over step 1's 0.877, +5.3 % over the shipped 0.855).
+# 2026-09-17 19:29 build 6 (c84a5e7: + fast_hit tests !snoop_wr and the registered hint's set, nothing from the live
+# translation), seed 21 + the switch: 35,797 ALMs (85 %), CPU clock MET +0.139, clk_ram +0.445, HDMI -0.001 on one
+# sys_top video register (the seed-sensitive endpoint; try-builds policy). rbf in scratch/pipeline_b6/. The switch
+# FITTER_AGGRESSIVE_ROUTABILITY_OPTIMIZATION ALWAYS was set in the build tree for builds 3-6; it is NOT in this file yet.
+# 2026-09-17 20:10: the routability optimization joins the recipe. Builds 3-6 of the CPU-pipeline branch (85-87 % ALMs)
+# routed only with it, build 2 failed routing without it, and build 6 (the deployable candidate) was fitted with it.
+# Build 6 HARDWARE (Opus operator, scratch/pipeline_b6/report.md): 8.1 boots <= 85 s, liveness OK, Speedometer Mix
+# 0.900/0.902/0.903 (mean 0.902: +2.8 % over step 1, +5.5 % over the shipped 0.855), CQD 0.660, FPU 0.464/0.467, clean
+# 46 s shutdown, no artefact in any captured frame (the ARM framebuffer does not pass through the HDMI register, so the
+# 0.001 ns HDMI miss is judged at the display). The box was left at the 8.1 halt screen on this rbf (cda6ba11).
+# 2026-09-18 21:40 build 7 (8a9b392: + increment 9, the unconditional transfers redirecting at the pop), seed 21
+# + the switch: routed, 36,388 ALMs (87 %, +591 over build 6), but the CPU clock MISSES by 1.575 ns (TNS -131;
+# HDMI +0.333, clk_ram +0.538). Worst path (scratch/pipeline_b7/): rr_a -> regfile -> ALU shifter/zero -> flags ->
+# the lookahead carrier -> a mux between go_pc_t_early and the early fetch target bd_t -> seed count -> epf_ftail,
+# 31.2 ns: a second issue_ifetch target next to the shared early-target wire (rule 3). Not deployed. Fix: the early
+# fetch takes go_pc_t_early (default arm rd_is_bcc ? rd_bcc_t : bd_t) and skips the states with their own arm.
+# 2026-09-18 22:17 build 7b (8a9b392 + 788ab35: the early fetch on the shared early-target wire, the refill seed count from
+# the sector valid runs), seed 21 + the switch: MEETS TIMING on every clock -- 35,807 ALMs (85 %), clk_sys +0.580,
+# HDMI +0.364, clk_ram +0.527, hold +0.147, TNS 0; synthesis 55,143 ALUTs (build 7: 55,598). rbf 9e3b7d9d =
+# scratch/pipeline_b7/MacQuadra800_b7b_s21r_9e3b7d9d.rbf, the hardware candidate for increment 9.
+# 2026-09-18 22:40 build 8 (78ba885 = the branch head: increments 9 + 10 (DBcc from the pop) + 788ab35), seed 21 + the
+# switch: MEETS TIMING on every clock -- 35,952 ALMs (86 %), clk_sys +1.114 (the best of the branch), HDMI +0.217,
+# clk_ram +0.914, hold +0.258, TNS 0; synthesis 55,424 ALUTs. rbf 69c53878 = scratch/pipeline_b8/, runs after 7b.
+# 2026-09-19 04:10 build 9 (4931e19 = the head: increments 11 (S_FETCH pop to the chain) + 12 (the loop-top record cache)
+# on build 8), seed 21 + the switch: MEETS TIMING on every clock -- 36,400 ALMs (87 %), clk_sys +1.007, HDMI +0.477,
+# clk_ram +0.697, TNS 0; synthesis 56,024 ALUTs. rbf f061d1fc = scratch/pipeline_b9/, the hardware candidate.
+# 2026-09-19 04:40 build 10 (7f69882: + increment 13, the one-clock posted store), seed 21 + the switch: MEETS TIMING on
+# every clock -- 36,428 ALMs (87 %), clk_sys +1.145 (the best of the branch), HDMI +0.251, clk_ram +0.445, TNS 0;
+# synthesis 55,999 ALUTs. rbf 28a7e6dc = scratch/pipeline_b10/, runs after build 9.
+# 2026-09-18 06:17 (machine clock; the entries above ran a day ahead) build 12, the bisect (build tree edca43e = build 8 +
+# increments 13, 14, 15, WITHOUT 11 and 12), seed 21 + the switch: MEETS TIMING on every clock -- 36,071 ALMs (86 %),
+# clk_sys +1.241 (the best of the branch), HDMI +0.412, clk_ram +0.806, hold +0.198, TNS 0; synthesis 55,480 ALUTs;
+# sdram_beat32 req_tgl -> req_handoff +1.384 (b10 +1.270, b8 +2.513). rbf 555a954b = scratch/pipeline_b12/. The flow ran
+# under build 11's launcher, which had survived its stop in the wait-gate (the log is build_b11_s21r.log, copied to
+# build_b12_s21r.log); the tree was clean at edca43e from 05:35, the flow started 05:54. Build 11 (the head) was never built.
+# ON HARDWARE build 12 DOES NOT BOOT (bare grey screen, no pointer): increment 14's read-passes-store compared only the
+# first 16-byte line, so a fill passed a queued line-crossing store (fixed cf06fe6; the full-machine sim reproduces the
+# hang on build 12's tree and boots build 13's).
+# 2026-09-18 06:55 build 13 (build 12's tree + cf06fe6; build tree 4d09389), seed 21 + the switch: MEETS TIMING on every
+# clock -- 36,089 ALMs (86 %), clk_sys +0.772, HDMI +0.527, clk_ram +0.668, hold +0.204, TNS 0; req_tgl -> req_handoff
+# +0.727 (b12 +1.384). rbf fde49a3c = scratch/pipeline_b13/. ON HARDWARE: boots, Mix 0.9285 (mean of 8; b8 0.907, shipped
+# 0.855), CQD 0.670, 0 anomalous values in 11 series, clean shutdown. The branch head (11/12 reverted, 4abb118) = this RTL.
+# 2026-09-18 14:31 ethernet build 1 (69d9585 on add-ethernet = build 13's machine + rtl/sonic_mbx.sv and its wiring; built
+# on the second Quartus host, dani@192.168.99.153, same 17.0.2 Lite), seed 21 + the switch: 36,560 ALMs (87 %, +471;
+# sonic_mbx itself 401.6 ALMs / 665 ALUTs / 0 RAM), clk_sys +0.547, clk_ram +0.770, hold +0.214, HDMI VIOLATED -0.306
+# (TNS -0.504, the framework's video register again). rbf 815ee8b4 = scratch/eth/build1/, tried on hardware as a marginal
+# build (the miss is not on the CPU clock). ON HARDWARE: Mac OS 8.1 boots with Ethernet Off and On, the driver opens, 12
+# packets out, DMA round trips 36 us average -- then the whole guest FREEZES: iosb's VIA2 any-slot flag followed edges of
+# the OR of VBL and SONIC and lost the interrupt for good (fixed 665a450). The seed 22 fit of this tree was abandoned.
+# 2026-09-18 15:33 ethernet build 2 (665a450: + the any-slot flag as a level, + the front-end's DEBUG word), seed 21 + the
+# switch, on .153: MEETS TIMING on every clock -- 36,502 ALMs (87 %), clk_sys +0.323, HDMI +0.314, clk_ram +0.716, hold
+# +0.220, TNS 0. rbf 2ea4d529 = scratch/eth/build2/.
+# 2026-09-19 11:19 ethernet build 11 (b2e5377 = the merge of Alan's pull request #3: the phantom adapter read after a
+# line ack in the clock the FSM leaves idle for a DMA beat, 0533256, and the DMA engine no longer starved by a parked
+# pseudo-DMA beat, 49b8648; his builds 9 and 10 were fitted on his own host), seed 21 + the switch, on this PC: MEETS
+# TIMING on every clock -- 36,914 ALMs (88 %), 25,896 registers, clk_sys +0.622, clk_ram +0.415, HDMI +0.107, hold
+# +0.190; req_tgl -> req_handoff +1.545, line_done_handoff -> line_tag +0.622; open_row stays in logic. rbf 933b421a =
+# scratch/ethernet-handover/build11_b2e5377/ = releases/MacQuadra800_20260919.rbf. ON HARDWARE with Main fbb540c8: 8.1 at
+# CFG 40 00 506/506 pings, CD audio transport, A/UX 3.1 boot/shell/shutdown with the SONIC present, both guests again
+# with Ethernet off -- all pass (docs/ethernet-regression-20260919.md).
+# 2026-09-19 XSTORE c328ae7, seed 21: 36,871 ALMs (88%), 491 RAM blocks,
+# 43 DSP; setup +0.068 ns, hold +0.243 ns, CPU +0.979 ns, SDRAM +0.800 ns.
+# Crossings sys->ram +1.514 ns / ram->sys +0.979 ns. Hardware Mix pending.
+# 2026-09-19 XSTORE+LEA 94d922f, seed21: 36,997 ALMs88%,491RAM,43DSP.
+# Setup +0.311 ns, hold +0.238 ns; CPU +1.025 ns, SDRAM +0.555 ns.
+# Crossings sys->ram +0.555 ns / ram->sys +1.025 ns; hardware trial pending.
+# 2026-09-19 P4 pipeline PEA 6e852a6, seed21: 38,185 ALMs91%,491RAM,43DSP.
+# CPU setup -0.357 ns (timing-marginal trial only), HDMI +0.180, hold +0.223.
+# SDRAM +0.478 ns; crossings sys->ram +0.478 / ram->sys +0.843 ns.
+# Cache data/tag RAM inference preserved. RBF SHA256 25c41c76545eb38b767df72145080d19b37577862816fcbb7250f864950ec2be.
+# 2026-09-19 P5 overlap + separate RF reads e12d882, seed21:38,320ALMs91%,491RAM,43DSP.
+# CPU +0.532 ns (internal CPU paths +0.556); SDRAM +0.665; hold +0.202.
+# HDMI -0.091 ns (shadowmask->OSD), second path -0.008 (scaler); experimental trial.
+# Crossings sys->ram +1.016 / ram->sys +0.532 ns. Both added RF banks remain MLAB.
+# RBF SHA256 4449b3c51a3e991515afe0440ce2da5aeab2d6175fbcda210f344d8841f037b1.
+# 2026-09-19 P6 indexed MOVE/shifts/LEA d83e238, seed21:39,631ALMs95%,491RAM,43DSP.
+# All timing met: CPU +0.252 ns, HDMI +0.089, SDRAM +0.741, hold +0.241.
+# Crossings sys->ram +0.741 / ram->sys +0.914 ns. RF bankE512bitMLAB; cache RAM preserved.
+# RBF SHA256 67a88e021a00722fed025cb261eb766ef3cb3f22c9c6200d77cb529fba935af0.
+# 2026-09-19 P6 memory-entry 90b37e4, seed21:39,603ALMs94%,491RAM,43DSP.
+# CPU +0.904 ns, SDRAM +0.608, hold +0.208; HDMI -0.187 ns (trial only).
+# Crossings sys->ram +0.608 / ram->sys +0.904 ns. Source and extraction checks pass.
+# RBF SHA256 d35e6b42edb653aab94cb95f6a5a92eefea8d8cf9b640d679a5b7055ca95df68.
+# 2026-09-19 P7 compare+early-drain 1c04a43, seed21:39,559ALMs94%,491RAM,43DSP.
+# CPU -0.012 ns (experimental only), HDMI +0.308, SDRAM +0.424, hold +0.220.
+# Crossings sys->ram +0.462 / ram->sys +0.790 ns. Source/extraction checks pass.
+# RF bankE512bitMLAB and cache tags M10K preserved; 26,405 registers.
+# RBF SHA256 702e23482a2203befc88b190446b68bfe182ef37a4c848057a866875305d9700.
+# 2026-09-19 P7 admission/branch f2b2770, seed21:39,591ALMs94%,491RAM,43DSP.
+# CPU -0.862 ns (TNS -4.710), HDMI -0.069 (TNS -0.394), SDRAM +0.727, hold +0.201.
+# Crossings sys->ram +0.771 / ram->sys +0.611; RF bankE MLAB, cache tags M10K.
+# Worst CPU path regfile pend_we -> general ALU -> pc[22], 27 logic levels.
+# Experimental trial only. Source/archive/cross checks pass; 26,347 registers.
+# RBF SHA256 e12627b49d97fd2efd41433c058e1c28906c7959317a63c52544cd655b26759e.
+# 2026-09-19 P13 cross-line cache admission (ef4f71d): timing met,
+# 39,772 ALMs; CPU +0.757, HDMI +0.135, SDRAM +0.200 ns;
+# worst hold +0.238, sys->ram +0.200 and ram->sys +0.757 ns.
+# 2026-09-19 P18 stack prefetch (7eef632), seed 21: 39,696 ALMs;
+# HDMI -0.173 ns (TNS -1.362), CPU +0.612, SDRAM +0.949 ns;
+# hold +0.213, sys->ram +1.614, ram->sys +0.612 ns. Marginal trial,
+# not release timing. Archived before next fit.
+# 2026-09-19 P24 stack prefetch + pipeline BRA (0177679), seed 21:
+# timing met; 39,716 ALMs; CPU +0.518, HDMI +0.119, SDRAM +0.804 ns;
+# hold +0.229, sys->ram +0.804 and ram->sys +0.518 ns.
+# P130 2026-09-21: seed 23 routing congestion, no new RBF/STA; 39,920 ALMs.
+# Retry unchanged P130 RTL at seed 24 after full wrapper terminal.
+# P130 seed24: routing failed, 39882 ALMs/482 RAM; no fresh STA/RBF (2026-09-21).
+# P136 hinted parallel spanning reads: seed24 development evaluation follows.
+# P136 seed24 fit: 40228 ALMs/502 RAM, CPU -5.481 ns; HDMI -0.373 ns.
+# P147 state-based cache response data selector: same seed, timing evaluation.
+# P147 P109/P120/P147 cache seed24: placement passed, routing congestion failed after40m10s; no fresh RBF or STA.
+# P150 retries identical qualified HDL at seed25; aggressive routability was already ALWAYS.
+# P150 seed25 2026-09-21: fit completed but CPU clock -19.298 ns, sys->ram -5.557 ns, 40,551 ALMs: the P147 cache response
+# into the fetch queue (mem_addr_q -> epf_data) is one clock too long.  P147 is out of the tree.
+# P165: P162 core (P137..P162 chain) + P124 cache (the last cache that fitted, -0.188 ns at seed 23) + P120 pipeline.
+# P165b (P165 + the headroom profile): 37,045 ALMs, CPU -0.145, clk_ram +0.605, HDMI +0.264; hardware Mix 1.364.
+# P168: P162 core + P136 cache (one-clock hit for misaligned longwords inside a line) + profile, seed 23:
+# 37,454 ALMs, fits, but CPU clock -6.798 ns (ATC RAM -> epf_data: the span data path reaches the fetch
+# queue through the live translation), HDMI -0.982.  Not a seed problem; P136 stays out.  Tree back at P165.
+# P170: P124 cache + the hinted pair hit only (P136's mirrored next-word banks and fast_pair_idle, built on the
+# registered hint like fast_hit; none of P136's live-request look paths).  Permute -3.1 %, all 31 self-tests pass.
+# P170 seed 23 2026-09-22: 37,243 ALMs, 489 RAM; routing congestion, no RBF.
+# P171: split fetch/data request channels (ifr_* from the core, arbiter in the wrappers) + idle-slot supply policy,
+# on P170.  Permute -5.7 %, Whetstone -1.1 % (sim, vs P170).  Seed 24 for the routing.
+# P171 seed 24 2026-09-22: 37,091 ALMs, 489 RAM, fits; CPU clock -1.231 ns (ATC RAM -> need_walk -> c_rdata -> ALU
+# compare -> branch dispatch -> ifr_addr enable, 1.6 ns of it the last route), clk_ram +0.399, HDMI +0.005.  Run as
+# _Unstable/MacQuadra800_p171.rbf for the Mix measurement.
+# P171b: the queue-bypass forward (epf_fwd_pc) and the refill-buffer fill at acknowledge read the fetch's own
+# address again, and a redirect replaces a speculative fetch the platform has not accepted yet (ifr_avail).
+# Sim vs P170: Permute -7.0 %, Whetstone -1.9 %, Queens -1.5 %, Dhrystone -2.3 %.
+# Sep24 common-ALU design fits capacity but seed28 cannot route; isolate seed21 trial.
+# 2026-09-25 night: the pipeline back in (P243/P244 in the core, the store buffer's read ack
+# without buffer_req), SCSI_CACHE_OFF=1 (needs the Main write buffer), and the release-lite trims
+# MISTER_BYPASS_AUDIO_FILTER / MISTER_DISABLE_VIDEO_CALC / VIDEO_512_OFF.  Seeds: 21 CPU +0.224 but
+# HDMI -0.091 / SDRAM -0.010; 23 CPU +0.483, HDMI -0.143 (ascal o_vcpt_pre3); 25, 26 router failed;
+# 24 MET on every clock: CPU +1.141, HDMI +0.158, SDRAM +0.791, crossings +1.120/+1.202, 38,487 ALMs,
+# 469 M10K, RBF md5 8481fce4.  Mix median 1.778 on hardware.  SEED 24 kept.
+# 2026-09-26: the VRAM fast path (direct VRAM writes and reads beside wombat_bus32, the
+# combinational VRAM read ack).  Seed 24 MET: CPU +0.074, HDMI +0.123, SDRAM +0.247, 38,445 ALMs,
+# 469 M10K, RBF md5 ce04f1c6; Color 8-bit 13.967 -> 12.61 s, Mix 1.776.  Seed 23 router failed;
+# 21 CPU -0.155 / HDMI -0.206; 25 router failed.
+# 2026-09-26: + P245 (MOVE16 chained at the acknowledge).  Seeds: 24 CPU -0.350 / HDMI -0.445;
+# 22 CPU -2.328; 26 CPU +0.135 / HDMI +0.133 but h2f_user0_clk -0.293 (ascal avl_dw -> o_dpram,
+# the scaler's DDR side), 38,819 ALMs, RBF md5 4b623bd0: Color 8-bit 11.42 s, Mix 1.777.
+# Seed 21 MET on every clock: CPU +0.461, HDMI +0.441, SDRAM +0.155, crossings +1.434/+0.732,
+# 38,592 ALMs, 468 M10K, RBF md5 9355b638; hardware Color 8-bit 11.42 s, Mix 1.777.  Seed 23 also MET
+# (CPU +0.427, HDMI +0.302, SDRAM +0.896, 38,550 ALMs; not run on hardware); seed 25 not finished.
+# SEED 21 kept.
+# 2026-09-26: + the ROM's retained line (every ROM read a 2-beat DDR3 line burst; the other
+# longwords from the line).  Seed 21 MET: CPU +0.357, HDMI +0.249, SDRAM +0.102, crossings
+# +1.661/+0.357, 38,733 ALMs, 468 M10K, RBF md5 7bcd182d; hardware Color 8-bit 9.87 s, Mix 1.781.
+# Seed 23 router failed.
+# 2026-09-27: + Dani's prefetch-fault fix (6f0f159).  Seeds: 21, 23, 26 router failed; 24 CPU -1.096;
+# 22 CPU -1.179 / SDRAM -2.264 / HDMI -0.967; 25 CPU -1.341; 27 CPU +0.193, SDRAM +0.295, HDMI -0.025
+# (RBF md5 85924646; hardware: Mix 1.781/1.781, Color 8-bit 9.944 s, FPU 0.684, clean shutdown).
+# 28 CPU -0.065 only; 29, 30 router failed; 31 HDMI -0.455 only (CPU +0.823, SDRAM +0.548); 32-35 router failed.  Walk stopped.
+set_global_assignment -name SEED 27
+# 2026-09-24: NEVER grew the full BRF fit by398 ALMs; retain the better ALWAYS setting.
+set_global_assignment -name FITTER_AGGRESSIVE_ROUTABILITY_OPTIMIZATION ALWAYS
+#
+# 2026-09-08: the release recipe.  Alan's 5aa596f AP68040 is +20 % logic and
+# the design no longer fits with speed-directed synthesis; all-area
+# synthesis fits but breaks HDMI-domain timing.  What fits with timing
+# (build L, MacQuadra800_20260908_2, +0.171 ns): OPTIMIZATION_MODE BALANCED,
+# OPTIMIZATION_TECHNIQUE BALANCED, register duplication off, plus the
+# switches below -- CACHE_CD_OFF (the CD passes through the block cache),
+# CACHE_SMALL (32/32/16-sector cache), MISTER_DISABLE_ALSA (Linux-side audio
+# mix; MT32-pi is a separate module), MISTER_DOWNSCALE_NN and
+# MISTER_DISABLE_ADAPTIVE (scaler refinements).  Composite Y/C stays in.
+# Re-enable any of them only with a matching cut elsewhere
+# (docs: area-levers in the resume doc; releases/README.md).
+
+#set_global_assignment -name VERILOG_MACRO "MISTER_FB=1"
+
+#enable it only if 8bit indexed mode is used in core
+#set_global_assignment -name VERILOG_MACRO "MISTER_FB_PALETTE=1"
+
+#do not enable DEBUG_NOHDMI in release!
+#set_global_assignment -name VERILOG_MACRO "MISTER_DEBUG_NOHDMI=1"
+
+# disable bilinear filtering when downscaling
+set_global_assignment -name VERILOG_MACRO "MISTER_DOWNSCALE_NN=1"
+
+# disable adaptive scanline filtering
+set_global_assignment -name VERILOG_MACRO "MISTER_DISABLE_ADAPTIVE=1"
+
+# ============================================================================
+# DEBUG ONLY -- SCSI protocol tracer in rtl/iosb.sv.
+#
+# Uncomment to stream every first-sighting SCSI register value, bus fault and
+# stray I/O address out the modem port as ASCII, readable on the MiSTer with
+#     stty -F /dev/ttyS1 115200 raw -echo && cat /dev/ttyS1
+# (scripts/scsi_trace.sh does deploy + capture + decode in one go).
+#
+# This TAKES OVER the guest's serial port -- the SCC no longer reaches the pin.
+# Never ship a bitstream built with this on.  scripts/build_only.sh detects the
+# line below and prints a DEBUG BUILD banner so it cannot pass unnoticed.
+# ============================================================================
+#set_global_assignment -name VERILOG_MACRO "SCSI_TRACE=1"
+#set_global_assignment -name VERILOG_MACRO "CDROM_OFF=1"
+#set_global_assignment -name VERILOG_MACRO "ETHERNET_OFF=1"
+# P165 2026-09-21: 40,003 ALMs at seed 23 failed routing (peak interconnect 84 %); the
+# CPU alone is 24,300 ALMs.  Development builds now also source the headroom profile
+# (about 3,300 ALMs of framework the benchmark never uses).  Release builds must not.
+# 2026-09-22 P171c: the OSDs, audio output and Y/C back in for a shippable fast build (the
+# full release recipe -- profile off, CD-ROM and Ethernet in -- synthesizes to 42,379 ALMs
+# with this CPU, over the device); the four invisible trims stay off.
+# 2026-09-23: P184 (P175-P178 back on P182) failed routing at seed 24, 39,567 ALMs, with the lite
+# profile.  Per the user's ruling (1.9 first, area after), development fits source the full
+# development profile again (OSDs, audio out and Y/C off too: ~2,170 ALMs more); P171 was
+# measured on hardware this way.  A shippable build goes back to cpu_release_lite.tcl.
+# 2026-09-24: interim peripheral build; restore disk cache, CD, Ethernet,
+# audio output, OSDs and Y/C. CPU caches use SETW=7 to avoid RAM spill.
+#source configs/cpu_development.tcl
+# Normal-feature goal: no development/release-lite framework omissions.
+#source configs/cpu_release_lite.tcl
+# P171c seed 24 2026-09-22: 39,070 ALMs (93 %), 489 RAM, routes; CPU clock -1.425 ns, HDMI/clk_ram met.  Seed 26 next.
+# P174: the one-clock instruction hit (fast_ihit; the line for the offer read on the P170 mirror banks in the
+# acknowledge clock).  Sim vs P171b: Permute -3.7 %, Whetstone -1.2 %, Dhrystone -1.0 %, Queens -2.7 %.
+# P171c seed 26: 39,141 ALMs, routes, CPU clock -1.648 ns (worse than 24): the in-place dispatch path is structural.
+# P174 seed 24 2026-09-22: 39,441 ALMs (94 %), routes; CPU clock -0.920 ns, HDMI +0.009, clk_ram met.  (Built from c152ac4;
+# the fast_span_ack change 949ac44 landed in the tree after its synthesis had read the sources.)
+# P174b (P174 + the fast_span_ack change) seed 24: 39,158 ALMs, routing failed (seed lottery at 93 %).
+# P175b (53f7f53): the instruction side's own hint bus (mem_ihint_addr; a mirror tag RAM and mirror data banks read it
+# every clock for fast_ihit) and a one-clock fill hold after an instruction acknowledge.  Sim vs P174: Permute -1.5 %,
+# Whetstone -0.8 %, Dhrystone -1.8 %, Queens -1.2 %.  FIRST FIT: 84,851 ALMs estimated, 104k registers -- the
+# full-depth data mirror (28 M10K) took the RAM estimate over the device and Quartus turned the OSD and palette
+# buffers into registers.  The mirrors were halved to their own bank's rows (P175c).
+# P177 (57a3356): a return-address stack hint for the RTS target fetch.  Sim vs P175b: Permute -3.0 %, Dhrystone -1.1 %.
+# NOTE: Quartus rewrites this file during a flow (it inlined the sourced profile's macros once); clean it after.
+# P178 (with P175c): the one-clock hit across two lines (the mirror tag RAM's port B reads the next row, the pair banks
+# its word 0).  Sim vs P177: Permute -2.1 %, Whetstone -1.2 %, Dhrystone -1.6 %.  sys_top passes PALETTE=false without
+# MISTER_FB (the dead 128x48 palette Quartus kept turning into 6,144 registers).  Synthesis estimate 39,043 ALMs.
+# P178 seed 24 2026-09-22 (8ce901c): 39,386 ALMs (94 %), 513 RAM blocks, routes; CPU clock -0.505 ns (the day's best),
+# HDMI +0.177, clk_ram +0.441.  rbf scratch/p178_xline_fit_20260922/MacQuadra800_p178_xline_8ce901c.rbf.
+# P178 ON HARDWARE (2026-09-22 evening): hangs during 8.1 extension loading (a blank alert, no disk activity).
+# Reproduced in the full-machine sim as "~ATM error type 10" (F-line) at ~70 guest-seconds, but only in some runs
+# (host-side options change the interleaving): a race, not a plain logic error.  P174 boots and benchmarks (Mix
+# 1.460).  The tree's CPU RTL is back at P174 (c152ac4); P175c/P177/P178 live in history (8ce901c) and
+# scratch/p178_state_20260922/ until the race is found.  The P178-off bisect fits failed routing (seeds 24, 25).
+# P179 seed 24 2026-09-22 (182109d): 39,113 ALMs (93 %), 508 RAM blocks, routes; CPU clock -3.153 ns (the known
+# path: ifr_addr -> MMU hint match -> cache fast_pair_idle -> c_rdata -> pipeline ALU -> rd_bcc_fl/dgo -> aer_wd;
+# no P179 logic on it), clk 1 -1.250, HDMI -0.386.  Too far out for hardware; not run.
+# P182 seed 24 2026-09-23 (122dab4): 39,229 ALMs (94 %), routes; CPU clock -0.718 ns (P174 -0.920 ran fine),
+# clk 1 +0.619, HDMI +0.029.  rbf scratch/p182_storehint_fit_20260922/MacQuadra800_p182_storehint_122dab4.rbf.
+# P184 seed 24 2026-09-23 (78f05d7, lite profile): 39,567 ALMs (94 %), routing FAILED (congestion).
+# P186 seed 24 2026-09-23 (3fd022b, development profile): 38,505 ALMs (92 %), routes; CPU clock -1.722 ns, HDMI +0.030,
+# clk 1 +0.563; clk_ram->clk_sys crossing FAILED -1.369 ns (sdram_beat32 wq_rp_handoff -> wq_room -> quadra800's write
+# registers: a falling-edge handoff through logic).  Not run.  P188 resynchronizes the pointer (one register) first.
+# P188 seed 24 2026-09-23 (f64a2d1, development profile): 38,735 ALMs (92 %), routes; CPU clock -1.671 ns, HDMI -0.070,
+# clk 1 +0.145, clk_sys<->clk_ram crossings met (+0.506 / +0.825).  HARDWARE: Mix 1.631 (P182 1.467).
+# P190 seed 24 2026-09-23 (e624537, development profile): 38,570 ALMs (92 %), routing FAILED (congestion).  Seed 25 next,
+# with P191-P193.
+# P193 seed 25 2026-09-23 (970b98c, development profile): 38,893 ALMs (93 %), routes; CPU clock -1.335 ns, HDMI +0.474,
+# clk 1 +0.271, crossings met (+1.359 / +0.852).  rbf md5 62d1d13b.
+# P195 seed 25 2026-09-23 (aef55e2): STOPPED -- synthesis put the byte-enabled cache data arrays in registers (514,863
+# registers; Quartus did not infer byte enables from slice writes into [31:0] arrays).  P195b splits them into byte lanes.
+# P197 seed 25 2026-09-23 (c4a3522, development profile): STOPPED after 1 h 45 min in quartus_fit with no output after
+# its pre-placement physical synthesis (P188/P193 took 17-26 min for the whole flow); cause not found.  Superseded by P205.
+# P205 seed 25 2026-09-23 (887945b, development profile): 39,109 ALMs (93 %), 504 RAM blocks, routes in ~12 min; CPU clock
+# -1.326 ns, HDMI +0.314, clk_ram +0.514, bridge crossings met (+1.207 / +0.976).  md5 a98eaf296dd7a20819387d15c2387b4b.
+# P205 on hardware: Mix 1.703 (P193 1.646).
+# P209 seed 25 2026-09-23 (8e4d06e): 39,224 ALMs (94 %), routes with congestion warnings; CPU clock -2.220 ns (debug_busy /
+# ifr_addr -> epf_data), HDMI +0.191, crossings met.  NOT run: carries the P207 read-after-store bug (CMPM/ADDX memory
+# modes lost their An update), fixed with P210-P212.
+# P212 seed 25 2026-09-23 (c214e74): 39,413 ALMs (94 %); CPU clock -1.446 ns (cache tag RAM -> core), HDMI +0.504,
+# clk_ram +0.453, crossings met.  md5 c829f5a0045b7a7d464536227b3e59f0.
+# P214 seed 25 2026-09-23 (73783ab): 39,163 ALMs (93 %); routing FAILED (congestion).  Seed 26 next, with P215.
+# P215 seed 26 2026-09-23 (bc45d86): STOPPED after 76 min of "exceedingly large" routing congestion.  Next: P216-P220 with
+# CACHE_TINY in the development profile (configs/cpu_development.tcl) for routing room, seed 25.
+# P220 seed 25 2026-09-23 (1a38ef8, CACHE_TINY): 39,078 ALMs (93 %), routes; CPU clock -2.596 ns (mem_addr_q -> MMU
+# request translation -> epf_data), HDMI +0.366, crossings met.  md5 08ff68f8a5363005afd09f5b98d968ce.  ON HARDWARE IT
+# FAILED: Finder type-41 bomb on both boots, a corrupted glyph, the Starting Up bar drawn past its box.  Timing or logic
+# undecided; P229 drops P215 (the associative MMU copies, suspected for the timing) to tell.
+# P229 seed 25 2026-09-23 (f79a2ef: P220 - P215 + P221-P227, no CACHE_TINY): 39,631 ALMs (95 %), routes; CPU clock
+# -1.313 ns (ifr_addr -> epf_data), HDMI +0.530, crossings met.  md5 de85957b0bb9bd86aef76280b139d3c0.
+# P229 on hardware: FAILED like P220 -> bisect in the full-machine sim put the fault on P219 (P232 disables it).
+# P231 (no P214) seed 25: -2.804 ns, not run; seed 27 stopped (P219 still in it).
+# P232 seed 25 2026-09-23 (9644f5a): 39,780 ALMs (95 %), routing overran: CPU clock -17.833 ns (router congestion).
+# Not usable.  CACHE_TINY back in the development profile (the P212+CACHE_TINY boot sim reached the Finder).
+# P232 + CACHE_TINY seed 25 2026-09-23 (be552ad): 39,417 ALMs (94 %), CPU clock -9.753 ns, clk_ram -0.311 (congestion).
+# Not usable.  Next: SCSI_CACHE_OFF (the block cache bypassed) in the development profile instead of CACHE_TINY.
+# P232 + SCSI_CACHE_OFF (479d914) seed sweep 2026-09-23/24: seed 25 routing FAILED (38,907 ALMs, 93 %); 24 FAILED;
+# 26 routed at -14.477 ns (unusable); 23 FAILED; 29 FAILED; seed 28 routes: 38,967 ALMs, 464 RAM blocks, CPU clock -2.165 ns (ctag_ram ->
+# core), HDMI +0.123, clk_ram +0.602, crossings met.  md5 9e95e885a2567a53a1fa8e43a1a4d24d.  SEED 28 kept.
+# Posted cross-line cache-store merge, validated on hardware.
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_XSTORE=1"
+# Overlap LEA displacement fetch with base selection; checked independently.
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_LEA=1"
+# P6 candidate: broaden the resident integer/memory stream at authentic 33 MHz.
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE=1"
+# Seqmem full fit cost 30 more ALMs; restore pipeline loads/stores.
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_LOADS=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_STORES=1"
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_PEA=1"
+# P6 memory-entry trial: avoid unrestricted entry's measured Mix regression.
+set_global_assignment -name VERILOG_MACRO "AP040_EXPERIMENTAL_PIPELINE_P6=1"
+set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_MEMORY_ENTRY=1"
+# P7 compare trial: indexed CMP/TST plus final-WB legacy handoff.
+set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_COMPARE=1"
+set_global_assignment -name VERILOG_MACRO "AP040_PIPELINE_EARLY_DRAIN=1"
+set_global_assignment -name VERILOG_MACRO "MISTER_DISABLE_SHADOWMASK=1"
+set_global_assignment -name VERILOG_MACRO "SCSI_CACHE_OFF=1"
+set_global_assignment -name VERILOG_MACRO "MISTER_BYPASS_AUDIO_FILTER=1"
+set_global_assignment -name VERILOG_MACRO "MISTER_DISABLE_VIDEO_CALC=1"
+set_global_assignment -name VERILOG_MACRO "VIDEO_512_OFF=1"
+set_global_assignment -name VERILOG_MACRO "CACHE_CD_OFF=1"
+#set_global_assignment -name VERILOG_MACRO "VIDEO_512_OFF=1"
+set_global_assignment -name VERILOG_MACRO "CACHE_SMALL=1"
+
+#use only 1MB per frame for scaler to free ~21MB DDR3 RAM
+#set_global_assignment -name VERILOG_MACRO "MISTER_SMALL_VBUF=1"
+
+# Disable YC / Composite output to save some resources
+#set_global_assignment -name VERILOG_MACRO "MISTER_DISABLE_YC=1"
+
+# Disable ALSA audio output to save some resources
+set_global_assignment -name VERILOG_MACRO "MISTER_DISABLE_ALSA=1"
+
+source sys/sys.tcl
+source sys/sys_analog.tcl
+source files.qip
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name PRE_FLOW_SCRIPT_FILE "quartus_sh:sys/build_id.tcl"
+set_location_assignment PIN_U9 -to ADC_CONVST
+set_location_assignment PIN_V10 -to ADC_SCK
+set_location_assignment PIN_AC4 -to ADC_SDI
+set_location_assignment PIN_AD4 -to ADC_SDO
+set_location_assignment PIN_AC24 -to AUDIO_L
+set_location_assignment PIN_AE25 -to AUDIO_R
+set_location_assignment PIN_AG26 -to AUDIO_SPDIF
+set_location_assignment PIN_AG25 -to BTN_OSD
+set_location_assignment PIN_AG23 -to BTN_RESET
+set_location_assignment PIN_AH24 -to BTN_USER
+set_location_assignment PIN_V11 -to FPGA_CLK1_50
+set_location_assignment PIN_Y13 -to FPGA_CLK2_50
+set_location_assignment PIN_E11 -to FPGA_CLK3_50
+set_location_assignment PIN_U10 -to HDMI_I2C_SCL
+set_location_assignment PIN_AA4 -to HDMI_I2C_SDA
+set_location_assignment PIN_T13 -to HDMI_I2S
+set_location_assignment PIN_T11 -to HDMI_LRCLK
+set_location_assignment PIN_U11 -to HDMI_MCLK
+set_location_assignment PIN_T12 -to HDMI_SCLK
+set_location_assignment PIN_AG5 -to HDMI_TX_CLK
+set_location_assignment PIN_AD19 -to HDMI_TX_DE
+set_location_assignment PIN_AD12 -to HDMI_TX_D[0]
+set_location_assignment PIN_AE9 -to HDMI_TX_D[10]
+set_location_assignment PIN_AB4 -to HDMI_TX_D[11]
+set_location_assignment PIN_AE7 -to HDMI_TX_D[12]
+set_location_assignment PIN_AF6 -to HDMI_TX_D[13]
+set_location_assignment PIN_AF8 -to HDMI_TX_D[14]
+set_location_assignment PIN_AF5 -to HDMI_TX_D[15]
+set_location_assignment PIN_AE4 -to HDMI_TX_D[16]
+set_location_assignment PIN_AH2 -to HDMI_TX_D[17]
+set_location_assignment PIN_AH4 -to HDMI_TX_D[18]
+set_location_assignment PIN_AH5 -to HDMI_TX_D[19]
+set_location_assignment PIN_AE12 -to HDMI_TX_D[1]
+set_location_assignment PIN_AH6 -to HDMI_TX_D[20]
+set_location_assignment PIN_AG6 -to HDMI_TX_D[21]
+set_location_assignment PIN_AF9 -to HDMI_TX_D[22]
+set_location_assignment PIN_AE8 -to HDMI_TX_D[23]
+set_location_assignment PIN_W8 -to HDMI_TX_D[2]
+set_location_assignment PIN_Y8 -to HDMI_TX_D[3]
+set_location_assignment PIN_AD11 -to HDMI_TX_D[4]
+set_location_assignment PIN_AD10 -to HDMI_TX_D[5]
+set_location_assignment PIN_AE11 -to HDMI_TX_D[6]
+set_location_assignment PIN_Y5 -to HDMI_TX_D[7]
+set_location_assignment PIN_AF10 -to HDMI_TX_D[8]
+set_location_assignment PIN_Y4 -to HDMI_TX_D[9]
+set_location_assignment PIN_T8 -to HDMI_TX_HS
+set_location_assignment PIN_AF11 -to HDMI_TX_INT
+set_location_assignment PIN_V13 -to HDMI_TX_VS
+set_location_assignment PIN_U14 -to IO_SCL
+set_location_assignment PIN_AG9 -to IO_SDA
+set_location_assignment PIN_AH17 -to KEY[0]
+set_location_assignment PIN_AH16 -to KEY[1]
+set_location_assignment PIN_W15 -to LED[0]
+set_location_assignment PIN_AA24 -to LED[1]
+set_location_assignment PIN_V16 -to LED[2]
+set_location_assignment PIN_V15 -to LED[3]
+set_location_assignment PIN_AF26 -to LED[4]
+set_location_assignment PIN_AE26 -to LED[5]
+set_location_assignment PIN_Y16 -to LED[6]
+set_location_assignment PIN_AA23 -to LED[7]
+set_location_assignment PIN_AA15 -to LED_HDD
+set_location_assignment PIN_AG28 -to LED_POWER
+set_location_assignment PIN_Y15 -to LED_USER
+set_location_assignment PIN_AH7 -to SDCD_SPDIF
+set_location_assignment PIN_AH26 -to SDIO_CLK
+set_location_assignment PIN_AF27 -to SDIO_CMD
+set_location_assignment PIN_AF25 -to SDIO_DAT[0]
+set_location_assignment PIN_AF23 -to SDIO_DAT[1]
+set_location_assignment PIN_AD26 -to SDIO_DAT[2]
+set_location_assignment PIN_AF28 -to SDIO_DAT[3]
+set_location_assignment PIN_Y11 -to SDRAM_A[0]
+set_location_assignment PIN_AB26 -to SDRAM_A[10]
+set_location_assignment PIN_AD17 -to SDRAM_A[11]
+set_location_assignment PIN_D12 -to SDRAM_A[12]
+set_location_assignment PIN_AA26 -to SDRAM_A[1]
+set_location_assignment PIN_AA13 -to SDRAM_A[2]
+set_location_assignment PIN_AA11 -to SDRAM_A[3]
+set_location_assignment PIN_W11 -to SDRAM_A[4]
+set_location_assignment PIN_Y19 -to SDRAM_A[5]
+set_location_assignment PIN_AB23 -to SDRAM_A[6]
+set_location_assignment PIN_AC23 -to SDRAM_A[7]
+set_location_assignment PIN_AC22 -to SDRAM_A[8]
+set_location_assignment PIN_C12 -to SDRAM_A[9]
+set_location_assignment PIN_Y17 -to SDRAM_BA[0]
+set_location_assignment PIN_AB25 -to SDRAM_BA[1]
+set_location_assignment PIN_AG10 -to SDRAM_CKE
+set_location_assignment PIN_AD20 -to SDRAM_CLK
+set_location_assignment PIN_AF13 -to SDRAM_DQMH
+set_location_assignment PIN_AG13 -to SDRAM_DQML
+set_location_assignment PIN_V12 -to SDRAM_DQ[0]
+set_location_assignment PIN_AE6 -to SDRAM_DQ[10]
+set_location_assignment PIN_AE23 -to SDRAM_DQ[11]
+set_location_assignment PIN_AG14 -to SDRAM_DQ[12]
+set_location_assignment PIN_AD5 -to SDRAM_DQ[13]
+set_location_assignment PIN_AF4 -to SDRAM_DQ[14]
+set_location_assignment PIN_AH3 -to SDRAM_DQ[15]
+set_location_assignment PIN_E8 -to SDRAM_DQ[1]
+set_location_assignment PIN_D11 -to SDRAM_DQ[2]
+set_location_assignment PIN_W12 -to SDRAM_DQ[3]
+set_location_assignment PIN_AH13 -to SDRAM_DQ[4]
+set_location_assignment PIN_D8 -to SDRAM_DQ[5]
+set_location_assignment PIN_AH14 -to SDRAM_DQ[6]
+set_location_assignment PIN_AF7 -to SDRAM_DQ[7]
+set_location_assignment PIN_AE24 -to SDRAM_DQ[8]
+set_location_assignment PIN_AD23 -to SDRAM_DQ[9]
+set_location_assignment PIN_AA18 -to SDRAM_nCAS
+set_location_assignment PIN_Y18 -to SDRAM_nCS
+set_location_assignment PIN_W14 -to SDRAM_nRAS
+set_location_assignment PIN_AA19 -to SDRAM_nWE
+set_location_assignment PIN_AG8 -to SD_SPI_CLK
+set_location_assignment PIN_AE15 -to SD_SPI_CS
+set_location_assignment PIN_AH8 -to SD_SPI_MISO
+set_location_assignment PIN_U13 -to SD_SPI_MOSI
+set_location_assignment PIN_Y24 -to SW[0]
+set_location_assignment PIN_W24 -to SW[1]
+set_location_assignment PIN_W21 -to SW[2]
+set_location_assignment PIN_W20 -to SW[3]
+set_location_assignment PIN_AG11 -to USER_IO[0]
+set_location_assignment PIN_AH9 -to USER_IO[1]
+set_location_assignment PIN_AH12 -to USER_IO[2]
+set_location_assignment PIN_AH11 -to USER_IO[3]
+set_location_assignment PIN_AG16 -to USER_IO[4]
+set_location_assignment PIN_AF15 -to USER_IO[5]
+set_location_assignment PIN_AF17 -to USER_IO[6]
+set_location_assignment PIN_AG21 -to VGA_B[0]
+set_location_assignment PIN_AA20 -to VGA_B[1]
+set_location_assignment PIN_AE22 -to VGA_B[2]
+set_location_assignment PIN_AF22 -to VGA_B[3]
+set_location_assignment PIN_AH23 -to VGA_B[4]
+set_location_assignment PIN_AH21 -to VGA_B[5]
+set_location_assignment PIN_AH27 -to VGA_EN
+set_location_assignment PIN_AE19 -to VGA_G[0]
+set_location_assignment PIN_AG15 -to VGA_G[1]
+set_location_assignment PIN_AF18 -to VGA_G[2]
+set_location_assignment PIN_AG18 -to VGA_G[3]
+set_location_assignment PIN_AG19 -to VGA_G[4]
+set_location_assignment PIN_AG20 -to VGA_G[5]
+set_location_assignment PIN_AH22 -to VGA_HS
+set_location_assignment PIN_AE17 -to VGA_R[0]
+set_location_assignment PIN_AE20 -to VGA_R[1]
+set_location_assignment PIN_AF20 -to VGA_R[2]
+set_location_assignment PIN_AH18 -to VGA_R[3]
+set_location_assignment PIN_AH19 -to VGA_R[4]
+set_location_assignment PIN_AF21 -to VGA_R[5]
+set_location_assignment PIN_AG24 -to VGA_VS
+set_global_assignment -name DEVICE_FILTER_PACKAGE UFBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 672
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 7
+set_global_assignment -name DEVICE 5CSEBA6U23I7
+set_global_assignment -name FAMILY "Cyclone V"
+set_global_assignment -name CDF_FILE jtag.cdf
+set_global_assignment -name QIP_FILE sys/sys.qip
+set_global_assignment -name QIP_FILE rtl/pll.qip
+set_global_assignment -name SDC_FILE MacQuadra800.sdc
+set_global_assignment -name SYSTEMVERILOG_FILE MacQuadra800.sv
+set_global_assignment -name QIP_FILE rtl/ap68040/rtl/ap040.qip
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/ap68040/experimental/ap040_pipeline_integer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/wombat_cpu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/wombat_store_buffer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/wombat_bus32.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/quadra800.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/iosb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/via6522.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/dafb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/rtc3430042.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/easc.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/ncr53c96.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/cd_audio.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/sonic_mbx.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/scsi_cache.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/adb.sv
+set_global_assignment -name VERILOG_FILE rtl/dpram.v
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/sdram.sv
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to SDRAM_DQ[*]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to HDMI_TX_CLK
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to HDMI_TX_DE
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to HDMI_TX_D[*]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to HDMI_TX_HS
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to HDMI_TX_VS
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_*
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[*]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to AUDIO_*
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to IO_S*
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDCD_SPDIF
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDIO_*
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_*
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SD_SPI*
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to USER_IO[*]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to VGA_*
+set_hps_location_assignment HPSINTERFACEPERIPHERALI2C_X52_Y60_N111 -to hdmi_i2c
+set_hps_location_assignment HPSINTERFACEPERIPHERALSPIMASTER_X52_Y72_N111 -to spi
+set_hps_location_assignment HPSINTERFACEPERIPHERALUART_X52_Y67_N111 -to uart
+set_instance_assignment -name ALLOW_SYNCH_CTRL_USAGE OFF -to *|SDRAM_*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_CONVST
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_SCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_SDI
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_SDO
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUDIO_*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to BTN_*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_CLK1_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_CLK2_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_CLK3_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_I2C_*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_I2S
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_LRCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_MCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_SCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_TX_*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_S*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDCD_SPDIF
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDIO_*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SD_SPI*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to USER_IO[*]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_*
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to BTN_*
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IO_S*
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SDCD_SPDIF
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SDIO_CMD
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SDIO_DAT[*]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SD_SPI*
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to USER_IO[*]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to VGA_EN
+set_global_assignment -name VERILOG_FILE rtl/pll_video.v
+set_global_assignment -name VERILOG_FILE rtl/scc.v
+set_global_assignment -name VERILOG_FILE rtl/uart/txuart.v
+set_global_assignment -name VERILOG_FILE rtl/uart/rxuart.v
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/sdram_beat32.sv
+
+# 2026-09-19 P9combined 28b164d seed21: MET,39782ALMs95%,26340regs491RAM43DSP.
+# CPU+1.084ns HDMI+.071 SDRAM+.643 hold+.229; crossings sys2ram+.941 ram2sys+1.084.
+# MOVE/RTS retirement and CAS fast-flag decisions. Source/hash/cross checks pass.
+
+# 2026-09-19 P12span1fb24fc seed21: MET39897ALMs95%,26335regs491RAM43DSP.
+# CPU+.366 HDMI+.093 SDRAM+.633 hold+.242, crossings+.670/+.366.
+# Within-line spanning read begins at idle admission; source/hash/cross checks pass.
+
+# 2026-09-19 P26 within-page unaligned operands (c8c58bf), seed21:
+# MET 39,730 ALMs95%,26,362regs,491RAM,43DSP; CPU+.775,HDMI+.113,
+# SDRAM+.668,hold+.205ns; crossings sys->ram+1.186,ram->sys+.775ns.
+# Archived source-verified RBF in scratch/p26unaligned_fit_20260919.
+
+# 2026-09-19 P33 MOVE destination overlap (32fb678), seed21:
+# MET 39,823 ALMs95%,26,373regs,491RAM,43DSP; CPU+.546,HDMI+.292,
+# SDRAM+.376,hold+.199ns; crossings sys->ram+.376,ram->sys+.546ns.
+# Source/hash/cross verified archive scratch/p33move_fit_20260919.
+# 2026-09-19 P39 64-byte refill/read retirement (26b644c), seed21:
+# 41,347 ALMs99%,26,531 registers,491 RAM,43 DSP. CPU -3.701ns
+# (TNS -655.169), HDMI +.088, SDRAM +.203, hold +.247ns.
+# sys->ram +.203, ram->sys +.326. Source/cross checks PASS; marginal
+# hardware trial only. CPU worst path: pipeline ALU flags -> branch refill.
+# Archive scratch/p39refill64_fit_20260919; bounded read flags under test.
+
+# 2026-09-20 P47 fast read flags (406a098), seed21: placement FAILED.
+# Required4356LABs > available4191; no freshRBF. P52 returns refill to64bytes
+# while retaining bounded prefix logic, indirectTST, residentCMP and fastflags.
+
+# 2026-09-20 P52 refill64/fastflags (fc6c880), seed21: placement passed,
+# routing FAILED from congestion. 41,356 ALMs99%,26,038regs,43DSP;
+# 3,740,942 memory bits. No fresh RBF. Source check PASS; archive
+# scratch/p52refill64_fit_20260920. P57 early MOVE store uses seed22
+# for a different placement; divider remains unchanged pending P59 gates.
+
+# 2026-09-20 P57 early MOVE store (e5066a2), seed22: placement passed,
+# routing FAILED congestion (16618/188026), 41,260 ALMs (98%), 26,039 regs,
+# 491 RAM blocks, 43 DSP. No fresh RBF; source manifest passed. Archive:
+# scratch/p57movestore_fit_20260920. P63 keeps seed22 and reduces only the
+# pipeline ALU operation set; full CPU/silicon100 qualification passed.
+
+# 2026-09-20 P63 pipeline ALU subset (6fbe313), seed22: FIT SUCCESS,
+# 41,174 ALMs98%,26,579regs,491RAMblocks,43DSP. Timing FAILED:
+# CPU -1.709ns, HDMI -0.213ns, SDRAM +0.478ns, worst hold +0.242ns.
+# Cross sys->RAM +2.325ns, RAM->sys +0.827ns. Archived fresh RBF in
+# scratch/p63subset_fit_20260920. Next development build keeps exact P63 CPU
+# and seed22, temporarily omits CD-ROM/audio and Ethernet using macros above.
+# DEVELOPMENT ONLY: restore both features and revalidate before release.
+
+# 2026-09-20 P63devnocdnet (29190fe), seed22: FIT SUCCESS,39,411ALMs94%,
+# 25,372regs,483RAMblocks,41DSP. CPU-.862ns,HDMI-.268ns,SDRAM+.796ns,
+# holdmin+.172ns,crosssysram+1.229ns/ramsys+1.259ns. Timing-failed development
+# trial, archived scratch/p63devnocdnet_fit_20260920. P64devmove retains these
+# temporary feature omissions and adds only qualified d16 MOVE destination overlap.
+
+# P90 qualified MMU at seed22:39465ALMs,CPU-.140,HDMI-.123,SDRAM+.380.
+# P93 parallel tags seed22:39432ALMs,CPU-1.612; rejected, P90 restored.
+# P94 uses identical P90 RTL at seed23 to test placement-only timing closure.
+
+# P94 seed23:39543ALMs,CPU-2.117,HDMI+.289,SDRAM+.178; restoreseed22.
+
+# P97 queue4 seed22:39614ALMs,CPU-.682ns,crosssysram+.529/ramsys+.387.
+# P99 adds qualified FPU operand-read hints/early issue; seed22, development
+# CD-ROM/audio and Ethernet omissions retained. Fit result pending.
+# P99 seed22 (4cd5824):39643ALMs,25627regs,482RAM,42DSP; CPU-1.531ns,
+# HDMI-.143ns,SDRAM+.266ns. Archive p99devfpuread_fit_20260920; source and
+# cross/detailed STA checks completed. Timing-failed development core, not released.
+
+# P102 seed22 (2c31be6):39537ALMs,CPU-1.009ns,HDMI+.177ns,RAM+.098ns.
+# P104 seed22 (53fb722):39542ALMs,CPU-1.019ns,HDMI-.269ns,RAM+.141ns.
+# P105 read selector seed22 (1e398ef):39464ALMs,CPU-.069ns,TNS-.069,
+# HDMI+.212ns,RAM+.386ns. Entire archive/cross/STA complete; no hardware test.
+# Retry same qualified P105 logic with seed23 to resolve marginal setup miss.
+
+# P105 seed23 (cd3fffc):39549ALMs,CPU+.293ns,HDMI+.196ns,RAM+.227ns;
+# cross sys-to-ram+.227ns/ram-to-sys+.541ns. All timing met.
+# P106 settled MOVE destination base qualified; retain seed23, dev features.
+
+# P106 seed23 (70debea):39617ALMs,CPU+.117ns,HDMI+.029ns,RAM+.371ns;
+# alltimingmet. P108b qualified d16 destination acknowledgement; retainseed23.

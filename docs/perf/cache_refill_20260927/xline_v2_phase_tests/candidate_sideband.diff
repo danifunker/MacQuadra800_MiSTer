@@ -1,0 +1,138 @@
+--- baseline_ap040_cache.v
++++ candidate_sideband_ap040_cache.v
+@@ -469,6 +469,7 @@
+ reg         sline_ready;         // a spanning store's line read has completed
+ reg         sp_held;             // ... and its two merge words are held (P187)
+ reg  [31:0] sp_h0, sp_h1;
++reg         xfirst_fill;         // fill first line, then replay unacknowledged crossing read
+ reg         fill_acked;          // the requester already has its data
+ reg  [31:0] r_wdata;             // captured aligned store data for hit update
+ reg         ack_r;
+@@ -705,7 +706,11 @@
+                                                         m_line_data[31:0];
+ wire fill_line_write = fill_line_match;
+ 
+-assign m_req   = fill_active ? !fill_line_match :
++// A first-line crossing fill may fetch only the requested critical word.
++// Other words can be copied from an already-complete retained line; never
++// issue new nonoperand tail reads while the crossing operand is pending.
++wire xfirst_local_tail = xfirst_fill && (fill_cnt != 2'd0);
++assign m_req   = fill_active ? (!fill_line_match && !xfirst_local_tail) :
+                  (pass_active ? (post_active | c_req) : 1'b0);
+ assign m_write = fill_active ? 1'b0 : (post_active | c_write);
+ assign m_instr = fill_active ? r_bank : (post_active ? 1'b0 : c_instr);
+@@ -1356,7 +1361,7 @@
+ 		fill_hold <= 0; r_wdata <= 0; pass_store_chk <= 0;
+ 		fill_hold2 <= 0; r_span2 <= 0; look2 <= 0; r_hway <= 0;
+ 		r_xline <= 0; xlook <= 0; xsnooped <= 0; r_setB <= 0; r_tagB <= 0;
+-		fill_cnt <= 0; fill_acked <= 0; r_fc <= 0; sline_ready <= 0; sp_held <= 0;
++		fill_cnt <= 0; fill_acked <= 0; xfirst_fill <= 0; r_fc <= 0; sline_ready <= 0; sp_held <= 0;
+ 		post_active <= 0; p_addr <= 0; p_wdata <= 0; p_size <= 0; p_fc <= 0;
+ 		iline_pending <= 0; iline_valid <= 0; iline_way <= 0;
+ 		iline_tag <= 0; iline_data <= 0; iline_stb <= 0; iline_stb_pend <= 0;
+@@ -1587,6 +1592,7 @@
+ 					end
+ 					else begin
+ 						// cacheable read: the tag row read runs in parallel
++						xfirst_fill <= 0;
+ 						r_row <= a_row;
+ 						r_tag <= a_tag;
+ 						r_bank <= c_instr;
+@@ -1694,7 +1700,13 @@
+ 				// a free-running snoop owns port B when it fires; retry
+ 				// until this row's invalidate is the one that lands
+ 				if (!snoop_wr) begin
+-                    cst <= cross_fault ? C_WINV : C_IDLE;
++                    if (xfirst_fill) begin
++                        // Retained-line availability vanished without a bus error.
++                        // Invalidate overwritten victim data before direct fallback.
++                        xfirst_fill <= 0;
++                        pass_ci_chk <= 0;
++                        cst <= C_PASS;
++                    end else cst <= cross_fault ? C_WINV : C_IDLE;
+ `ifdef AP040_EXPERIMENTAL_XSTORE
+                     cross_fault <= 0;
+ `endif
+@@ -1774,13 +1786,26 @@
+ 				end
+ 				else if (r_xline) begin
+ 					// first line: keep its word 3 and look the next line
+-					// up (xlook_read runs the reads); a miss bypasses
++					// up (xlook_read runs the reads); a clean miss fills first
+ 					if (xlook_read) begin
+ 						fill_hold2 <= data_hit;
+ 						xsnooped <= snoop_xrow;
+ 						xlook <= 1;
+ 					end
+-					else begin
++					else if (!look_hit && !look_snooped && !snoop_look_row && !inv_wren) begin
++                        // Allocate the first line without acknowledging the crossing
++                        // operand. After publication the held request replays through
++                        // the existing first-hit / second-line path.
++                        r_way <= !v_w0 ? 2'd0 : !v_w1 ? 2'd1 : !v_w2 ? 2'd2 :
++                                 !v_w3 ? 2'd3 : tag_q[ROWW-1:ROWW-2];
++                        r_beat <= r_addr[3:2];
++                        fill_cnt <= 0;
++                        fill_acked <= 0;
++                        r_issued <= 0;
++                        xfirst_fill <= 1;
++                        cst <= C_FILL;
++                    end
++                    else begin
+ 						pass_ci_chk <= 0;
+ 						cst <= C_PASS;
+ 					end
+@@ -1835,6 +1860,7 @@
+ 					// once the requester has its data the request is gone;
+ 					// holding would block the next one forever
+ 					err_hold <= !fill_acked;
++                    xfirst_fill <= 0;
+ 					cst <= C_FERR;
+ 				end
+ 				else if (fill_line_match || (r_issued && m_ack)) begin : fill_beat
+@@ -1846,7 +1872,7 @@
+ 					w = fill_line_match ? fill_line_word : m_rdata;
+ 					if (fill_cnt == 2'd0) fill_hold <= w;
+ 					if (fill_cnt == 2'd1) fill_hold2 <= w;
+-					if (!fill_acked &&
++					if (!fill_acked && !xfirst_fill &&
+ 					    ((fill_cnt == 2'd0 && !r_span2) || (fill_cnt == 2'd1 && r_span2))) begin
+ 						rdata_r <= r_span2 ? span_extract({fill_hold, w}, r_size, r_off) :
+ 						           r_xline ? span_extract({fill_hold2, w}, r_size, r_off)
+@@ -1861,13 +1887,18 @@
+ 						fill_cnt <= fill_cnt + 2'd1;
+ 					end
+ 				end
++                else if (xfirst_local_tail && !r_issued) begin
++                    // No physical tail request was issued. Discard the partial
++                    // allocation and finish the original crossing read via PASS.
++                    cst <= C_FERR;
++                end
+ 				else if (!r_issued) r_issued <= 1;
+ 			end
+ 
+ 			C_TAGW: begin
+ 				// the tag row write runs in parallel (tag_we): new tag,
+ 				// its valid bit, and the advanced round robin
+-				if (!fill_acked) begin
++				if (!fill_acked && !xfirst_fill) begin
+ 					rdata_r <= r_span2 ? span_extract({fill_hold, fill_hold2}, r_size, r_off) :
+ 					           r_xline ? span_extract({fill_hold2, fill_hold}, r_size, r_off)
+ 					                   : lw_extract(fill_hold, r_size, r_off);
+@@ -1882,7 +1913,15 @@
+ 					iline_way <= r_way;
+ 					iline_tag <= r_addr[31:4];
+ 				end
+-				cst <= C_IDLE;
++                if (xfirst_fill) begin
++                    xfirst_fill <= 0;
++                    if (fill_snooped || snoop_fill_row || inv_wren) begin
++                        // Do not retry a poisoned or conflicting publication.
++                        // C_PASS still uses the original held address and size.
++                        pass_ci_chk <= 0;
++                        cst <= C_PASS;
++                    end else cst <= C_IDLE;
++                end else cst <= C_IDLE;
+ 			end
+ 
+ 			default: cst <= C_IDLE;

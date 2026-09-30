@@ -1,0 +1,13 @@
+{
+  "prelaunch_checked_unix_time": 1790570613.6033778,
+  "preexisting_quartus_processes": [],
+  "tracked_input_count": 1892,
+  "prior_seed27_differences": [
+    "rtl/ap68040/rtl/ap040_fpu.v"
+  ],
+  "candidate_fpu_sha256": "55ff9b3cd1d59069ec0b94ca17e4dc3a8c87ac031317902285444d92643724a2",
+  "qsf_sha256": "9b6fa7c352dd7667339e6e6ec4f03a00d1894b7e7fce14908f8b57b99c059ec4",
+  "sdc_sha256": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062",
+  "local_env_mode": "0600",
+  "status": "verified immediately before authorized launch"
+}

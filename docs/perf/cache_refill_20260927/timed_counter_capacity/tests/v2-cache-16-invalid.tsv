@@ -1,0 +1,89 @@
+META	format	fpu-timed-profile-v2
+META	clock	post_eval_33MHz_rising_edges
+META	timer_bracket	start_trap_return_inclusive_to_stop_trap_call_exclusive
+META	callback_bracket	JSR_call_inclusive_to_return_exclusive
+META	raw_microseconds	A0_D0_at_timer_trap_returns
+META	site_labels	unknown_three_CODE3_sites
+META	raw_cap	4096
+META	invalid_samples	0
+META	raw_dropped	0
+META	diagnostic_dropped	0
+SCHEMA	TOTAL	site	span	status	clocks	dispatches	bg_samples	blocking_decode	go_samples	mrd_fill_overlap	mrd_fill_unacked_overlap
+SCHEMA	HISTOGRAM	kind	site	span	status	id	clocks
+SCHEMA	RAW	site	start_A0D0	stop_A0D0	delta_u64	backwards	start_return_cycle	stop_return_cycle
+SCHEMA	DIAG	site	cycle	kind	reason
+LIFECYCLE	0	identifies=1	unmatched=0	raw_pairs=1	raw_missing=0
+SPAN	0	timer	starts=1	complete=1	aborted=0	open=0
+SPAN	0	callback	starts=1	complete=1	aborted=0	open=0
+TOTAL	0	timer	complete	3	1	1	1	1	1	1
+CORE	0	timer	complete	9	1
+CORE	0	timer	complete	153	1
+CORE	0	timer	complete	160	1
+CACHE	0	timer	complete	4	1
+CACHE	0	timer	complete	8	2
+FPU_FST	0	timer	complete	0	1
+FPU_FST	0	timer	complete	1	2
+FPU_OP_BUSY	0	timer	complete	17	2
+TOTAL	0	timer	partial	0	0	0	0	0	0	0
+TOTAL	0	callback	complete	3	1	1	1	1	1	1
+CORE	0	callback	complete	9	1
+CORE	0	callback	complete	153	1
+CORE	0	callback	complete	160	1
+CACHE	0	callback	complete	4	1
+CACHE	0	callback	complete	9	2
+FPU_FST	0	callback	complete	0	1
+FPU_FST	0	callback	complete	1	2
+FPU_OP_BUSY	0	callback	complete	17	2
+TOTAL	0	callback	partial	0	0	0	0	0	0	0
+RAW	0	100	120	20	0	50	70
+DIAG	0	1	identify	
+LIFECYCLE	1	identifies=1	unmatched=0	raw_pairs=1	raw_missing=0
+SPAN	1	timer	starts=1	complete=1	aborted=0	open=0
+SPAN	1	callback	starts=1	complete=1	aborted=0	open=0
+TOTAL	1	timer	complete	3	1	1	1	1	1	1
+CORE	1	timer	complete	9	1
+CORE	1	timer	complete	153	1
+CORE	1	timer	complete	160	1
+CACHE	1	timer	complete	4	1
+CACHE	1	timer	complete	16	2
+FPU_FST	1	timer	complete	0	1
+FPU_FST	1	timer	complete	1	2
+FPU_OP_BUSY	1	timer	complete	17	2
+TOTAL	1	timer	partial	0	0	0	0	0	0	0
+TOTAL	1	callback	complete	3	1	1	1	1	1	1
+CORE	1	callback	complete	9	1
+CORE	1	callback	complete	153	1
+CORE	1	callback	complete	160	1
+CACHE	1	callback	complete	4	1
+CACHE	1	callback	complete	0	2
+FPU_FST	1	callback	complete	0	1
+FPU_FST	1	callback	complete	1	2
+FPU_OP_BUSY	1	callback	complete	17	2
+TOTAL	1	callback	partial	0	0	0	0	0	0	0
+RAW	1	100	120	20	0	50	70
+DIAG	1	1	identify	
+LIFECYCLE	2	identifies=1	unmatched=0	raw_pairs=1	raw_missing=0
+SPAN	2	timer	starts=1	complete=1	aborted=0	open=0
+SPAN	2	callback	starts=1	complete=1	aborted=0	open=0
+TOTAL	2	timer	complete	3	1	1	1	1	1	1
+CORE	2	timer	complete	9	1
+CORE	2	timer	complete	153	1
+CORE	2	timer	complete	160	1
+CACHE	2	timer	complete	4	1
+CACHE	2	timer	complete	0	2
+FPU_FST	2	timer	complete	0	1
+FPU_FST	2	timer	complete	1	2
+FPU_OP_BUSY	2	timer	complete	17	2
+TOTAL	2	timer	partial	0	0	0	0	0	0	0
+TOTAL	2	callback	complete	3	1	1	1	1	1	1
+CORE	2	callback	complete	9	1
+CORE	2	callback	complete	153	1
+CORE	2	callback	complete	160	1
+CACHE	2	callback	complete	4	1
+CACHE	2	callback	complete	0	2
+FPU_FST	2	callback	complete	0	1
+FPU_FST	2	callback	complete	1	2
+FPU_OP_BUSY	2	callback	complete	17	2
+TOTAL	2	callback	partial	0	0	0	0	0	0	0
+RAW	2	100	120	20	0	50	70
+DIAG	2	1	identify	

@@ -1,3 +1,4 @@
+#include <map>
 // wombat33 — Verilator simulation main
 //
 // Same framework as the other cores' verilator setups (ImGui + SDL2,
@@ -187,6 +188,7 @@ static bool dispatched = false;
 
 #include "../scripts/fixtures/speedometer_timing_observer/adapter.inc"
 #include "sim_ram_snapshot.h"
+#include "sim_refill_profile.h"
 
 // Simulation-only exact-workload profiler. SIGUSR1 resets/starts the
 // bracket; SIGUSR2 stops it and writes the report.
@@ -200,6 +202,9 @@ static uint8_t bracket_prev_state = 0;
 static uint64_t bracket_dispatches = 0;
 static uint64_t bracket_cycles, bracket_state_cycles[256], bracket_state_entries[256];
 static uint64_t bracket_transitions[256][256], bracket_opcodes[65536];
+// cache maintenance (CINV/CPUSH, F4xx): dispatch PC and the return address on
+// the stack, to find who flushes (2026-09-26)
+static std::map<uint64_t, uint64_t> bracket_f4_sites, bracket_f4_calls;
 static uint64_t bracket_cache_states[8], bracket_rd_accept, bracket_look_hit, bracket_ipred_hit;
 
 static uint64_t bracket_ic_enabled, bracket_dc_enabled, bracket_mmu_enabled;
@@ -208,6 +213,7 @@ static uint64_t bracket_mrd_cst[8], bracket_mwr_cst[8], bracket_mrd_sbpend, brac
 static uint64_t bracket_fill_d, bracket_fill_i, bracket_sb_full, bracket_read_behind_store;
 static uint64_t bracket_pass_write, bracket_pass_read, bracket_sb_pushes;
 static uint8_t bracket_prev_cst = 0;
+static SimRefillProfile bracket_refill;
 static void bracket_start_signal(int) { bracket_start_req = 1; }
 static void bracket_stop_signal(int) { bracket_stop_req = 1; }
 
@@ -219,16 +225,19 @@ static void bracket_reset() {
 	memset(bracket_state_entries, 0, sizeof(bracket_state_entries));
 	memset(bracket_transitions, 0, sizeof(bracket_transitions));
 	memset(bracket_opcodes, 0, sizeof(bracket_opcodes));
+	bracket_f4_sites.clear(); bracket_f4_calls.clear();
 	memset(bracket_cache_states, 0, sizeof(bracket_cache_states));
 	memset(bracket_mrd_cst, 0, sizeof(bracket_mrd_cst)); memset(bracket_mwr_cst, 0, sizeof(bracket_mwr_cst));
 	bracket_mrd_sbpend = bracket_mwr_sbpend = bracket_fill_d = bracket_fill_i = bracket_sb_full = 0;
 	bracket_read_behind_store = bracket_pass_write = bracket_pass_read = bracket_sb_pushes = 0;
 	bracket_prev_valid = false;
 	bracket_prev_cst = 0xff;
+	bracket_refill.reset();
 }
 
 static void bracket_dump() {
 	if (bracket_file.empty()) return;
+	bracket_refill.stop();
 	FILE* f = fopen(bracket_file.c_str(), "w");
 	if (!f) { fprintf(stderr, "[CPU-PROFILE] cannot write %s\n", bracket_file.c_str()); return; }
 	uint64_t dispatches = bracket_dispatches;
@@ -268,6 +277,49 @@ static void bracket_dump() {
 	fprintf(f, "MEM\tread_with_store_pending_samples\t%llu\n", (unsigned long long)bracket_read_behind_store);
 	fprintf(f, "MEM\tpass_cycles_write\t%llu\n", (unsigned long long)bracket_pass_write);
 	fprintf(f, "MEM\tpass_cycles_read\t%llu\n", (unsigned long long)bracket_pass_read);
+	// Post-eval refill register samples. The issued/acked columns describe
+	// cache state at the edge; they are not memory bus transaction counts.
+	fprintf(f, "REFILL_META\tclock_sample\tpost_eval_rising_edge\n");
+	fprintf(f, "REFILL_META\tduration\tC_FILL_through_C_TAGW_complete_bracket_spans_only\n");
+	fprintf(f, "REFILL_META\tmrd_overlap\tcore_state_9_and_C_FILL_same_sample\n");
+	fprintf(f, "REFILL_META\tstates\tissued_is_registered_state_local_match_is_combinational_setup_is_neither\n");
+	fprintf(f, "REFILL_PARTIAL\tstart\t%llu\n", (unsigned long long)bracket_refill.partial_at_start);
+	fprintf(f, "REFILL_PARTIAL\tend\t%llu\n", (unsigned long long)bracket_refill.partial_at_end);
+	fprintf(f, "REFILL_PARTIAL\taborted\t%llu\n", (unsigned long long)bracket_refill.aborted);
+	fprintf(f, "REFILL_REGION\tbank\tregion\tfill_entries\tfill_samples\ttagwrite_samples\tissued_state_samples\tlocal_match_samples\tsetup_state_samples\tmrd_overlap_samples\tcompleted\n");
+	for (int bank = 0; bank < 2; bank++) for (int reg = 0; reg < 3; reg++) {
+		uint64_t fill = 0;
+		for (int beat = 0; beat < 4; beat++) for (int issued = 0; issued < 2; issued++)
+			for (int acked = 0; acked < 2; acked++)
+				fill += bracket_refill.fill_samples[bank][reg][beat][issued][acked];
+		if (fill || bracket_refill.tagwrite_samples[bank][reg])
+			fprintf(f, "REFILL_REGION\t%s\t%s\t%llu\t%llu\t%llu\t%llu\t%llu\t%llu\t%llu\t%llu\n",
+			        bank ? "instruction" : "data", reg == 0 ? "ram" : reg == 1 ? "rom" : "other",
+			        (unsigned long long)bracket_refill.fill_entries[bank][reg],
+			        (unsigned long long)fill,
+			        (unsigned long long)bracket_refill.tagwrite_samples[bank][reg],
+			        (unsigned long long)bracket_refill.issued_state_samples[bank][reg],
+			        (unsigned long long)bracket_refill.local_match_samples[bank][reg],
+			        (unsigned long long)bracket_refill.setup_state_samples[bank][reg],
+			        (unsigned long long)bracket_refill.mrd_overlap_samples[bank][reg],
+			        (unsigned long long)bracket_refill.completed[bank][reg]);
+	}
+	fprintf(f, "REFILL_SAMPLE\tbank\tregion\tfill_cnt\tr_issued\tfill_acked\tclocks\n");
+	for (int bank = 0; bank < 2; bank++) for (int reg = 0; reg < 3; reg++)
+		for (int beat = 0; beat < 4; beat++) for (int issued = 0; issued < 2; issued++)
+			for (int acked = 0; acked < 2; acked++) {
+				uint64_t clocks = bracket_refill.fill_samples[bank][reg][beat][issued][acked];
+				if (clocks) fprintf(f, "REFILL_SAMPLE\t%s\t%s\t%d\t%d\t%d\t%llu\n",
+				                    bank ? "instruction" : "data", reg == 0 ? "ram" : reg == 1 ? "rom" : "other",
+				                    beat, issued, acked, (unsigned long long)clocks);
+			}
+	fprintf(f, "REFILL_DURATION\tbank\tregion\tclocks\tcomplete_fills\n");
+	for (const auto &kv : bracket_refill.duration_hist) {
+		const unsigned bank = (kv.first >> 2) & 1, reg = kv.first & 3;
+		fprintf(f, "REFILL_DURATION\t%s\t%s\t%llu\t%llu\n",
+		        bank ? "instruction" : "data", reg == 0 ? "ram" : reg == 1 ? "rom" : "other",
+		        (unsigned long long)(kv.first >> 3), (unsigned long long)kv.second);
+	}
 	fprintf(f, "CACHE_STATE\tid\tcycles\tpercent\n");
 	for (int i=0; i<8; i++) if (bracket_cache_states[i])
 		fprintf(f, "CACHE_STATE\t%d\t%llu\t%.6f\n", i,
@@ -281,6 +333,13 @@ static void bracket_dump() {
 	std::vector<int> ops;
 	for (int i=0; i<65536; i++) if (bracket_opcodes[i]) ops.push_back(i);
 	std::sort(ops.begin(), ops.end(), [](int a,int b) { return bracket_opcodes[a] > bracket_opcodes[b]; });
+	for (auto &kv : bracket_f4_sites)
+		fprintf(f, "F4SITE\t%04X\t%08X\t%llu\n", (unsigned)(kv.first >> 32), (uint32_t)kv.first,
+		        (unsigned long long)kv.second);
+	for (auto &kv : bracket_f4_calls)
+		if (kv.second >= 100)
+			fprintf(f, "F4CALL\t%08X\t%08X\t%llu\n", (uint32_t)(kv.first >> 32), (uint32_t)kv.first,
+			        (unsigned long long)kv.second);
 	fprintf(f, "OPCODE\topcode\tdispatches\tpercent\n");
 	for (int op: ops)
 		fprintf(f, "OPCODE\t%04X\t%llu\t%.6f\n", op,
@@ -315,6 +374,13 @@ static void bracket_step(bool dispatch) {
 		const bool busreq = SIMEMU->__PVT__machine__DOT__cpu__DOT__cpu_bus_req;
 		const bool buswr = SIMEMU->__PVT__machine__DOT__cpu__DOT__cpu_bus_write;
 		const bool rbank = SIMEMU->__PVT__machine__DOT__cpu__DOT__g_cache__DOT__cache__DOT__r_bank;
+		bracket_refill.sample(cst & 7, rbank,
+			SIMEMU->__PVT__machine__DOT__cpu__DOT__g_cache__DOT__cache__DOT__r_addr,
+			SIMEMU->__PVT__machine__DOT__cpu__DOT__g_cache__DOT__cache__DOT__fill_cnt,
+			SIMEMU->__PVT__machine__DOT__cpu__DOT__g_cache__DOT__cache__DOT__r_issued,
+			SIMEMU->__PVT__machine__DOT__cpu__DOT__g_cache__DOT__cache__DOT__fill_acked,
+			SIMEMU->__PVT__machine__DOT__cpu__DOT__g_cache__DOT__cache__DOT__fill_line_match,
+			state == 9);
 		if (state == 9) { bracket_mrd_cst[cst&7]++; if (sbc) bracket_mrd_sbpend++; }
 		if (state == 10) { bracket_mwr_cst[cst&7]++; if (sbc) bracket_mwr_sbpend++; }
 		if ((cst&7) == 5 && bracket_prev_cst != 5) { if (rbank) bracket_fill_i++; else bracket_fill_d++; }
@@ -337,6 +403,13 @@ static void bracket_step(bool dispatch) {
 	if (dispatch) {
 		bracket_dispatches++;
 		bracket_opcodes[ir]++;
+		if ((ir & 0xFF00) == 0xF400) {
+			const uint32_t pc = SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__pc_i;
+			const uint32_t a7 = VERTOPINTERN->debug_a7;
+			const uint32_t ret = ((a7 >> 2) < sizeof(SIMEMU->ram) / sizeof(SIMEMU->ram[0])) ? SIMEMU->ram[a7 >> 2] : 0;
+			bracket_f4_sites[((uint64_t)ir << 32) | pc]++;
+			bracket_f4_calls[((uint64_t)pc << 32) | ret]++;
+		}
 	}
 	if (!bracket_prev_valid || state != bracket_prev_state) {
 		bracket_state_entries[state]++;

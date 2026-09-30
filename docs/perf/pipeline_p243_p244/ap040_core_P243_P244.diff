@@ -1,0 +1,103 @@
+--- a/rtl/ap68040/rtl/ap040_core.v
++++ b/rtl/ap68040/rtl/ap040_core.v
+@@ -2607,18 +2607,69 @@
+ // Forward final pipeline WB flags before SR's sequential update, just as
+ // legacy ALU lookahead forwards its producer's flags before retirement.
+ `ifdef AP040_EXPERIMENTAL_PIPELINE
+-wire [4:0] pipe_branch_ccr = pipe_retire ? pipe_ccr : sr[4:0];
++// P243: only a WB retire's registered flags (flags_in is wb_ccr whenever
++// wb_v); a fast read retire's flags come from this cycle's load data, and
++// the lookahead waits for S_DECODE instead (see rd_bcc_fl_ok).
++wire [4:0] pipe_branch_ccr = pipe_wb_retire ? pipe_alu_flags_in : sr[4:0];
+ `else
+ wire [4:0] pipe_branch_ccr = sr[4:0];
+ `endif
+-wire  [4:0] rd_bcc_fl = pipe_drain ? pipe_branch_ccr : (regs_alu_fire && p_flags) ? alu_fast_fl : sr[4:0];
++// P243 (2026-09-25): the lookahead Bcc's producer flags come from their own
++// small fast-flag unit whose operands never include this cycle's memory data.
++// With the ALU's fast flags, the one-clock cache hit's data ran through the
++// ALU into the taken decision, the refill seed and the next instruction's
++// register selects in the same clock (-2.5 ns in the pipeline fits).  An
++// ALU op retiring on a memory operand (S_MRD) now resolves its Bcc in
++// S_DECODE a cycle later; register and S_PIPE_SDONE (m_val) producers keep
++// the lookahead.
++wire [31:0] la_src = (state == S_PIPE_SDONE) ? m_val : (p_src == SK_REG) ? rf_capture_a : src_val;
++wire [31:0] la_a   = p_sextw ? {{16{la_src[15]}}, la_src[15:0]} : la_src;
++wire [31:0] la_b   = rf_capture_b;
++wire [31:0] la_mask = (op_size == `AP040_SZ_B) ? 32'h0000_00FF : (op_size == `AP040_SZ_W) ? 32'h0000_FFFF : 32'hFFFF_FFFF;
++wire [31:0] la_am  = la_a & la_mask;
++wire [31:0] la_bm  = la_b & la_mask;
++wire [32:0] la_add = {1'b0, la_bm} + {1'b0, la_am};
++wire [32:0] la_sub = {1'b0, la_bm} - {1'b0, la_am};
++function la_msb(input [1:0] sz, input [32:0] r);
++	la_msb = (sz == `AP040_SZ_B) ? r[7] : (sz == `AP040_SZ_W) ? r[15] : r[31];
++endfunction
++function la_cout(input [1:0] sz, input [32:0] r);
++	la_cout = (sz == `AP040_SZ_B) ? r[8] : (sz == `AP040_SZ_W) ? r[16] : r[32];
++endfunction
++wire la_a_msb = la_msb(op_size, {1'b0, la_am});
++wire la_b_msb = la_msb(op_size, {1'b0, la_bm});
++wire la_add_msb = la_msb(op_size, la_add), la_sub_msb = la_msb(op_size, la_sub);
++wire la_add_v = (la_a_msb == la_b_msb) && (la_add_msb != la_a_msb);
++wire la_sub_v = (la_a_msb != la_b_msb) && (la_sub_msb == la_a_msb);
++wire [31:0] la_and = la_bm & la_am, la_or = la_bm | la_am, la_eor = la_bm ^ la_am;
++reg  [4:0] la_fl;
++always @* begin
++	case (alu_op)
++		`AP040_ALU_ADD: la_fl = {la_cout(op_size, la_add), la_add_msb, (la_add[31:0] & la_mask) == 32'd0, la_add_v, la_cout(op_size, la_add)};
++		`AP040_ALU_SUB: la_fl = {la_cout(op_size, la_sub), la_sub_msb, (la_sub[31:0] & la_mask) == 32'd0, la_sub_v, la_cout(op_size, la_sub)};
++		`AP040_ALU_CMP: la_fl = {sr[4], la_sub_msb, (la_sub[31:0] & la_mask) == 32'd0, la_sub_v, la_cout(op_size, la_sub)};
++		`AP040_ALU_MOVE, `AP040_ALU_TST: la_fl = {sr[4], la_a_msb, la_am == 32'd0, 1'b0, 1'b0};
++		`AP040_ALU_AND: la_fl = {sr[4], la_msb(op_size, {1'b0, la_and}), la_and == 32'd0, 1'b0, 1'b0};
++		`AP040_ALU_OR:  la_fl = {sr[4], la_msb(op_size, {1'b0, la_or}),  la_or  == 32'd0, 1'b0, 1'b0};
++		`AP040_ALU_EOR: la_fl = {sr[4], la_msb(op_size, {1'b0, la_eor}), la_eor == 32'd0, 1'b0, 1'b0};
++		default: la_fl = sr[4:0];
++	endcase
++end
++// P244: CAS/CAS2 compare their two registered operands for equality
++// directly (the Z of mem - Dc) instead of reading the ALU's fast flags,
++// whose operand mux also carries this cycle's cache data (the decision
++// picks the memory write or the register write, and rf_we feeds the
++// register-select bypass: -0.85 ns in the P243 fit).
++wire        cas_equal = ((dst_val ^ src_val) & la_mask) == 32'd0;
++wire  [4:0] rd_bcc_fl = pipe_drain ? pipe_branch_ccr : (regs_alu_fire && p_flags) ? la_fl : sr[4:0];
+ wire legacy_alu_fast_ok = (alu_op == `AP040_ALU_ADD) || (alu_op == `AP040_ALU_SUB) ||
+     (alu_op == `AP040_ALU_CMP) || (alu_op == `AP040_ALU_MOVE) || (alu_op == `AP040_ALU_TST) ||
+     (alu_op == `AP040_ALU_AND) || (alu_op == `AP040_ALU_OR) || (alu_op == `AP040_ALU_EOR);
+ `ifdef AP040_EXPERIMENTAL_PIPELINE
+-wire        rd_bcc_fl_ok = !(regs_alu_fire && p_flags) || (pipe_rf_owner ? legacy_alu_fast_ok : alu_fast_ok);
++wire        rd_bcc_fl_ok = (!(regs_alu_fire && p_flags) || ((state != S_MRD) && legacy_alu_fast_ok)) &&
++                           !(pipe_drain && pipe_retire && !pipe_wb_retire);   // P243
+ `else
+-wire        rd_bcc_fl_ok = !(regs_alu_fire && p_flags) || alu_fast_ok;
++wire        rd_bcc_fl_ok = !(regs_alu_fire && p_flags) || ((state != S_MRD) && legacy_alu_fast_ok);   // P243
+ `endif
+ wire        rd_bcc_taken = cond_true_fl(rd_ir[11:8], rd_bcc_fl);
+ always @* begin
+@@ -7539,7 +7590,7 @@
+ 			S_CAS2_5: begin
+ 				sr[4:0] <= alu_fl;
+ 				// CMP-only decisions avoid the general shift/result flag mux.
+-				if (alu_fast_fl[2]) begin
++				if (cas_equal) begin
+ 					src_val <= bf_du;            // ALU: mem2 - Dc2
+ 					dst_val <= bf_field;
+ 					state <= S_CAS2_6;
+@@ -7550,7 +7601,7 @@
+ 			S_CAS2_6: begin
+ 				sr[4:0] <= alu_fl;
+ 				// CMP-only decisions avoid the general shift/result flag mux.
+-				if (alu_fast_fl[2]) begin
++				if (cas_equal) begin
+ 					rr_a <= {1'b0, x_ext[24:22]};   // Du1
+ 					rr_b <= {1'b0, x_ext[8:6]};     // Du2
+ 					state <= S_CAS2_W2;
+@@ -8878,7 +8929,7 @@
+ 			S_CAS4: begin
+ 				sr[4:0] <= alu_fl;
+ 				// CMP-only decisions avoid the general shift/result flag mux.
+-				if (alu_fast_fl[2])
++				if (cas_equal)
+ 					mwr(dst_addr, op_size, bf_du, S_NEXT);   // equal: update
+ 				else begin
+ 					rfw({1'b0, x_ext[2:0]}, merge_sz(cas_dc, dst_val, op_size));

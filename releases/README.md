@@ -12,6 +12,10 @@ must never be flashed (`scripts/deploy_screenshot.sh` refuses one).
 
 | build | md5 | timing | notes |
 |---|---|---|---|
+| `MacQuadra800_20260930.rbf` | `49951492d3576add9470bc1d1ef28e5d` | met, **+0.310 ns setup (HDMI) / +0.219 ns hold worst** (`clk_sys` +0.507, `clk_ram` +0.834; crossings +1.201 / +0.507) | **Release polish: the three `Dbg` OSD lines are gone, an OSD Scale option (Normal / V-Integer / Narrower and Wider HV-Integer) through the framework's `video_freak`, the 12in 512x384 monitor option is back, and the SCC's CTS bit reads the way the Mac serial driver wants, so printing over the Modem port works with the daemon's RTS asserted and a printer that drops RTS gets "not responding".** Room made by keeping the FPU state frame once (P263, -159 ALMs / -595 registers); the CPU and disk paths are otherwise 20260929_2's: PR 1.267, Disk 2.488, FPU 0.961-0.968 warm, Mix 1.808, 4 MB duplicate 5.24 s median, 0 hangs in 10; all four Scale modes and 512x384 through OSD resets; ImageWriter prints at 9600; idle and Shut Down clean. Known: PRAM starts zeroed at every core load, so the Chooser's port choice must be made again after a load. **Use with `MiSTer_20260928`.** A/UX and CD audio still not run. Seed 24; 39,300 ALMs (94 %). |
+| `MacQuadra800_20260929_2.rbf` | `f769b9e1ef496428be071d4ded9e90ae` | met, **+0.299 ns setup (CPU and HDMI) / +0.207 ns hold worst** (`clk_ram` +0.678; crossings +0.707 / +0.600) | **Disk 45 % faster: the 53C96 engine's sector buffer is two halves in the same M10K, so the platform transfer of sector n+1 overlaps the guest draining sector n, and a write flushes one half while the guest fills the other.** Speedometer PR Disk 1.70 -> **2.46** (72 % of a real Quadra 800), a 4 MB Finder duplicate 6.68 -> 4.95 s, read phase 1.65 -> 2.1-2.4 MiB/s, write 1.0 -> 1.4-1.5 MiB/s; CPU, FPU (0.976), Mix (1.807) and Graphics unchanged; 30 duplicates with no hang; idle and Shut Down clean. Everything else as 20260929. **Use with `MiSTer_20260928`.** A/UX and CD audio still not run. Seed 27; 39,246 ALMs (94 %). |
+| `MacQuadra800_20260929.rbf` | `dc281d649d54f1cbbddd4650423e204b` | met, **+0.110 ns setup (HDMI) / +0.250 ns hold worst** (`clk_sys` +0.864, `clk_ram` +0.409; crossings +1.128 / +0.867) | **20260928 plus the IOSB interrupt fix: a Finder copy could hang mid-write** when the ROM's VBL dispatcher wrote the VIA2 IFR in the clock the 53C96 raised its interrupt (the edge was lost; about one copy in ten to twenty). Also the PDMA watchdog no longer ages through a slow acknowledge. Found by reproducing the hang in the full-machine sim with randomised sector latency; directed benches in `verilator/`. Hardware: 30 Finder duplicates over two boots with no hang, PR Disk 1.70 with the tight-loop Main, FPU 0.96-0.98, idle and shutdown clean. **Use with `MiSTer_20260928`** (the tight disk service loop, PR Disk 1.62 -> 1.74). A/UX and CD audio still not run. Seed 31; 39,102 ALMs (93 %). |
+| `MacQuadra800_20260928.rbf` | `b7e88b8163679a607680e2e80669f396` | met, **+0.006 ns setup (HDMI) / +0.220 ns hold worst** (`clk_sys` +0.103, `clk_ram` +0.612; crossings +1.432 / +0.586) | **The FPU catches the real Quadra 800: Speedometer 4.02 FPU Benchmarks 0.973 on hardware (0.684 on the 2026-09-27 build; a real Quadra 800 scores 1.011), Benchmark Mix 1.803 (1.781), Color 8-bit unchanged.** Nine CPU commits (P250..P258): FP decode and operand fetch overlap the running FP op, FADD/FMUL in 4 clocks, results written back in the rounding clock, S/D operands unpacked and packed at dispatch, d16 and indexed FP operands resolved in the decode clock, exception prefetch in longwords, FSAVE/FRESTORE loops tightened. Mac OS 8.1 gate passed (24 valid benchmark runs, idle clock, clean shutdowns). **A/UX 3.1 and CD audio NOT run on this bitstream** (the images are no longer on the test box). Needs a Main with the Quadra support and the Mac write buffer (`45182b73` or the FujiNet/printer `ff404af9` it was tested with). Seed 31 with `PLACEMENT_EFFORT_MULTIPLIER 2.0` and `ROUTER_TIMING_OPTIMIZATION_LEVEL MAXIMUM`; 39,191 ALMs (94 %), 468 M10K, 36 DSP. |
 | `MacQuadra800_20260919.rbf` | `933b421a0880177be1b5fb2861dcea15` | met, **+0.107 ns setup / +0.190 ns hold worst** (HDMI +0.107, `clk_ram` +0.415, `clk_sys` +0.622) | **Built-in Ethernet.** The Quadra 800's onboard DP83932 SONIC at its real addresses, so Apple's own driver binds to it: DHCP, ping, FTP both ways byte-exact, on Mac OS 8.1 with Open Transport. OSD **Ethernet (on reset)**, default Off; needs the Main binary `releases/MiSTer`. With it Off the machine is the 20260918 one. Carries three `Dbg ...` bring-up lines in the OSD: leave them at On. |
 | `MacQuadra800_20260918.rbf` | `fde49a3cf474d5c07aff26c592200125` | met, **+0.204 ns hold / +0.527 ns setup worst** (HDMI +0.527, `clk_ram` +0.668, `clk_sys` +0.772) | **The CPU pipeline increments: Speedometer 4.02 Benchmark Mix 0.9285 (0.855 on 20260916_2, +8.6 %), Color QuickDraw 0.670, on a core 1,055 ALMs smaller.** A one-clock data-cache hit on a dedicated hint bus, redirects that hint and issue their target from the retire that pops them (BRA/BSR/JSR/JMP, DBcc, short Bcc), pops/pushes/MOVEM issued in place, a one-clock posted store with a write-side MMU verdict, and a read that may pass one queued store to another line. Mac OS 8.1 and A/UX 3.1 (32 MB) pass the gate; eight Mix runs + CQD + FPU with zero anomalous values. **The CD-audio item of the gate was NOT run on this bitstream** (the CD/SCSI RTL is unchanged from 20260916_2). Seed 21; 86 % ALMs. |
 | `MacQuadra800_20260916_2.rbf` | `8552a4094e151bf7b853916a9099e2c2` | met, **+0.244 ns setup** (HDMI +0.255, `clk_sys` +0.442, `clk_ram` +0.851) | **The AP68040 vendored into the repo with Adam Polkosnik's September fixes** (replaces the 2026-09-17 00:42 file `ab1da889`, same SCSI/CD RTL, whose CPU clock missed by 0.231 ns): memory bitfield reads sized by span, FPSP BUSY-frame FRESTORE resume (the Quadra ROM uses it), MOVEM saved-EA/SSW.CM continuation, nonresident ATC entries, our memind reserved-encoding fix, shared ALU adders and FPU normalizer, the integer register file in MLABs. Cycle-identical to the 20260915 CPU on the sim gates; Speedometer 4.02 Benchmark Mix **0.855** (0.858 on 20260915), Color QuickDraw 0.641 over four depths (8-bit 0.629 vs 0.605), Performance Rating 0.810. Mac OS 8.1 boots with a second disk and a CD mounted; A/UX and CD audio not re-run on this file (unchanged RTL outside the CPU, gated on `ab1da889`). Ships with `releases/MiSTer_20260916` (`431da61a`). Seed 21; 37,144 ALMs (89 %). |
@@ -50,6 +54,215 @@ Installed on the `.143` box that way on 2026-09-19; the user confirmed the
 menu and the display working. It is meant for the Ethernet core built from
 `add-ethernet` (`b2e5377` and later), released as `MacQuadra800_20260919.rbf`
 (below); the older released cores run under it with Ethernet simply absent.
+
+### `MiSTer_20260928` — Main with the tight disk service loop
+
+md5 `75e00b65d443e17c288c3297e5e93caf`. `alanswx/Main_MiSTer` branch
+`mac-printer-fujinet-tightloop`, commit `be6604e` (one commit on the
+FujiNet/printer/write-buffer build `b4192cd`, md5 `ff404af9`), clean build
+2026-09-28; passes both CLAUDE.md greps. After serving a Quadra 800
+hard-disk request on slot 0/1 it spins on the SD status for up to 250 us
+and keeps serving while requests keep coming, for at most 2 ms per pass,
+instead of waiting a whole Main pass for every 512-byte sector
+(`MAC_SD_SPIN_US` / `MAC_SD_BUDGET_US` environment overrides, spin 0 = the
+old behaviour). On `MacQuadra800_20260928.rbf`: Speedometer PR Disk
+1.704 / 1.745 / 1.741 (1.52 for the instrumented spin-0 control, 1.62 on
+`ff404af9`), 4 MB Photoshop duplicate 6.68 / 6.69 / 6.94 s (7.34 for the
+control, about 7.2 on `ff404af9`), mouse and guest Ethernet unaffected
+(`docs/perf/disk_tightloop_20260928/production.md`). Install as for the
+binary above; no inittab change is needed.
+
+## `MacQuadra800_20260930.rbf`
+
+md5 `49951492d3576add9470bc1d1ef28e5d`, sha256
+`2627bf94d547200cfc5d2151b9487b21e379f145e3e0bb2945246f188cf7ccf0`, seed 24,
+the 20260928 recipe with `VIDEO_512_OFF` dropped. **Timing met on every
+clock**: `clk_sys` +0.507 ns, `clk_ram` +0.834 ns, HDMI +0.310 ns, worst hold
++0.219 ns, crossings +1.201 / +0.507 ns. 39,300 ALMs (94 %), 24,668
+registers, 468 M10K, 36 DSP. Built 2026-09-30 from `6ce38c8` on
+`add-ethernet` (the `.qsf` at `b89ab9e`). Seed walk:
+`docs/perf/p263_fpga_20260930` (seeds 27 and 28 failed routing, 31 missed the
+CPU clock, 23 missed HDMI only and was hardware-trialled first,
+`docs/perf/p263_hw_20260930`).
+
+**What is new: the release polish.** The three `Dbg ...` bring-up lines are
+gone from the OSD (the store buffer, SDRAM line and DMA snoop fast paths are
+simply on, as in every release since 20260919). The OSD has a **Scale**
+option (Normal, V-Integer, Narrower HV-Integer, Wider HV-Integer) through
+the framework's `video_freak`, and the **12in 512x384** monitor option is
+back (`pll_cfg`, about 360 ALMs). The SCC's RR0 CTS bit now reads the way
+the Mac serial driver expects, so printing over the Modem port with the
+daemon's RTS asserted works again and a printer that drops RTS gets "The
+printer is not responding" instead of a stalled queue. To make room, the
+FPU's state frame is kept once (P263: the core's FRESTORE staging and the
+FPU's duplicate copies are gone, -159 ALMs / -595 registers,
+`docs/cpu-fsave-compaction-20260929.md`); the CPU is otherwise the
+20260929_2 one, so every FPU/disk figure is unchanged within boot-to-boot
+spread.
+
+**Hardware** (`docs/perf/p263_release_hw_20260930`, disposable Quad Squad copy,
+32 MB, `MiSTer_20260928`; the seed-23 trial of the same RTL in
+`docs/perf/p263_hw_20260930`): Performance Rating five runs, PR 1.267, CPU
+0.896, Disk **2.488** median (20260929_2: 1.266 / 0.896 / 2.462); FPU 0.953
+cold, 0.961 and 0.968 warm (0.976; the difference is the Matrix Multiply
+subtest's boot-to-boot spread, 0.68-0.75 s over five runs on this RTL);
+Benchmark Mix 1.808 (1.807); ten Photoshop duplicates, median 5.24 s
+(4.98-5.27; 20260929_2 4.95 s, whose two write modes both recur), 0 hangs;
+Scale Normal 960x720, the three integer modes 640x480, back to Normal; 12in
+512x384 desktop through an OSD reset and 13in 640x480 through another, halt
+screens intact; Print Desktop to the ImageWriter on the Modem port at 9600
+with RTS asserted, 19,146 bytes at line rate and a two-page PDF, no alert
+(at seed 23 the same job with RTS dropped by hand gave "The printer is not
+responding" and resumed when RTS returned); four minutes idle with the
+clock in step; three clean Shut Downs.
+
+**Known on this build:** PRAM powers up zeroed at every core load
+(`rtl/rtc3430042.sv`), so the Chooser's serial-port choice for the printer
+reverts to the Printer port after a load and must be set to Modem Port
+again; after an OSD reset the guest clock re-seeds to the core-load time.
+
+**Main:** `MiSTer_20260928` (the tight disk service loop). **Gate status:**
+Mac OS 8.1 passed on the shipped bitstream; A/UX 3.1 at 32 MB and CD audio
+still not run (the images are not on the test box).
+
+## `MacQuadra800_20260929_2.rbf`
+
+md5 `f769b9e1ef496428be071d4ded9e90ae`, sha256
+`28c40b4b3999ca2f64d783892c13da760d17fadebb6fff3cfae5f2b2d38bdfa9`, seed 27,
+the 20260928 recipe. **Timing met on every clock**: `clk_sys` +0.299 ns,
+`clk_ram` +0.678 ns, HDMI +0.299 ns, worst hold +0.207 ns, crossings +0.707 /
++0.600 ns. 39,246 ALMs (94 %), 468 M10K, 36 DSP. Built 2026-09-29 from
+`2b30d64` on `add-ethernet` (the `.qsf` at `d2a9207`).
+
+**What is new: the ping-pong sector buffer (P260).** The 53C96 target's
+sector buffer is 512 x 16 in the same single M10K, two 256-word halves. A
+READ prefetches the next sector into the idle half as soon as the platform
+channel and that half are free, while the guest is still draining the active
+one; the halves swap when the active one is spent. A WRITE flushes a full
+half and hands the other to the guest at once; intermediate chunks complete
+with the flush in flight, the command's last chunk still waits for its flush
+so STATUS GOOD means the data was accepted. Before this the engine raised the
+next request only after the guest had drained or filled its single buffer,
+so every sector cost the SPI transfer plus the guest's drain in series.
+Qualified in the full-machine sim with randomised sector-service latency (18
+of 18 copies byte-identical, 18-34 % faster) and by two new directed tests in
+`tb_ncr53c96` (T21 the ROM boot shape, T22 random-timing 8-block READ/WRITE),
+`docs/perf/p260_pingpong_sim_20260929`.
+
+**Hardware** (`docs/perf/p260_hw_20260929`, disposable Quad Squad copy, 32 MB,
+`MiSTer_20260928`): Performance Rating five runs, **Disk 2.462 median**
+(20260929: 1.699; real Quadra 800 3.443), PR 1.266 (1.211), CPU / Graphics /
+Math unchanged; 30 Photoshop duplicates on one boot, median **4.95 s** (6.68),
+read phase 2.06-2.36 MiB/s (1.65), write phase 1.37-1.53 MiB/s (0.94-1.01);
+FPU 0.951 cold / 0.976 warm, Benchmark Mix 1.807; 0 hangs in 30 copies; four
+minutes idle with the clock in step; Shut Down to the halt screen.
+
+**Main:** `MiSTer_20260928` (the tight disk service loop). **Gate status:**
+Mac OS 8.1 passed; A/UX 3.1 at 32 MB and CD audio still not run.
+
+## `MacQuadra800_20260929.rbf`
+
+md5 `dc281d649d54f1cbbddd4650423e204b`, sha256
+`c12571b540f0f1c34165f608499c1d759f626b1b33f894f23c3190c64fed1273`, seed 31,
+the 20260928 recipe. **Timing met on every clock**: `clk_sys` +0.864 ns,
+`clk_ram` +0.409 ns, HDMI +0.110 ns, worst hold +0.250 ns, crossings +1.128 /
++0.867 ns. 39,102 ALMs (93 %), 468 M10K, 36 DSP. Built 2026-09-29 from
+`f9f6da6` on `add-ethernet`.
+
+**What is new: two IOSB fixes** (`docs/scsi-write-hang-20260928.md`). While
+measuring the disk, Finder copies of a 4 MB file hung in the write phase about
+one time in ten to twenty: writes stopped, the 53C96 raised no further sector
+request, the pointer still moved, the clock froze. Reproduced deterministically
+in the full-machine sim with randomised sector-service latency (seed 14 of 18)
+and traced to the VIA2 emulation: the IFR write assigns the whole flag register
+after the edge latches in the same always block, so the ROM's VBL dispatcher
+writing `$02` in the very clock the 53C96 raised INT erased the just-latched
+bit 3, and since the chip holds INT until its ISR is read no further edge ever
+came. The IFR write now carries the live INT and DRQ levels (the latch already
+follows the level at both edges) and a same-clock ASC edge. Second, the PDMA
+beat watchdog aged through the platform acknowledge, so a guest beat waiting
+through an acknowledge longer than 7.9 ms (Main preempted mid-transfer) got a
+spurious bus error; it now freezes while `io_ack` is up. `make
+tb_scsi_irq_ack_race tb_sdma_ack_watchdog` in `verilator/` fail on the old
+IOSB and pass now; the sim completes the hanging copy byte-identically.
+
+**Hardware** (`docs/perf/iosbfix_hw_20260929`): 30 Finder duplicates over two
+boots on the disposable Quad Squad copy with zero hangs (the old RTL would
+have passed that 4-21 % of the time), PR Disk 1.70 / PR 1.21 with
+`MiSTer_20260928`, FPU 0.955-0.981, four minutes idle with the clock in step,
+type-select alive, Shut Down to the halt screen. Speed unchanged from 20260928.
+
+**Main:** `MiSTer_20260928` (md5 `75e00b65`, branch `mac-printer-fujinet-tightloop`
+of alanswx/Main_MiSTer): the Quadra support, the Mac write buffer, and the tight
+disk service loop that removes Main's per-sector turnaround (PR Disk 1.62 ->
+1.74, 4 MB copies 7.0 -> 6.7 s, input and ping unaffected). `ff404af9` and
+`45182b73` also work, more slowly on disk.
+
+**Gate status:** Mac OS 8.1 passed. A/UX 3.1 at 32 MB and the CD audio
+transport still not run (no images on the test box).
+
+## `MacQuadra800_20260928.rbf`
+
+md5 `b7e88b8163679a607680e2e80669f396`, sha256
+`7f6c835be1ed5bc4944cd697b01237838dbf3b92803a6e2c0ba5ae37787fe79c`, seed 31,
+the qsf recipe plus two fitter settings that are now part of it
+(`PLACEMENT_EFFORT_MULTIPLIER 2.0`, `ROUTER_TIMING_OPTIMIZATION_LEVEL
+MAXIMUM`; with the old settings no seed of this RTL met the CPU clock, see
+`docs/perf/fpu_p254_seed_walk` and `docs/perf/fpu_p258_fitter_settings`).
+**Timing met on every clock**: `clk_sys` (the 33 MHz CPU clock) +0.103 ns,
+`clk_ram` +0.612 ns, HDMI +0.006 ns, worst hold +0.220 ns; the SDRAM bridge
+crossings +1.432 / +0.586 ns; no array fell out to registers. **39,191 ALMs
+(94 %)**, 24,675 registers, 468 M10K, 36 DSP. Built 2026-09-28 on branch
+`add-ethernet` from `ad7a0d4` (the RTL) with the recipe committed as
+`868b0e8`.
+
+**What is new: the FPU.** Nine CPU commits in one day, each measured with a
+new 10-second per-instruction harness (`docs/perf/fpu_latency_20260928`) and
+driven by a timed-window profile of Speedometer's three FPU tests
+(`docs/perf/fpu_subtest_breakdown_20260928`):
+
+- P250: an FP instruction's decode, effective address and operand reads
+  overlap the FP op still running; only the request waits.
+- P251, P252: done in the writeback clock, product registered at dispatch,
+  alignment folded into the add, and the common result rounded and written
+  back in one clock. FADD and FMUL 4 clocks (68040: 3 and 5), FDIV 27 (37.5).
+- P253, P255: single and double memory sources unpacked, and single/double
+  register stores packed, in the dispatch clock.
+- P256: d16(An), d16(PC) and brief-indexed FP operands resolved in the decode
+  clock (the four EA states skipped). Matrix's inner loop 26 -> 15 clocks,
+  FFT's butterfly 65 -> 33.
+- P257, P258: the exception prefetch fetches the handler window in aligned
+  longwords (every exception 9 clocks cheaper), FSAVE frame words back to
+  back and FRESTORE reads hinted (the FPSP trap with frame save 167 -> 125).
+
+Register-level results are byte-identical to the previous core on the
+native Whetstone, Matrix and FFT kernels and on the corpus; a new 67-check
+directed program (`t_fpu_addr`) covers every inline addressing form.
+
+**Hardware** (`docs/perf/hw_p258_seed31_20260928`, disposable Quad Squad
+copy, 32 MB): FPU Benchmarks median of five **0.973** (KWhet 4563, Matrix
+0.693 s, FFT 0.280 s; the 2026-09-27 build 0.684; a real Quadra 800 1.011,
+5457, 0.713 s, 0.288 s: Matrix and FFT beat the real machine, Whetstone is
+84 % of it because 58 % of that test runs inside the ROM's FPSP). Benchmark
+Mix median of five **1.803** (1.781). Color 8-bit 9.85-9.90 s (unchanged).
+24 valid runs, no anomalous timer, the menu-bar clock in step with the
+MiSTer's for the whole session, four minutes idle, keyboard alive, Special ->
+Shut Down to the halt screen twice. Individual Mix rows move by up to 20 %
+between two fits of the same RTL (memory placement per boot), so compare
+builds by the whole-Mix median only.
+
+**Gate status:** Mac OS 8.1 passed. **A/UX 3.1 at 32 MB and the CD audio
+transport were not run** on this bitstream: neither the A/UX image nor
+`ToneTest.cue` is on the test box any more. The SCSI, CD and I/O RTL is
+unchanged from 20260919; the CPU's exception and FSAVE/FRESTORE paths did
+change (P257, P258), which is what A/UX exercises hardest, so that check is
+owed before this is called final.
+
+**Main:** needs a Main with the Quadra 800 support and the Mac write buffer
+(`SCSI_CACHE_OFF` recipe): branch `mac-printer-writebuffer` of
+`alanswx/Main_MiSTer` (`45182b73`) as documented, or the FujiNet/printer
+build `ff404af9` that was on the box for these runs; both pass the two greps
+in CLAUDE.md.
 
 ## `MacQuadra800_20260919.rbf`
 

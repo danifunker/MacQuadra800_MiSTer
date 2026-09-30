@@ -1,0 +1,17 @@
+{
+  "status": "PASS runtime/ABI/heap/code/histogram, numerical unqualified",
+  "candidate_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "binary_sha256": "1fbfa2acea41fdf711e2b0d2e1bd94bfe52e70299144278d200eac4d5ad0d69e",
+  "source_manifest_sha256": "913529b79dd46d98bac3e91f907c363d8534c3a80abbe9bb793f36317a8d63c0",
+  "consumed_identity_sha256": "414d7ca2cb86cbf92cdf6b44921d366d46c4d215ad4fc64d5f4ea45732a5cda0",
+  "nonFPU_consumed_sources_identical": true,
+  "flags_image_rom_romlat_identical": true,
+  "baseline_loop": 31634431,
+  "candidate_loop": 29640994,
+  "fewer_clocks": 1993437,
+  "reduction_percent": 6.301478917069822,
+  "numerical_oracle": "NONE",
+  "exec_session": 25281,
+  "runner_pid": 2255076,
+  "workload_pid": 2255388
+}

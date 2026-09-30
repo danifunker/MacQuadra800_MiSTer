@@ -1,0 +1,181 @@
+LOADED image into SDRAM model (romlat=6)
+SDRAM ready at 123957300 ps
+[NCR 0] housekeeping: rst=1 bus=0 probe=1
+[NCR 12] forward op=ff -> lba=7dff0000
+NATIVE_START fpcr=00000000 pc=006300ae
+SCC_SERIAL_OUT: ch=B byte=00 time=544809150
+SCC_SERIAL_OUT: ch=A byte=00 time=544809150
+HEARTBEAT cycle=2000000 pc=4088db72
+HEARTBEAT cycle=4000000 pc=006006f2
+HEARTBEAT cycle=6000000 pc=006006d4
+HEARTBEAT cycle=8000000 pc=4088df4e
+WHETSTONE_LOOP cycles=8726508 platform=sdram romlat=6
+WHETSTONE RETURNED cycles=8727284 loop=8726508
+NATIVE_COVERAGE body=1729593 resource=3812032 rom=4914403 vector11_pc=162035 unimp_pulse_samples=5060
+NATIVE_OVERLAP bg=825375 blockingdec=487279 go=1077759 mrd_fill=4148 mrd_unacked=1186
+NATIVE_TOTAL clocks=8726508 core=8726508 cache=8726508 fst=8726508
+NATIVE_CORE state=3 samples=257815
+NATIVE_CORE state=4 samples=499493
+NATIVE_CORE state=8 samples=397188
+NATIVE_CORE state=9 samples=1556905
+NATIVE_CORE state=10 samples=835676
+NATIVE_CORE state=11 samples=223393
+NATIVE_CORE state=13 samples=308573
+NATIVE_CORE state=15 samples=10121
+NATIVE_CORE state=16 samples=1
+NATIVE_CORE state=17 samples=1
+NATIVE_CORE state=19 samples=2
+NATIVE_CORE state=20 samples=268294
+NATIVE_CORE state=21 samples=931
+NATIVE_CORE state=22 samples=5060
+NATIVE_CORE state=23 samples=15180
+NATIVE_CORE state=24 samples=16111
+NATIVE_CORE state=26 samples=30075
+NATIVE_CORE state=27 samples=58797
+NATIVE_CORE state=28 samples=150278
+NATIVE_CORE state=30 samples=223468
+NATIVE_CORE state=34 samples=14
+NATIVE_CORE state=35 samples=5061
+NATIVE_CORE state=36 samples=5061
+NATIVE_CORE state=37 samples=5061
+NATIVE_CORE state=38 samples=5060
+NATIVE_CORE state=39 samples=5061
+NATIVE_CORE state=41 samples=5061
+NATIVE_CORE state=42 samples=5061
+NATIVE_CORE state=43 samples=5060
+NATIVE_CORE state=44 samples=5060
+NATIVE_CORE state=45 samples=5060
+NATIVE_CORE state=46 samples=5060
+NATIVE_CORE state=47 samples=5060
+NATIVE_CORE state=51 samples=50823
+NATIVE_CORE state=52 samples=15180
+NATIVE_CORE state=55 samples=10121
+NATIVE_CORE state=56 samples=9134
+NATIVE_CORE state=57 samples=1
+NATIVE_CORE state=62 samples=14192
+NATIVE_CORE state=65 samples=14192
+NATIVE_CORE state=68 samples=10403
+NATIVE_CORE state=69 samples=282
+NATIVE_CORE state=70 samples=36128
+NATIVE_CORE state=78 samples=2
+NATIVE_CORE state=79 samples=2
+NATIVE_CORE state=102 samples=10120
+NATIVE_CORE state=112 samples=25300
+NATIVE_CORE state=113 samples=25300
+NATIVE_CORE state=114 samples=5060
+NATIVE_CORE state=116 samples=5060
+NATIVE_CORE state=117 samples=20240
+NATIVE_CORE state=118 samples=20240
+NATIVE_CORE state=120 samples=20240
+NATIVE_CORE state=130 samples=25300
+NATIVE_CORE state=131 samples=25300
+NATIVE_CORE state=134 samples=930
+NATIVE_CORE state=135 samples=930
+NATIVE_CORE state=136 samples=930
+NATIVE_CORE state=137 samples=930
+NATIVE_CORE state=151 samples=10120
+NATIVE_CORE state=153 samples=877649
+NATIVE_CORE state=155 samples=156537
+NATIVE_CORE state=156 samples=6060
+NATIVE_CORE state=157 samples=12522
+NATIVE_CORE state=158 samples=123057
+NATIVE_CORE state=160 samples=1077759
+NATIVE_CORE state=161 samples=154623
+NATIVE_CORE state=162 samples=70840
+NATIVE_CORE state=163 samples=20240
+NATIVE_CORE state=164 samples=88948
+NATIVE_CORE state=165 samples=229960
+NATIVE_CORE state=173 samples=10119
+NATIVE_CORE state=177 samples=15180
+NATIVE_CORE state=178 samples=91285
+NATIVE_CORE state=179 samples=35427
+NATIVE_CORE state=180 samples=5061
+NATIVE_CORE state=182 samples=65780
+NATIVE_CORE state=183 samples=65780
+NATIVE_CORE state=190 samples=339103
+NATIVE_CORE state=191 samples=5086
+NATIVE_CORE state=250 samples=930
+NATIVE_CACHE state=0 samples=7360570
+NATIVE_CACHE state=1 samples=283164
+NATIVE_CACHE state=4 samples=8294
+NATIVE_CACHE state=5 samples=292
+NATIVE_CACHE state=6 samples=804902
+NATIVE_CACHE state=8 samples=134643
+NATIVE_CACHE state=9 samples=134643
+FPU_ELIG_WINDOW clocks=8726508 sampling=pre_edge_existing_in_loop
+FPU_ELIG_ROUND samples=258827 eligible=141674 bg=31804 decode_wait=30711 cpu_go=109870
+FPU_ELIG_ROUND_REJECT reason=0 samples=4
+FPU_ELIG_ROUND_REJECT reason=1 samples=4
+FPU_ELIG_ROUND_REJECT reason=2 samples=117149
+FPU_ELIG_ROUND_REJECT reason=3 samples=0
+FPU_ELIG_ROUND_REJECT reason=4 samples=4
+FPU_ELIG_ROUND_REJECT reason=5 samples=0
+FPU_ELIG_ROUND_REJECT reason=6 samples=0
+FPU_ELIG_ROUND_REJECT reason=7 samples=0
+FPU_ELIG_ROUND_REJECT reason=8 samples=0
+FPU_ELIG_ROUND_REJECT reason=9 samples=0
+FPU_ELIG_STDONE samples=3489 enables_zero=3489 eligible=3489 enabled=0 sideport=0 not_ce_reset=0
+FPU_ELIG_FST id=0 samples=7459512
+FPU_ELIG_FST id=1 samples=78186
+FPU_ELIG_FST id=2 samples=7983
+FPU_ELIG_FST id=3 samples=117425
+FPU_ELIG_FST id=4 samples=258832
+FPU_ELIG_FST id=5 samples=56789
+FPU_ELIG_FST id=6 samples=3489
+FPU_ELIG_FST id=7 samples=174259
+FPU_ELIG_FST id=9 samples=82096
+FPU_ELIG_FST id=10 samples=127442
+FPU_ELIG_FST id=11 samples=53040
+FPU_ELIG_FST id=12 samples=21390
+FPU_ELIG_FST id=13 samples=23749
+FPU_ELIG_FST id=14 samples=258827
+FPU_ELIG_FST id=17 samples=3489
+FPU_ELIG_BUSY_OP op=00 samples=298717
+FPU_ELIG_BUSY_OP op=04 samples=25110
+FPU_ELIG_BUSY_OP op=1a samples=3841
+FPU_ELIG_BUSY_OP op=20 samples=86640
+FPU_ELIG_BUSY_OP op=22 samples=407995
+FPU_ELIG_BUSY_OP op=23 samples=371706
+FPU_ELIG_BUSY_OP op=28 samples=60950
+FPU_ELIG_BUSY_OP op=7f samples=12037
+FPU_ELIG_ROUND_OP op=00 samples=83613 eligible=83610
+FPU_ELIG_ROUND_OP op=04 samples=930 eligible=0
+FPU_ELIG_ROUND_OP op=1a samples=960 eligible=959
+FPU_ELIG_ROUND_OP op=20 samples=11200 eligible=8990
+FPU_ELIG_ROUND_OP op=22 samples=75091 eligible=25234
+FPU_ELIG_ROUND_OP op=23 samples=76188 eligible=13408
+FPU_ELIG_ROUND_OP op=28 samples=10845 eligible=9473
+SDRAM_PROTOCOL_ERRORS 0
+SDRAM_TIMING tRC=13 tRCD=2 tRP=3 tRAS=6 max_refresh_gap=779
+BERR 0  IPL_ASSERTED_CYCLES 0  ROM_READS total=664 loop=664  VRAM_BEATS 0
+CORE_LAT instr n=598301 sum=784126 | read n=801615 sum=1311158 | write n=579935 sum=720194
+EXT read_line_hit n=0 sum=0 mean=0.00
+EXT read_first_miss n=164 sum=1593 mean=9.71
+EXT_HIST read_first_miss 7:12 8:8 9:7 10:133 12:2 13:1 15:1
+EXT read_bus32 n=9773 sum=173150 mean=17.72
+EXT_HIST read_bus32 16:127 17:3162 18:6123 19:185 20:118 21:1 22:57
+EXT write_direct n=540510 sum=1582671 mean=2.93
+EXT_HIST write_direct 2:38859 3:501651
+EXT write_bus32 n=39425 sum=394333 mean=10.00
+EXT_HIST write_bus32 10:39345 11:77 12:3
+EXT instr n=627 sum=6256 mean=9.98
+EXT_HIST instr 2:3 7:27 8:12 9:22 10:533 11:3 12:6 13:4 14:7 15:1 16:5 20:2 23:1 24:1
+BUS32_SHAPE class=2 size=2 addr[3:0]=e n=9773
+BUS32_SHAPE class=4 size=2 addr[3:0]=2 n=5084
+BUS32_SHAPE class=4 size=2 addr[3:0]=6 n=6771
+BUS32_SHAPE class=4 size=2 addr[3:0]=a n=17100
+BUS32_SHAPE class=4 size=2 addr[3:0]=e n=10470
+BUS32_REGION class=2 addr=0600000 n=9630
+BUS32_REGION class=2 addr=0630000 n=143
+BUS32_REGION class=4 addr=0630000 n=39425
+WALKER n=42 sum=380
+STOREBUF full_stall_cycles=51816
+STOREBUF_OCC 0:6493259 1:1223270 2:558315 3:326530 4:125134
+BRIDGE ram_reads=19712 read_wait_fifo_cycles=230 wq_full_cycles=2529 wq_noroom_cycles=101513 write_blocked_by_room=80949 fill_poisoned_pushes=0
+BRIDGE_WQ_OCC 0:5951229 1:526802 2:586446 3:350964 4:342222 5:457669 6:409663 7:98984 8:2529
+BRIDGE_WQ_AT_READ 0:19664 1:14 2:19 3:10 4:2 5:1 6:1 7:1
+SDRAM rd hit=9597 conflict=6559 closed=3556 | wr hit=2202948 conflict=8750 closed=30324 | refresh=34267 busy=7197005/26179524 clk_ram
+- /home/alans/mister/MacQuadra800_MiSTer/scratch/native_fpu_kernel_20260928/tb_platform_whet.sv:456: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01
+- Verilator: $finish at 265ms; walltime 37.357 s; speed 7.082 ms/s
+- Verilator: cpu 37.354 s on 1 threads; allocated 168 MB

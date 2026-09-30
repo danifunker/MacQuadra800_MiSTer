@@ -33,16 +33,10 @@
  *      33_000_000.  This is the check that the clock re-parameterisation
  *      actually reached the instance inside iosb, not just the module default.
  *
- * Build + run (Verilator 5.x, from verilator/):
- *   verilator --binary -j 0 -Wno-fatal -Wno-WIDTH -Wno-UNUSED -Wno-PINMISSING \
- *     -Wno-DECLFILENAME -Wno-MISINDENT -Wno-CASEINCOMPLETE -Wno-SYNCASYNCNET \
- *     -Wno-BLKANDNBLK -Wno-PINCONNECTEMPTY --timescale 1ns/1ps -I../rtl \
- *     --Mdir /tmp/obj_iosbscc --top-module tb_iosb_scc tb_iosb_scc.v \
- *     ../rtl/iosb.sv ../rtl/scc.v ../rtl/uart/txuart.v ../rtl/uart/rxuart.v \
- *     ../rtl/via6522.sv ../rtl/easc.sv ../rtl/ncr53c96.sv ../rtl/adb.sv \
- *     ../rtl/rtc3430042.sv ../rtl/dpram.v altsyncram_stub.v
- *   /tmp/obj_iosbscc/Vtb_iosb_scc
- * PASS criterion: last line "RESULT: PASS", exit 0.
+ * Build + run (Verilator 5.x, from verilator/; the flags and the iosb.sv
+ * dependency list are IOSB_TB / IOSB_TB_DEPS in the Makefile):
+ *   make tb_iosb_scc
+ * PASS criterion: last line "RESULT: PASS", exit 0 (non-zero on FAIL).
  */
 
 `timescale 1ns/1ps
@@ -201,6 +195,7 @@ module tb_iosb_scc;
 		$display("");
 		if (errors == 0) $display("RESULT: PASS");
 		else             $display("RESULT: FAIL (%0d error(s))", errors);
+		if (errors != 0) $fatal(1, "tb_iosb_scc: FAILED");
 		$finish;
 	end
 
@@ -208,7 +203,7 @@ module tb_iosb_scc;
 	initial begin
 		#40_000_000;
 		$display("RESULT: FAIL (timeout)");
-		$finish;
+		$fatal(1, "tb_iosb_scc: timeout");
 	end
 
 endmodule

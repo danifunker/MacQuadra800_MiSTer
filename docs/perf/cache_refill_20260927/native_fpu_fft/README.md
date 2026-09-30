@@ -1,0 +1,13 @@
+# Native FPU FFT baseline runtime profile
+
+Completed baseline tEsT12000 selector2 callback: **14,301,941 loop clocks**, return600D, callee-save integer/FP/stack ABI and code checks PASS, chip/bus/IRQ errors0. Exact three allocations/frees and heap scalar restoration PASS; actual20 FFft entries,1 FExptab call,20 N/pointer checks and20 FP4 scalar checks. Starting FPCR00000000. This is a reset-start native callback using the pinned copied OS RAM/ROM runtime and actual SDRAM service path, not the full OS Speedometer timed suite. No input/output payloads were captured; numerical output remains unqualified.
+
+FPU nonidle samples3,764,285 (26.32% of loop), CPU GO3,982,103 and DEC1,858,524; these overlapping state occupancies are not independent stall costs. ROUND752,193/guard720,567 and STDONE257,041 are screening samples, not predicted speedup; STDONE guard is observed at its own edge rather than the preceding conversion exit. Core/cache/FST histogram sums each equal loop clocks, cache capacity16 with bounds rejection. CORE_LAT/fill/bridge detail is preserved in run/run.log.
+
+This archive contains only text sources, small ABI/code/stack/heap captures, identity and terminal evidence. Paths in source_manifest.sha256 and run/identity.json refer to the **original full scratch project** scratch/native_fpu_fft_20260928, its immutable baseline RTL tree and external RAM/ROM/resource dependencies. They record consumed input identities; archive_manifest.sha256 checks the archive itself. Generated model, binaries, full RAM/ROM images and compiler log are excluded. PLAN.md/PREPARED.md preserve the prelaunch design and therefore retain their original prospective wording. Generic WHETSTONE labels in the reused runner/TB are only harness labels: the resource selector is2, native FPU FFT.
+
+From the repository root, validate the archive:
+
+    python3 docs/perf/cache_refill_20260927/native_fpu_fft/check_archive.py
+
+For a fresh replay, copy the archived runner/TB/monitor/image generator/entry/identity files into a new scratch directory, regenerate ram.bin with prepare_image.py using its pinned external dependencies, and use TREE=scratch/fpu_refill_platform_workload_20260927/baseline CCACHE_DISABLE=1 python3 NEW/run_platform_whet.py --out NEW/run. The runner requires a fresh output directory, verifies baseline FPU2d53/cache7cba, the pinned selector2 image, all10 active release CPU flags and uses ROMlat6/unroll256/two build jobs. The TB stops at40M clocks; each build/run phase has a300s wall cap with actual child processgroup kill/wait on timeout, no automatic retry. Do not replay into the completed scratch directory. A numerical FFT oracle and full guest results are separate gates.

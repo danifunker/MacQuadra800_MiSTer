@@ -1,0 +1,40 @@
+--- baseline/sdram_beat32.sv
++++ candidate/sdram_beat32.sv
+@@ -131,7 +131,7 @@
+ wire wq_push_bus = !init && !wp_valid && req && we && !rbusy && !ack && !fill_pending && !wq_full;
+ wire wq_push = !init && (wp_valid || wq_push_bus);
+ wire [60:0] wq_push_data = wp_valid ? {wp_addr, wp_data, wp_be} : {addr, wdata, be};
+-// The queue slot is only consumed after publication through wq_wp_handoff.
++// The queue slot is only consumed after publication through wq_available_handoff.
+ // Explicit asynchronous MLAB read preserves the existing capture edge.
+ `ifdef VERILATOR
+ // Behavioral counterpart for queue simulation: synchronous write, asynchronous
+@@ -162,7 +162,9 @@
+ `endif
+ reg   [3:0] wq_wp   = 0;             // clk_sys: next free slot (bit 3 = wrap)
+ reg   [3:0] wq_rp   = 0;             // clk_ram: next slot to drain
+-reg   [3:0] wq_wp_handoff = 0;       // wq_wp seen on clk_ram's falling edge
++// Compare on the publication edge. wq_rp changes only at posedge clk_ram,
++// so it stays constant from this falling edge until the next capture decision.
++reg         wq_available_handoff = 0;
+ reg   [3:0] wq_rp_handoff = 0;       // wq_rp seen on clk_ram's falling edge
+ // The read pointer crosses into clk_sys through one plain register, and
+ // everything clk_sys derives from it (full, empty, room) is computed from
+@@ -240,7 +242,7 @@
+ assign line_pending_tag_o = r_addr[26:4];
+ 
+ always @(negedge clk_ram) begin
+-	wq_wp_handoff <= wq_wp;
++	wq_available_handoff <= (wq_wp != wq_rp);
+ 	wq_rp_handoff <= wq_rp;
+ 	req_handoff  <= req_tgl;
+ 	ack_handoff  <= ack_tgl;
+@@ -350,7 +352,7 @@
+ 		else rd_word <= rd_word + 1'b1;
+ 	end
+ 	else if (!busy_r) begin
+-		if (wq_wp_handoff != wq_rp) begin
++		if (wq_available_handoff) begin
+ 			acc      <= 0;
+ 			rd_word  <= 0;
+ 			busy_r   <= 1;

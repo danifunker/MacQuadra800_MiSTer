@@ -1,0 +1,29 @@
+{
+  "reviewer": "/root",
+  "tests_done": true,
+  "setup_all_three_selected": true,
+  "iterations": [
+    1,
+    1,
+    1
+  ],
+  "whetstones_per_second": 3850.048,
+  "matrix_seconds": 0.928,
+  "fft_seconds": 0.418,
+  "ratings": [
+    0.739,
+    0.761,
+    0.687
+  ],
+  "aggregate_rating": 0.729,
+  "screens": {
+    "screenshot_f4277.png": "e7c623b75e7d5bd3a390cd1a5db375d551ad435981403c2635637ed3754ae9b1",
+    "screenshot_f7382.png": "f62654d3ea0760e557ff3fa6b88516ac44be66931a13e236902d510fd9a1fdf1"
+  },
+  "independent_sources_223": "PASS",
+  "independent_binary": "2f16b5f63372788b8dc1b63ae8d657cdaad67c3e5232524e9be1edb0d14e6ebf",
+  "independent_refill_check": "PASS",
+  "independent_v2_observer_check": "PASS",
+  "child_absent": true,
+  "scope": "Displayed guest results; observer raw branch events cover fullwindow without per-subtest/unique-instruction attribution."
+}

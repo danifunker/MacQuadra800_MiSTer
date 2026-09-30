@@ -1,0 +1,4 @@
+Warning: Cyclone V device family does not have read control (rden). Parameter rdcontrol_aclr will be ignored.
+Time: 0  Instance: altdpram_edge_tb.dut
+PASS altdpram write captured on posedge, asynchronous read follows address
+/home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/supplement/altdpram_edge_tb.sv:15: $finish called at 17000 (1ps)

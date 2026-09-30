@@ -1,0 +1,12 @@
+{
+  "exec_session_id": 33022,
+  "actual_launcher_pid": "not captured by exec session wrapper; no PID remains after completion and process namespace inspection did not expose it",
+  "pid_observation": "after terminal: ps -C python3,iverilog,vvp returned no processes",
+  "started_local_from_preflight_file_mtime": "2026-09-28T06:12:43.112114-04:00",
+  "finished_local_from_result_file_mtime": "2026-09-28T06:14:41.062249-04:00",
+  "runner_wall_seconds": 117.95,
+  "terminal_exit_status": 0,
+  "simulation_status": "PASS",
+  "immutable_inputs_revalidated": 101,
+  "scope": "five existing fullcore AP040 program regressions (FPU, FP frames, prepared FPSP resume, MMU, exceptions), CPU bus model only; no normalization unit, direct cache XSTORE/posted/phase benches, full machine, Quartus, or hardware"
+}

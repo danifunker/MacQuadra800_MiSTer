@@ -1,0 +1,53 @@
+{
+  "scope": "real CPU early branch into already captured timer marker; only second pass is identified",
+  "expected_D0": 2,
+  "expected_memory": {
+    "0x000fbeaa": "0004",
+    "0x000fbeac": "0042",
+    "0x00100100": "600d0042"
+  },
+  "expected_sp": "0x00200000",
+  "rom_bytes_sha256": "7c4c3c7fe65a57d9ad1da328ffa56cde8d355212ac46e0d85aded9d6a1298613",
+  "segments": {
+    "reset vectors": {
+      "offset": "0x0",
+      "bytes": "0020000040801000"
+    },
+    "entry: mask IRQ, A5 globals, A4 callback, jump prefix": {
+      "offset": "0x1000",
+      "bytes": "46fc27004bf90010000049f940804d404ef9408050bc"
+    },
+    "helper RTS": {
+      "offset": "0x4d36",
+      "bytes": "4e75"
+    },
+    "callback ADDQ.L #1,D0; RTS": {
+      "offset": "0x4d40",
+      "bytes": "52804e75"
+    },
+    "pinned site1 prefix, relocated helper, returnword, jump timer": {
+      "offset": "0x50bc",
+      "bytes": "3b7c0004beaa3b7c0042beac4eb940804d3678004ef940805106"
+    },
+    "fallback start, callback, return TST.B, jump stop": {
+      "offset": "0x5106",
+      "bytes": "3f3c00004e944a2dbeaa4ef940805132"
+    },
+    "fallback stop, stack balance, RAM signature, STOP": {
+      "offset": "0x5132",
+      "bytes": "4eb940804d36548f23fc600d0042001001004e72270060fe"
+    },
+    "earlybranch entry primes timer before identity": {
+      "offset": "0x1000",
+      "bytes": "46fc27004bf90010000049f940804d4072004ef940805106"
+    },
+    "ADDQ.W #4,A2; BRA.B to known timer marker": {
+      "offset": "0x50d0",
+      "bytes": "584a6032"
+    },
+    "prime pass returns to prefix, second pass terminates": {
+      "offset": "0x5138",
+      "bytes": "548f4a01660872014ef9408050bc23fc600d0042001001004e72270060fe"
+    }
+  }
+}

@@ -14,12 +14,9 @@ ap040_fpu dut (
     .cr_sel(2'd0), .cr_we(1'b0), .cr_wdata(32'd0), .bsun_req(1'b0),
     .ia_we(1'b0), .ia_wdata(32'd0), .fm_sel(3'd0), .fm_we(1'b0),
     .fm_wdata(96'd0), .fsave_ack(1'b0), .frestore_idle(1'b0),
-    .frestore_unimp(1'b0), .pend_capture(1'b0), .frestore_cusavepc(8'd0),
-    .frestore_et15(1'b0), .frestore_fpt15(1'b0), .frestore_wbt(96'd0),
-    .frestore_fpiar(32'd0), .frestore_busy(1'b0), .frestore_cmd1(16'd0),
-    .frestore_cmd3(16'd0), .frestore_stag(3'd0), .frestore_dtag(3'd0),
-    .frestore_flags(3'd0), .frestore_fpt(96'd0), .frestore_et(96'd0),
-    .frestore_grs(3'd0), .frestore_wbte15(1'b0), .fp_reset(1'b0)
+    .frestore_unimp(1'b0), .pend_capture(1'b0),
+    .frestore_busy(1'b0), .frestore_nocmd3(1'b0),
+    .frame_we(1'b0), .frame_idx(5'd0), .frame_wd(32'd0), .fp_reset(1'b0)
 );
 localparam [4:0] NORM = 2, EXEC = 3, WB = 4, NORM2 = 13,
                  ROUND = 14, RESTORE_N = 20;

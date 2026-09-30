@@ -1,0 +1,124 @@
+{
+  "scope": "existing fullcore FPU, FP frame, prepared FPSP resume, FPCR, MMU and exception programs plus normalization unit test; CPU bus model only; no full machine/OS/hardware",
+  "immutable_input_manifest_sha256": "80723de23ff80d01845eeff63f9edab1511073800feddd3c1a90d8b99a972248",
+  "simulation_status": "PASS",
+  "targets": {
+    "baseline": {
+      "fpu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 103656,
+          "1": 148702,
+          "2": 148702
+        },
+        "log_sha256": "90eb3f4f4bc6827dec8bb23f2efac8ad8b57cd3ed98dac8d41fd40dbcada51e4",
+        "wall_seconds": 24.789
+      },
+      "fpu_frames": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 8488,
+          "1": 12820,
+          "2": 12820
+        },
+        "log_sha256": "269005dc17cb23f1609effe98fd35819e86f48eb49651508829222deb5908498",
+        "wall_seconds": 1.535
+      },
+      "fpu_resume": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 14090,
+          "1": 21162,
+          "2": 21162
+        },
+        "log_sha256": "1d6307c19681ec2789ecf9e2c9032287d7b49b23bd08687925d5d510c4d47779",
+        "wall_seconds": 2.242
+      },
+      "mmu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 340160,
+          "1": 505494,
+          "2": 505494
+        },
+        "log_sha256": "ccfb27f7aff6ae864c294374b9e520674abc1eee52b6d811dc208fe68ee3cd4f",
+        "wall_seconds": 61.702
+      },
+      "exceptions": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 140688,
+          "1": 213186,
+          "2": 213182
+        },
+        "log_sha256": "6ed70f573ed48251e1a4ffbf59db36a8ddd035bc4b81acb99a9e64c086b6a38c",
+        "wall_seconds": 24.5
+      },
+      "fpu_normalize": {
+        "status": "PASS",
+        "bus_phase_cycles": {},
+        "log_sha256": "74d1ce28ef99aa1b61d91e877f735cd73e02ed19410ce977376974cb7f0e64a0",
+        "wall_seconds": 0.665
+      }
+    },
+    "candidate": {
+      "fpu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 103656,
+          "1": 148700,
+          "2": 148700
+        },
+        "log_sha256": "2363d316c8641f2dd974e7196c92d2c215af8d4b17fb3b039a3cb96b12d5e250",
+        "wall_seconds": 24.706
+      },
+      "fpu_frames": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 8488,
+          "1": 12820,
+          "2": 12820
+        },
+        "log_sha256": "269005dc17cb23f1609effe98fd35819e86f48eb49651508829222deb5908498",
+        "wall_seconds": 1.536
+      },
+      "fpu_resume": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 14090,
+          "1": 21162,
+          "2": 21162
+        },
+        "log_sha256": "1d6307c19681ec2789ecf9e2c9032287d7b49b23bd08687925d5d510c4d47779",
+        "wall_seconds": 2.241
+      },
+      "mmu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 340160,
+          "1": 505494,
+          "2": 505494
+        },
+        "log_sha256": "ccfb27f7aff6ae864c294374b9e520674abc1eee52b6d811dc208fe68ee3cd4f",
+        "wall_seconds": 61.743
+      },
+      "exceptions": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 140688,
+          "1": 213186,
+          "2": 213182
+        },
+        "log_sha256": "6ed70f573ed48251e1a4ffbf59db36a8ddd035bc4b81acb99a9e64c086b6a38c",
+        "wall_seconds": 24.423
+      },
+      "fpu_normalize": {
+        "status": "PASS",
+        "bus_phase_cycles": {},
+        "log_sha256": "74d1ce28ef99aa1b61d91e877f735cd73e02ed19410ce977376974cb7f0e64a0",
+        "wall_seconds": 0.666
+      }
+    }
+  },
+  "immutable_inputs_revalidated": 100
+}

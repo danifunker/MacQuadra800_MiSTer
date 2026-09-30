@@ -1,0 +1,41 @@
+{
+  "scope": "one full-OS Speedometer FPU suite run on revised55ff; displayed guest times are primary, observer spans cover the full control window and are not subtest attribution",
+  "terminal_result": {
+    "tests_done": true,
+    "iterations": [1, 1, 1],
+    "whetstones_per_second": 3850.048,
+    "whetstones_rating": 0.739,
+    "matrix_seconds": 0.991,
+    "matrix_rating": 0.713,
+    "fft_seconds": 0.447,
+    "fft_rating": 0.642,
+    "aggregate_rating": 0.698,
+    "setup_screenshot": "fpu_setup.png",
+    "done_and_results_screenshot": "fpu_done.png",
+    "visual_review": "primary visually reviewed terminal screenshot"
+  },
+  "observer_full_window": {
+    "edges": 1304100000,
+    "raw": 11666052,
+    "normal": 5347864,
+    "old_guard_accepted": 930,
+    "new_guard_accepted": 930,
+    "enable_rejected": 5346934,
+    "post_mismatch": 0,
+    "side_rejects": 0,
+    "reconciliation_pass": true,
+    "precision0_enables32_bucket": {
+      "raw": 11525828,
+      "single": 5584580,
+      "normal_exponent": 5346934
+    },
+    "precision0_enables0_bucket": {
+      "raw": 140224,
+      "single": 930,
+      "normal_exponent": 930,
+      "old_guard_accepted": 930,
+      "new_guard_accepted": 930
+    }
+  },
+  "interpretation": "Displayed FPU results show no gain at Speedometer precision versus the original73bc candidate. Removing the FPCR precision00 restriction did not increase eligibility: the dominant precision0/enables32 normal-single bucket is rejected by the retained exception-enable guard, while the 930 precision0/enables0 eligible cases pass both old and new predicates. The aggregate full-window profile does not associate events with individual timed subtests."
+}

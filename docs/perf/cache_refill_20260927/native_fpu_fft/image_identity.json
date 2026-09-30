@@ -1,0 +1,26 @@
+{
+  "scope": "native tEsT12000 selector2 baseline fixture; no numerical oracle",
+  "input_image": "/home/alans/mister/MacQuadra800_MiSTer/scratch/whetstone_full_fixture_20260920/ram.bin",
+  "input_sha256": "6822b7289bc21c7472c3e1f6d1661140a68aaf7338cfddf693f4a22df330ad00",
+  "output_sha256": "04d33e7f38bd77e55322d10b49ef53beebf6b23a9c96f92caddc5dcc93ebfc6e",
+  "resource": {
+    "id": 12000,
+    "name": "\u0000FPUTests.rsrc",
+    "len": 3784,
+    "body": 161401
+  },
+  "resource_sha256": "34ee511807b66d2360c505b352d0946c01730d764843ed815cfd49bab2fa8aa0",
+  "fork_sha256": "9dd34c045a5637fc3a894c8d9e945629b3236eb183ba1a838946a0023b1fe111",
+  "entry_sha256": "e848d72960739868954d7e704e30bb2445feb6d360e719e004fe2f743a81b345",
+  "entry_bytes": 230,
+  "resource_base": "0x600000",
+  "a4_anchor": "0x608ea0",
+  "globals": "0x600ea0..0x600ec7",
+  "entry": "0x630000",
+  "stack": "0x640000",
+  "abi_area": "0x625000..0x6251ff",
+  "selector": 2,
+  "fpcr": "unchanged; monitor reports starting value",
+  "preserved_ranges_checked": true,
+  "vector11": "0x4088d9fe"
+}

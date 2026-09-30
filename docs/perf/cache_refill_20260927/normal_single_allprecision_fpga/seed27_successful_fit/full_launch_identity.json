@@ -1,0 +1,53 @@
+{
+  "unit": "codex-fpu-normal-single-allprecision-quartus-20260928-seed27.service",
+  "invocation_id": "bc05612be0014d6880a51cb94c7e282a",
+  "tool_session_id": 33157,
+  "observed_unix_time": 1790570681.8849268,
+  "processes": [
+    {
+      "pid": 2365170,
+      "ppid": 1174693,
+      "comm": "systemd-run",
+      "cmdline": "systemd-run --user --wait --unit=codex-fpu-normal-single-allprecision-quartus-20260928-seed27 --property=WorkingDirectory=/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_quartus_20260928_seed27/tree --property=StandardOutput=append:/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_quartus_20260928_seed27/full_systemd_stdout.log --property=StandardError=append:/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_quartus_20260928_seed27/full_systemd_stderr.log /bin/bash /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_quartus_20260928_seed27/run_full_compile_child.sh",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer",
+      "exe": "/usr/bin/systemd-run",
+      "exe_sha256": "dbc8b988a849d5c9d7ef2de7068a6f107021bc6c11e0d7864c73f373eef726a7"
+    },
+    {
+      "pid": 2365172,
+      "ppid": 1734,
+      "comm": "bash",
+      "cmdline": "/bin/bash /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_quartus_20260928_seed27/run_full_compile_child.sh",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_quartus_20260928_seed27/tree",
+      "exe": "/usr/bin/bash",
+      "exe_sha256": "bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1"
+    },
+    {
+      "pid": 2365174,
+      "ppid": 2365172,
+      "comm": "bash",
+      "cmdline": "bash scripts/build_only.sh",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_quartus_20260928_seed27/tree",
+      "exe": "/usr/bin/bash",
+      "exe_sha256": "bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1"
+    },
+    {
+      "pid": 2365187,
+      "ppid": 2365174,
+      "comm": "quartus_sh",
+      "cmdline": "quartus_sh --flow compile MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_quartus_20260928_seed27/tree",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_sh",
+      "exe_sha256": "bdfda93ce02a5e802194d1f001446ac333ac1c039898f1a12843fca32afaf917"
+    },
+    {
+      "pid": 2365226,
+      "ppid": 2365187,
+      "comm": "quartus_map",
+      "cmdline": "quartus_map --ipc_flow=15 --ipc_mode --smart --read_settings_files=on --write_settings_files=off MacQuadra800 -c MacQuadra800",
+      "cwd": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_quartus_20260928_seed27/tree",
+      "exe": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_map",
+      "exe_sha256": "ab8b5946501cbc7c260a44088454204449c5afed35f18a1e4d1dde5c680cf89b"
+    }
+  ]
+}

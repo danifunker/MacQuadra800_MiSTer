@@ -1,0 +1,9 @@
+# Timed-FPU observer attempt 2 preflight archive
+
+This is a compact qualification archive for the corrected attempt 2 observer. The full frozen scratch layout remains at `scratch/fpu_timed_profile_attempt2_20260927`; this archive contains selected source inputs, manifests, and small preflight evidence. The copied `source_manifest.sha256` is exact from the full scratch tree and its paths resolve relative to that full scratch directory. `archive_manifest.sha256` hashes every file in this compact archive except itself.
+
+Attempt 2 passed host checks, decoder eligibility review, normal-ROM smoke boot, and two short actual-machine fixture checks. The fixtures exercise a timer/callback path and one early-branch hazard with independent guest-state checks. **No actual Speedometer benchmark workload result is captured here.** All three CODE3 site identities and raw timer pairs still require the targeted workload run; OS recognition remains unproven.
+
+The source manifest and `identity.json` freeze the simulator binary, disk and pre-run inputs. The preflight README and original scratch README document the adapter correction and remaining scope. The `actual_fixture` reports are fixture evidence only. The full scratch tree also contains the generated Verilator model, ROM image, disk, ROM hex fixtures, CPU traces and live-run outputs; those bulky or mutable artifacts are intentionally excluded here.
+
+The included `reproduce_host.py` applies the exact host delta to a separate, hash-matching attempt-1 simulator tree using `python3 reproduce_host.py --tree PATH_TO_ATTEMPT1_TREE`; the complete frozen attempt-2 scratch tree is required for model checks and real-model fixture runs. Do not rebuild or change frozen inputs after launch. Source inputs remain frozen; this archive makes no claim that the real operating system has yet been recognized by the timed observer.

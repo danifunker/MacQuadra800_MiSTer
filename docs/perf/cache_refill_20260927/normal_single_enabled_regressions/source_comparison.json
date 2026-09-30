@@ -1,0 +1,39 @@
+{
+  "reference_input_tree": "scratch/fpu_normal_single_allprecision_regressions_20260928/inputs",
+  "candidate_source": "scratch/fpu_normal_single_enabled_candidate_20260928/ap040_fpu.v",
+  "candidate_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "baseline_source": "copied frozen production FPU in inputs/baseline_ap040_fpu.v",
+  "baseline_sha256": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "input_files_compared": 94,
+  "input_differences": [
+    "ap68040/rtl/ap040_fpu.v"
+  ],
+  "non_fpu_input_differences": [],
+  "qsf_reference_sha256": "75c69f933515f05c729076108b26515f3f6aff84a36692fdd58d2f95077fe1fd",
+  "targets": [
+    "fpu",
+    "fpu_frames",
+    "fpu_resume",
+    "mmu",
+    "exceptions",
+    "fpu_normalize"
+  ],
+  "flags": [
+    "-g2012",
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "scope": "existing fullcore FPU, FP frame, prepared FPSP resume, FPCR, MMU and exception programs plus normalization unit test; CPU bus model only; no full machine/OS/hardware; candidate relaxes the all-precision FPCR exception-enable guard",
+  "status": "PREPARED_ONLY_NO_COMPILE_OR_SIMULATION"
+}

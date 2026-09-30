@@ -1,0 +1,37 @@
+{
+  "baseline_loop_cycles": 17641650,
+  "candidate_loop_cycles": 17637468,
+  "candidate_minus_baseline_cycles": -4182,
+  "candidate_speed_ratio": 1.0002371088639255,
+  "source_differences": [
+    "rtl/ap68040/rtl/ap040_cache.v"
+  ],
+  "release_flags": [
+    "-DAP040_EXPERIMENTAL_XSTORE",
+    "-DAP040_EXPERIMENTAL_LEA",
+    "-DAP040_EXPERIMENTAL_PIPELINE",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6",
+    "-DAP040_PIPELINE_MEMORY_ENTRY",
+    "-DAP040_PIPELINE_COMPARE",
+    "-DAP040_PIPELINE_EARLY_DRAIN",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "image_sha256": "6822b7289bc21c7472c3e1f6d1661140a68aaf7338cfddf693f4a22df330ad00",
+  "rom_sha256": "7d9cb8c3bae0e26171adf9f24bedf10bf6371ae3c9bdbcdfd3b94e5350099fb6",
+  "romlat": 6,
+  "oracle_matches": {
+    "whet_globals.hex": true,
+    "whet_code.hex": true,
+    "whet_stack.hex": true
+  },
+  "capture_sha256": {
+    "whet_globals.hex": "0c53bbdd1c8b8a9cf4ce4ef2e99a1d9df12a92d1dd75ecefb6648a58a62b5de3",
+    "whet_code.hex": "3749b3dfd69b7990a88e7f86aa116e5825fdb6561ad1c21a8b1448112847b330",
+    "whet_stack.hex": "cd55cd53a6c251ce84c1eac12d627510e5b405ad788e1e5de311ad883d4d10a6"
+  }
+}

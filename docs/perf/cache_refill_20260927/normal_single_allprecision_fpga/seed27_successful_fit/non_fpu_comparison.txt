@@ -1,0 +1,9 @@
+Pinned prior project manifest: scratch/fpu_normal_single_move_quartus_20260928_seed27/tracked_source_manifest.sha256
+Pinned manifest entries: 1892
+Only changed path versus prior seed27 project: rtl/ap68040/rtl/ap040_fpu.v
+FPU prior SHA-256: 73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f
+FPU candidate SHA-256: 55ff9b3cd1d59069ec0b94ca17e4dc3a8c87ac031317902285444d92643724a2
+Unchanged inputs, including seed27 QSF and SDC: 1891 / 1891 exact SHA-256 matches
+MacQuadra800.sdc: b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062 (exact match)
+Unexpected/missing paths: 0
+Generated Quartus db/output_files/incremental_db copied: no

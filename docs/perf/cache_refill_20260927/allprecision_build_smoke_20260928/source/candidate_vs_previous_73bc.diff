@@ -1,0 +1,11 @@
+--- extended_only/ap040_fpu.v
++++ allprecision/ap040_fpu.v
+@@ -1015,7 +1015,7 @@
+ 					end
+ 					else if (src_fmt == 3'd1 && opmode == 7'h00 &&
+                         din[94:87] != 8'd0 && din[94:87] != 8'hFF &&
+-                        fpcr[7:6] == 2'b00 && fpcr[15:8] == 8'd0 &&
++                        fpcr[15:8] == 8'd0 &&
+                         !cr_we && !fm_we && !bsun_req && !fp_reset &&
+                         !frestore_idle && !frestore_unimp && !fsave_ack &&
+                         !pend_capture) begin : fast_normal_single_move

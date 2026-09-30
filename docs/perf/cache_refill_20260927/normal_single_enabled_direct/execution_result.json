@@ -1,0 +1,19 @@
+{
+  "command": "python3 scratch/fpu_normal_single_enabled_tests_20260928/run.py",
+  "tool_session_id": 28125,
+  "exit_status": 0,
+  "source_inputs_match_prelaunch": true,
+  "terminal_process_check": "ps confirmed no python3/iverilog/vvp remained after completion; simulation and compiler PIDs were not captured before these short runs exited",
+  "baseline": {
+    "compile_log": "baseline.compile.log",
+    "run_log": "baseline.run.log",
+    "summary": "PASS normal_single checks=97834 normal=97795 fast=0 slow=97830"
+  },
+  "candidate": {
+    "compile_log": "candidate.compile.log",
+    "run_log": "candidate.run.log",
+    "summary": "PASS normal_single checks=97834 normal=97795 fast=97795 slow=35"
+  },
+  "matched_signature_lines": 36,
+  "result": "PASS"
+}

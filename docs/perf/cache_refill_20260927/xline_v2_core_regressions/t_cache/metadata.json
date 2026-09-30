@@ -1,0 +1,129 @@
+{
+  "status": "PASS",
+  "started_local": "2026-09-28T06:17:00.941708-04:00",
+  "target": "t_cache only; reuses immutable baseline/candidate VVPs from completed five-target package",
+  "max_workers": 2,
+  "command_timeout_seconds": 240,
+  "source_sha256": "27988162bf2e048eb8ec3f42de55a570d76c759977afc34e2e3de9a1c884efed",
+  "assembler_sha256": "de9e4aa58e19078f6eb219d549159395211248e3ebfdd87be96effd84b800057",
+  "variants": {
+    "candidate": {
+      "vvp": "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_core_regressions_20260928/outputs/candidate/prog.vvp",
+      "vvp_sha256": "6d88285e324c50618b9326562495be5c0aa46b533bbb7e9a29cf47f35c061dbe",
+      "commands": [
+        {
+          "argv": [
+            "/home/alans/mister/MacQuadra800_fixtures/wombat-vasm/vasmm68k_mot",
+            "-Fbin",
+            "-m68040",
+            "-no-opt",
+            "-o",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_t_cache_extra_20260928/candidate/t_cache.bin",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_t_cache_extra_20260928/t_cache.s"
+          ],
+          "pid": 9,
+          "started_local": "2026-09-28T06:17:00.945576-04:00",
+          "exit_status": 0,
+          "finished_local": "2026-09-28T06:17:00.949002-04:00",
+          "wall_seconds": 0.003,
+          "log_sha256": "3c0a4cb7478fdfcba716098ddf2920feb339b583531156e36400d44bfbe71980"
+        },
+        {
+          "argv": [
+            "/home/alans/miniconda3/bin/python3",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_core_regressions_20260928/inputs/tb/bin2hex.py",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_t_cache_extra_20260928/candidate/t_cache.bin",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_t_cache_extra_20260928/candidate/t_cache.hex"
+          ],
+          "pid": 10,
+          "started_local": "2026-09-28T06:17:00.949094-04:00",
+          "exit_status": 0,
+          "finished_local": "2026-09-28T06:17:00.964577-04:00",
+          "wall_seconds": 0.015,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "vvp",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_core_regressions_20260928/outputs/candidate/prog.vvp",
+            "+prog=t_cache.hex"
+          ],
+          "pid": 12,
+          "started_local": "2026-09-28T06:17:00.964747-04:00",
+          "exit_status": 0,
+          "finished_local": "2026-09-28T06:17:01.479531-04:00",
+          "wall_seconds": 0.515,
+          "log_sha256": "6426360b3a256aba5ca2b9e7297af3d9d8e1af019fb998e8326cad3df94f6742"
+        }
+      ],
+      "status": "PASS",
+      "bus_phase_cycles": {
+        "0": 2294,
+        "1": 3382,
+        "2": 3382
+      },
+      "bin_sha256": "7bfba2a1d97b29c76c71c0528d20f5f72d68120c04f8893266c39a764c38d391",
+      "hex_sha256": "151d92e914358e74464e3796f715f9acc2a0860271593632b66ee7007d10c567"
+    },
+    "baseline": {
+      "vvp": "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_core_regressions_20260928/outputs/baseline/prog.vvp",
+      "vvp_sha256": "0c8ab3d3ab3d8acf2694b83395a49f8397edac6664a622bdf69f1b336666633d",
+      "commands": [
+        {
+          "argv": [
+            "/home/alans/mister/MacQuadra800_fixtures/wombat-vasm/vasmm68k_mot",
+            "-Fbin",
+            "-m68040",
+            "-no-opt",
+            "-o",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_t_cache_extra_20260928/baseline/t_cache.bin",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_t_cache_extra_20260928/t_cache.s"
+          ],
+          "pid": 8,
+          "started_local": "2026-09-28T06:17:00.945481-04:00",
+          "exit_status": 0,
+          "finished_local": "2026-09-28T06:17:00.949053-04:00",
+          "wall_seconds": 0.004,
+          "log_sha256": "3c0a4cb7478fdfcba716098ddf2920feb339b583531156e36400d44bfbe71980"
+        },
+        {
+          "argv": [
+            "/home/alans/miniconda3/bin/python3",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_core_regressions_20260928/inputs/tb/bin2hex.py",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_t_cache_extra_20260928/baseline/t_cache.bin",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_t_cache_extra_20260928/baseline/t_cache.hex"
+          ],
+          "pid": 11,
+          "started_local": "2026-09-28T06:17:00.949129-04:00",
+          "exit_status": 0,
+          "finished_local": "2026-09-28T06:17:00.964647-04:00",
+          "wall_seconds": 0.016,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "vvp",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_v2_core_regressions_20260928/outputs/baseline/prog.vvp",
+            "+prog=t_cache.hex"
+          ],
+          "pid": 13,
+          "started_local": "2026-09-28T06:17:00.964814-04:00",
+          "exit_status": 0,
+          "finished_local": "2026-09-28T06:17:01.479845-04:00",
+          "wall_seconds": 0.515,
+          "log_sha256": "6426360b3a256aba5ca2b9e7297af3d9d8e1af019fb998e8326cad3df94f6742"
+        }
+      ],
+      "status": "PASS",
+      "bus_phase_cycles": {
+        "0": 2294,
+        "1": 3382,
+        "2": 3382
+      },
+      "bin_sha256": "7bfba2a1d97b29c76c71c0528d20f5f72d68120c04f8893266c39a764c38d391",
+      "hex_sha256": "151d92e914358e74464e3796f715f9acc2a0860271593632b66ee7007d10c567"
+    }
+  },
+  "updated_local": "2026-09-28T06:17:01.481942-04:00",
+  "finished_local": "2026-09-28T06:17:01.482461-04:00"
+}

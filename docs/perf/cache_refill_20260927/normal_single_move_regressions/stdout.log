@@ -1,0 +1,17 @@
+baseline fpu PASS
+baseline fpu_frames PASS
+baseline fpu_resume PASS
+baseline mmu PASS
+baseline exceptions PASS
+baseline fpu_normalize PASS
+candidate fpu PASS
+candidate fpu_frames PASS
+candidate fpu_resume PASS
+candidate mmu PASS
+candidate exceptions PASS
+candidate fpu_normalize PASS
+Traceback (most recent call last):
+  File "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_move_regressions_20260928/run.py", line 30, in <module>
+    for f,h in identity['sources'].items():assert hashlib.sha256(Path(f).read_bytes()).hexdigest()==h,f
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_move_regressions_20260928/stdout.log

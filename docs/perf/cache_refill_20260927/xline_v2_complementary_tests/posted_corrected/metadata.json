@@ -1,0 +1,89 @@
+{
+  "status": "PASS_POSTED_CONTRACT_PAIR",
+  "runner_pid": 2588732,
+  "started_utc": "2026-09-28T10:04:46.994901+00:00",
+  "recipe_sha256": "273e0f759638875ee35bdf386ce3586e23581eb014900eb2688615f849daca3b",
+  "reviewed_adapter_manifest_sha256": "621111ac5747266f887b9d5fb811bad73c8857bec435d772084be84d5239d199",
+  "existing_RTL_manifest_sha256": "23937433536945689927de234649d8e1e8e5d556e05ad9d97d953b7ca7dbc25f",
+  "flags": [
+    "-g2012",
+    "-DAP040_EXPERIMENTAL_XSTORE"
+  ],
+  "steps": [
+    {
+      "name": "baseline_build",
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-DAP040_EXPERIMENTAL_XSTORE",
+        "-I",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl",
+        "-s",
+        "tb_posted_read_matrix",
+        "-o",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/posted_contract_pair/outputs/baseline.vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/posted_contract_pair/tb_cache_posted_read_matrix.sv",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl/ap040_cache.v",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/baseline/rtl/ap68040/rtl/primitives/dpram.v"
+      ],
+      "pid": 2588733,
+      "exit_status": 0,
+      "terminal": true
+    },
+    {
+      "name": "baseline_run",
+      "argv": [
+        "vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/posted_contract_pair/outputs/baseline.vvp"
+      ],
+      "pid": 2588737,
+      "exit_status": 0,
+      "terminal": true
+    },
+    {
+      "name": "candidate_build",
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-DAP040_EXPERIMENTAL_XSTORE",
+        "-I",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/candidate/rtl/ap68040/rtl",
+        "-s",
+        "tb_posted_read_matrix",
+        "-o",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/posted_contract_pair/outputs/candidate.vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/posted_contract_pair/tb_cache_posted_read_matrix.sv",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/candidate/rtl/ap68040/rtl/ap040_cache.v",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/inputs/candidate/rtl/ap68040/rtl/primitives/dpram.v"
+      ],
+      "pid": 2588757,
+      "exit_status": 0,
+      "terminal": true
+    },
+    {
+      "name": "candidate_run",
+      "argv": [
+        "vvp",
+        "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/posted_contract_pair/outputs/candidate.vvp"
+      ],
+      "pid": 2588761,
+      "exit_status": 0,
+      "terminal": true
+    }
+  ],
+  "scope": "unit cache byte oracle at read ACK, disjoint posted hit permitted, final RAM/cache checks retained",
+  "baseline": {
+    "pending": 816,
+    "prepared": 816,
+    "early_disjoint_acks": 30,
+    "cases": 216
+  },
+  "candidate": {
+    "pending": 816,
+    "prepared": 816,
+    "early_disjoint_acks": 30,
+    "cases": 216
+  },
+  "postrun_sources": "PASS",
+  "finished_utc": "2026-09-28T10:04:50.706219+00:00"
+}

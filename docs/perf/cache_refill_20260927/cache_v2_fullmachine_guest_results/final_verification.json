@@ -1,0 +1,110 @@
+{
+  "checked_utc": "2026-09-28T12:48:40.106504+00:00",
+  "source223_postcheck": "PASS",
+  "binary_sha256": "727eb1298eaab8189b4b9f472008b3b47aa6b0b88afc343a9ab9ec3318b9a600",
+  "runs": [
+    {
+      "kind": "fpu",
+      "terminal_identity": "PASS",
+      "finished_utc": "2026-09-28T12:25:28.396751+00:00",
+      "supervisor_pid": 2612651,
+      "child_pid": 2612657,
+      "processes_gone": true,
+      "setup_sha256": "e7c623b75e7d5bd3a390cd1a5db375d551ad435981403c2635637ed3754ae9b1",
+      "setup_byteexact_completed6c": true,
+      "final_sha256": "661c02149e510cb6e41920acbaff5c98d765429c6fdddef74430e8e93294b6cc",
+      "final_byteexact_completed6c": false,
+      "control_byteexact_completed6c": true,
+      "automated_checks": [
+        {
+          "argv": [
+            "python3",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_fullmachine_20260928/verilator/tests/check_refill_report.py",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_fullmachine_20260928/fpu_run/refill.tsv"
+          ],
+          "exit_status": 0,
+          "stdout": "refill report reconciles: fill=365246825 tagwrite=36074590 completed=36074589\n"
+        },
+        {
+          "argv": [
+            "python3",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_fullmachine_supervision_20260928/check_guard_report.py",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_fullmachine_20260928/fpu_run/refill.tsv"
+          ],
+          "exit_status": 0,
+          "stdout": "PASS v2 enabled observer report {'edges': 1304100000, 'raw': 11666048, 'normal': 5347864, 'guard73bc': 930, 'guard55ff': 930, 'guard6c': 5347864, 'post_mismatch': 0}\n"
+        }
+      ]
+    },
+    {
+      "kind": "mix",
+      "terminal_identity": "PASS",
+      "finished_utc": "2026-09-28T12:28:08.927209+00:00",
+      "supervisor_pid": 2615087,
+      "child_pid": 2615097,
+      "processes_gone": true,
+      "setup_sha256": "c494076aac7cb6cf960b6258ef41b43068133f03ee3f40c29a2fa6a3a8300b93",
+      "setup_byteexact_completed6c": true,
+      "final_sha256": "0941228750148435e93c78f90733376ee65c515c6ea727b968d29f3d7a9bd0ef",
+      "final_byteexact_completed6c": false,
+      "control_byteexact_completed6c": true,
+      "automated_checks": [
+        {
+          "argv": [
+            "python3",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_fullmachine_20260928/verilator/tests/check_refill_report.py",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_mix_20260928/run/refill.tsv"
+          ],
+          "exit_status": 0,
+          "stdout": "refill report reconciles: fill=183689748 tagwrite=18146879 completed=18146879\n"
+        },
+        {
+          "argv": [
+            "python3",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_mix_20260928/check_guard_report.py",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_mix_20260928/run/refill.tsv",
+            "--allow-empty"
+          ],
+          "exit_status": 0,
+          "stdout": "PASS v2 enabled observer report {'edges': 1304100000, 'raw': 334028, 'normal': 1280, 'guard73bc': 1280, 'guard55ff': 1280, 'guard6c': 1280, 'post_mismatch': 0}\n"
+        }
+      ]
+    },
+    {
+      "kind": "color8",
+      "terminal_identity": "PASS",
+      "finished_utc": "2026-09-28T12:01:32.216796+00:00",
+      "supervisor_pid": 2615095,
+      "child_pid": 2615113,
+      "processes_gone": true,
+      "setup_sha256": "92082dbb64531d12b08550b9861840f7c48f034cbd143afed3bdd6c994794810",
+      "setup_byteexact_completed6c": true,
+      "final_sha256": "f1b0eae8b07efbe84a9be0c7e2d00fbd6085835219d97dccf019c8d4bf547c22",
+      "final_byteexact_completed6c": false,
+      "control_byteexact_completed6c": true,
+      "automated_checks": [
+        {
+          "argv": [
+            "python3",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_fullmachine_20260928/verilator/tests/check_refill_report.py",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_color8_20260928/run/refill.tsv"
+          ],
+          "exit_status": 0,
+          "stdout": "refill report reconciles: fill=86068206 tagwrite=8519737 completed=8519737\n"
+        },
+        {
+          "argv": [
+            "python3",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_color8_20260928/check_guard_report.py",
+            "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_color8_20260928/run/refill.tsv",
+            "--allow-empty"
+          ],
+          "exit_status": 0,
+          "stdout": "PASS v2 enabled observer report {'edges': 524160000, 'raw': 273, 'normal': 0, 'guard73bc': 0, 'guard55ff': 0, 'guard6c': 0, 'post_mismatch': 0}\n"
+        }
+      ]
+    }
+  ],
+  "guest_verdict": "FPU and Mix INVALID; Color8 visible9.856seconds only, not overall qualification",
+  "goal": "PAUSED; user chooses next work"
+}

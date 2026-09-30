@@ -1,0 +1,67 @@
+{
+  "status": "PREPARED_ONLY_NOT_COMPILED_OR_SIMULATED_WAIT_FOR_ROOT_REVIEW",
+  "input_count": 101,
+  "input_manifest_sha256": "9462419b0f13e9cdf173caef70f12abd5b24865af0bfcbe08aecfbc6563a9d81",
+  "fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "cache_sha256": {
+    "baseline": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+    "candidate": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481"
+  },
+  "qsf_reference_sha256": "75c69f933515f05c729076108b26515f3f6aff84a36692fdd58d2f95077fe1fd",
+  "targets": [
+    "fpu",
+    "fpu_frames",
+    "fpu_resume",
+    "mmu",
+    "exceptions"
+  ],
+  "flags": [
+    "-g2012",
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "sim_flags": [
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "tools": {
+    "iverilog": {
+      "path": "/usr/bin/iverilog",
+      "sha256": "a6071e4b4a68feafca0c8ee0e6aa275eee9a43a108c62801cfd1eca6eab6d8a3"
+    },
+    "vvp": {
+      "path": "/usr/bin/vvp",
+      "sha256": "a10bd7d4a0850308ac8c2c98115b6a3084f9be978307610f2a521190c28f4023"
+    },
+    "assembler": {
+      "path": "/home/alans/mister/MacQuadra800_fixtures/wombat-vasm/vasmm68k_mot",
+      "sha256": "de9e4aa58e19078f6eb219d549159395211248e3ebfdd87be96effd84b800057"
+    }
+  },
+  "runner_sha256": "bd1a4dec5c917b900be2932bf29e84861a8f7572ec1c48073c4e68db84b2c125",
+  "source_comparison_sha256": "0279269b829e108beffd87b3510ec943afbc9500d87b8e9ffd77b147d03345bc",
+  "command_plan_sha256": "fe5e04169e4b1cc89573a69b38cd34dced2293c8a6798191d0dbce6083bbb3c8",
+  "outputs_hashed_as_inputs": false
+}

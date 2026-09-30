@@ -1,0 +1,16 @@
+The pinned cache source is bundled at reference/rtl/ap040_cache.v, SHA-256:
+7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747
+
+In the source at lines 423-440, C_IDLE through C_SWEEP use IDs 0-7. Under
+AP040_EXPERIMENTAL_XSTORE, the comma-declared constants include
+C_XSTORE_LOOK=4'd8 and C_XSTORE_WRITE=4'd9, and cst is reg [3:0]. Without
+that define, cst is reg [2:0]. The bundled release project file,
+reference/MacQuadra800.qsf, sets AP040_EXPERIMENTAL_XSTORE=1 at line 531.
+cache_state_labels.py checks the pinned RTL hash and extracts both comma-
+declared state constants; test_cache_state_labels.py requires IDs 8 and 9.
+
+The old eight-bin counter and old strict checker are bundled under reference/
+as window_counters_v1.h and check_timed_profile_v1.py. The old checker has a
+format-specific 0-7 cache bound. The corrected checker preserves that v1 bound
+and allows 0-15 only for v2; tests exercise v1 rejection of IDs 8/9 in both
+checkers, v2 acceptance of 8/9, and v2 rejection of 16.

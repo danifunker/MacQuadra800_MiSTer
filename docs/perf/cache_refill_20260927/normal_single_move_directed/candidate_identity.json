@@ -1,0 +1,7 @@
+{
+  "scope": "unqualified scratch candidate; no synthesis or workload run",
+  "baseline": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_refill_platform_workload_20260927/baseline/rtl/ap68040/rtl/ap040_fpu.v",
+  "baseline_sha256": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "candidate_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "change": "normal FMOVE.S dispatch converts directly into existing ROUND/WB; extended precision, disabled enables, no conflicting sideports"
+}

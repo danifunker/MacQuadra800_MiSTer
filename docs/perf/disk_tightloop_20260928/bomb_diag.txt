@@ -1,0 +1,4 @@
+Tue Sep 29 00:52:48 UTC 2026
+349.24 315.04
+SDPROF elapsed_ms=200017 polls=2077319 poll_avg_us=95 poll_max_us=137004 status_us=12442977 read_req=2433 write_req=6 read_blocks=2433 write_blocks=6 read_bytes=1245696 write_bytes=3072 read_hist=2433,0,0,0,0,0 write_hist=6,0,0,0,0,0 cache_hit=2225 cache_miss=207 file_read_us=268331 prefetch_us=12613 file_write_us=52 to_fpga_us=297108 from_fpga_us=472 service_us=611801 passes=2074880 pass_avg_us=95 pass_max_us=136999 macpoll_us=101479662 macpoll_max_us=21382 mwb_flushes=3 mwb_flush_bytes=1536 mwb_flush_us=13904 mwb_flush_max_us=6236 gap_n=2438 gap_avg_us=9769 gap_hist=1,1234,715,125,127,110,126 tl_waits=0 tl_hits=0 tl_wait_us=0 tl_budget_exits=0
+ls: cannot access '/tmp/mac_eth_stats': No such file or directory

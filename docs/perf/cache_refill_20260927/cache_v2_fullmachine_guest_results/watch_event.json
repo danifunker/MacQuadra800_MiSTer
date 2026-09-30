@@ -1,0 +1,70 @@
+{
+  "event": "all_terminal",
+  "checked_utc": "2026-09-28T12:32:04.243019+00:00",
+  "goal": "PAUSED; only originally authorized test completion/report/MD work remains",
+  "runs": [
+    {
+      "kind": "fpu",
+      "status": "EXIT0_REFILL_OBSERVER_PASS_PENDING_SCREENSHOT_REVIEW",
+      "supervisor_pid": 2612651,
+      "child_pid": 2612657,
+      "exit_status": 0,
+      "child_terminal": true,
+      "output_directory": "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_fullmachine_20260928/fpu_run",
+      "screens": [
+        "screenshot_f1667.png",
+        "screenshot_f2144.png",
+        "screenshot_f2249.png",
+        "screenshot_f2293.png",
+        "screenshot_f2660.png",
+        "screenshot_f3085.png",
+        "screenshot_f3889.png",
+        "screenshot_f4277.png",
+        "screenshot_f7382.png"
+      ],
+      "error": null
+    },
+    {
+      "kind": "mix",
+      "status": "EXIT0_REFILL_OBSERVER_PASS_PENDING_SCREENSHOT_REVIEW",
+      "supervisor_pid": 2615087,
+      "child_pid": 2615097,
+      "exit_status": 0,
+      "child_terminal": true,
+      "output_directory": "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_mix_20260928/run",
+      "screens": [
+        "screenshot_f1667.png",
+        "screenshot_f2144.png",
+        "screenshot_f2249.png",
+        "screenshot_f2293.png",
+        "screenshot_f2660.png",
+        "screenshot_f3085.png",
+        "screenshot_f3889.png",
+        "screenshot_f4277.png",
+        "screenshot_f7382.png"
+      ],
+      "error": null
+    },
+    {
+      "kind": "color8",
+      "status": "EXIT0_REFILL_OBSERVER_PASS_PENDING_SCREENSHOT_REVIEW",
+      "supervisor_pid": 2615095,
+      "child_pid": 2615113,
+      "exit_status": 0,
+      "child_terminal": true,
+      "output_directory": "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_color8_20260928/run",
+      "screens": [
+        "screenshot_f1667.png",
+        "screenshot_f2144.png",
+        "screenshot_f2249.png",
+        "screenshot_f2293.png",
+        "screenshot_f2660.png",
+        "screenshot_f3085.png",
+        "screenshot_f3889.png",
+        "screenshot_f4277.png",
+        "screenshot_f5525.png"
+      ],
+      "error": null
+    }
+  ]
+}

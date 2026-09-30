@@ -1,0 +1,21 @@
+{
+  "variant": "baseline",
+  "prelaunch_files": {
+    "Vemu": "fa4f49fb89ab14932dd4dbd3d957396435d86cac2031c6da406a8f4f1c32ed76",
+    "control.txt": "eafdd1b91b0984cf882584f7714b12083f082ea7443dd44d60808d507ccd0639",
+    "run.hda": "80d8479430a66edae161c2bac6a9563dbb4f6bd0f564ee7849a555c447df8888",
+    "rom.hex": "045c02746b5f15f83132d33c5414f806e7b049f3bfe53a7bd0ecacb8e072d673"
+  },
+  "original_binary_path": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_refill_model_baseline_20260927/verilator/obj_dir/Vemu",
+  "original_baseline_recipe": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_refill_model_baseline_20260927/RUN_MANIFEST.txt",
+  "RTL_differences": [
+    "ap68040/rtl/ap040_fpu.v"
+  ],
+  "baseline_FPU_sha256": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "candidate_FPU_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "nonFPU_RTL_host_model_identical": true,
+  "baseline_RUN_MANIFEST_sha256": "5bb2e702b45355c2cfc340f837af50360d171c190164286d8d396ba446594c2e",
+  "candidate_build_identity_sha256": "f0af69d289e01b70171c1e2cde079948d23fc79b03e687b4e8f294473714eefb",
+  "model": "first4publication2;full10CPU+SCSI_CACHE_OFF;unroll256",
+  "scope": "fullMix all10/oneiteration must be validated by setup/final screenshots; fixed1300M profile bracket is not timer oracle"
+}

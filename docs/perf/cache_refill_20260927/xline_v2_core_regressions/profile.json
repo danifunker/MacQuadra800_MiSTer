@@ -1,0 +1,55 @@
+{
+  "targets": [
+    "fpu",
+    "fpu_frames",
+    "fpu_resume",
+    "mmu",
+    "exceptions"
+  ],
+  "flags": [
+    "-g2012",
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "sim_flags": [
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "scope": "five existing fullcore AP040 program regressions (FPU, FP frames, prepared FPSP resume, MMU, exceptions), CPU bus model only; no normalization unit, direct cache XSTORE/posted/phase benches, full machine, Quartus, or hardware",
+  "fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "cache_sha256": {
+    "baseline": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+    "candidate": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481"
+  },
+  "qsf_reference_sha256": "75c69f933515f05c729076108b26515f3f6aff84a36692fdd58d2f95077fe1fd",
+  "assembler": "/home/alans/mister/MacQuadra800_fixtures/wombat-vasm/vasmm68k_mot",
+  "reference_runner": "scratch/fpu_normal_single_enabled_regressions_20260928/run.py",
+  "resource_limits": {
+    "workers": 2,
+    "per_command_seconds": 240,
+    "global_seconds": 3600,
+    "automatic_retries": 0
+  }
+}

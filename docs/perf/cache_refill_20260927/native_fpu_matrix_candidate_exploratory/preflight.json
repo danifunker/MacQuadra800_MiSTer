@@ -1,0 +1,10 @@
+{
+  "baseline_identity_sha256": "4a0b4c2e281ec23e6c450de0d8b14e3a14ceaa2d26b123ac47f6dc070f9d3eb3",
+  "rtl_differences": [
+    "ap68040/rtl/ap040_fpu.v"
+  ],
+  "candidate_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "image_sha256": "a8d1b0b4786139e906481f1341ed2c35488ab2d900df6dd04eae029112e5f8d7",
+  "baseline_loop_cycles": 31634431,
+  "scope": "one exploratory candidate Matrix timing/ABI/heap run; no numerical oracle; original baseline harness/model/image unchanged"
+}

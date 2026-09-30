@@ -1,0 +1,25 @@
+{
+  "unit": "codex-fpu-normal-single-enabled-quartus-20260928-seed27-cross.service",
+  "invocation_id": "5c93b6a69556427ebbb6406685c94d4a",
+  "tool_session_id": 76111,
+  "quartus_sta_pid": 2462920,
+  "quartus_sta_executable": "/home/alans/intelFPGA_lite/quartus/linux64/quartus_sta",
+  "quartus_sta_executable_sha256": "3e5b6469769824667c28dcad237a4ad5f46aad67c3ccd76ec3c0824e7094fe78",
+  "command": "quartus_sta -t scripts/cpu/timequest_cross_domain.tcl fpu_normal_single_enabled_seed27_20260928",
+  "exit_status": 0,
+  "warnings": 8,
+  "errors": 0,
+  "reports": {
+    "sys_to_ram": {
+      "path": "tree/scratch/cross_sys2ram_fpu_normal_single_enabled_seed27_20260928.txt",
+      "sha256": "5574fc35a2eee8c997b8de40c2dc520c425556b5e9faf25fbb9f72669b697f0c",
+      "worst_slack_ns": 0.706
+    },
+    "ram_to_sys": {
+      "path": "tree/scratch/cross_ram2sys_fpu_normal_single_enabled_seed27_20260928.txt",
+      "sha256": "73dcadf3a4a17a15a40b574836f1be8ba3312ab81e7aa1b15f85cfa1222ddf14",
+      "worst_slack_ns": 0.112
+    }
+  },
+  "status": "complete"
+}

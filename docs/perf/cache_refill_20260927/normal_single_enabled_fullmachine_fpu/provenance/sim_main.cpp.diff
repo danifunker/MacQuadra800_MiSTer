@@ -1,0 +1,81 @@
+--- original73bc/verilator/sim_main.cpp
++++ prepared55ff/verilator/sim_main.cpp
+@@ -189,6 +189,7 @@
+ #include "../scripts/fixtures/speedometer_timing_observer/adapter.inc"
+ #include "sim_ram_snapshot.h"
+ #include "sim_refill_profile.h"
++#include "sim_fpu_guard_profile.h"
+ 
+ // Simulation-only exact-workload profiler. SIGUSR1 resets/starts the
+ // bracket; SIGUSR2 stops it and writes the report.
+@@ -214,6 +215,37 @@
+ static uint64_t bracket_pass_write, bracket_pass_read, bracket_sb_pushes;
+ static uint8_t bracket_prev_cst = 0;
+ static SimRefillProfile bracket_refill;
++static SimFpuGuardProfile bracket_fpu_guard;
++static SimFpuGuardEdge bracket_fpu_edge;
++// Capture once immediately before eval; commit through the existing gate.
++static void fpu_guard_before_eval() {
++    auto* e=SIMEMU;
++    SimFpuGuardEdge s;
++    s.nreset=!VERTOPINTERN->reset; // sim.v machine nreset=~reset
++    s.ce=true; // sim.v machine ce=1
++    s.req=e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_req;
++    s.opclass=e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_class;
++    s.format=e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_fmt;
++    s.opmode=e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_opm;
++    s.restore_unimp=e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_frestore_unimp;
++    s.restore_resume=e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_frestore_resume;
++    s.state_unimp=e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_fstate_unimp;
++    s.pc=e->__PVT__machine__DOT__cpu__DOT__core__DOT__pc_i;
++    s.fpcr=e->__PVT__machine__DOT__cpu__DOT__core__DOT__g_fpu__DOT__fpu__DOT__fpcr;
++    s.fst=e->__PVT__machine__DOT__cpu__DOT__core__DOT__g_fpu__DOT__fpu__DOT__fst;
++    s.state_e1=e->__PVT__machine__DOT__cpu__DOT__core__DOT__g_fpu__DOT__fpu__DOT__fstate_e1;
++    s.state_resig=e->__PVT__machine__DOT__cpu__DOT__core__DOT__g_fpu__DOT__fpu__DOT__fstate_resig;
++    s.exponent=(e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpb[2]>>23)&255;
++    s.sideports|=uint8_t(e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_crwe)<<0;
++    s.sideports|=uint8_t(e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_fmwe)<<1;
++    s.sideports|=uint8_t(e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_bsun)<<2;
++    s.sideports|=uint8_t(e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_rst)<<3;
++    s.sideports|=uint8_t(e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_frestore_idle)<<4;
++    s.sideports|=uint8_t(e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_frestore_unimp)<<5;
++    s.sideports|=uint8_t(e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_fsave_ack)<<6;
++    s.sideports|=uint8_t(e->__PVT__machine__DOT__cpu__DOT__core__DOT__fpu_pendcap)<<7;
++    bracket_fpu_edge=s;
++}
+ static void bracket_start_signal(int) { bracket_start_req = 1; }
+ static void bracket_stop_signal(int) { bracket_stop_req = 1; }
+ 
+@@ -233,6 +265,7 @@
+ 	bracket_prev_valid = false;
+ 	bracket_prev_cst = 0xff;
+ 	bracket_refill.reset();
++	bracket_fpu_guard.reset();
+ }
+ 
+ static void bracket_dump() {
+@@ -345,6 +378,7 @@
+ 		fprintf(f, "OPCODE\t%04X\t%llu\t%.6f\n", op,
+ 		        (unsigned long long)bracket_opcodes[op],
+ 		        dispatches ? 100.0*bracket_opcodes[op]/dispatches : 0.0);
++	bracket_fpu_guard.dump(f);
+ 	fclose(f);
+ 	printf("[CPU-PROFILE] wrote %s: %llu cycles, %llu opcode dispatches, %.3f clocks/dispatch\n",
+ 	       bracket_file.c_str(), (unsigned long long)bracket_cycles,
+@@ -364,6 +398,8 @@
+ 	}
+ 	if (action == CpuProfileGate::Stop) { bracket_dump(); return; }
+ 	if (action == CpuProfileGate::Skip) return;
++	bracket_fpu_guard.sample(bracket_fpu_edge,
++		SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__g_fpu__DOT__fpu__DOT__fst);
+ 	uint8_t state=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__state;
+ 	uint16_t ir=SIMEMU->__PVT__machine__DOT__cpu__DOT__core__DOT__ir;
+ 	uint8_t cst=SIMEMU->__PVT__machine__DOT__cpu__DOT__g_cache__DOT__cache__DOT__cst;
+@@ -604,6 +640,7 @@
+ 				if (!scsi_disk_file.empty()) blockdevice.BeforeEval(main_time);
+ 			}
+ 			if (clk_sys.clk) speedometer_before_eval();
++			if (clk_sys.clk) fpu_guard_before_eval();
+ 			top->eval();
+ 			if (clk_sys.clk) dispatched = dispatch_observer.sample(VERTOPINTERN->reset,
+ 				SIMEMU->machine__DOT__cpu__DOT__core__DOT__perf_dispatch_toggle);

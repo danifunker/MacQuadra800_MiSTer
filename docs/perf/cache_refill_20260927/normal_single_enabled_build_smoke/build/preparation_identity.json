@@ -1,0 +1,9 @@
+{
+  "stage": "PREPARE_ONLY_NO_BUILD_OR_SIMULATION",
+  "project_manifest_sha256": "6ce6d46953c97a8de7c4944d189ef5af62dcfcdb712a896f8164e99bb03c3094",
+  "candidate_fpu": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "observer": "10d57ba74f446d4e91815cf7f24baf9551370eabe326f93b83e6282d514e8be1",
+  "checker": "69c525db4dbb4adfdea4986f6ab166cf4080b522fef61361922a0954245ec280",
+  "build_supervisor": "0bee4ba3eaf9c27cdc1e92fee87d794d081997118efef42f81acb31cab2f7471",
+  "smoke_supervisor": "c76361a2595fa218a31f3cb56ab39c7cbf27b5ac721b300b2bd59343ccd0aec0"
+}

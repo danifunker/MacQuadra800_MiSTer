@@ -1,0 +1,442 @@
+CASE id=0 sideband=0 instr=0 addr=00004000 size=2 start=5322
+EVENT case=0 cycle=5324 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=0 cycle=5331 kind=sdr_ack rel=9 data=a5000000
+EVENT case=0 cycle=5332 kind=bus_ack rel=10 data=a5000000
+EVENT case=0 cycle=5332 kind=fill_step rel=10 count=0 word=0 source=     bus
+EVENT case=0 cycle=5333 kind=line_valid rel=11
+EVENT case=0 cycle=5333 kind=critical_ack rel=11 data=a5000000
+EVENT case=0 cycle=5334 kind=fill_step rel=12 count=1 word=1 source=     bus
+EVENT case=0 cycle=5336 kind=fill_step rel=14 count=2 word=2 source=     bus
+EVENT case=0 cycle=5338 kind=fill_step rel=16 count=3 word=3 source=     bus
+EVENT case=0 cycle=5339 kind=tag_commit rel=17
+HITS base=00004000 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=1 sideband=0 instr=0 addr=00004014 size=2 start=5357
+EVENT case=1 cycle=5359 kind=fill_enter rel=2 beat=1 way=0
+EVENT case=1 cycle=5365 kind=sdr_ack rel=8 data=a5000005
+EVENT case=1 cycle=5366 kind=bus_ack rel=9 data=a5000005
+EVENT case=1 cycle=5366 kind=fill_step rel=9 count=0 word=1 source=     bus
+EVENT case=1 cycle=5367 kind=line_valid rel=10
+EVENT case=1 cycle=5367 kind=critical_ack rel=10 data=a5000005
+EVENT case=1 cycle=5368 kind=fill_step rel=11 count=1 word=2 source=     bus
+EVENT case=1 cycle=5370 kind=fill_step rel=13 count=2 word=3 source=     bus
+EVENT case=1 cycle=5372 kind=fill_step rel=15 count=3 word=0 source=     bus
+EVENT case=1 cycle=5373 kind=tag_commit rel=16
+HITS base=00004010 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=2 sideband=0 instr=0 addr=00004028 size=2 start=5392
+EVENT case=2 cycle=5394 kind=fill_enter rel=2 beat=2 way=0
+EVENT case=2 cycle=5399 kind=sdr_ack rel=7 data=a500000a
+EVENT case=2 cycle=5400 kind=bus_ack rel=8 data=a500000a
+EVENT case=2 cycle=5400 kind=fill_step rel=8 count=0 word=2 source=     bus
+EVENT case=2 cycle=5401 kind=line_valid rel=9
+EVENT case=2 cycle=5401 kind=critical_ack rel=9 data=a500000a
+EVENT case=2 cycle=5402 kind=fill_step rel=10 count=1 word=3 source=     bus
+EVENT case=2 cycle=5404 kind=fill_step rel=12 count=2 word=0 source=     bus
+EVENT case=2 cycle=5406 kind=fill_step rel=14 count=3 word=1 source=     bus
+EVENT case=2 cycle=5407 kind=tag_commit rel=15
+HITS base=00004020 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=3 sideband=0 instr=0 addr=0000403c size=2 start=5426
+EVENT case=3 cycle=5428 kind=fill_enter rel=2 beat=3 way=0
+EVENT case=3 cycle=5433 kind=sdr_ack rel=7 data=a500000f
+EVENT case=3 cycle=5434 kind=bus_ack rel=8 data=a500000f
+EVENT case=3 cycle=5434 kind=fill_step rel=8 count=0 word=3 source=     bus
+EVENT case=3 cycle=5435 kind=line_valid rel=9
+EVENT case=3 cycle=5435 kind=critical_ack rel=9 data=a500000f
+EVENT case=3 cycle=5436 kind=fill_step rel=10 count=1 word=0 source=     bus
+EVENT case=3 cycle=5438 kind=fill_step rel=12 count=2 word=1 source=     bus
+EVENT case=3 cycle=5440 kind=fill_step rel=14 count=3 word=2 source=     bus
+EVENT case=3 cycle=5441 kind=tag_commit rel=15
+HITS base=00004030 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=4 sideband=0 instr=0 addr=00004045 size=2 start=5460
+EVENT case=4 cycle=5462 kind=fill_enter rel=2 beat=1 way=0
+EVENT case=4 cycle=5467 kind=sdr_ack rel=7 data=a5000011
+EVENT case=4 cycle=5468 kind=bus_ack rel=8 data=a5000011
+EVENT case=4 cycle=5468 kind=fill_step rel=8 count=0 word=1 source=     bus
+EVENT case=4 cycle=5469 kind=line_valid rel=9
+EVENT case=4 cycle=5470 kind=fill_step rel=10 count=1 word=2 source=     bus
+EVENT case=4 cycle=5471 kind=critical_ack rel=11 data=000011a5
+EVENT case=4 cycle=5472 kind=fill_step rel=12 count=2 word=3 source=     bus
+EVENT case=4 cycle=5474 kind=fill_step rel=14 count=3 word=0 source=     bus
+EVENT case=4 cycle=5475 kind=tag_commit rel=15
+HITS base=00004040 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=5 sideband=1 instr=0 addr=00004050 size=2 start=5494
+EVENT case=5 cycle=5496 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=5 cycle=5501 kind=sdr_ack rel=7 data=a5000014
+EVENT case=5 cycle=5502 kind=bus_ack rel=8 data=a5000014
+EVENT case=5 cycle=5502 kind=fill_step rel=8 count=0 word=0 source=     bus
+EVENT case=5 cycle=5503 kind=line_valid rel=9
+EVENT case=5 cycle=5503 kind=fill_step rel=9 count=1 word=1 source=sideband
+EVENT case=5 cycle=5503 kind=critical_ack rel=9 data=a5000014
+EVENT case=5 cycle=5504 kind=tag_commit rel=10
+HITS base=00004050 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=6 sideband=1 instr=0 addr=00004064 size=2 start=5522
+EVENT case=6 cycle=5524 kind=fill_enter rel=2 beat=1 way=0
+EVENT case=6 cycle=5529 kind=sdr_ack rel=7 data=a5000019
+EVENT case=6 cycle=5530 kind=bus_ack rel=8 data=a5000019
+EVENT case=6 cycle=5530 kind=fill_step rel=8 count=0 word=1 source=     bus
+EVENT case=6 cycle=5531 kind=line_valid rel=9
+EVENT case=6 cycle=5531 kind=fill_step rel=9 count=1 word=2 source=sideband
+EVENT case=6 cycle=5531 kind=critical_ack rel=9 data=a5000019
+EVENT case=6 cycle=5532 kind=tag_commit rel=10
+HITS base=00004060 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=7 sideband=1 instr=0 addr=00004078 size=2 start=5551
+EVENT case=7 cycle=5553 kind=fill_enter rel=2 beat=2 way=0
+EVENT case=7 cycle=5558 kind=sdr_ack rel=7 data=a500001e
+EVENT case=7 cycle=5559 kind=bus_ack rel=8 data=a500001e
+EVENT case=7 cycle=5559 kind=fill_step rel=8 count=0 word=2 source=     bus
+EVENT case=7 cycle=5560 kind=line_valid rel=9
+EVENT case=7 cycle=5560 kind=fill_step rel=9 count=1 word=3 source=sideband
+EVENT case=7 cycle=5560 kind=critical_ack rel=9 data=a500001e
+EVENT case=7 cycle=5561 kind=tag_commit rel=10
+HITS base=00004070 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=8 sideband=1 instr=0 addr=0000408c size=2 start=5580
+EVENT case=8 cycle=5582 kind=fill_enter rel=2 beat=3 way=0
+EVENT case=8 cycle=5587 kind=sdr_ack rel=7 data=a5000023
+EVENT case=8 cycle=5588 kind=bus_ack rel=8 data=a5000023
+EVENT case=8 cycle=5588 kind=fill_step rel=8 count=0 word=3 source=     bus
+EVENT case=8 cycle=5589 kind=line_valid rel=9
+EVENT case=8 cycle=5589 kind=fill_step rel=9 count=1 word=0 source=sideband
+EVENT case=8 cycle=5589 kind=critical_ack rel=9 data=a5000023
+EVENT case=8 cycle=5590 kind=tag_commit rel=10
+HITS base=00004080 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=9 sideband=1 instr=0 addr=00004095 size=2 start=5609
+EVENT case=9 cycle=5611 kind=fill_enter rel=2 beat=1 way=0
+EVENT case=9 cycle=5617 kind=sdr_ack rel=8 data=a5000025
+EVENT case=9 cycle=5618 kind=bus_ack rel=9 data=a5000025
+EVENT case=9 cycle=5618 kind=fill_step rel=9 count=0 word=1 source=     bus
+EVENT case=9 cycle=5619 kind=line_valid rel=10
+EVENT case=9 cycle=5619 kind=fill_step rel=10 count=1 word=2 source=sideband
+EVENT case=9 cycle=5620 kind=critical_ack rel=11 data=000025a5
+EVENT case=9 cycle=5620 kind=tag_commit rel=11
+HITS base=00004090 instr=0 all_four_words=PASS no_bus=PASS
+ILINE_WARM alternate=000046a0 PASS
+CASE id=10 sideband=0 instr=1 addr=000040a0 size=2 start=5654
+EVENT case=10 cycle=5656 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=10 cycle=5663 kind=sdr_ack rel=9 data=a5000028
+EVENT case=10 cycle=5664 kind=bus_ack rel=10 data=a5000028
+EVENT case=10 cycle=5664 kind=fill_step rel=10 count=0 word=0 source=     bus
+EVENT case=10 cycle=5665 kind=line_valid rel=11
+EVENT case=10 cycle=5665 kind=critical_ack rel=11 data=a5000028
+EVENT case=10 cycle=5666 kind=fill_step rel=12 count=1 word=1 source=     bus
+EVENT case=10 cycle=5668 kind=fill_step rel=14 count=2 word=2 source=     bus
+EVENT case=10 cycle=5670 kind=fill_step rel=16 count=3 word=3 source=     bus
+EVENT case=10 cycle=5671 kind=tag_commit rel=17
+ILINE_EVICT base=000040a0 alternate=000046a0 PASS
+HITS base=000040a0 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=11 sideband=0 instr=1 addr=000040b4 size=2 start=5691
+EVENT case=11 cycle=5693 kind=fill_enter rel=2 beat=1 way=0
+EVENT case=11 cycle=5698 kind=sdr_ack rel=7 data=a500002d
+EVENT case=11 cycle=5699 kind=bus_ack rel=8 data=a500002d
+EVENT case=11 cycle=5699 kind=fill_step rel=8 count=0 word=1 source=     bus
+EVENT case=11 cycle=5700 kind=line_valid rel=9
+EVENT case=11 cycle=5700 kind=critical_ack rel=9 data=a500002d
+EVENT case=11 cycle=5701 kind=fill_step rel=10 count=1 word=2 source=     bus
+EVENT case=11 cycle=5703 kind=fill_step rel=12 count=2 word=3 source=     bus
+EVENT case=11 cycle=5705 kind=fill_step rel=14 count=3 word=0 source=     bus
+EVENT case=11 cycle=5706 kind=tag_commit rel=15
+ILINE_EVICT base=000040b0 alternate=000046a0 PASS
+HITS base=000040b0 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=12 sideband=0 instr=1 addr=000040c8 size=2 start=5726
+EVENT case=12 cycle=5728 kind=fill_enter rel=2 beat=2 way=0
+EVENT case=12 cycle=5733 kind=sdr_ack rel=7 data=a5000032
+EVENT case=12 cycle=5734 kind=bus_ack rel=8 data=a5000032
+EVENT case=12 cycle=5734 kind=fill_step rel=8 count=0 word=2 source=     bus
+EVENT case=12 cycle=5735 kind=line_valid rel=9
+EVENT case=12 cycle=5735 kind=critical_ack rel=9 data=a5000032
+EVENT case=12 cycle=5736 kind=fill_step rel=10 count=1 word=3 source=     bus
+EVENT case=12 cycle=5738 kind=fill_step rel=12 count=2 word=0 source=     bus
+EVENT case=12 cycle=5740 kind=fill_step rel=14 count=3 word=1 source=     bus
+EVENT case=12 cycle=5741 kind=tag_commit rel=15
+ILINE_EVICT base=000040c0 alternate=000046a0 PASS
+HITS base=000040c0 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=13 sideband=0 instr=1 addr=000040dc size=2 start=5761
+EVENT case=13 cycle=5763 kind=fill_enter rel=2 beat=3 way=0
+EVENT case=13 cycle=5768 kind=sdr_ack rel=7 data=a5000037
+EVENT case=13 cycle=5769 kind=bus_ack rel=8 data=a5000037
+EVENT case=13 cycle=5769 kind=fill_step rel=8 count=0 word=3 source=     bus
+EVENT case=13 cycle=5770 kind=line_valid rel=9
+EVENT case=13 cycle=5770 kind=critical_ack rel=9 data=a5000037
+EVENT case=13 cycle=5771 kind=fill_step rel=10 count=1 word=0 source=     bus
+EVENT case=13 cycle=5773 kind=fill_step rel=12 count=2 word=1 source=     bus
+EVENT case=13 cycle=5775 kind=fill_step rel=14 count=3 word=2 source=     bus
+EVENT case=13 cycle=5776 kind=tag_commit rel=15
+ILINE_EVICT base=000040d0 alternate=000046a0 PASS
+HITS base=000040d0 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=14 sideband=1 instr=1 addr=000040e0 size=2 start=5796
+EVENT case=14 cycle=5798 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=14 cycle=5803 kind=sdr_ack rel=7 data=a5000038
+EVENT case=14 cycle=5804 kind=bus_ack rel=8 data=a5000038
+EVENT case=14 cycle=5804 kind=fill_step rel=8 count=0 word=0 source=     bus
+EVENT case=14 cycle=5805 kind=line_valid rel=9
+EVENT case=14 cycle=5805 kind=fill_step rel=9 count=1 word=1 source=sideband
+EVENT case=14 cycle=5805 kind=critical_ack rel=9 data=a5000038
+EVENT case=14 cycle=5806 kind=tag_commit rel=10
+ILINE_EVICT base=000040e0 alternate=000046a0 PASS
+HITS base=000040e0 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=15 sideband=1 instr=1 addr=000040f4 size=2 start=5826
+EVENT case=15 cycle=5828 kind=fill_enter rel=2 beat=1 way=0
+EVENT case=15 cycle=5833 kind=sdr_ack rel=7 data=a500003d
+EVENT case=15 cycle=5834 kind=bus_ack rel=8 data=a500003d
+EVENT case=15 cycle=5834 kind=fill_step rel=8 count=0 word=1 source=     bus
+EVENT case=15 cycle=5835 kind=line_valid rel=9
+EVENT case=15 cycle=5835 kind=fill_step rel=9 count=1 word=2 source=sideband
+EVENT case=15 cycle=5835 kind=critical_ack rel=9 data=a500003d
+EVENT case=15 cycle=5836 kind=tag_commit rel=10
+ILINE_EVICT base=000040f0 alternate=000046a0 PASS
+HITS base=000040f0 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=16 sideband=1 instr=1 addr=00004108 size=2 start=5856
+EVENT case=16 cycle=5858 kind=fill_enter rel=2 beat=2 way=0
+EVENT case=16 cycle=5865 kind=sdr_ack rel=9 data=a5000042
+EVENT case=16 cycle=5866 kind=bus_ack rel=10 data=a5000042
+EVENT case=16 cycle=5866 kind=fill_step rel=10 count=0 word=2 source=     bus
+EVENT case=16 cycle=5867 kind=line_valid rel=11
+EVENT case=16 cycle=5867 kind=fill_step rel=11 count=1 word=3 source=sideband
+EVENT case=16 cycle=5867 kind=critical_ack rel=11 data=a5000042
+EVENT case=16 cycle=5868 kind=tag_commit rel=12
+ILINE_EVICT base=00004100 alternate=000046a0 PASS
+HITS base=00004100 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=17 sideband=1 instr=1 addr=0000411c size=2 start=5888
+EVENT case=17 cycle=5890 kind=fill_enter rel=2 beat=3 way=0
+EVENT case=17 cycle=5895 kind=sdr_ack rel=7 data=a5000047
+EVENT case=17 cycle=5896 kind=bus_ack rel=8 data=a5000047
+EVENT case=17 cycle=5896 kind=fill_step rel=8 count=0 word=3 source=     bus
+EVENT case=17 cycle=5897 kind=line_valid rel=9
+EVENT case=17 cycle=5897 kind=fill_step rel=9 count=1 word=0 source=sideband
+EVENT case=17 cycle=5897 kind=critical_ack rel=9 data=a5000047
+EVENT case=17 cycle=5898 kind=tag_commit rel=10
+ILINE_EVICT base=00004110 alternate=000046a0 PASS
+HITS base=00004110 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=18 sideband=0 instr=0 addr=00004200 size=2 start=5918
+EVENT case=18 cycle=5920 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=18 cycle=5925 kind=sdr_ack rel=7 data=a5000080
+EVENT case=18 cycle=5926 kind=bus_ack rel=8 data=a5000080
+EVENT case=18 cycle=5926 kind=fill_step rel=8 count=0 word=0 source=     bus
+EVENT case=18 cycle=5927 kind=line_valid rel=9
+EVENT case=18 cycle=5927 kind=critical_ack rel=9 data=a5000080
+EVENT case=18 cycle=5928 kind=fill_step rel=10 count=1 word=1 source=     bus
+EVENT case=18 cycle=5930 kind=fill_step rel=12 count=2 word=2 source=     bus
+EVENT case=18 cycle=5932 kind=fill_step rel=14 count=3 word=3 source=     bus
+EVENT case=18 cycle=5933 kind=tag_commit rel=15
+HITS base=00004200 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=19 sideband=0 instr=0 addr=00004a04 size=2 start=5951
+EVENT case=19 cycle=5953 kind=fill_enter rel=2 beat=1 way=1
+EVENT case=19 cycle=5960 kind=sdr_ack rel=9 data=a5000281
+EVENT case=19 cycle=5961 kind=bus_ack rel=10 data=a5000281
+EVENT case=19 cycle=5961 kind=fill_step rel=10 count=0 word=1 source=     bus
+EVENT case=19 cycle=5962 kind=line_valid rel=11
+EVENT case=19 cycle=5962 kind=critical_ack rel=11 data=a5000281
+EVENT case=19 cycle=5963 kind=fill_step rel=12 count=1 word=2 source=     bus
+EVENT case=19 cycle=5965 kind=fill_step rel=14 count=2 word=3 source=     bus
+EVENT case=19 cycle=5967 kind=fill_step rel=16 count=3 word=0 source=     bus
+EVENT case=19 cycle=5968 kind=tag_commit rel=17
+HITS base=00004a00 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=20 sideband=0 instr=0 addr=00005208 size=2 start=5987
+EVENT case=20 cycle=5989 kind=fill_enter rel=2 beat=2 way=2
+EVENT case=20 cycle=5996 kind=sdr_ack rel=9 data=a5000482
+EVENT case=20 cycle=5997 kind=bus_ack rel=10 data=a5000482
+EVENT case=20 cycle=5997 kind=fill_step rel=10 count=0 word=2 source=     bus
+EVENT case=20 cycle=5998 kind=line_valid rel=11
+EVENT case=20 cycle=5998 kind=critical_ack rel=11 data=a5000482
+EVENT case=20 cycle=5999 kind=fill_step rel=12 count=1 word=3 source=     bus
+EVENT case=20 cycle=6001 kind=fill_step rel=14 count=2 word=0 source=     bus
+EVENT case=20 cycle=6003 kind=fill_step rel=16 count=3 word=1 source=     bus
+EVENT case=20 cycle=6004 kind=tag_commit rel=17
+HITS base=00005200 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=21 sideband=0 instr=0 addr=00005a0c size=2 start=6023
+EVENT case=21 cycle=6025 kind=fill_enter rel=2 beat=3 way=3
+EVENT case=21 cycle=6032 kind=sdr_ack rel=9 data=a5000683
+EVENT case=21 cycle=6033 kind=bus_ack rel=10 data=a5000683
+EVENT case=21 cycle=6033 kind=fill_step rel=10 count=0 word=3 source=     bus
+EVENT case=21 cycle=6034 kind=line_valid rel=11
+EVENT case=21 cycle=6034 kind=critical_ack rel=11 data=a5000683
+EVENT case=21 cycle=6035 kind=fill_step rel=12 count=1 word=0 source=     bus
+EVENT case=21 cycle=6037 kind=fill_step rel=14 count=2 word=1 source=     bus
+EVENT case=21 cycle=6039 kind=fill_step rel=16 count=3 word=2 source=     bus
+EVENT case=21 cycle=6040 kind=tag_commit rel=17
+HITS base=00005a00 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=22 sideband=0 instr=0 addr=00006200 size=2 start=6059
+EVENT case=22 cycle=6061 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=22 cycle=6068 kind=sdr_ack rel=9 data=a5000880
+EVENT case=22 cycle=6069 kind=bus_ack rel=10 data=a5000880
+EVENT case=22 cycle=6069 kind=fill_step rel=10 count=0 word=0 source=     bus
+EVENT case=22 cycle=6070 kind=line_valid rel=11
+EVENT case=22 cycle=6070 kind=critical_ack rel=11 data=a5000880
+EVENT case=22 cycle=6071 kind=fill_step rel=12 count=1 word=1 source=     bus
+EVENT case=22 cycle=6073 kind=fill_step rel=14 count=2 word=2 source=     bus
+EVENT case=22 cycle=6075 kind=fill_step rel=16 count=3 word=3 source=     bus
+EVENT case=22 cycle=6076 kind=tag_commit rel=17
+HITS base=00006200 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=23 sideband=1 instr=0 addr=00004300 size=2 start=6094
+EVENT case=23 cycle=6096 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=23 cycle=6103 kind=sdr_ack rel=9 data=a50000c0
+EVENT case=23 cycle=6104 kind=bus_ack rel=10 data=a50000c0
+EVENT case=23 cycle=6104 kind=fill_step rel=10 count=0 word=0 source=     bus
+EVENT case=23 cycle=6105 kind=line_valid rel=11
+EVENT case=23 cycle=6105 kind=fill_step rel=11 count=1 word=1 source=sideband
+EVENT case=23 cycle=6105 kind=critical_ack rel=11 data=a50000c0
+EVENT case=23 cycle=6106 kind=tag_commit rel=12
+HITS base=00004300 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=24 sideband=1 instr=0 addr=00004b04 size=2 start=6124
+EVENT case=24 cycle=6126 kind=fill_enter rel=2 beat=1 way=1
+EVENT case=24 cycle=6132 kind=sdr_ack rel=8 data=a50002c1
+EVENT case=24 cycle=6133 kind=bus_ack rel=9 data=a50002c1
+EVENT case=24 cycle=6133 kind=fill_step rel=9 count=0 word=1 source=     bus
+EVENT case=24 cycle=6134 kind=line_valid rel=10
+EVENT case=24 cycle=6134 kind=fill_step rel=10 count=1 word=2 source=sideband
+EVENT case=24 cycle=6134 kind=critical_ack rel=10 data=a50002c1
+EVENT case=24 cycle=6135 kind=tag_commit rel=11
+HITS base=00004b00 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=25 sideband=1 instr=0 addr=00005308 size=2 start=6154
+EVENT case=25 cycle=6156 kind=fill_enter rel=2 beat=2 way=2
+EVENT case=25 cycle=6163 kind=sdr_ack rel=9 data=a50004c2
+EVENT case=25 cycle=6164 kind=bus_ack rel=10 data=a50004c2
+EVENT case=25 cycle=6164 kind=fill_step rel=10 count=0 word=2 source=     bus
+EVENT case=25 cycle=6165 kind=line_valid rel=11
+EVENT case=25 cycle=6165 kind=fill_step rel=11 count=1 word=3 source=sideband
+EVENT case=25 cycle=6165 kind=critical_ack rel=11 data=a50004c2
+EVENT case=25 cycle=6166 kind=tag_commit rel=12
+HITS base=00005300 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=26 sideband=1 instr=0 addr=00005b0c size=2 start=6185
+EVENT case=26 cycle=6187 kind=fill_enter rel=2 beat=3 way=3
+EVENT case=26 cycle=6194 kind=sdr_ack rel=9 data=a50006c3
+EVENT case=26 cycle=6195 kind=bus_ack rel=10 data=a50006c3
+EVENT case=26 cycle=6195 kind=fill_step rel=10 count=0 word=3 source=     bus
+EVENT case=26 cycle=6196 kind=line_valid rel=11
+EVENT case=26 cycle=6196 kind=fill_step rel=11 count=1 word=0 source=sideband
+EVENT case=26 cycle=6196 kind=critical_ack rel=11 data=a50006c3
+EVENT case=26 cycle=6197 kind=tag_commit rel=12
+HITS base=00005b00 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=27 sideband=1 instr=0 addr=00006300 size=2 start=6216
+EVENT case=27 cycle=6218 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=27 cycle=6225 kind=sdr_ack rel=9 data=a50008c0
+EVENT case=27 cycle=6226 kind=bus_ack rel=10 data=a50008c0
+EVENT case=27 cycle=6226 kind=fill_step rel=10 count=0 word=0 source=     bus
+EVENT case=27 cycle=6227 kind=line_valid rel=11
+EVENT case=27 cycle=6227 kind=fill_step rel=11 count=1 word=1 source=sideband
+EVENT case=27 cycle=6227 kind=critical_ack rel=11 data=a50008c0
+EVENT case=27 cycle=6228 kind=tag_commit rel=12
+HITS base=00006300 instr=0 all_four_words=PASS no_bus=PASS
+CASE id=28 sideband=0 instr=1 addr=00004400 size=2 start=6246
+EVENT case=28 cycle=6248 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=28 cycle=6255 kind=sdr_ack rel=9 data=a5000100
+EVENT case=28 cycle=6256 kind=bus_ack rel=10 data=a5000100
+EVENT case=28 cycle=6256 kind=fill_step rel=10 count=0 word=0 source=     bus
+EVENT case=28 cycle=6257 kind=line_valid rel=11
+EVENT case=28 cycle=6257 kind=critical_ack rel=11 data=a5000100
+EVENT case=28 cycle=6258 kind=fill_step rel=12 count=1 word=1 source=     bus
+EVENT case=28 cycle=6260 kind=fill_step rel=14 count=2 word=2 source=     bus
+EVENT case=28 cycle=6262 kind=fill_step rel=16 count=3 word=3 source=     bus
+EVENT case=28 cycle=6263 kind=tag_commit rel=17
+ILINE_EVICT base=00004400 alternate=000046a0 PASS
+HITS base=00004400 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=29 sideband=0 instr=1 addr=00004c04 size=2 start=6283
+EVENT case=29 cycle=6285 kind=fill_enter rel=2 beat=1 way=1
+EVENT case=29 cycle=6292 kind=sdr_ack rel=9 data=a5000301
+EVENT case=29 cycle=6293 kind=bus_ack rel=10 data=a5000301
+EVENT case=29 cycle=6293 kind=fill_step rel=10 count=0 word=1 source=     bus
+EVENT case=29 cycle=6294 kind=line_valid rel=11
+EVENT case=29 cycle=6294 kind=critical_ack rel=11 data=a5000301
+EVENT case=29 cycle=6295 kind=fill_step rel=12 count=1 word=2 source=     bus
+EVENT case=29 cycle=6297 kind=fill_step rel=14 count=2 word=3 source=     bus
+EVENT case=29 cycle=6299 kind=fill_step rel=16 count=3 word=0 source=     bus
+EVENT case=29 cycle=6300 kind=tag_commit rel=17
+ILINE_EVICT base=00004c00 alternate=000046a0 PASS
+HITS base=00004c00 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=30 sideband=0 instr=1 addr=00005408 size=2 start=6320
+EVENT case=30 cycle=6322 kind=fill_enter rel=2 beat=2 way=2
+EVENT case=30 cycle=6329 kind=sdr_ack rel=9 data=a5000502
+EVENT case=30 cycle=6330 kind=bus_ack rel=10 data=a5000502
+EVENT case=30 cycle=6330 kind=fill_step rel=10 count=0 word=2 source=     bus
+EVENT case=30 cycle=6331 kind=line_valid rel=11
+EVENT case=30 cycle=6331 kind=critical_ack rel=11 data=a5000502
+EVENT case=30 cycle=6332 kind=fill_step rel=12 count=1 word=3 source=     bus
+EVENT case=30 cycle=6334 kind=fill_step rel=14 count=2 word=0 source=     bus
+EVENT case=30 cycle=6336 kind=fill_step rel=16 count=3 word=1 source=     bus
+EVENT case=30 cycle=6337 kind=tag_commit rel=17
+ILINE_EVICT base=00005400 alternate=000046a0 PASS
+HITS base=00005400 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=31 sideband=0 instr=1 addr=00005c0c size=2 start=6357
+EVENT case=31 cycle=6359 kind=fill_enter rel=2 beat=3 way=3
+EVENT case=31 cycle=6366 kind=sdr_ack rel=9 data=a5000703
+EVENT case=31 cycle=6367 kind=bus_ack rel=10 data=a5000703
+EVENT case=31 cycle=6367 kind=fill_step rel=10 count=0 word=3 source=     bus
+EVENT case=31 cycle=6368 kind=line_valid rel=11
+EVENT case=31 cycle=6368 kind=critical_ack rel=11 data=a5000703
+EVENT case=31 cycle=6369 kind=fill_step rel=12 count=1 word=0 source=     bus
+EVENT case=31 cycle=6371 kind=fill_step rel=14 count=2 word=1 source=     bus
+EVENT case=31 cycle=6373 kind=fill_step rel=16 count=3 word=2 source=     bus
+EVENT case=31 cycle=6374 kind=tag_commit rel=17
+ILINE_EVICT base=00005c00 alternate=000046a0 PASS
+HITS base=00005c00 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=32 sideband=0 instr=1 addr=00006400 size=2 start=6394
+EVENT case=32 cycle=6396 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=32 cycle=6402 kind=sdr_ack rel=8 data=a5000900
+EVENT case=32 cycle=6403 kind=bus_ack rel=9 data=a5000900
+EVENT case=32 cycle=6403 kind=fill_step rel=9 count=0 word=0 source=     bus
+EVENT case=32 cycle=6404 kind=line_valid rel=10
+EVENT case=32 cycle=6404 kind=critical_ack rel=10 data=a5000900
+EVENT case=32 cycle=6405 kind=fill_step rel=11 count=1 word=1 source=     bus
+EVENT case=32 cycle=6407 kind=fill_step rel=13 count=2 word=2 source=     bus
+EVENT case=32 cycle=6409 kind=fill_step rel=15 count=3 word=3 source=     bus
+EVENT case=32 cycle=6410 kind=tag_commit rel=16
+ILINE_EVICT base=00006400 alternate=000046a0 PASS
+HITS base=00006400 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=33 sideband=1 instr=1 addr=00004500 size=2 start=6430
+EVENT case=33 cycle=6432 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=33 cycle=6439 kind=sdr_ack rel=9 data=a5000140
+EVENT case=33 cycle=6440 kind=bus_ack rel=10 data=a5000140
+EVENT case=33 cycle=6440 kind=fill_step rel=10 count=0 word=0 source=     bus
+EVENT case=33 cycle=6441 kind=line_valid rel=11
+EVENT case=33 cycle=6441 kind=fill_step rel=11 count=1 word=1 source=sideband
+EVENT case=33 cycle=6441 kind=critical_ack rel=11 data=a5000140
+EVENT case=33 cycle=6442 kind=tag_commit rel=12
+ILINE_EVICT base=00004500 alternate=000046a0 PASS
+HITS base=00004500 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=34 sideband=1 instr=1 addr=00004d04 size=2 start=6462
+EVENT case=34 cycle=6464 kind=fill_enter rel=2 beat=1 way=1
+EVENT case=34 cycle=6471 kind=sdr_ack rel=9 data=a5000341
+EVENT case=34 cycle=6472 kind=bus_ack rel=10 data=a5000341
+EVENT case=34 cycle=6472 kind=fill_step rel=10 count=0 word=1 source=     bus
+EVENT case=34 cycle=6473 kind=line_valid rel=11
+EVENT case=34 cycle=6473 kind=fill_step rel=11 count=1 word=2 source=sideband
+EVENT case=34 cycle=6473 kind=critical_ack rel=11 data=a5000341
+EVENT case=34 cycle=6474 kind=tag_commit rel=12
+ILINE_EVICT base=00004d00 alternate=000046a0 PASS
+HITS base=00004d00 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=35 sideband=1 instr=1 addr=00005508 size=2 start=6494
+EVENT case=35 cycle=6496 kind=fill_enter rel=2 beat=2 way=2
+EVENT case=35 cycle=6503 kind=sdr_ack rel=9 data=a5000542
+EVENT case=35 cycle=6504 kind=bus_ack rel=10 data=a5000542
+EVENT case=35 cycle=6504 kind=fill_step rel=10 count=0 word=2 source=     bus
+EVENT case=35 cycle=6505 kind=line_valid rel=11
+EVENT case=35 cycle=6505 kind=fill_step rel=11 count=1 word=3 source=sideband
+EVENT case=35 cycle=6505 kind=critical_ack rel=11 data=a5000542
+EVENT case=35 cycle=6506 kind=tag_commit rel=12
+ILINE_EVICT base=00005500 alternate=000046a0 PASS
+HITS base=00005500 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=36 sideband=1 instr=1 addr=00005d0c size=2 start=6526
+EVENT case=36 cycle=6528 kind=fill_enter rel=2 beat=3 way=3
+EVENT case=36 cycle=6535 kind=sdr_ack rel=9 data=a5000743
+EVENT case=36 cycle=6536 kind=bus_ack rel=10 data=a5000743
+EVENT case=36 cycle=6536 kind=fill_step rel=10 count=0 word=3 source=     bus
+EVENT case=36 cycle=6537 kind=line_valid rel=11
+EVENT case=36 cycle=6537 kind=fill_step rel=11 count=1 word=0 source=sideband
+EVENT case=36 cycle=6537 kind=critical_ack rel=11 data=a5000743
+EVENT case=36 cycle=6538 kind=tag_commit rel=12
+ILINE_EVICT base=00005d00 alternate=000046a0 PASS
+HITS base=00005d00 instr=1 all_four_words=PASS no_bus=PASS
+CASE id=37 sideband=1 instr=1 addr=00006500 size=2 start=6558
+EVENT case=37 cycle=6560 kind=fill_enter rel=2 beat=0 way=0
+EVENT case=37 cycle=6567 kind=sdr_ack rel=9 data=a5000940
+EVENT case=37 cycle=6568 kind=bus_ack rel=10 data=a5000940
+EVENT case=37 cycle=6568 kind=fill_step rel=10 count=0 word=0 source=     bus
+EVENT case=37 cycle=6569 kind=line_valid rel=11
+EVENT case=37 cycle=6569 kind=fill_step rel=11 count=1 word=1 source=sideband
+EVENT case=37 cycle=6569 kind=critical_ack rel=11 data=a5000940
+EVENT case=37 cycle=6570 kind=tag_commit rel=12
+ILINE_EVICT base=00006500 alternate=000046a0 PASS
+HITS base=00006500 instr=1 all_four_words=PASS no_bus=PASS
+PASS integrated cache/refill cases; chip_errors=0
+- /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_refill_path_20260927/tb_refill_path.sv:305: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01
+- Verilator: $finish at 200us; walltime 0.011 s; speed 18.170 ms/s
+- Verilator: cpu 0.011 s on 1 threads; allocated 7 MB

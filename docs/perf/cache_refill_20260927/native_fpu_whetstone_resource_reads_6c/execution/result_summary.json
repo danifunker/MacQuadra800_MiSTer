@@ -1,0 +1,169 @@
+{
+  "target": {
+    "starts": 96271,
+    "ends": 96271,
+    "active": 0,
+    "touched": 96271,
+    "whole": 96271,
+    "sum": 331334,
+    "max": 25,
+    "partial": 0,
+    "partial_edges": 0,
+    "active_edges": 0,
+    "occupancy": 331334,
+    "unclassified": 0
+  },
+  "saved_rest_resource": {
+    "n": 90990,
+    "sum": 311506,
+    "max": 25
+  },
+  "path_counts": {
+    "0": 64181,
+    "1": 22459,
+    "2": 9630,
+    "3": 0,
+    "4": 1,
+    "5": 0,
+    "6": 0
+  },
+  "branch_event_counts": {
+    "0": 22459,
+    "1": 0,
+    "2": 1,
+    "3": 9630,
+    "4": 0,
+    "5": 1,
+    "6": 0
+  },
+  "scope": "translated enabled/cacheable resource data read episodes; no historical invalidation cause, numerical oracle or removable-cycle prediction",
+  "loop_clocks": 8724166,
+  "hot_addresses": [
+    {
+      "addr": 6295214,
+      "size": 2,
+      "n": 9630,
+      "sum": 199716,
+      "max": 25,
+      "address_hex": "00600eae",
+      "mean_inclusive_edges": 20.73894080996885,
+      "excess_over_one": 190086,
+      "loop_share_percent": 2.2892274172683096
+    },
+    {
+      "addr": 6295234,
+      "size": 2,
+      "n": 22460,
+      "sum": 66091,
+      "max": 6,
+      "address_hex": "00600ec2",
+      "mean_inclusive_edges": 2.9426090828138913,
+      "excess_over_one": 43631,
+      "loop_share_percent": 0.7575623847597581
+    },
+    {
+      "addr": 6295226,
+      "size": 2,
+      "n": 22460,
+      "sum": 23783,
+      "max": 14,
+      "address_hex": "00600eba",
+      "mean_inclusive_edges": 1.0589047195013357,
+      "excess_over_one": 1323,
+      "loop_share_percent": 0.27261058535566607
+    },
+    {
+      "addr": 6295230,
+      "size": 2,
+      "n": 22460,
+      "sum": 22472,
+      "max": 13,
+      "address_hex": "00600ebe",
+      "mean_inclusive_edges": 1.00053428317008,
+      "excess_over_one": 12,
+      "loop_share_percent": 0.2575833609768544
+    },
+    {
+      "addr": 6295218,
+      "size": 2,
+      "n": 9630,
+      "sum": 9630,
+      "max": 1,
+      "address_hex": "00600eb2",
+      "mean_inclusive_edges": 1.0,
+      "excess_over_one": 0,
+      "loop_share_percent": 0.11038304406404005
+    },
+    {
+      "addr": 6295222,
+      "size": 2,
+      "n": 9630,
+      "sum": 9630,
+      "max": 1,
+      "address_hex": "00600eb6",
+      "mean_inclusive_edges": 1.0,
+      "excess_over_one": 0,
+      "loop_share_percent": 0.11038304406404005
+    },
+    {
+      "addr": 6291484,
+      "size": 1,
+      "n": 1,
+      "sum": 12,
+      "max": 12,
+      "address_hex": "0060001c",
+      "mean_inclusive_edges": 12.0,
+      "excess_over_one": 11,
+      "loop_share_percent": 0.000137548964565782
+    }
+  ],
+  "events": [
+    {
+      "addr": 6295214,
+      "size": 2,
+      "event": 3,
+      "n": 9630
+    },
+    {
+      "addr": 6295230,
+      "size": 2,
+      "event": 0,
+      "n": 22459
+    },
+    {
+      "addr": 6295230,
+      "size": 2,
+      "event": 2,
+      "n": 1
+    },
+    {
+      "addr": 6295230,
+      "size": 2,
+      "event": 5,
+      "n": 1
+    }
+  ],
+  "first_failure_masks": [
+    {
+      "addr": 6295214,
+      "size": 2,
+      "mask": 1,
+      "n": 9630
+    }
+  ],
+  "invalidation_events": 0,
+  "original_reports_and_NEXT_and_four_captures": "byte-exact",
+  "child_cleanup": {
+    "supervisor2573599": true,
+    "runner2573601": true,
+    "native2574362": true,
+    "unit": "inactive/dead/ExecMainStatus0"
+  },
+  "limitations": [
+    "No historical attribution of missing tags to earlier snoop/store/sweep/replacement/cold entry.",
+    "Physical request latency includes cache setup; do not equate external LONG count9773 with resource firstpass9630.",
+    "No independent numerical oracle or OS timing measurement.",
+    "ROMlat6 fixture stand-in unchanged; no hardware/DDR3-ROM timing claim.",
+    "Inclusive latency/excess are accounting, not predicted removable clocks."
+  ]
+}

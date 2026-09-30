@@ -1,0 +1,2 @@
+ALL TESTS PASSED: 10336 normalization cases and ce holds
+/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_move_regressions_20260928/tb/tb_ap040_fpu_normalize.v:121: $finish called at 206746000 (1ps)

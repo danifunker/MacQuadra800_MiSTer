@@ -1,0 +1,9 @@
+tb_ap040_program: running ome/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/outputs/baseline/fpu_frames.hex
+ERROR: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/inputs/tb/tb_ap040_program.v:808: $readmemh: Unable to open ome/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/outputs/baseline/fpu_frames.hex for reading.
+FAIL: access outside memory model at ffffffc4 (pc=0000f140)
+ERROR: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/inputs/tb/tb_ap040_program.v:808: $readmemh: Unable to open ome/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/outputs/baseline/fpu_frames.hex for reading.
+FAIL: access outside memory model at ffffffc4 (pc=0000f140)
+ERROR: /home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/inputs/tb/tb_ap040_program.v:808: $readmemh: Unable to open ome/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/outputs/baseline/fpu_frames.hex for reading.
+FAIL: access outside memory model at ffffffc4 (pc=0000f140)
+TEST FAILED with 3 errors
+/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_regressions_20260928/inputs/tb/tb_ap040_program.v:858: $finish called at 6644895000 (1ps)

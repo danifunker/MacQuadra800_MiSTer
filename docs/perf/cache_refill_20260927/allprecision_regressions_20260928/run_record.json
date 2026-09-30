@@ -1,0 +1,31 @@
+{
+  "attempt": 2,
+  "runner_command": "python3 scratch/fpu_normal_single_allprecision_regressions_20260928/run.py",
+  "exec_session_id": 47711,
+  "exit_status": 0,
+  "started_after": "sequential `--preflight-only` PASS, then full paired run invocation",
+  "completed_epoch": 1790570573.006745,
+  "input_manifest_sha256": "80723de23ff80d01845eeff63f9edab1511073800feddd3c1a90d8b99a972248",
+  "result_status": "PASS",
+  "terminal_targets": {
+    "baseline": [
+      "exceptions",
+      "fpu",
+      "fpu_frames",
+      "fpu_normalize",
+      "fpu_resume",
+      "mmu"
+    ],
+    "candidate": [
+      "exceptions",
+      "fpu",
+      "fpu_frames",
+      "fpu_normalize",
+      "fpu_resume",
+      "mmu"
+    ]
+  },
+  "immutable_inputs_revalidated": 100,
+  "attempt1_path_truncation_preserved_at": "attempt1_path_truncation/",
+  "suite_scope": "existing fullcore FPU, FP frame, prepared FPSP resume, FPCR, MMU and exception programs plus normalization unit test; CPU bus model only; no full machine/OS/hardware"
+}

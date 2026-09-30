@@ -1,0 +1,67 @@
+rtl=b2ed1b0  latency=3  empty block=34 clocks
+key          test                                                        c16    c32    c64 c64cold   32-16   64-32   per16 |    b16    b32    b64    body
+fmove_i      FMOVE.X FPm,FPn  indep                                       82    130    226     531    3.00    3.00    3.00 |     48     96    192    3.00
+fmove_d      FMOVE.X FPm,FPn  dep                                         82    130    226     531    3.00    3.00    3.00 |     48     96    192    3.00
+faddeq_i     FADD.X equal exp  indep                                      98    162    290     533    4.00    4.00    4.00 |     64    128    256    4.00
+faddeq_d     FADD.X equal exp  dep                                        98    162    290     533    4.00    4.00    4.00 |     64    128    256    4.00
+fadd5_i      FADD.X exp diff 5  indep                                     98    162    290     533    4.00    4.00    4.00 |     64    128    256    4.00
+fadd5_d      FADD.X exp diff 5  dep                                       98    162    290     533    4.00    4.00    4.00 |     64    128    256    4.00
+fadd40_i     FADD.X exp diff 40  indep                                    98    162    290     533    4.00    4.00    4.00 |     64    128    256    4.00
+fadd40_d     FADD.X exp diff 40  dep                                      98    162    290     533    4.00    4.00    4.00 |     64    128    256    4.00
+fsubc_i      FSUB.X cancel/FADD d60 pairs  indep                         106    178    322     534    4.50    4.50    4.50 |     72    144    288    4.50
+fsubc_d      FSUB.X cancel/FADD d60 pairs  dep                           106    178    322     534    4.50    4.50    4.50 |     72    144    288    4.50
+fsubn_i      FSUB.X no cancel  indep                                     114    194    354     534    5.00    5.00    5.00 |     79    159    319    5.00
+fsubn_d      FSUB.X no cancel  dep                                       114    194    354     534    5.00    5.00    5.00 |     79    159    319    5.00
+fmul_i       FMUL.X FPm,FPn  indep                                        98    162    290     533    4.00    4.00    4.00 |     64    128    256    4.00
+fmul_d       FMUL.X FPm,FPn  dep                                          98    162    290     533    4.00    4.00    4.00 |     64    128    256    4.00
+fmul2_i      FMUL.X by 2.0 (fast path)  indep                             98    162    290     533    4.00    4.00    4.00 |     64    128    256    4.00
+fdiv_i       FDIV.X FPm,FPn  indep                                       439    871   1735    1762   27.00   27.00   25.31 |    409    841   1705   27.00
+fdiv_d       FDIV.X FPm,FPn  dep                                         439    871   1735    1762   27.00   27.00   25.31 |    409    841   1705   27.00
+fsqrt_i      FSQRT.X FPm,FPn  indep                                      439    871   1735    1762   27.00   27.00   25.31 |    410    842   1706   27.00
+fsqrt_d      FSQRT.X FPn  dep                                            439    871   1735    1762   27.00   27.00   25.31 |    410    842   1706   27.00
+fmulmx_i     FMUL.X (A0),FPn  indep                                      135    263    519    1010    8.00    8.00    6.31 |    128    256    512    8.00
+fmulmx_d     FMUL.X (A0),FPn  dep                                        135    263    519    1008    8.00    8.00    6.31 |    128    256    512    8.00
+fmulmd_i     FMUL.D (A0),FPn  indep                                      119    231    455     944    7.00    7.00    5.31 |    112    224    448    7.00
+fmulmd_d     FMUL.D (A0),FPn  dep                                        119    231    455     940    7.00    7.00    5.31 |    112    224    448    7.00
+fmulms_i     FMUL.S (A0),FPn  indep                                      103    199    391     878    6.00    6.00    4.31 |     96    192    384    6.00
+fmulms_d     FMUL.S (A0),FPn  dep                                        103    199    391     882    6.00    6.00    4.31 |     96    192    384    6.00
+faddpi_i     FADD.D (A0)+,FPn  indep                                     119    231    455    1416    7.00    7.00    5.31 |    112    224    448    7.00
+faddpi_d     FADD.D (A0)+,FPn  dep                                       119    231    455     946    7.00    7.00    5.31 |    112    224    448    7.00
+fstx_i       FMOVE.X FPn,(A0)  indep                                     319    607   1183    1583   18.00   18.00   17.81 |    269    557   1133   18.00
+fstx_d       FADD.X + FMOVE.X of its result (pair)                       321    609   1185    1986   18.00   18.00   17.94 |    271    559   1135   18.00
+fstd_i       FMOVE.D FPn,(A0)  indep                                     223    415    799    1199   12.00   12.00   11.81 |    173    365    749   12.00
+fstd_d       FADD.X + FMOVE.D of its result (pair)                       225    417    801    1602   12.00   12.00   11.94 |    176    367    751   12.00
+fsts_i       FMOVE.S FPn,(A0)  indep                                     127    223    415     863    6.00    6.00    5.81 |     80    173    365    6.00
+fsts_d       FADD.X + FMOVE.S of its result (pair)                       151    295    583    1441    9.00    9.00    7.31 |    144    288    576    9.00
+fstl_i       FMOVE.L FPn,(A0)  indep                                     151    295    583    1009    9.00    9.00    7.31 |    144    288    576    9.00
+fstl_d       FADD.X + FMOVE.L of its result (pair)                       215    423    839    1538   13.00   13.00   11.31 |    208    416    832   13.00
+fld_i        FMOVE.D (A0),FPn  different dest                            103    199    391     882    6.00    6.00    4.31 |     96    192    384    6.00
+fld_d        FMOVE.D (A0),FP0  same dest                                 103    201    391     880    6.12    5.94    4.31 |     96    194    384    5.94
+fcmp_i       FCMP.X FPm,FPn                                               96    160    288     534    4.00    4.00    3.88 |     64    128    256    4.00
+fcmpb_d      FCMP.X + FBEQ.W not taken (pair)                            128    224    416    1064    6.00    6.00    5.88 |     96    192    384    6.00
+fbnt         FBEQ.W not taken                                             43     79    178     530    2.25    3.09    0.56 |     36     71    144    2.28
+fbt          FBNE.W taken (to next insn)                                  68     79    151     562    0.69    2.25    2.12 |     36     72    143    2.22
+add_i        ADD.L D0,Dn  (integer only)                                  23     66     71     270    2.69    0.16   -0.69 |     16     32     64    1.00
+mulint1      FMUL.X FP7,FPn + 1 ADD.L (pair)                             128    199    391     833    4.44    6.00    5.88 |     96    192    384    6.00
+mulint1d     FMUL.X FP7,FP0 dep + 1 ADD.L (pair)                         103    199    391     808    6.00    6.00    4.31 |     96    192    384    6.00
+mulint4      FMUL.X FP7,FPn + 4 ADD.L (group)                            178    322    608    1592    9.00    8.94    9.00 |    144    288    576    9.00
+mulint8      FMUL.X FP7,FPn + 8 ADD.L (group)                            215    425    839    2691   13.12   12.94   11.31 |    208    418    832   12.94
+divint8      FDIV.X FP7,FPn + 8 ADD.L (group)                            439    871   1762    2650   27.00   27.84   25.31 |    418    850   1714   27.00
+divint24     FDIV.X FP7,FPn + 24 ADD.L (group)                           498    960   1866    6919   28.88   28.31   29.00 |    464    928   1859   29.09
+flds16_i     FMOVE.S d16(A0),FPn                                          87    167    327     997    5.00    5.00    3.31 |     80    160    320    5.00
+fldsx_i      FMOVE.S d8(A0,D0.L),FPn                                     114    167    354     992    3.31    5.84    5.00 |     80    160    320    5.00
+flds0_i      FMOVE.S (A0),FPn                                             89    167    327     818    4.88    5.00    3.44 |     82    160    320    5.00
+fsts16_i     FMOVE.S FPn,d16(A0)                                         127    223    415    1092    6.00    6.00    5.81 |     80    173    365    6.00
+ldmul        FMOVE.S d16(A0),FP0 ; FMUL.X FP0,FP1 (pair)                 151    322    583    1594   10.69    8.16    7.31 |    144    288    576    9.00
+mulst        FMUL.X FP1,FP2 ; FMOVE.S FP2,d16(A0) (pair)                 151    295    585    1662    9.00    9.06    7.31 |    144    288    578    9.06
+matrix       Matrix: FMOVE.S 0(A0,D0.L),FP0; FMUL.X FP1,FP0; FADD.X FP0,FP2; ADDQ.L #4,D0 (group)    247    514    967    2690   16.69   14.16   13.31 |    240    480    960   15.00
+fft          FFT: 2x FMOVE.S d16(A0),FPn; FSUB.X; FMUL.X; FADD.X; 2x FMOVE.S FPn,d16(A0) (group)    535   1065   2119    5586   33.12   32.94   31.31 |    528   1058   2112   32.94
+fldd16_i     FMOVE.D d16(A0),FPn                                         103    199    391    1060    6.00    6.00    4.31 |     96    192    384    6.00
+fstd16_i     FMOVE.D FPn,d16(A0)                                         223    415    799    1405   12.00   12.00   11.81 |    173    365    749   12.00
+fintrz_rte   FINTRZ.X FP1,FP0 -> vec 11, handler RTE                    1050   2096   4182    4534   65.38   65.19   63.50 |   1039   2082   4171   65.28
+fintrz_fs    FINTRZ.X FP1,FP0 -> vec 11, handler FSAVE/FRESTORE/RTE     2684   5358  10712   11088  167.12  167.31  165.62 |   2670   5347  10698  167.22
+fmovecr_rte  FMOVECR #0,FP0 -> vec 11, handler RTE                      1050   2096   4182    4534   65.38   65.19   63.50 |   1039   2082   4171   65.28
+fmovecr_fs   FMOVECR #0,FP0 -> vec 11, handler FSAVE/FRESTORE/RTE       2684   5358  10712   11088  167.12  167.31  165.62 |   2670   5347  10698  167.22
+trap         TRAP #0 -> handler RTE                                      936   1867   3720    3883   58.19   57.91   56.38 |    925   1853   3709   58.00
+aline        A-line $A000 -> handler ADDQ.L #2,2(SP); RTE               1019   2024   4043    4236   62.81   63.09   61.56 |   1005   2013   4029   63.00
+nop_rte      handler-only reference: BSR to RTS (not a trap)             142    327    591    1102   11.56    8.25    6.75 |    131    316    583    8.34

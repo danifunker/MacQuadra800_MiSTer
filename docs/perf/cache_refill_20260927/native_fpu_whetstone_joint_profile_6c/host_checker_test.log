@@ -1,0 +1,1 @@
+PASS passive checker: sparse valid immediate/overflow/partial+finish-active fixtures and15corruptions rejected; no RTL/model run

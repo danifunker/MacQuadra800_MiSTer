@@ -1,0 +1,13 @@
+--- frozen_attempt1/tb_xfirst_sideband.sv
++++ attempt2/tb_xfirst_sideband.sv
+@@ -195,7 +195,9 @@
+      $fatal(1,"held fault was reissued/acknowledged or lost err_hold");
+    end
+    held_faults++;
+-   req=0;error_arm=0;error_with_ack=0;drain();
++   req=0;error_arm=0;error_with_ack=0;
++   @(negedge clk); // one enabled posedge observes withdrawal and clears err_hold
++   drain();
+    if(acks!=start_acks)$fatal(1,"fault counted operand ACK");
+    if(phase || dut.err_hold)$fatal(1,"fault phase/hold not released");
+    // Retry only after the old request was withdrawn and error cleanup drained.

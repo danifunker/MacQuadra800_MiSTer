@@ -1,0 +1,10 @@
+PASS unsupported opcode=3b7c supported=0
+PASS unsupported opcode=3f3c supported=0
+PASS unsupported opcode=4e94 supported=0
+PASS unsupported opcode=4eb9 supported=0
+PASS unsupported opcode=4a2d supported=0
+PASS unsupported opcode=a193 supported=0
+PASS unsupported opcode=225f supported=0
+PASS supported MOVEQ opcode=7800 supported=1
+PASS decoder eligibility cases=8
+scratch/fpu_timed_profile_attempt2_20260927/review_decoder/tb_decoder_eligibility.sv:50: $finish called at 8000 (1ps)

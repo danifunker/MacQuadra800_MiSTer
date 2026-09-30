@@ -1,0 +1,21 @@
+{
+  "unit": "codex-cache-xline-first-fill-quartus-seed31-20260928-cross",
+  "invocation_id": "f85cf3ea49cb4d8d94129c86dedcb2a3",
+  "child_pid": 2628000,
+  "wrapper_exit": 0,
+  "quartus_sta_exit": 0,
+  "tag": "cache_xline_v2_seed31_20260928",
+  "checked_unix_time": 1790592998.5101922,
+  "reports": [
+    {
+      "path": "tree/scratch/cross_sys2ram_cache_xline_v2_seed31_20260928.txt",
+      "sha256": "dbe6b18ae1692023895310ce84c300204a60051e1b3e91d0f5b801952db9aa64",
+      "size_bytes": 4056
+    },
+    {
+      "path": "tree/scratch/cross_ram2sys_cache_xline_v2_seed31_20260928.txt",
+      "sha256": "a254a24cee01f8cc24a2c16b7214050f487f229e4c07ba755c5930de1fd4a79d",
+      "size_bytes": 3588
+    }
+  ]
+}

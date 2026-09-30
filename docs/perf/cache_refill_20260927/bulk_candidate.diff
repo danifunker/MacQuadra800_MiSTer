@@ -1,0 +1,72 @@
+--- rtl/ap68040/rtl/ap040_cache.v
++++ scratch/fpu_bulk_line_candidate_20260927/ap040_cache.v
+@@ -704,6 +704,19 @@
+                              (r_beat == 2'd2) ? m_line_data[63:32]  :
+                                                         m_line_data[31:0];
+ wire fill_line_write = fill_line_match;
++// Completed retained line, with no outstanding beat: install all four
++// word-interleaved arrays together. Never abandon an issued transaction.
++wire fill_line_bulk = fill_line_match && !m_err;
++wire [127:0] bulk_array_data = (r_way == 2'd0) ? m_line_data :
++                              (r_way == 2'd1) ? {m_line_data[31:0], m_line_data[127:32]} :
++                              (r_way == 2'd2) ? {m_line_data[63:0], m_line_data[127:64]} :
++                                               {m_line_data[95:0], m_line_data[127:96]};
++wire [31:0] bulk_req_word = (r_addr[3:2] == 2'd0) ? m_line_data[127:96] :
++                           (r_addr[3:2] == 2'd1) ? m_line_data[95:64] :
++                           (r_addr[3:2] == 2'd2) ? m_line_data[63:32] : m_line_data[31:0];
++wire [31:0] bulk_next_word = (r_addr[3:2] == 2'd0) ? m_line_data[95:64] :
++                            (r_addr[3:2] == 2'd1) ? m_line_data[63:32] :
++                            (r_addr[3:2] == 2'd2) ? m_line_data[31:0] : m_line_data[127:96];
+ 
+ assign m_req   = fill_active ? !fill_line_match :
+                  (pass_active ? (post_active | c_req) : 1'b0);
+@@ -1289,7 +1302,7 @@
+     !c_write && !c_instr && !look_snooped && !snoop_look_row &&
+     !err_hold && !m_err;
+ wire [63:0] pair_new = span_merge(sp_held ? {sp_h0, sp_h1} : {sp_w0, sp_w1}, r_wdata, r_size, r_off);
+-assign cd_we     = store_pair_write ? ((4'd1 << wr_arr) | (4'd1 << wr_arr1)) :
++assign cd_we     = fill_line_bulk ? 4'hF : store_pair_write ? ((4'd1 << wr_arr) | (4'd1 << wr_arr1)) :
+                    (store_hit_write || fill_beat_write) ? (4'd1 << wr_arr) : 4'd0;
+ // P195: a store hit writes only its own bytes, so no store reads the old
+ // word first.  st_val/st_be place the operand over the pair {word w, word
+@@ -1305,13 +1318,13 @@
+ wire  [3:0] st_b   = st_lo ? st_be[3:0]   : st_be[7:4];
+ // array k: a spanning store's second word goes to wr_arr1, everything
+ // else (its first word, a single-word store, a fill beat) to wr_arr
+-assign {cd_be0, cd_wdat0} = store_pair_write ? ((wr_arr1 == 2'd0) ? {st_be[3:0], st_val[31:0]} : {st_be[7:4], st_val[63:32]}) :
++assign {cd_be0, cd_wdat0} = fill_line_bulk ? {4'hF, bulk_array_data[127:96]} : store_pair_write ? ((wr_arr1 == 2'd0) ? {st_be[3:0], st_val[31:0]} : {st_be[7:4], st_val[63:32]}) :
+                             store_hit_write ? {st_b, st_w} : {4'hF, cd_wdat};
+-assign {cd_be1, cd_wdat1} = store_pair_write ? ((wr_arr1 == 2'd1) ? {st_be[3:0], st_val[31:0]} : {st_be[7:4], st_val[63:32]}) :
++assign {cd_be1, cd_wdat1} = fill_line_bulk ? {4'hF, bulk_array_data[95:64]} : store_pair_write ? ((wr_arr1 == 2'd1) ? {st_be[3:0], st_val[31:0]} : {st_be[7:4], st_val[63:32]}) :
+                             store_hit_write ? {st_b, st_w} : {4'hF, cd_wdat};
+-assign {cd_be2, cd_wdat2} = store_pair_write ? ((wr_arr1 == 2'd2) ? {st_be[3:0], st_val[31:0]} : {st_be[7:4], st_val[63:32]}) :
++assign {cd_be2, cd_wdat2} = fill_line_bulk ? {4'hF, bulk_array_data[63:32]} : store_pair_write ? ((wr_arr1 == 2'd2) ? {st_be[3:0], st_val[31:0]} : {st_be[7:4], st_val[63:32]}) :
+                             store_hit_write ? {st_b, st_w} : {4'hF, cd_wdat};
+-assign {cd_be3, cd_wdat3} = store_pair_write ? ((wr_arr1 == 2'd3) ? {st_be[3:0], st_val[31:0]} : {st_be[7:4], st_val[63:32]}) :
++assign {cd_be3, cd_wdat3} = fill_line_bulk ? {4'hF, bulk_array_data[31:0]} : store_pair_write ? ((wr_arr1 == 2'd3) ? {st_be[3:0], st_val[31:0]} : {st_be[7:4], st_val[63:32]}) :
+                             store_hit_write ? {st_b, st_w} : {4'hF, cd_wdat};
+ assign cd_widx   = {r_bank, r_row[SETW-1:0], wr_way};
+ wire [63:0] cross_first_merge = span_merge({data_hit,32'd0}, r_wdata, r_size, r_off);
+@@ -1837,6 +1850,22 @@
+ 					err_hold <= !fill_acked;
+ 					cst <= C_FERR;
+ 				end
++				else if (fill_line_bulk) begin
++					// The sideband supplies the complete physical line. The existing
++					// C_TAGW still arbitrates validation against all recorded snoops.
++					if (!fill_acked) begin
++						rdata_r <= r_span2 ? span_extract({bulk_req_word, bulk_next_word}, r_size, r_off) :
++						           r_xline ? span_extract({fill_hold2, bulk_req_word}, r_size, r_off) :
++						                     lw_extract(bulk_req_word, r_size, r_off);
++						ack_r <= 1;
++						fill_acked <= 1;
++					end
++					fill_hold <= bulk_req_word;
++					fill_hold2 <= bulk_next_word;
++					fill_cnt <= 2'd3;
++					r_issued <= 0;
++					cst <= C_TAGW;
++				end
+ 				else if (fill_line_match || (r_issued && m_ack)) begin : fill_beat
+ 					// The data RAM write runs in parallel (cd_we), just as it
+ 					// does for a returned bus beat.  The requester is

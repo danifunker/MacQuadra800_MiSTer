@@ -1,0 +1,63 @@
+{
+  "scope": "matched fullOS FPU displayedtime/rating comparison; calibrated4/2RAM model, not FPGA",
+  "candidate_fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "baseline": {
+    "aggregate": 0.698,
+    "whetstones_per_second": 3849.262,
+    "matrix_seconds": 0.991,
+    "fft_seconds": 0.447
+  },
+  "previous55ff": {
+    "aggregate": 0.698,
+    "whetstones_per_second": 3850.048,
+    "matrix_seconds": 0.991,
+    "fft_seconds": 0.447
+  },
+  "candidate": {
+    "reviewer": "/root",
+    "tests_done": true,
+    "setup_all_three_selected": true,
+    "iterations": [
+      1,
+      1,
+      1
+    ],
+    "whetstones_per_second": 3850.048,
+    "matrix_seconds": 0.928,
+    "fft_seconds": 0.418,
+    "ratings": [
+      0.739,
+      0.761,
+      0.687
+    ],
+    "aggregate_rating": 0.729,
+    "screens": {
+      "screenshot_f4277.png": "e7c623b75e7d5bd3a390cd1a5db375d551ad435981403c2635637ed3754ae9b1",
+      "screenshot_f7382.png": "f62654d3ea0760e557ff3fa6b88516ac44be66931a13e236902d510fd9a1fdf1"
+    },
+    "independent_sources_223": "PASS",
+    "independent_binary": "2f16b5f63372788b8dc1b63ae8d657cdaad67c3e5232524e9be1edb0d14e6ebf",
+    "independent_refill_check": "PASS",
+    "independent_v2_observer_check": "PASS",
+    "child_absent": true,
+    "scope": "Displayed guest results; observer raw branch events cover fullwindow without per-subtest/unique-instruction attribution."
+  },
+  "aggregate_rating_increase_percent": 4.441260744985676,
+  "matrix_throughput_increase_percent_from_rounded_times": 6.788793103448265,
+  "fft_throughput_increase_percent_from_rounded_times": 6.937799043062198,
+  "observer_fullwindow": {
+    "edges": 1304100000,
+    "raw_branch_events": 11666052,
+    "normal": 5347864,
+    "guard73bc": 930,
+    "guard55ff": 930,
+    "guard6c": 5347864,
+    "eligible_post_round": 5347864,
+    "eligible_post_mismatch": 0,
+    "precision0_enable0x20_normal": 5346934,
+    "precision0_enable0_normal": 930,
+    "context_cap": 64,
+    "context_dropped": 5347800
+  },
+  "goal_at_least10percent_aggregate": "not_met"
+}

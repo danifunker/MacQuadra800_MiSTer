@@ -1,0 +1,11 @@
+--- seed28/MacQuadra800.qsf
++++ seed31/MacQuadra800.qsf
+@@ -398,7 +398,7 @@
+ # 22 CPU -1.179 / SDRAM -2.264 / HDMI -0.967; 25 CPU -1.341; 27 CPU +0.193, SDRAM +0.295, HDMI -0.025
+ # (RBF md5 85924646; hardware: Mix 1.781/1.781, Color 8-bit 9.944 s, FPU 0.684, clean shutdown).
+ # 28 CPU -0.065 only; 29, 30 router failed; 31 HDMI -0.455 only (CPU +0.823, SDRAM +0.548); 32-35 router failed.  Walk stopped.
+-set_global_assignment -name SEED 28
++set_global_assignment -name SEED 31
+ # 2026-09-24: NEVER grew the full BRF fit by398 ALMs; retain the better ALWAYS setting.
+ set_global_assignment -name FITTER_AGGRESSIVE_ROUTABILITY_OPTIMIZATION ALWAYS
+ #

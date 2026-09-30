@@ -1,0 +1,11 @@
+# 6c seed31 FPGA timing failure
+
+This archive records the seed31 compile and timing reports for the 6c candidate. Quartus analysis/synthesis, fitter, assembler and TimeQuest completed with no Quartus errors. The Quartus flow exit status was 0, while `build_only.sh` and the systemd unit returned 1 because the RAM-clock setup gate failed. This result is not timing-clean and was not deployed.
+
+Fit used 38,667/41,910 ALMs, 24,591 registers, 468/553 RAM blocks, 3,389,411 memory bits, 36 DSPs and 4 PLLs. CPU setup slack is +0.230 ns; HDMI is +0.085 ns; RAM clock is **−0.103 ns** (TNS −0.652 ns); worst hold is +0.229 ns. The RBF is 4,497,956 bytes (SHA-256 `98f96258a59c6ce26ce7d4f4af11e6c2426cd2dc9fdddc5bea91605cb27ee6a3`), and the SOF is 6,690,368 bytes (SHA-256 `930ab6b311536fb91cdb8d8cc1dbc3281eaed33c28471a6d90e0bad100057d42`). These hashes identify omitted outputs; neither payload is included or approved for deployment.
+
+The serialized cross-domain report command exited 0 and both directions meet their reported setup checks: system-to-RAM +1.406 ns and RAM-to-system +0.348 ns, six paths each. A separate intra-RAM-clock report found **12 violated paths in its summary**. Its detail report expands only the worst three paths, not all 12. The worst is `sdram_beat32|wq_wp_handoff[3]` to `sdram_beat32|a_ram[24]`: −0.103 ns slack, 4.544 ns data delay, −0.450 ns clock skew and two logic levels. The summary's 12 violations are the reason seed31 is not accepted despite positive CPU/HDMI slack and passing crossings.
+
+The frozen seed31 manifest covers 1,892 source inputs. Compared with seed28, the only input change is `MacQuadra800.qsf`, changing SEED 28 to 31; the FPU, SDC, cache source and all other inputs are unchanged. Source postrun verification passed. The archive includes both manifests, QSF diff, candidate FPU source, compile/process identities, raw build/map/fit/STA/crossing/RAM-path reports and logs. It excludes RBF/SOF payloads, Quartus databases and private environment files.
+
+Run `python3 check_archive.py .` from this directory. The portable checker verifies the archive inventory, the sole-QSF source delta, source postrun status, compile/crossing/RAM-path identities, the 12-summary/3-detail distinction and omitted artifact metadata. It does not run Quartus.

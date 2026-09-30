@@ -1,0 +1,9 @@
+{
+  "checked_unix_time": 1790589168.799679,
+  "manifest": "candidate_seed33_manifest.sha256",
+  "manifest_sha256": "0d2d84ea49bad9a234646fe37dbf0a4c0d038d4d7ccda8317395be1d0f878a1c",
+  "entries": 1892,
+  "verified": 1892,
+  "mismatches": [],
+  "result": "PASS"
+}

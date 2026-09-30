@@ -1,5 +1,10 @@
 # MacQuadra800_MiSTer — working notes for Claude
 
+Start with [HANDOFF-20260928.md](HANDOFF-20260928.md): the current release
+state (the 2026-09-28/29 FPU, disk and IOSB work, what is owed for a final
+release, what is next). `RESUME-20260927.md` is the historical experiment
+journal. `releases/README.md` is the per-build record.
+
 Macintosh Quadra 800 core for the MiSTer FPGA (DE10-Nano). Authentic 33 MHz
 68040 bus clock, AP68040 CPU (git submodule), 128 MB SDRAM main memory, DAFB
 video, NCR 53C96 SCSI, Z8530 SCC, ASC sound, ADB via VIA. Boots Mac OS 7.x/8.1
@@ -27,7 +32,7 @@ separate codename and are deliberately unchanged.
 | `tools/misterdeploy/` | the reusable rbf push + `load_core` launcher |
 | `releases/` | shipped `.rbf`s + `README.md` (table + one section per release) + `quadra800.rom` |
 | `docs/` | design notes (`sdram-fast-path.md`, `PERFORMANCE_MEASUREMENTS.md`, `scsi/`, …) |
-| `RESUME-*.md` | session hand-off notes; the newest is the one to read first |
+| `HANDOFF-20260928.md`, `RESUME-*.md` | current handoff first; dated experiment journals preserve historical state |
 | `BUILD.md` | full build/deploy/disk documentation — read it before touching hardware |
 
 ## Build
@@ -39,7 +44,18 @@ bash scripts/build_only.sh --check    # Analysis & Synthesis only (~13 min), no 
 
 - Needs `scripts/local.env` (gitignored; from `scripts/local.env.sample`). It
   holds `QUARTUS_BIN`, the MiSTer host/key, and the seed paths.
-- **Run it from Git bash**, not WSL. On this box `bash.exe` on PATH resolves to
+- **Since 2026-09-13 the work runs on a 16-core Linux box**, not the Windows
+  machine the next two bullets describe: Quartus is
+  `/home/alans/intelFPGA_lite/quartus/bin` (in `scripts/local.env`), Verilator 5
+  is `/home/alans/verilator5/bin`, and the ARM toolchain for Main is under
+  `/opt/gcc-arm-10.2-2020.11-x86_64-arm-none-linux-gnueabihf/bin`.  A seed walk
+  or variant is a **scratch project**: a copy of the project in
+  `scratch/<name>` with the changed files and `SEED` edited, launched with
+  `systemd-run --user ... bash scripts/build_only.sh`. Separate scratch
+  databases isolate inputs, but **only one Quartus flow may run globally**.
+  Keep the normal wait gate and verify host processes before launching.
+- **Historical Windows instructions only:** run from Git bash, not WSL.
+  On the former Windows host `bash.exe` on PATH resolves to
   WSL's `C:\Windows\System32\bash.exe`; the build needs
   `C:\Program Files\Git\bin\bash.exe`. From PowerShell, launch it detached with
   `Start-Process` so a tool timeout cannot kill Quartus mid-fit.
@@ -47,18 +63,19 @@ bash scripts/build_only.sh --check    # Analysis & Synthesis only (~13 min), no 
   checkout: commit what is to be built, launch `build_only.sh`, and do not
   touch RTL, the `.qsf`, `files.qip` or the `.sdc` until the flow ends (docs
   and `scratch/` are fine meanwhile). A variant or older RTL is a commit you
-  check out between builds; a full-machine sim copy comes from
-  `scripts/sim_tree_wsl.sh <name> <commit>` inside WSL. After each fit, before
+  check out between builds. On the current Linux host use isolated scratch
+  copies with pinned manifests and durable user units; the older
+  `scripts/sim_tree_wsl.sh` recipe was for WSL. After each fit, before
   the next build overwrites the db:
   `quartus_sta -t scripts/cpu/timequest_cross_domain.tcl <tag>`.
 - **Never run two builds of this project at once** — they share `db/` and
   corrupt each other. **And never two Quartus flows on this box at all,
   worktrees included** (user, 2026-09-16): a seed walk runs one seed after
-  another; check `Get-CimInstance Win32_Process` for `quartus*` first. Other cores are built on this box by other sessions
+  another; check host `ps`/`pgrep` for every `quartus_*` process first. Other cores are built on this box by other sessions
   (sgiindy, MacLC…): `build_only.sh`'s wait-gate blocks on *any* `quartus_*`,
-  so launch with `--no-wait` only after checking that no MacQuadra800 flow is
+  so launch with `--no-wait` only after checking that no Quartus flow is
   running, and never kill a `quartus_*` process without matching its command
-  line to this project (`Get-CimInstance Win32_Process`).
+  line and working directory to this project. Prefer the normal wait gate.
 - Timing met (positive worst slack in `output_files/*.sta.summary`) is the
   **release** bar, not a precondition for trying a build. The design sits at
   ~92 % ALMs with tenths of a nanosecond of slack and the fits are a seed
@@ -83,7 +100,26 @@ bash scripts/build_only.sh --check    # Analysis & Synthesis only (~13 min), no 
   path reports (`docs/sdram-open-row-crossing.md`) before trusting the build.
 - `SCSI_TRACE` in the `.qsf` makes a **debug** build that hijacks the serial
   port. It must stay commented out for anything released.
-- **The qsf's default settings ARE the release recipe (2026-09-08):**
+- **The qsf's default settings ARE the release recipe** (updated 2026-09-29;
+  the seed and every seed tried is in the `.qsf` comment block, with
+  `PLACEMENT_EFFORT_MULTIPLIER 2.0` and `ROUTER_TIMING_OPTIMIZATION_LEVEL
+  MAXIMUM` since 2026-09-28, without which no seed met the CPU clock at
+  94 %).  On top of the 2026-09-08 recipe below it sets: all the
+  `AP040_*PIPELINE*` / `XSTORE` / `LEA` CPU macros (the second integer
+  pipeline, back since `31b6e99`), `SCSI_CACHE_OFF` (the core's SCSI block
+  cache off -- it no longer fits, `docs/perf/disk_cacheon_builds_20260928/`;
+  the 53C96 engine's two-half sector buffer, P260, does the overlap instead
+  -- **needs the write-buffer Main**, below, or every disk write waits ~4 ms
+  on the SD card), and the release-lite framework trims
+  `MISTER_BYPASS_AUDIO_FILTER`, `MISTER_DISABLE_VIDEO_CALC`,
+  `MISTER_DISABLE_SHADOWMASK` (`VIDEO_512_OFF` was dropped on 2026-09-29: the
+  512x384 monitor option is in the release); CPU caches are 8+8 KB (`SETW =
+  7` in `ap040_cache.v`; 16+16 KB fits the M10K budget but misses the CPU
+  clock).  The build sits at 94 % ALMs, 468 of 553 M10K, and every RTL
+  change re-rolls the placement: expect a 2-4 seed walk per change
+  (`docs/perf/*_fpga_*`); `docs/AREA_BUDGET_20260924.md` has the per-feature
+  costs.
+  The 2026-09-08 recipe:
   balanced synthesis, register duplication off, and the switches
   `CACHE_CD_OFF` (the CD passes through the block cache), `CACHE_SMALL`
   (32/32/16-sector cache), `MISTER_DISABLE_ALSA`, `MISTER_DOWNSCALE_NN`,
@@ -99,14 +135,23 @@ bash scripts/build_only.sh --check    # Analysis & Synthesis only (~13 min), no 
   is the `CDROM` parameter on `ncr53c96` (plumbed through `iosb` and
   `quadra800`). Default on; a release build never sets it.
 
-## Simulation (WSL)
+## Simulation
 
-Verilator 5 lives in WSL (`wsl.exe -e bash -lc '…'`; the `Failed to mount I:\`
-line on stderr is harmless).
+Verilator 5 is `/home/alans/verilator5/bin` on this box (put it first on
+PATH; the system verilator is too old), vasm is
+`/home/alans/mister/MacQuadra800_fixtures/wombat-vasm/vasmm68k_mot`
+(`VASM=... sh rtl/ap68040/tb/run_tests.sh`, also with `CPU_TEST_LEA=1
+CPU_TEST_XSTORE=1`; keep `CPU_TEST_WORK` a short path). The WSL notes below
+are the pre-2026-09-13 Windows setup. Long runs go under `systemd-run --user
+--collect`; never `pkill -f` (it kills the shell). The full-machine guest
+recipe the 2026-09-28/29 qualifications used (golden disk copy, control
+stream, model 4/2, screenshots) is under `docs/perf/p252_p256_fpu_qual/` and
+`docs/perf/p260_pingpong_sim_20260929/` (which also has the randomised
+sector-latency harness that found the IOSB hang).
 
 ```bash
-# directed testbenches, from verilator/ (run on /mnt/c or synced tree)
-make tb_sdram tb_wombat_bus32 tb_store_buffer tb_memory_path tb_memory_path_registered_first_miss tb_ncr53c96 tb_easc
+# directed testbenches, from verilator/
+make tb_sdram tb_wombat_bus32 tb_store_buffer tb_memory_path tb_memory_path_registered_first_miss tb_ncr53c96 tb_easc tb_scsi_irq_ack_race tb_sdma_ack_watchdog tb_iosb_scc
 # full machine sim: sync sources to ~/MacQuadra800 (ext4), build Vemu + ROM hexes
 bash scripts/sim_wsl.sh build
 bash scripts/sim_wsl.sh disk <image.hda>      # writable copy
@@ -135,6 +180,25 @@ ROM + A/UX disk and is the golden reference for SCSI/ESP behaviour.
 
 Target is the DE10-Nano at the address in `scripts/local.env`
 (`192.168.99.143`, ssh key `~/.ssh/mister_only`, mrext remote on `:8182`).
+**Since 2026-09-18 the box is `10.3.89.233` (`MiSTer.local`) over Wi-Fi, key
+`~/.ssh/id_rsa`; since 2026-09-29 its USB (and so the Wi-Fi dongle) is dead
+and it is reached on wired eth0 `10.3.164.251`** -- `scripts/local.env` has
+the current address; the addresses in this section are the old LAN's. This
+box's mrext ignores mouse commands: `mac_shutdown.sh` cannot press Shut
+Down, use the `vmouse.py` recipe below (the 2026-09-28/29 hardware READMEs
+under `docs/perf/` have the exact scripts). Main on the box since 2026-09-29
+is `releases/MiSTer_20260928` (the tight disk service loop).  The box is shared with other cores' sessions (FM-7, Apple
+IIgs, ...): look at the screen before loading anything, and the user says when
+it is free.  The mouse is driven with
+`ssh ... python3 /media/fat/Scripts/q800tools/vmouse.py` (Finder Shut Down:
+`home m:111,-10 0.5 down 0.8 m:13,66 6 up`).
+**Main:** the core needs a Main with the Quadra 800 support and, for the
+`SCSI_CACHE_OFF` release recipe, the Mac disk write buffer: branch
+`mac-printer-writebuffer` of `alanswx/Main_MiSTer` (MiSTer-devel master +
+printer + write buffer; binary md5 `45182b73`, installed 2026-09-27).  A Main
+without Quadra support makes every build come up black; check
+`grep -a -c macquadra800 /media/fat/MiSTer` and
+`grep -a -c "Mac write buffer" /media/fat/MiSTer` before debugging a core.
 **Use only this box** (user, 2026-09-16): the second MiSTer at `.92` belongs
 to another session and is not to be touched, not even read-only.
 

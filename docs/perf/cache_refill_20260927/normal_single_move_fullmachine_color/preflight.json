@@ -1,0 +1,15 @@
+{
+  "prepared_only": true,
+  "baseline_tree": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_refill_model_baseline_20260927",
+  "RTL_differences": [
+    "ap68040/rtl/ap040_fpu.v"
+  ],
+  "candidate_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "golden_disk_sha256": "80d8479430a66edae161c2bac6a9563dbb4f6bd0f564ee7849a555c447df8888",
+  "controls": {
+    "fpu": "33108dcd7af064820bb59ae89f72c77a2f8a62b74bbee73f86bd912c244253e4",
+    "color8": "fae07029b5f17ecc0e7471fa90499d09b29bd08a50c433eb058f603d24a15ecc"
+  },
+  "source_manifest_sha256": "c528f7e7e9030de959dd5c8adddb239c3727abb5895a2285f9b35c04de243810",
+  "build_or_run_launched": false
+}

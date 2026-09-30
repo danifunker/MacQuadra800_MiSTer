@@ -1,0 +1,31 @@
+{
+  "scope": "new generated model short disk-free smoke, not benchmark or guest guard coverage",
+  "supervisor_pid": 2367624,
+  "argv": [
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_fullmachine_20260928/verilator/obj_dir/Vemu",
+    "--headless",
+    "--no-cpu-trace",
+    "+rom=rom.hex",
+    "+ram=0",
+    "--control",
+    "control.txt",
+    "--cpu-profile",
+    "refill.tsv",
+    "--max-cycles",
+    "200000",
+    "+ram_line_model",
+    "+ram_first_latency=4",
+    "+ram_line_publish_delay=2"
+  ],
+  "binary_sha256": "fc196b28762c249c6af8820326a1c4689f9ac99e30350160a70091eac8464a4d",
+  "started_utc": "2026-09-28T04:46:43.440217+00:00",
+  "child_pid": 2367625,
+  "running_exe_sha256": "fc196b28762c249c6af8820326a1c4689f9ac99e30350160a70091eac8464a4d",
+  "exit_status": 0,
+  "finished_utc": "2026-09-28T04:46:43.821796+00:00",
+  "child_terminal": true,
+  "check0": 0,
+  "check1": 0,
+  "source_manifest_postrun": "PASS",
+  "status": "PASS"
+}

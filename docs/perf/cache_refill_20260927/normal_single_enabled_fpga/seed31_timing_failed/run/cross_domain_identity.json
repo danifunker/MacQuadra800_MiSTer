@@ -1,0 +1,25 @@
+{
+  "unit": "codex-fpu-normal-single-enabled-quartus-20260928-seed31-cross.service",
+  "invocation_id": "ceedac38801d485b959834626563a2fc",
+  "tool_session_id": 17546,
+  "quartus_sta_pid": 2503469,
+  "quartus_sta_executable_sha256": "3e5b6469769824667c28dcad237a4ad5f46aad67c3ccd76ec3c0824e7094fe78",
+  "command": "quartus_sta -t scripts/cpu/timequest_cross_domain.tcl fpu_normal_single_enabled_seed31_20260928",
+  "exit_status": 0,
+  "tool_result": "success, 0 Quartus errors; both crossing setup groups pass",
+  "sys_to_ram": {
+    "path": "tree/scratch/cross_sys2ram_fpu_normal_single_enabled_seed31_20260928.txt",
+    "paths": 6,
+    "violated": 0,
+    "worst_slack_ns": 1.406,
+    "report_sha256": "6bd2250dc5d279c62a21c089e91420f499481c101818d12c52d2253350878464"
+  },
+  "ram_to_sys": {
+    "path": "tree/scratch/cross_ram2sys_fpu_normal_single_enabled_seed31_20260928.txt",
+    "paths": 6,
+    "violated": 0,
+    "worst_slack_ns": 0.348,
+    "report_sha256": "dd6809db1eccbea801445a3aef0198aeaaa6ce77976bf2a58341f7edd497a97a"
+  },
+  "status": "complete-crossing-checks-pass"
+}

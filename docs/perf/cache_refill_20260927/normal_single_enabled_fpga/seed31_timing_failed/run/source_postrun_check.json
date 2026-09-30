@@ -1,0 +1,8 @@
+{
+  "manifest": "seed31_candidate_6c_manifest.sha256",
+  "manifest_sha256": "2a09ab93d2ba9b92d448eb07be0717061a3912ce23dea8418cbb5a169ec58747",
+  "expected_entries": 1892,
+  "passed_entries": 1892,
+  "failed_paths": [],
+  "status": "PASS"
+}

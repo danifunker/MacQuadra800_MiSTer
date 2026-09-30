@@ -1,0 +1,229 @@
+{
+  "scope": "existing fullcore FPU, FP frame, prepared FPSP resume, FPCR, MMU and exception programs plus normalization unit test; CPU bus model only; no full machine/OS/hardware; candidate relaxes the all-precision FPCR exception-enable guard",
+  "immutable_input_manifest_sha256": "b769a8d916b316f39b7a210564e0efb73473e3eb3a5df9b0dbdcebc91be91e2b",
+  "immutable_input_count": 102,
+  "source_flags": [
+    "-g2012",
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "sim_flags": [
+    "-DAP040_EXPERIMENTAL_LEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_LOADS=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_P6=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_PEA=1",
+    "-DAP040_EXPERIMENTAL_PIPELINE_STORES=1",
+    "-DAP040_EXPERIMENTAL_XSTORE=1",
+    "-DAP040_PIPELINE_COMPARE=1",
+    "-DAP040_PIPELINE_EARLY_DRAIN=1",
+    "-DAP040_PIPELINE_MEMORY_ENTRY=1",
+    "-DCACHE_CD_OFF=1",
+    "-DCACHE_SMALL=1",
+    "-DSIMULATION=1"
+  ],
+  "tools": {
+    "iverilog": {
+      "path": "/usr/bin/iverilog",
+      "sha256": "a6071e4b4a68feafca0c8ee0e6aa275eee9a43a108c62801cfd1eca6eab6d8a3"
+    },
+    "vvp": {
+      "path": "/usr/bin/vvp",
+      "sha256": "a10bd7d4a0850308ac8c2c98115b6a3084f9be978307610f2a521190c28f4023"
+    },
+    "assembler": {
+      "path": "/home/alans/mister/MacQuadra800_fixtures/wombat-vasm/vasmm68k_mot",
+      "sha256": "de9e4aa58e19078f6eb219d549159395211248e3ebfdd87be96effd84b800057"
+    }
+  },
+  "targets": {
+    "baseline": {
+      "fpu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 103656,
+          "1": 148702,
+          "2": 148702
+        },
+        "log_sha256": "c69017c3fdd3885ad0534c9b9d8890fa058d40b3850392c304da90b133961591",
+        "wall_seconds": 24.724,
+        "artifacts": {
+          "simulation_binary_sha256": "06983f06195e22765177b6b63c4913dfbcdca2937587d1742fff0296ae2e9fea",
+          "program_binary_sha256": "90573314abd954c60f01bdd9131ea944c64c1e5f6d007f62e75ebd60b8440509",
+          "program_hex_sha256": "7cebbcef910fd0ade30af40c72de53ac3497b3c08e7cc3bcc849c2564c34d5b9"
+        }
+      },
+      "fpu_frames": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 8488,
+          "1": 12820,
+          "2": 12820
+        },
+        "log_sha256": "b16ed5f230ad232f2b2ba53909a6376ae69b6efcb4756594d569533e370a4304",
+        "wall_seconds": 1.538,
+        "artifacts": {
+          "simulation_binary_sha256": "06983f06195e22765177b6b63c4913dfbcdca2937587d1742fff0296ae2e9fea",
+          "program_binary_sha256": "5c968fe83e7ab588441754444cc0a2b794747832733f58832b1e74b1daddadfb",
+          "program_hex_sha256": "e29aa1b47ea1a4219385418e3053950f1110b1b21e08e063f642aebacbeab9ae"
+        }
+      },
+      "fpu_resume": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 14090,
+          "1": 21162,
+          "2": 21162
+        },
+        "log_sha256": "cb8159e7c72f7e17399734324cceea933139208ae802739f16bf900789f7d060",
+        "wall_seconds": 2.239,
+        "artifacts": {
+          "simulation_binary_sha256": "06983f06195e22765177b6b63c4913dfbcdca2937587d1742fff0296ae2e9fea",
+          "program_binary_sha256": "91469b73d3869ed01e9adecc963812588b508e7e834374fc10898ecc535ba788",
+          "program_hex_sha256": "cf4535c35b4f731325fc03f86b29b513416f22c2bc7b60210e05f9839c893a49"
+        }
+      },
+      "mmu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 340160,
+          "1": 505494,
+          "2": 505494
+        },
+        "log_sha256": "7b5eded647ccb43458f0d809af56e15edc4eadd83acee22b705b2eabd0bc7016",
+        "wall_seconds": 61.746,
+        "artifacts": {
+          "simulation_binary_sha256": "06983f06195e22765177b6b63c4913dfbcdca2937587d1742fff0296ae2e9fea",
+          "program_binary_sha256": "67164b48ce0f046e33a12c762888fc74cdfb1f03746b4bbe419caffe7d295fea",
+          "program_hex_sha256": "672b5250ce7b6da7a4241d8dd29d82ef61253eb543c3f3b3a1631d5468de69ed"
+        }
+      },
+      "exceptions": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 140688,
+          "1": 213186,
+          "2": 213182
+        },
+        "log_sha256": "f27886791cfd1694df999bbc1d6e581be8d3aeef1dc3e7f6c1f72430e265e148",
+        "wall_seconds": 24.356,
+        "artifacts": {
+          "simulation_binary_sha256": "06983f06195e22765177b6b63c4913dfbcdca2937587d1742fff0296ae2e9fea",
+          "program_binary_sha256": "14ce53bae2d90af4363ca9b33b55f71f7a114e90cf31d13de86968b3e3ef5ecf",
+          "program_hex_sha256": "8c3cbfb050469821fcae1bbd9a3fa965a997148621902fb2aa9756ef20333264"
+        }
+      },
+      "fpu_normalize": {
+        "status": "PASS",
+        "bus_phase_cycles": {},
+        "log_sha256": "960f5efc20f5e6153358dafde3f298ab5ad99d9aecaf20230da39688b951330a",
+        "wall_seconds": 0.666,
+        "artifacts": {
+          "simulation_binary_sha256": "d6ac212576075ec7e27bfcae5dbfe4840c8ffa84851caa76cdcea91513f6aedd"
+        }
+      }
+    },
+    "candidate": {
+      "fpu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 103656,
+          "1": 148700,
+          "2": 148700
+        },
+        "log_sha256": "0fa482da254e0840835fc91b7452169af8087b06c66cbc5457c677850687da4a",
+        "wall_seconds": 24.776,
+        "artifacts": {
+          "simulation_binary_sha256": "764a3ed35f81e2ad60634125f617437445ac21b44b772921d1212c4505f25f4a",
+          "program_binary_sha256": "90573314abd954c60f01bdd9131ea944c64c1e5f6d007f62e75ebd60b8440509",
+          "program_hex_sha256": "7cebbcef910fd0ade30af40c72de53ac3497b3c08e7cc3bcc849c2564c34d5b9"
+        }
+      },
+      "fpu_frames": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 8488,
+          "1": 12820,
+          "2": 12820
+        },
+        "log_sha256": "b16ed5f230ad232f2b2ba53909a6376ae69b6efcb4756594d569533e370a4304",
+        "wall_seconds": 1.558,
+        "artifacts": {
+          "simulation_binary_sha256": "764a3ed35f81e2ad60634125f617437445ac21b44b772921d1212c4505f25f4a",
+          "program_binary_sha256": "5c968fe83e7ab588441754444cc0a2b794747832733f58832b1e74b1daddadfb",
+          "program_hex_sha256": "e29aa1b47ea1a4219385418e3053950f1110b1b21e08e063f642aebacbeab9ae"
+        }
+      },
+      "fpu_resume": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 14090,
+          "1": 21162,
+          "2": 21162
+        },
+        "log_sha256": "cb8159e7c72f7e17399734324cceea933139208ae802739f16bf900789f7d060",
+        "wall_seconds": 2.239,
+        "artifacts": {
+          "simulation_binary_sha256": "764a3ed35f81e2ad60634125f617437445ac21b44b772921d1212c4505f25f4a",
+          "program_binary_sha256": "91469b73d3869ed01e9adecc963812588b508e7e834374fc10898ecc535ba788",
+          "program_hex_sha256": "cf4535c35b4f731325fc03f86b29b513416f22c2bc7b60210e05f9839c893a49"
+        }
+      },
+      "mmu": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 340160,
+          "1": 505494,
+          "2": 505494
+        },
+        "log_sha256": "7b5eded647ccb43458f0d809af56e15edc4eadd83acee22b705b2eabd0bc7016",
+        "wall_seconds": 61.901,
+        "artifacts": {
+          "simulation_binary_sha256": "764a3ed35f81e2ad60634125f617437445ac21b44b772921d1212c4505f25f4a",
+          "program_binary_sha256": "67164b48ce0f046e33a12c762888fc74cdfb1f03746b4bbe419caffe7d295fea",
+          "program_hex_sha256": "672b5250ce7b6da7a4241d8dd29d82ef61253eb543c3f3b3a1631d5468de69ed"
+        }
+      },
+      "exceptions": {
+        "status": "PASS",
+        "bus_phase_cycles": {
+          "0": 140688,
+          "1": 213186,
+          "2": 213182
+        },
+        "log_sha256": "f27886791cfd1694df999bbc1d6e581be8d3aeef1dc3e7f6c1f72430e265e148",
+        "wall_seconds": 24.625,
+        "artifacts": {
+          "simulation_binary_sha256": "764a3ed35f81e2ad60634125f617437445ac21b44b772921d1212c4505f25f4a",
+          "program_binary_sha256": "14ce53bae2d90af4363ca9b33b55f71f7a114e90cf31d13de86968b3e3ef5ecf",
+          "program_hex_sha256": "8c3cbfb050469821fcae1bbd9a3fa965a997148621902fb2aa9756ef20333264"
+        }
+      },
+      "fpu_normalize": {
+        "status": "PASS",
+        "bus_phase_cycles": {},
+        "log_sha256": "960f5efc20f5e6153358dafde3f298ab5ad99d9aecaf20230da39688b951330a",
+        "wall_seconds": 0.665,
+        "artifacts": {
+          "simulation_binary_sha256": "b67349b5808a88c7ab49db589070771ca7bfe1e3cf988389099952f616177cba"
+        }
+      }
+    }
+  },
+  "simulation_status": "PASS",
+  "global_wall_cap_seconds": 3600,
+  "command_wall_cap_seconds": 240,
+  "immutable_inputs_revalidated": 102,
+  "wall_seconds": 231.429
+}

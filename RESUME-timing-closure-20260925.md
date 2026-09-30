@@ -1,5 +1,7 @@
 # Resume here: timing closure and disk profiling, 2026-09-25
 
+**Newer: `RESUME-disk-and-area-20260925.md` (the Main write buffer, the SCSI cache off, room for the pipeline).**
+
 ## LATEST (2026-09-25 evening): timing closed, PR #7 open
 
 `a0b3072` meets timing on every clock: CPU +0.007, SDRAM +0.082, HDMI +0.044 ns,

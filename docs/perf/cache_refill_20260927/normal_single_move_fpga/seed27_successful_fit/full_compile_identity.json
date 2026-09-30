@@ -1,0 +1,106 @@
+{
+  "candidate_source": {
+    "git_head": "708c12542a74c0b92872910d330a6e989b6a2181",
+    "fpu_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+    "qsf_sha256": "9b6fa7c352dd7667339e6e6ec4f03a00d1894b7e7fce14908f8b57b99c059ec4",
+    "qsf_seed": 27,
+    "tracked_changes": [
+      "MacQuadra800.qsf",
+      "rtl/ap68040/rtl/ap040_fpu.v"
+    ]
+  },
+  "full_compile": {
+    "unit": "codex-fpu-normal-single-move-quartus-20260928-seed27.service",
+    "invocation_id": "747d6ca57c794b7ea25a3abb1ae8f12c",
+    "wrapper_main_pid": 2297441,
+    "quartus_sh_pid": 2297454,
+    "quartus_fit_pid": 2301004,
+    "quartus_postfit_sta_pid": 2310117,
+    "log": "tree/output_files/build_20260927_230903.log",
+    "result": "success",
+    "errors": 0,
+    "warnings": 201,
+    "elapsed": "00:15:54",
+    "finished": "2026-09-27 23:24:57 local"
+  },
+  "fit_resources": {
+    "device": "5CSEBA6U23I7",
+    "ALMs_used": 38750,
+    "ALMs_total": 41910,
+    "ALM_utilization_percent": 92,
+    "registers": 24642,
+    "block_memory_bits": 3389411,
+    "block_memory_bits_total": 5662720,
+    "RAM_blocks_used": 468,
+    "RAM_blocks_total": 553,
+    "RAM_block_utilization_percent": 85,
+    "DSP_blocks": 36,
+    "PLLs": 4,
+    "fitter_RAM_summary": {
+      "total_instances": 98,
+      "AUTO_instances": 69,
+      "AUTO_mapped_to_M10K_blocks": 104,
+      "explicit_M10K_instances": 17,
+      "explicit_M10K_blocks": 364,
+      "MLAB_instances": 12,
+      "MLAB_cells": 461,
+      "total_M10K_blocks": 468
+    }
+  },
+  "timing": {
+    "source": "tree/output_files/MacQuadra800.sta.summary",
+    "setup_slack_ns": {
+      "pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk": 0.269,
+      "emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk": 0.576,
+      "emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk": 0.743,
+      "sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk": 2.447,
+      "FPGA_CLK1_50": 6.345,
+      "FPGA_CLK2_50": 9.957,
+      "emu|pllv|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk": 18.008,
+      "pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk": 22.841
+    },
+    "hold_slack_ns": {
+      "pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk": 0.212,
+      "emu|pllv|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk": 0.25,
+      "emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk": 0.256,
+      "pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk": 0.268,
+      "FPGA_CLK1_50": 0.289,
+      "sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk": 0.354,
+      "FPGA_CLK2_50": 0.421,
+      "emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk": 0.448
+    },
+    "worst_overall_slack_ns": 0.212,
+    "all_reported_setup_and_hold_TNS_ns": 0.0
+  },
+  "cross_domain": {
+    "unit": "codex-fpu-normal-single-move-quartus-20260928-seed27-cross.service",
+    "invocation_id": "99505b154bbf49afb3b51d44dd7f65f1",
+    "quartus_sta_command": "scripts/local.env QUARTUS_BIN/quartus_sta -t scripts/cpu/timequest_cross_domain.tcl fpu_candidate_seed27_20260927",
+    "result": "success",
+    "sys_to_ram_worst_slack_ns": 1.818,
+    "ram_to_sys_worst_slack_ns": 0.743,
+    "reports": [
+      {
+        "path": "tree/scratch/cross_sys2ram_fpu_candidate_seed27_20260927.txt",
+        "sha256": "3cd85b5950dd8af673a2ee4f5e7ed8b68c4ecc839f9967462e233b73577a52f2"
+      },
+      {
+        "path": "tree/scratch/cross_ram2sys_fpu_candidate_seed27_20260927.txt",
+        "sha256": "de489970b05888a1f1888c91019e3dcef718202c3e786eeab08b07d739a962db"
+      }
+    ]
+  },
+  "artifacts": {
+    "rbf": {
+      "path": "tree/output_files/MacQuadra800.rbf",
+      "size_bytes": 4457856,
+      "sha256": "cc948b77d304b42b27d530030e81dec10f5f880c828f8d17088d94a0e03f2185"
+    },
+    "sof": {
+      "path": "tree/output_files/MacQuadra800.sof",
+      "size_bytes": 6690368,
+      "sha256": "b65d2d1653d89a6448e880da83960e8b211bd1f5c1c3bc95e1facdc20da9846e"
+    }
+  },
+  "note": "No deploy. Seed 21 with identical candidate RTL failed routing; do not interpret cross-seed ALM differences as an RTL area delta."
+}

@@ -1,0 +1,9 @@
+# Matched full OS CPU Mix comparison
+
+The prior normal-single candidate73bc leaves the displayed aggregate at1.798, matching baseline2d53. Both terminal runs exited0 and passed refill reconciliation. Setup screenshots are byte-identical, with all ten Mix tests checked and one iteration each. Both final screenshots show tests done and all ten nonzero absolute metrics. The done dialog hides some middle ratings/iteration cells; this archive does not infer them. Visible raw results are in comparison.json.
+
+This uses the original calibrated simulation RAM service model (first-word4, retained publication2), all ten release CPU flags plus SCSI_CACHE_OFF, unroll256, the same ROM/control and separate fresh golden disks. Only ap040_fpu.v differs. Fixed-window profiles are not guest timer measurements. There is no aggregate improvement claim and no FPGA timing qualification.
+
+The compact archive contains metadata, controls, setup/final screenshots, reconciled profiles, source/build provenance and the launch supervisor. Source_manifest and inputs.json retain original scratch paths and prelaunch golden disk hashes: completed guest disks mutate normally and are not archived. No binary, ROM, disk, generated model or full CPU trace is included. Full execution artifacts remain under scratch/fpu_normal_single_mix_20260928. Supervisors retain their original pending-screen-review status; comparison.json records subsequent visual qualification separately.
+
+Run `python3 docs/perf/cache_refill_20260927/normal_single_move_fullmachine_mix/check_archive.py` from the repository. The archive checker validates immutable hashes, terminal metadata and profiles; screenshot content was visually reviewed by primary and agent, not OCR-certified. Reproduction requires reconstructing the original frozen model project and external fixtures; run_mix.py documents exact launch arguments and safeguards.

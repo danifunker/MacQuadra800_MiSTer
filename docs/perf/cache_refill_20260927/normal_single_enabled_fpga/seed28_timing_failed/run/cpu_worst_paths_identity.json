@@ -1,0 +1,23 @@
+{
+  "unit": "codex-fpu-normal-single-enabled-quartus-20260928-seed28-cpu-paths.service",
+  "invocation_id": "7c1daa8cbb2748a0a8b6f26963776442",
+  "tool_session_id": 84256,
+  "quartus_sta_pid": 2487136,
+  "quartus_sta_executable_sha256": "3e5b6469769824667c28dcad237a4ad5f46aad67c3ccd76ec3c0824e7094fe78",
+  "command": "quartus_sta -t scripts/cpu/timequest_worst_paths.tcl scratch/cpu_timing_6c_seed28_20260928",
+  "exit_status": 0,
+  "summary_report": "tree/scratch/cpu_timing_6c_seed28_20260928/worst_paths.txt",
+  "summary_sha256": "7ac7a88b3ebdaa77aeac6ba78ade17a5dce224b12993acecdc12a7a1f63402bd",
+  "detailed_report": "tree/scratch/cpu_timing_6c_seed28_20260928/worst_detail.txt",
+  "detail_sha256": "83350dcd13cd56c22c9101f8e5a73faaabb6a87d7256c300bb8f66fa070420d5",
+  "worst_path": {
+    "slack_ns": -1.225,
+    "startpoint": "emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_core:core|ap040_regfile:regfile|rf_written[6]",
+    "endpoint": "emu:emu|quadra800:machine|wombat_cpu:cpu|ap040_mmu:mmu|hq_ptag[19]",
+    "data_delay_ns": 30.871,
+    "clock_skew_ns": -0.507,
+    "logic_levels": 24,
+    "interpretation": "CPU register-file-to-MMU hardware-page-tag path; no FPU cell on this path. The worst endpoint differs from seed27."
+  },
+  "status": "complete"
+}

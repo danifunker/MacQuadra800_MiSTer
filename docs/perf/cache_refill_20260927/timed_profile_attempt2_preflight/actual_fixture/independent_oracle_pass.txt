@@ -1,0 +1,4 @@
+Independent guest-state oracle excerpts from the short actual-machine fixture runs:
+fixture: FIXTURE_CHECK PASS selector0=0004 selector1=0042 magic=600d0042 D0=00000001 SP=00200000
+fixture_earlybranch: FIXTURE_CHECK PASS selector0=0004 selector1=0042 magic=600d0042 D0=00000002 SP=00200000
+Both run logs report one timer span of 79 clocks and one callback span of 39 clocks, with no aborted or unmatched spans. These are fixture checks, not Speedometer workload results.

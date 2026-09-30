@@ -1,0 +1,17 @@
+{
+  "baseline_cache_sha256": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+  "candidate_cache_sha256": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481",
+  "paired_RTL_count": 113,
+  "sole_RTL_delta": [
+    "ap68040/rtl/ap040_cache.v"
+  ],
+  "fpu_both_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "all_other_RTL_equal": true,
+  "cache_SETW": 7,
+  "unit_macros": [
+    "AP040_EXPERIMENTAL_XSTORE"
+  ],
+  "unit_bench_delta": "posted_pin_adapter.diff connects missing instruction hint inputs and c_ihold0; XSTORE unmodified",
+  "phase_status": "NOT_PREPARED_NOT_RUN",
+  "CPU_regressions_full10_flags_required": true
+}

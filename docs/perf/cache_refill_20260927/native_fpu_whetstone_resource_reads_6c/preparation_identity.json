@@ -1,0 +1,17 @@
+{
+  "status": "PREPARED_NOT_BUILT_OR_RUN",
+  "parent_source_manifest_sha256": "e5393d16e3281cef14d365fd7a421db1e27e358aa47782d51d42a4f1dcde9d9a",
+  "candidate_fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "shared_input_count": 125,
+  "changed_shared_inputs": [
+    "profile/next_monitor.svh",
+    "profile/supervise.py"
+  ],
+  "new_monitor": "profile/resource_read_monitor.svh",
+  "all_113_RTL_identical_to_qualified_profile": true,
+  "image_sha256": "9e58e9b226e03acbee4e1ae690a8b67500328dfb5933df55e1b832c926c653e9",
+  "rom_sha256": "7d9cb8c3bae0e26171adf9f24bedf10bf6371ae3c9bdbcdfd3b94e5350099fb6",
+  "original_bench_checker_runner_unchanged": true,
+  "expected_loop_clocks": 8724166,
+  "scope": "passive physical resource read attribution, no historical cause/numerical oracle or performance prediction"
+}

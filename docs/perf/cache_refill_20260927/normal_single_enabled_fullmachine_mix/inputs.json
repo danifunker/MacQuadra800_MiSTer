@@ -1,0 +1,24 @@
+{
+  "stage": "PREPARED_ONLY_NOT_LAUNCHED",
+  "kind": "mix",
+  "source_project": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_fullmachine_20260928",
+  "source_manifest_sha256": "6ce6d46953c97a8de7c4944d189ef5af62dcfcdb712a896f8164e99bb03c3094",
+  "candidate_fpu": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "binary_path": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_enabled_fullmachine_20260928/verilator/obj_dir/Vemu",
+  "binary_sha256": "2f16b5f63372788b8dc1b63ae8d657cdaad67c3e5232524e9be1edb0d14e6ebf",
+  "build_identity_sha256": "4d5ddefac09f008158cb68230f6f2027144eecab78fe394b68128c5fffd27edc",
+  "control_source": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_mix_20260928/baseline/control.txt",
+  "prelaunch_files": {
+    "control.txt": "eafdd1b91b0984cf882584f7714b12083f082ea7443dd44d60808d507ccd0639",
+    "run.hda": "80d8479430a66edae161c2bac6a9563dbb4f6bd0f564ee7849a555c447df8888",
+    "rom.hex": "045c02746b5f15f83132d33c5414f806e7b049f3bfe53a7bd0ecacb8e072d673"
+  },
+  "checker_sha256": "69c525db4dbb4adfdea4986f6ab166cf4080b522fef61361922a0954245ec280",
+  "refill_checker_sha256": "24b55cf250431a5fc1f7024de7f6697793f93b71fd29ab973e42bc64e926ac21",
+  "model": "first4/publication2;all10releaseCPU+SCSI_CACHE_OFF;unroll256;8+8KB",
+  "expected_setup_screen": "screenshot_f4277.png",
+  "expected_terminal_screen": "screenshot_f7382.png",
+  "guest_gate": "Color onlyEightbit/iteration1/done/time vs9.878; Mixall10/iteration1/done/all10nonzero andaggregate vs1.798; manualscreenreviewrequired",
+  "observer_allow_empty": true,
+  "wall_cap_seconds": 10800
+}

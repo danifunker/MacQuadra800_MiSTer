@@ -1,0 +1,4 @@
+33c33
+< assert hashlib.sha256((ap/'ap040_fpu.v').read_bytes()).hexdigest()=='2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465', 'baseline FPU required'
+---
+> # p256_qual: FPU pin removed so the candidate FPU can be compared against the archived 0b2d265 payload

@@ -1,0 +1,45 @@
+== native_whet/stdout_ad7a0d4.log
+WHETSTONE_LOOP cycles=7501046 platform=sdram romlat=6
+NATIVE_QUALIFIED native_FPSP_coverage=1 ABI_match=1 guest_600D=1 chip_errors=0 numerical_oracle=none
+exit=0
+== native_whet/stdout_b2ed1b0.log
+WHETSTONE_LOOP cycles=7555677 platform=sdram romlat=6
+NATIVE_QUALIFIED native_FPSP_coverage=1 ABI_match=1 guest_600D=1 chip_errors=0 numerical_oracle=none
+exit=0
+== native_matrix/stdout_0b2d265.log
+WHETSTONE_LOOP cycles=31634431 platform=sdram romlat=6
+NATIVE_QUALIFIED native_FPSP_coverage=1 ABI_match=1 guest_600D=1 chip_errors=0 numerical_oracle=none
+exit=0
+== native_matrix/stdout_ad7a0d4.log
+WHETSTONE_LOOP cycles=21317917 platform=sdram romlat=6
+NATIVE_QUALIFIED native_FPSP_coverage=1 ABI_match=1 guest_600D=1 chip_errors=0 numerical_oracle=none
+exit=0
+== native_matrix/stdout_b2ed1b0.log
+WHETSTONE_LOOP cycles=21320889 platform=sdram romlat=6
+NATIVE_QUALIFIED native_FPSP_coverage=1 ABI_match=1 guest_600D=1 chip_errors=0 numerical_oracle=none
+exit=0
+== native_fft/stdout_ad7a0d4.log
+FFT_CAPTURE_DONE pc=00600e00 blocks=3 bytes=5152
+WHETSTONE_LOOP cycles=8933349 platform=sdram romlat=6
+NATIVE_QUALIFIED native_FPSP_coverage=1 ABI_match=1 guest_600D=1 chip_errors=0 numerical_oracle=none
+exit=0
+== native_fft/stdout_b2ed1b0.log
+FFT_CAPTURE_DONE pc=00600e00 blocks=3 bytes=5152
+WHETSTONE_LOOP cycles=8933636 platform=sdram romlat=6
+NATIVE_QUALIFIED native_FPSP_coverage=1 ABI_match=1 guest_600D=1 chip_errors=0 numerical_oracle=none
+exit=0
+2ba379765a772982c60251323aa9dfb8cd14fbf25b85c922054f201bf854dfd4  native_matrix/run_0b2d265/matrix_rows.hex
+2ba379765a772982c60251323aa9dfb8cd14fbf25b85c922054f201bf854dfd4  native_matrix/run_ad7a0d4/matrix_rows.hex
+2ba379765a772982c60251323aa9dfb8cd14fbf25b85c922054f201bf854dfd4  native_matrix/run_b2ed1b0/matrix_rows.hex
+4514f6f2aacaa94a0d35a173951239370e8ba346cd7620450006cf5dc1adbc30  native_fft/run_ad7a0d4/fft_payload_0.hex
+c00bde7efb6263d221cba7c377ea6604b46f4e8696af23b43b4081a5ed602031  native_fft/run_ad7a0d4/fft_payload_1.hex
+d85fb8320d6d546c495e23158e746a9bb919d954065dc9c0a0aa17c26c035b6d  native_fft/run_ad7a0d4/fft_payload_2.hex
+4514f6f2aacaa94a0d35a173951239370e8ba346cd7620450006cf5dc1adbc30  native_fft/run_b2ed1b0/fft_payload_0.hex
+c00bde7efb6263d221cba7c377ea6604b46f4e8696af23b43b4081a5ed602031  native_fft/run_b2ed1b0/fft_payload_1.hex
+d85fb8320d6d546c495e23158e746a9bb919d954065dc9c0a0aa17c26c035b6d  native_fft/run_b2ed1b0/fft_payload_2.hex
+4514f6f2aacaa94a0d35a173951239370e8ba346cd7620450006cf5dc1adbc30  ../native_fft_buffers_20260928/baseline/run/fft_payload_0.hex
+c00bde7efb6263d221cba7c377ea6604b46f4e8696af23b43b4081a5ed602031  ../native_fft_buffers_20260928/baseline/run/fft_payload_1.hex
+d85fb8320d6d546c495e23158e746a9bb919d954065dc9c0a0aa17c26c035b6d  ../native_fft_buffers_20260928/baseline/run/fft_payload_2.hex
+2560b04ce38ac3b9262fc43af88cc1dc89522b60aec4bb67972013d3d6d197cd  native_whet/run_ad7a0d4/native_globals.hex
+2560b04ce38ac3b9262fc43af88cc1dc89522b60aec4bb67972013d3d6d197cd  native_whet/run_b2ed1b0/native_globals.hex
+2560b04ce38ac3b9262fc43af88cc1dc89522b60aec4bb67972013d3d6d197cd  ../native_fpu_kernel_20260928/run/native_globals.hex

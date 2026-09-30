@@ -1,0 +1,17 @@
+{
+  "entries_base": 1892,
+  "entries_candidate": 1892,
+  "actual_files": 1892,
+  "missing": [],
+  "mismatches": [],
+  "hash_deltas": [
+    "MacQuadra800.qsf"
+  ],
+  "generated_dirs": [],
+  "local_env_mode": "0o600",
+  "manifest_sha256": "84c6b48b1637b46c73940da8f46b9834498dd7deddcd61bedc6ac83310094cae",
+  "qsf_sha256": "822ecfa6d72e581d362ec0bb0c3e8ee370fcb9a8ef66f4499f7adede44ada3f0",
+  "qsf_diff_sha256": "f0a79876c77f895dcd49c4bc156142b20815d3ae2c3451f0cec376cd6de04715",
+  "result": "PASS",
+  "status": "compile terminal: fitter failed Error 11802; no fresh RBF; no final timing analysis"
+}

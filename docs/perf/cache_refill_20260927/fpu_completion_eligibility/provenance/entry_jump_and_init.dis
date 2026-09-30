@@ -1,0 +1,7 @@
+000c 4efa0e50  jmp     ($e50,PC); ($e5e)
+0010 41fafffa  lea     (-$6,PC), A0; ($c)
+0014 d1fc00008e94  adda.l  #$8e94, A0
+001a 2008  move.l  A0, D0
+001c a055  dc.w    $a055; opcode 1010
+001e c18c  exg     D0, A4
+0020 4e75  rts

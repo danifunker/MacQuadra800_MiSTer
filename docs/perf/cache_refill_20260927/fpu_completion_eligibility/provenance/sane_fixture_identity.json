@@ -1,0 +1,149 @@
+{
+  "scope": "Prepare original Whetstone plus original ROM runtime state for a CPU fixture.\n\nNot a resumable Mac checkpoint: selected private RAM is replaced, CPU starts\nat a new supervisor stub, and original low-memory reset words are restored.\nExecution and an independent numerical oracle remain separate requirements.\n",
+  "ram_input_sha256": "a14fe7709eac1597cf7c016bedf6c0aa0a167aff554dc04dd039677d61176665",
+  "ram_output_sha256": "6822b7289bc21c7472c3e1f6d1661140a68aaf7338cfddf693f4a22df330ad00",
+  "fork_sha256": "9dd34c045a5637fc3a894c8d9e945629b3236eb183ba1a838946a0023b1fe111",
+  "code3_sha256": "02123c6cb020961c79cbb66cbadef9247a1add4c480b421645d2a4a4c3fefc31",
+  "relocations": [
+    {
+      "segment": 3,
+      "field": "0x5fa",
+      "kind": "A5",
+      "before": "0x58",
+      "after": "0x620058"
+    },
+    {
+      "segment": 3,
+      "field": "0x5b6",
+      "kind": "A5",
+      "before": "0x58",
+      "after": "0x620058"
+    },
+    {
+      "segment": 3,
+      "field": "0x580",
+      "kind": "A5",
+      "before": "0x58",
+      "after": "0x620058"
+    },
+    {
+      "segment": 3,
+      "field": "0x49c",
+      "kind": "A5",
+      "before": "0x58",
+      "after": "0x620058"
+    },
+    {
+      "segment": 3,
+      "field": "0x458",
+      "kind": "A5",
+      "before": "0x58",
+      "after": "0x620058"
+    },
+    {
+      "segment": 3,
+      "field": "0x422",
+      "kind": "A5",
+      "before": "0x58",
+      "after": "0x620058"
+    },
+    {
+      "segment": 3,
+      "field": "0x610",
+      "kind": "A5",
+      "before": "0x50",
+      "after": "0x620050"
+    },
+    {
+      "segment": 3,
+      "field": "0x4b2",
+      "kind": "A5",
+      "before": "0x50",
+      "after": "0x620050"
+    },
+    {
+      "segment": 3,
+      "field": "0x666",
+      "kind": "A5",
+      "before": "0x60",
+      "after": "0x620060"
+    },
+    {
+      "segment": 3,
+      "field": "0x508",
+      "kind": "A5",
+      "before": "0x60",
+      "after": "0x620060"
+    },
+    {
+      "segment": 3,
+      "field": "0x7ca",
+      "kind": "A5",
+      "before": "0x70",
+      "after": "0x620070"
+    },
+    {
+      "segment": 3,
+      "field": "0x804",
+      "kind": "A5",
+      "before": "0x68",
+      "after": "0x620068"
+    },
+    {
+      "segment": 3,
+      "field": "0x81e",
+      "kind": "A5",
+      "before": "0x78",
+      "after": "0x620078"
+    },
+    {
+      "segment": 3,
+      "field": "0x2d6",
+      "kind": "segment",
+      "before": "0x932",
+      "after": "0x600932"
+    },
+    {
+      "segment": 3,
+      "field": "0x704",
+      "kind": "segment",
+      "before": "0x840",
+      "after": "0x600840"
+    }
+  ],
+  "slots": [
+    {
+      "a5_offset": "0x50",
+      "target": "0x6112d2"
+    },
+    {
+      "a5_offset": "0x58",
+      "target": "0x61130a"
+    },
+    {
+      "a5_offset": "0x60",
+      "target": "0x611342"
+    },
+    {
+      "a5_offset": "0x68",
+      "target": "0x61137a"
+    },
+    {
+      "a5_offset": "0x70",
+      "target": "0x6113b2"
+    },
+    {
+      "a5_offset": "0x78",
+      "target": "0x61140c"
+    }
+  ],
+  "code_bases": {
+    "3": "0x600000",
+    "6": "0x610000"
+  },
+  "a5": "0x620000",
+  "stack": "0x640000",
+  "entry": "0x630000",
+  "status": "prepared only; no execution or numerical validation",
+  "runtime": "original installed SANE dispatchers; trap sites remain unchanged until ROM runtime rewrites them"
+}

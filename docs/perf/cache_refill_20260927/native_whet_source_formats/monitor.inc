@@ -1,0 +1,71 @@
+// PROPOSED simulation-only source-format monitor. No RTL/kernel change.
+// All inputs are sampled before NBA on the FPU's own enabled clock edge.
+`define SF dut.cpu.core.g_fpu.fpu
+bit sf_episode_seen=0;
+longint sf_raw=0,sf_unique=0,sf_held=0,sf_restore=0,sf_pending=0;
+longint sf_raw_shape[8][8][128],sf_unique_shape[8][8][128];
+longint sf_context_shape[4][8][8][128],sf_sideport_raw=0,sf_sideport_unique=0;
+longint sf_single_opportunity=0,sf_extended_opportunity=0;
+longint sf_single_raw=0,sf_extended_raw=0,sf_context_unknown=0;
+wire sf_ports=`SF.cr_we||`SF.fm_we||`SF.bsun_req||`SF.fp_reset||
+    `SF.frestore_idle||`SF.frestore_unimp||`SF.fsave_ack||`SF.pend_capture;
+wire sf_new_command=`SF.nreset&&`SF.ce&&`SF.fst==0&&`SF.req&&
+    !(`SF.frestore_unimp&&`SF.frestore_resume)&&
+    !(`SF.fstate_unimp&&!`SF.fstate_e1&&`SF.fstate_resig);
+wire sf_common_move=`SF.op_class==3'b010&&`SF.opmode==0&&
+    `SF.fpcr[7:6]==0&&`SF.fpcr[15:8]==0&&!sf_ports;
+wire sf_single_guard=sf_common_move&&`SF.src_fmt==1&&
+    `SF.din[94:87]!=0&&`SF.din[94:87]!=8'hff;
+wire sf_extended_guard=sf_common_move&&`SF.src_fmt==2&&`SF.din[63]&&
+    `SF.din[94:80]>=15'd1&&`SF.din[94:80]<=15'd32766;
+task sf_sample;
+    int context_id;
+    if(!`SF.nreset)sf_episode_seen=0;
+    else if(`SF.ce)begin
+        if(!`SF.req)sf_episode_seen=0;
+        if(in_loop&&`SF.fst==0)begin
+            if(`SF.frestore_unimp&&`SF.frestore_resume)sf_restore++;
+            else if(`SF.req&&`SF.fstate_unimp&&!`SF.fstate_e1&&`SF.fstate_resig)sf_pending++;
+        end
+        if(sf_new_command)begin
+            if(in_loop)begin
+                sf_raw++;sf_raw_shape[`SF.op_class][`SF.src_fmt][`SF.opmode]++;
+                if(sf_ports)sf_sideport_raw++;
+                if(sf_single_guard)sf_single_raw++;
+                if(sf_extended_guard)sf_extended_raw++;
+                if(sf_episode_seen)sf_held++;
+                else begin
+                    sf_unique++;sf_unique_shape[`SF.op_class][`SF.src_fmt][`SF.opmode]++;
+                    if(sf_ports)sf_sideport_unique++;
+                    if(sf_single_guard)sf_single_opportunity++;
+                    if(sf_extended_guard)sf_extended_opportunity++;
+                    // Core keeps current PC/IR while its command is in GO;
+                    // ia_wdata is wired to pc_i, unlike pre-NBA FPIAR.
+                    context_id=3;
+                    if(dut.cpu.core.state==8'd160&&dut.cpu.core.ir[15:8]==8'hf2)begin
+                        if(`SF.ia_wdata>=32'h600000&&`SF.ia_wdata<32'h600ec8)context_id=0;
+                        else if(`SF.ia_wdata>=32'h40800000&&`SF.ia_wdata<32'h40900000)context_id=1;
+                        else context_id=2;
+                    end else sf_context_unknown++;
+                    sf_context_shape[context_id][`SF.op_class][`SF.src_fmt][`SF.opmode]++;
+                end
+            end
+            sf_episode_seen=1;
+        end
+    end
+endtask
+task sf_finish;
+    longint rawsum,uniquesum,ctxsum;rawsum=0;uniquesum=0;ctxsum=0;
+    for(int c=0;c<8;c++)for(int f=0;f<8;f++)for(int o=0;o<128;o++)begin
+        rawsum+=sf_raw_shape[c][f][o];uniquesum+=sf_unique_shape[c][f][o];
+        if(sf_raw_shape[c][f][o])$display("FPU_SOURCE_SHAPE class=%0d field_fmt=%0d op=%02h raw_branch_edges=%0d first_branch_per_req_episode=%0d",c,f,o,sf_raw_shape[c][f][o],sf_unique_shape[c][f][o]);
+        for(int x=0;x<4;x++)begin
+            ctxsum+=sf_context_shape[x][c][f][o];
+            if(sf_context_shape[x][c][f][o])$display("FPU_SOURCE_CONTEXT context=%0d class=%0d field_fmt=%0d op=%02h first_branch_per_req_episode=%0d",x,c,f,o,sf_context_shape[x][c][f][o]);
+        end
+    end
+    if(rawsum!=sf_raw||uniquesum!=sf_unique||ctxsum!=sf_unique||sf_unique+sf_held!=sf_raw)$fatal(1,"FPU source monitor sum mismatch");
+    $display("FPU_SOURCE_TOTAL raw_branch_edges=%0d first_branch_per_req_episode=%0d held_reexecution_edges=%0d restore_priority_edges=%0d pending_frame_edges=%0d sideport_raw=%0d sideport_unique=%0d unknown_context=%0d",sf_raw,sf_unique,sf_held,sf_restore,sf_pending,sf_sideport_raw,sf_sideport_unique,sf_context_unknown);
+    $display("FPU_SOURCE_OPPORTUNITY single_raw=%0d single_unique=%0d extended_raw=%0d extended_unique=%0d saved_cycles=UNMEASURED",sf_single_raw,sf_single_opportunity,sf_extended_raw,sf_extended_opportunity);
+endtask
+`undef SF

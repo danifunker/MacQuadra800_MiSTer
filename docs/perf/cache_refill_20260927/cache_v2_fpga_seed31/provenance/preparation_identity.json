@@ -1,0 +1,18 @@
+{
+  "status": "prepared_then_fit_completed",
+  "base_seed31_manifest_sha256": "2a09ab93d2ba9b92d448eb07be0717061a3912ce23dea8418cbb5a169ec58747",
+  "candidate_source_manifest_sha256": "0ed13641e5adf221c6b72b531bfd881b065ef1e3bb30a0af8a43810916042458",
+  "candidate_cache_sha256": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481",
+  "candidate_cache_diff_sha256": "407894f435f8e0e693f0fa1fc28e15cb2752e05d8d932bbd99cf217978ff2759",
+  "source_entries": 1892,
+  "changed_source_paths": [
+    "rtl/ap68040/rtl/ap040_cache.v"
+  ],
+  "qsf_seed": 31,
+  "prelaunch_generated_dirs_absent": [
+    "db",
+    "incremental_db",
+    "output_files"
+  ],
+  "checked_unix_time": 1790593085.516918
+}

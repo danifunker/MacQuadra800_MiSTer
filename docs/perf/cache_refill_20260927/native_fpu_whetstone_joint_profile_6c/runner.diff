@@ -1,0 +1,74 @@
+--- original/run_platform_whet.py
++++ paired/run_platform_whet.py
+@@ -2,11 +2,12 @@
+ """Whetstone fixture on the shipped memory path: quadra800 + sdram_beat32 +
+ sdram.sv + the tb_sdram chip model, all RTL from TREE=<dir containing rtl/>.
+ 
+-  TREE=scratch/tree_p205 scripts/cpu/platform_fixture/run_platform_whet.py --out DIR
+-      [--image RAM.bin] [--rom ROM] [--romlat N] [--ref DIR_WITH_REFERENCE_HEX]
++  python3 run_platform_whet.py --out NEW_DIR
++      [--image RAM.bin] [--rom ROM] [--romlat N]
+ 
+ Prints WHETSTONE_LOOP / WHETSTONE RETURNED and the instrumentation summary;
+-the full log is DIR/run.log.  EXTRA_FLAGS / EXTRA_PLUSARGS pass through.
++the full log is DIR/run.log. Uses local frozen TREE/assets; EXTRA_FLAGS /
++EXTRA_PLUSARGS are forbidden. Launch only via reviewed supervisor.
+ """
+ import argparse, hashlib, json, os, re, subprocess, sys
+ from pathlib import Path
+@@ -18,7 +19,7 @@
+ 
+ p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+ p.add_argument('--image', type=Path, default=HERE/'ram.bin')
+-p.add_argument('--rom', type=Path, default=R/'releases/quadra800.rom')
++p.add_argument('--rom', type=Path, default=HERE/'assets/quadra800.rom')
+ p.add_argument('--out', type=Path, required=True)
+ p.add_argument('--romlat', type=int, default=6, help='clk_sys cycles from a ROM beat request to its ack (DDR3 stand-in)')
+ p.add_argument('--no-compile', action='store_true')
+@@ -27,7 +28,9 @@
+ native_identity=json.loads((HERE/'image_identity.json').read_text())
+ assert native_identity['selector']==1 and native_identity['resource_sha256']=='34ee511807b66d2360c505b352d0946c01730d764843ed815cfd49bab2fa8aa0'
+ assert hashlib.sha256(a.image.read_bytes()).hexdigest()==native_identity['output_sha256'],'native image identity'
+-tree = Path(os.environ['TREE']).resolve()
++tree = (HERE/'tree').resolve()
++assert not os.environ.get('EXTRA_FLAGS') and not os.environ.get('EXTRA_PLUSARGS'), 'frozen recipe only'
++assert hashlib.sha256((tree/'rtl/ap68040/rtl/ap040_fpu.v').read_bytes()).hexdigest()=='6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b'
+ rtl = tree/'rtl'
+ ap = rtl/'ap68040/rtl'
+ d = a.out.resolve(); assert not d.exists(), "fresh output directory required"; d.mkdir(parents=True)
+@@ -35,7 +38,7 @@
+ # The chip model is tb_sdram.sv's, unchanged except for its storage: the
+ # associative array becomes a flat 32M-word array (an unwritten cell reads 0,
+ # not $FFFF) so the 32 MB image can be backdoor-loaded without a 16M-entry map.
+-src = (R/'verilator/tb_sdram.sv').read_text()
++src = (HERE/'assets/tb_sdram.sv').read_text()
+ model = src[src.index('module sdram_model'):]
+ subs = [('bit [15:0] mem [int];', 'bit [15:0] mem [0:33554431];'),
+         ('mem.exists(k) ? mem[k] : 16\'hFFFF', 'mem[k]'),
+@@ -49,7 +52,7 @@
+ 
+ units = ['ap040_core', 'ap040_bus_timeout', 'ap040_regfile', 'ap040_alu', 'ap040_muldiv',
+          'ap040_mmu', 'ap040_cache', 'ap040_fpu']
+-sources = [HERE/'tb_platform_whet.sv', flat, R/'verilator/altddio_out_stub.v']
++sources = [HERE/'tb_platform_whet.sv', flat, HERE/'assets/altddio_out_stub.v']
+ sources += [rtl/f for f in ['quadra800.sv', 'wombat_cpu.sv', 'wombat_store_buffer.sv', 'wombat_bus32.sv',
+             'sdram_beat32.sv', 'sdram.sv', 'iosb.sv', 'via6522.sv', 'dafb.sv', 'rtc3430042.sv', 'easc.sv',
+             'ncr53c96.sv', 'sonic_mbx.sv', 'cd_audio.sv', 'scsi_cache.sv', 'adb.sv', 'scc.v',
+@@ -62,7 +65,7 @@
+           '-DCACHE_CD_OFF=1', '-DCACHE_SMALL=1', '-DSIMULATION=1']  # SIMULATION: behavioural BRAMs, as the full-machine sim
+ flags += os.environ.get('EXTRA_FLAGS', '').split()
+ active_macros = set(re.findall(r'^set_global_assignment -name VERILOG_MACRO "([A-Z0-9_]+)=1"',
+-                               (R/'MacQuadra800.qsf').read_text(), re.M))
++                               (HERE/'assets/MacQuadra800.qsf').read_text(), re.M))
+ for flag in flags:
+     if flag.startswith('-DAP040_') or flag in ('-DCACHE_CD_OFF=1', '-DCACHE_SMALL=1'):
+         assert flag[2:].split('=')[0] in active_macros, f'fixture flag absent from qsf: {flag}'
+@@ -94,7 +97,7 @@
+     run([VERILATOR, '--binary', '--timing', '-O3', '--unroll-count', '256',
+          '--x-assign', 'fast', '--x-initial', 'fast', '--noassert',
+          '-j', '2', '--build-jobs', '2', '--timescale-override', '1ps/1ps', *warn,
+-         '--top-module', 'tb_platform_whet', '--Mdir', d/'obj', '-I'+str(rtl), '-I'+str(ap), *flags, *sources],
++         '--top-module', 'tb_platform_whet', '--Mdir', d/'obj', '-I'+str(HERE), '-I'+str(rtl), '-I'+str(ap), *flags, *sources],
+         'compile.log')
+ 
+ text = run(['stdbuf', '-oL', d/'obj/Vtb_platform_whet', '+prog='+str(a.image.resolve()), '+rom='+str(a.rom.resolve()),

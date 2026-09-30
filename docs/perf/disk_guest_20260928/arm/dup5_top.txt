@@ -1,0 +1,24 @@
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  50% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+21528 21527 root     S     7540   1%   5% /media/fat/mister_printerd -d /dev/ttyS1 -b 57600 -m imagewriter -c MacQuadra800 -o /media/fat/printers
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  52% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+27881 27754 root     R     2512   0%   4% top -b -n 1
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  39% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+27999 27754 root     R     2512   0%   4% top -b -n 1
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  45% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+  651     1 root     S     6972   1%   5% wpa_supplicant -s -B -P /run/wpa_supplicant.wlan0.pid -i wlan0 -D nl80211,wext -c /media/fat/linux/wpa_supplicant.conf
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  52% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+  762     1 root     SN    761m 155%   0% /tmp/remote.sh -service exec &
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  54% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+  762     1 root     SN    761m 155%   0% /tmp/remote.sh -service exec &
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  48% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+28469 27754 root     R     2512   0%   4% top -b -n 1
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+21495     1 root     R    80100  16%  46% /media/fat/MiSTer /media/fat/_Unstable/MacQuadra800.rbf
+28587 27754 root     R     2512   0%   4% top -b -n 1

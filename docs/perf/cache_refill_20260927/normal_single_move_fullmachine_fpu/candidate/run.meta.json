@@ -1,0 +1,32 @@
+{
+  "status": "EXIT0_REFILL_PASS_PENDING_SCREENSHOT_REVIEW",
+  "supervisor_pid": 2265331,
+  "started_utc": "2026-09-28T02:33:03.344932+00:00",
+  "argv": [
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_move_fullmachine_20260928/verilator/obj_dir/Vemu",
+    "--headless",
+    "--no-cpu-trace",
+    "--disk",
+    "run.hda",
+    "+rom=/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_move_fullmachine_20260928/verilator/quadra800-fastboot.rom.hex",
+    "+ram=0",
+    "--control",
+    "control.txt",
+    "--cpu-profile",
+    "refill.tsv",
+    "--max-cycles",
+    "20000000000",
+    "+ram_line_model",
+    "+ram_first_latency=4",
+    "+ram_line_publish_delay=2"
+  ],
+  "binary_sha256": "3b4fd3081c2767001c640eada91b6d163083f5b8839320e268d9838fe10044d9",
+  "build_identity_sha256": "f0af69d289e01b70171c1e2cde079948d23fc79b03e687b4e8f294473714eefb",
+  "golden_input_disk_sha256": "80d8479430a66edae161c2bac6a9563dbb4f6bd0f564ee7849a555c447df8888",
+  "control_sha256": "33108dcd7af064820bb59ae89f72c77a2f8a62b74bbee73f86bd912c244253e4",
+  "source_manifest_sha256": "c528f7e7e9030de959dd5c8adddb239c3727abb5895a2285f9b35c04de243810",
+  "child_pid": 2265332,
+  "exit_status": 0,
+  "finished_utc": "2026-09-28T04:18:31.735302+00:00",
+  "refill_check_exit_status": 0
+}

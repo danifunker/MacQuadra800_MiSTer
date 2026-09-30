@@ -1,0 +1,15 @@
+PASS unsupported opcode=3b7c supported=0
+PASS unsupported opcode=3f3c supported=0
+PASS unsupported opcode=4e94 supported=0
+PASS unsupported opcode=4eb9 supported=0
+PASS unsupported opcode=4a2d supported=0
+PASS unsupported opcode=a193 supported=0
+PASS unsupported opcode=225f supported=0
+PASS supported MOVEQ opcode=7800 supported=1
+PASS ed MOVEA.W D3,A1 opcode=3243 supported=1
+PASS ed MOVEA.W D3,A0 opcode=3043 supported=1
+PASS ted ADDQ.W #1,D3 opcode=5243 supported=1
+PASS A31E falls back opcode=a31e supported=0
+PASS A01F falls back opcode=a01f supported=0
+PASS decoder eligibility cases=13
+scratch/native_matrix_decoder_review_20260928/tb_decoder_eligibility.sv:55: $finish called at 13000 (1ps)

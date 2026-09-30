@@ -1,0 +1,7 @@
+{
+  "stage": "PREPARED_NO_BINARY_OR_RUN",
+  "candidate_fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "initial_native_code_sha256": "a0956478bf3f4c808c8eb71696249b51de15c48ea59861ae4f3519fbb09d4115",
+  "image_sha256": "9e58e9b226e03acbee4e1ae690a8b67500328dfb5933df55e1b832c926c653e9",
+  "scope": "actual native selector1 kernel, no numerical oracle"
+}

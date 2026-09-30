@@ -1,0 +1,10 @@
+{
+  "status": "PREFLIGHT_PASS",
+  "source_manifest_sha256": "7082248bdd0ec877b3a673ffe1b8dd21c91789fdf0afefe0ecb7ce877590610e",
+  "candidate_fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "supervisor_sha256": "2055c6f02b4c0e5b91a86d1aec13cd34d3920d648707fc866d8afd2c9570ea7c",
+  "unit": "native-whet-resource-read-20260928.service",
+  "created_utc": "2026-09-28T09:42:28.508659+00:00",
+  "preflight_all145_sources": "PASS",
+  "fresh_output_guards": "PASS"
+}

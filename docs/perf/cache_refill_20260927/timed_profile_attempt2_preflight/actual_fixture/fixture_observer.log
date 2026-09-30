@@ -1,0 +1,22 @@
+META format=speedometer-observer-v1 clock_unit=33MHz_rising_edges limit=512 resource_sha256=af67113bceb4eb906e973a9b747a0b1925b9d64c62f0f9a84bc6f0578839ca80
+LIVE cycle=250 kind=PREFIX phase=1 site=0 pc=408050bc reason=
+LIVE cycle=261 kind=PREFIX phase=2 site=0 pc=408050bc reason=
+LIVE cycle=261 kind=PREFIX phase=3 site=0 pc=408050c2 reason=
+LIVE cycle=270 kind=PREFIX phase=4 site=1 pc=408050c2 reason=
+LIVE cycle=276 kind=PREFIX phase=5 site=1 pc=408050c8 reason=
+LIVE cycle=309 kind=FPU_Identify phase=5 site=1 pc=0 reason=
+LIVE cycle=309 kind=IDENTIFY phase=5 site=1 pc=408050ce reason=
+LIVE cycle=309 kind=PREFIX phase=0 site=1 pc=408050ce reason=
+LIVE cycle=333 kind=FPU_TimerStart phase=0 site=1 pc=0 reason=
+LIVE cycle=342 kind=FPU_CallbackStart phase=0 site=1 pc=0 reason=
+LIVE cycle=381 kind=FPU_CallbackStop phase=0 site=1 pc=0 reason=
+LIVE cycle=412 kind=FPU_TimerStop phase=0 site=1 pc=0 reason=
+ADAPTER cycle=473 request_samples=390 ack_samples=47 instruction_acks=34 data_acks=13 error_acks=0 fetched_bytes=110 dispatches=21 known_dispatches=21 ir_mismatch=0 signature_failures=0 secondary_skipped=0 primary_mismatch_skipped=0 diagnostic_dropped=0 starts=1 stops=1 callbacks=1 returns=1 aborts=0 unmatched=0 prefix_aborts=0 prefix0=1 prefix1=1 prefix2=1 prefix3=1 prefix4=1 prefix5=1 invalidation0=1 invalidation1=0 invalidation2=1 invalidation3=0 invalidation4=0 invalidation5=0
+INVALIDATIONS cycle=473 reason=0 phase0=1 phase1=0 phase2=0 phase3=0 phase4=0 phase5=0
+INVALIDATIONS cycle=473 reason=1 phase0=0 phase1=0 phase2=0 phase3=0 phase4=0 phase5=0
+INVALIDATIONS cycle=473 reason=2 phase0=1 phase1=0 phase2=0 phase3=0 phase4=0 phase5=0
+INVALIDATIONS cycle=473 reason=3 phase0=0 phase1=0 phase2=0 phase3=0 phase4=0 phase5=0
+INVALIDATIONS cycle=473 reason=4 phase0=0 phase1=0 phase2=0 phase3=0 phase4=0 phase5=0
+INVALIDATIONS cycle=473 reason=5 phase0=0 phase1=0 phase2=0 phase3=0 phase4=0 phase5=0
+FPU_SUMMARY starts=1 stops=1 callbacks=1 returns=1 aborts=0 unmatched=0 prefix_aborts=0 timer_open=0 callback_open=0 raw_stop_pending=0
+SUMMARY records=0 identities=0 micro_starts=0 micro_stops=0 contexts=1 capped=0

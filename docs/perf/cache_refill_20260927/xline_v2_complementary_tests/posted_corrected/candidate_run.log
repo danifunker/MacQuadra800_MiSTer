@@ -1,0 +1,2 @@
+POSTED_MATRIX PASS cases=216 pending=816 prepared=816 early_disjoint_acks=30
+/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_validation_20260928/existing/posted_contract_pair/tb_cache_posted_read_matrix.sv:234: $finish called at 1491000000 (1ps)

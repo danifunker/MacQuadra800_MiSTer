@@ -1,0 +1,74 @@
+== assembling test programs ==
+
+warning 41 in line 218 of "asm/t_bitfield_mmu.s": label name conflicts with directive
+>fail:
+
+warning 40 in line 221 of "asm/t_bitfield_mmu.s": label name conflicts with mnemonic
+>halt:
+
+warning 40 in line 142 of "asm/t_bitfield_cache.s": label name conflicts with mnemonic
+>halt:
+
+warning 41 in line 125 of "asm/t_moves_fc.s": label name conflicts with directive
+>fail:
+
+warning 40 in line 128 of "asm/t_moves_fc.s": label name conflicts with mnemonic
+>halt:
+
+warning 41 in line 243 of "asm/t_movem_restart.s": label name conflicts with directive
+>fail:
+
+warning 40 in line 246 of "asm/t_movem_restart.s": label name conflicts with mnemonic
+>halt:   bra.s   halt
+
+warning 40 in line 160 of "asm/t_atcprobe.s": label name conflicts with mnemonic
+>halt:   bra     halt
+
+warning 41 in line 234 of "asm/t_fpu_frames.s": label name conflicts with directive
+>fail:
+
+warning 41 in line 219 of "asm/t_fpu_resume.s": label name conflicts with directive
+>fail:
+
+warning 41 in line 58 of "asm/t_refill_load.s": label name conflicts with directive
+>fail:
+
+warning 41 in line 49 of "asm/pipe_bench.s": label name conflicts with directive
+>even:
+
+warning 41 in line 59 of "asm/branch_bench.s": label name conflicts with directive
+>even:
+== compiling benches ==
+== running ==
+  pass  reset
+  pass  regfile
+  pass  regfile_poison
+  pass  regfile_bypass_control  (control: failed as required)
+  pass  regfile_extra_bypass_control  (control: failed as required)
+  pass  regfile_fifth_bypass_control  (control: failed as required)
+  pass  alu_arithmetic
+  pass  fpu_normalize
+  pass  double_fault
+  pass  walker_cdc
+  pass  bus16_gap
+  pass  bus_timeout
+  pass  cache_snoop
+  pass  cache_xstore
+  pass  integer
+  pass  exceptions
+  pass  mmu
+  pass  bitfield_mmu
+  pass  bitfield_cache
+  pass  moves_fc
+  pass  movem_restart
+  pass  atcprobe
+  pass  fpu_frames
+  pass  fpu_resume
+  pass  cache
+  pass  fpu
+  pass  branch_early
+  pass  loops_irq
+  pass  refill_load
+  pass  lea_d16
+  pass  lea_fault
+AP68040: ALL TESTS PASSED

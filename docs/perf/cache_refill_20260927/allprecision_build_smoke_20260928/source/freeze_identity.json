@@ -1,0 +1,9 @@
+{
+  "manifest_sha256": "cd794af982858ddbb3f116345bf9dd301111897c73c575a343f6283ccc58ab0f",
+  "candidate_fpu": "55ff9b3cd1d59069ec0b94ca17e4dc3a8c87ac031317902285444d92643724a2",
+  "sim_main": "3a1902f3d4076dfbcce62265cb5da34c9ebcba57cb4e73216c577d502326f634",
+  "observer": "660e5a3bc092b09be52609bfd3364f47f723532d1cc074de3b3ab3dc556c66be",
+  "stage": "prepared-only no fullguest build/run",
+  "files": 218,
+  "bytes": 12003499
+}

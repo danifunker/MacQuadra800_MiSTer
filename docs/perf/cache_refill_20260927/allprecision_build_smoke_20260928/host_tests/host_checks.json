@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "strict_test": "g++ -std=c++17 -Wall -Wextra -Werror -pedantic -O2 verilator/sim_fpu_guard_profile_test.cpp -o /tmp/sim_fpu_guard_profile_test_20260928; execute",
+  "output": "PASS guard observer exact predicates/FPCR buckets/ports/priority/heldreq/bounded context/window/snapshot/report",
+  "mapping_syntax": "g++ -std=c++17 -fsyntax-only -I/home/alans/verilator5/share/verilator/include -I<original73bc>/verilator/obj_dir verilator/guard_mapping_check.cpp",
+  "mapping_scope": "prior generated header only, not55ff full-model build",
+  "no_fullguest_build_or_run": true
+}

@@ -1,0 +1,82 @@
+--- scratch/fpu_completion_eligibility_20260928/tb_platform_whet.sv
++++ scratch/native_fpu_kernel_20260928/tb_platform_whet.sv
+@@ -231,6 +231,9 @@
+ 
+ // Simulation-only completion eligibility measurement. No FPU RTL is modified.
+ `define FMON dut.cpu.core.g_fpu.fpu
++longint native_core[256],native_cache[16];
++longint native_body=0,native_resource=0,native_rom=0,native_vector11=0,native_unimp=0;
++longint native_bg=0,native_blockdec=0,native_go=0,native_mrd_fill=0,native_mrd_unacked=0;
+ longint fm_clocks=0,fm_fst[32],fm_busy_op[128],fm_round_op[128],fm_round_eligible_op[128];
+ longint fm_round=0,fm_round_eligible=0,fm_round_reject[10];
+ longint fm_round_bg=0,fm_round_decwait=0,fm_round_go=0;
+@@ -266,7 +269,7 @@
+ always @(posedge clk_sys) if (nreset) begin
+ 	cycles++;
+ 	if (debug_fault || debug_halted) $fatal(1, "CPU fault/halt pc=%h", dut.cpu.core.pc_i);
+-	if (cycles > 400000000) $fatal(1, "timeout pc=%h", dut.cpu.core.pc_i);
++	if (cycles > 40000000) $fatal(1, "timeout pc=%h", dut.cpu.core.pc_i);
+ 	if (cycles % 2000000 == 0) $display("HEARTBEAT cycle=%0d pc=%h", cycles, dut.cpu.core.pc_i);
+ 	if (dut.svc == 3) begin berr_seen++; $display("BUS ERROR addr=%h", {dbg_berr_addr}); end
+ 	if (in_loop && dut.ipl_n != 3'b111) ipl_seen++;
+@@ -304,6 +307,22 @@
+ 	end
+ 
+ 	if (in_loop) begin
++        if (dut.cpu.core.state>=256 || dut.cpu.g_cache.cache.cst>=16 ||
++            `FMON.fst>=32 || `FMON.r_op>=128) $fatal(1,"native profile index out of range");
++        native_core[dut.cpu.core.state]++;
++        native_cache[dut.cpu.g_cache.cache.cst]++;
++        if(dut.cpu.core.pc_i>=32'h60029a && dut.cpu.core.pc_i<32'h6006a2)native_body++;
++        if(dut.cpu.core.pc_i>=32'h600000 && dut.cpu.core.pc_i<32'h600ec8)native_resource++;
++        if(dut.cpu.core.pc_i>=32'h40800000 && dut.cpu.core.pc_i<32'h40900000)native_rom++;
++        if(dut.cpu.core.pc_i==32'h4088d9fe)native_vector11++;
++        if(`FMON.unimp)native_unimp++;
++        if(dut.cpu.core.fpu_bg)native_bg++;
++        if(dut.cpu.core.state==153 && dut.cpu.core.fpu_bg && !dut.cpu.core.fpu_done)native_blockdec++;
++        if(dut.cpu.core.state==160)native_go++;
++        if(dut.cpu.core.state==9 && dut.cpu.g_cache.cache.cst==4)begin
++            native_mrd_fill++;
++            if(!dut.cpu.g_cache.cache.fill_acked)native_mrd_unacked++;
++        end
+         fm_clocks++;
+         fm_fst[`FMON.fst]++;
+         if (`FMON.fst!=0) fm_busy_op[`FMON.r_op]++;
+@@ -341,7 +360,7 @@
+ 
+ 	// markers, as tb_w.sv: at the external write's acknowledge
+ 	if (dut.bus_req && dut.bus_write && dut.bus_ack && dut.bus_addr == 32'hf108) begin
+-		if (dut.bus_wdata[15:0] == 1) begin stamp_start = cycles; in_loop = 1; end
++		if (dut.bus_wdata[15:0] == 1) begin stamp_start = cycles; in_loop = 1; $display("NATIVE_START fpcr=%08h pc=%08h",`FMON.fpcr,dut.cpu.core.pc_i); end
+ 		else if (dut.bus_wdata[15:0] == 2) begin
+ 			loop_cycles = cycles - stamp_start; in_loop = 0;
+ 			$display("WHETSTONE_LOOP cycles=%0d platform=sdram romlat=%0d", loop_cycles, romlat);
+@@ -374,10 +393,25 @@
+ 		$display("WHETSTONE RETURNED cycles=%0d loop=%0d", cycles, loop_cycles);
+ 		// let the bridge FIFO drain before reading the chip back
+ 		repeat (400) @(posedge clk_sys);
+-		dump_hex("whet_globals.hex", 'h61df90, 'h61dfa3);
+-		dump_hex("whet_code.hex",    'h600000, 'h600b4d);
+-		dump_hex("whet_stack.hex",   'h63fc00, 'h63ffff);
++		dump_hex("native_globals.hex", 'h600ea0, 'h600ec7);
++		dump_hex("native_code.hex", 'h600000, 'h600e9f);
++        dump_hex("native_abi.hex", 'h625000, 'h6251ff);
++		dump_hex("native_stack.hex", 'h63f000, 'h63ffff);
+         if(fm_clocks!=loop_cycles)$fatal(1,"eligibility monitor/window mismatch %0d != %0d",fm_clocks,loop_cycles);
++        begin
++            longint core_sum,cache_sum,fst_sum;
++            core_sum=0;cache_sum=0;fst_sum=0;
++            for(int x=0;x<256;x++)core_sum+=native_core[x];
++            for(int x=0;x<16;x++)cache_sum+=native_cache[x];
++            for(int x=0;x<32;x++)fst_sum+=fm_fst[x];
++            if(core_sum!=loop_cycles || cache_sum!=loop_cycles || fst_sum!=loop_cycles)$fatal(1,"native histogram totals");
++            if(native_body==0 || native_vector11==0 || native_unimp==0)$fatal(1,"native/FPSP coverage absent");
++            $display("NATIVE_COVERAGE body=%0d resource=%0d rom=%0d vector11_pc=%0d unimp_pulse_samples=%0d",native_body,native_resource,native_rom,native_vector11,native_unimp);
++            $display("NATIVE_OVERLAP bg=%0d blockingdec=%0d go=%0d mrd_fill=%0d mrd_unacked=%0d",native_bg,native_blockdec,native_go,native_mrd_fill,native_mrd_unacked);
++            $display("NATIVE_TOTAL clocks=%0d core=%0d cache=%0d fst=%0d",loop_cycles,core_sum,cache_sum,fst_sum);
++            for(int x=0;x<256;x++)if(native_core[x])$display("NATIVE_CORE state=%0d samples=%0d",x,native_core[x]);
++            for(int x=0;x<16;x++)if(native_cache[x])$display("NATIVE_CACHE state=%0d samples=%0d",x,native_cache[x]);
++        end
+         $display("FPU_ELIG_WINDOW clocks=%0d sampling=pre_edge_existing_in_loop",fm_clocks);
+         $display("FPU_ELIG_ROUND samples=%0d eligible=%0d bg=%0d decode_wait=%0d cpu_go=%0d",fm_round,fm_round_eligible,fm_round_bg,fm_round_decwait,fm_round_go);
+         for(int x=0;x<10;x++)$display("FPU_ELIG_ROUND_REJECT reason=%0d samples=%0d",x,fm_round_reject[x]);

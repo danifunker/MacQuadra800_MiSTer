@@ -1,0 +1,37 @@
+006e 4e56fffc  link    A6, #-$4
+0072 48e71c20  movem.l D3-D5/A2, -(A7)
+0076 246e0008  movea.l ($8,A6), A2
+007a 7a01  moveq   #$1, D5
+007c 604e  bra     $cc
+007e 7601  moveq   #$1, D3
+0080 6042  bra     $c4
+0082 4ebaffbc  jsr     (-$44,PC); ($40)
+0086 3800  move.w  D0, D4
+0088 3044  movea.w D4, A0
+008a 2008  move.l  A0, D0
+008c 81fc0078  divs.w  #$78, D0
+0090 c1fc0078  muls.w  #$78, D0
+0094 3204  move.w  D4, D1
+0096 9240  sub.w   D0, D1
+0098 0641ffc4  addi.w  #-$3c, D1
+009c 48c1  ext.l   D1
+009e 83fc0003  divs.w  #$3, D1
+00a2 f2015000  fmove.w   D1, FP0
+00a6 f22e6400fffc  fmove.s   FP0, (-$4,A6)
+00ac 3045  movea.w D5, A0
+00ae 2008  move.l  A0, D0
+00b0 e588  lsl.l   #2, D0
+00b2 3043  movea.w D3, A0
+00b4 2208  move.l  A0, D1
+00b6 e589  lsl.l   #2, D1
+00b8 20720800  movea.l (A2,D0.l), A0
+00bc 21aefffc1800  move.l  (-$4,A6), (A0,D1.l)
+00c2 5243  addq.w  #1, D3
+00c4 0c430028  cmpi.w  #$28, D3
+00c8 6fb8  ble     $82
+00ca 5245  addq.w  #1, D5
+00cc 0c450028  cmpi.w  #$28, D5
+00d0 6fac  ble     $7e
+00d2 4cdf0438  movem.l (A7)+, D3-D5/A2
+00d6 4e5e  unlk    A6
+00d8 4e75  rts

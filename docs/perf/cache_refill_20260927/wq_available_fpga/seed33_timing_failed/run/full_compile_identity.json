@@ -1,0 +1,110 @@
+{
+  "unit": "codex-fpu-6c-wq-available-quartus-20260928-seed33.service",
+  "invocation_id": "2f8804bb0255442b9a93ab4faddaec9e",
+  "tool_session_id": 99650,
+  "wrapper_child_pid": 2564512,
+  "quartus_sh_pid": 2564527,
+  "quartus_map_pid": 2564565,
+  "quartus_fit_pid": 2568275,
+  "quartus_asm_pid": 2578429,
+  "quartus_sta_pid": 2578653,
+  "started_local": "2026-09-28 05:32:21 EDT",
+  "finished_local": "2026-09-28 05:49:19 EDT",
+  "build_log": "tree/output_files/build_20260928_053221.log",
+  "wrapper_exit": 1,
+  "quartus_flow_exit": 0,
+  "analysis_synthesis": "successful",
+  "fitter": "successful",
+  "timing_gate": "failed; worst setup slack -0.292 ns",
+  "source_manifest": "candidate_seed33_manifest.sha256",
+  "source_postrun": "source_postrun_check.json",
+  "fit": {
+    "alm": 38622,
+    "registers": 24631,
+    "ram_blocks": 468,
+    "memory_bits": 3389411
+  },
+  "setup": {
+    "cpu_slack_ns": 0.099,
+    "cpu_tns_ns": 0.0,
+    "hdmi_slack_ns": -0.198,
+    "hdmi_tns_ns": -0.378,
+    "ram_rising_to_falling_slack_ns": -0.292,
+    "ram_rising_to_falling_tns_ns": -0.579
+  },
+  "min_hold_slack_ns": 0.201,
+  "artifacts": {
+    "MacQuadra800.rbf": {
+      "bytes": 4447936,
+      "sha256": "bcd6a403d51fad66b2b4dba6f76f251ee762c36f7c4aa9c06bb68fd7bdaacf11"
+    },
+    "MacQuadra800.sof": {
+      "bytes": 6690368,
+      "sha256": "9f36df6183209b252d2e5662bdb9d88d50c18982d0b5539b06b665f064fa1b4d"
+    },
+    "MacQuadra800.fit.rpt": {
+      "bytes": 3037335,
+      "sha256": "06febca85d29f05beded580de897450b1649a22b2fb32169814e3d0bc051520d"
+    },
+    "MacQuadra800.fit.summary": {
+      "bytes": 683,
+      "sha256": "cb1a5d13df88916bb2f95ab8df53a1bce2c305fc7a0aa6783fc9f80836143147"
+    },
+    "MacQuadra800.fit.smsg": {
+      "bytes": 2174,
+      "sha256": "8a9464919de3b58b842724698c0914045c6c6f399ee464fff7e641ef03893c0d"
+    },
+    "MacQuadra800.flow.rpt": {
+      "bytes": 16378,
+      "sha256": "f11f3bcb365ba3a9640e48665264264bc68fce62e9f18647ec15ca17b8b71bfb"
+    },
+    "MacQuadra800.sta.rpt": {
+      "bytes": 396680,
+      "sha256": "13dd2a0d8a7a5486a11609fb035b96e0050e7c4ba4c6a7dd3fcb40f3889cc0c6"
+    },
+    "MacQuadra800.sta.summary": {
+      "bytes": 4396,
+      "sha256": "2edd9193e149c0af781c231eb4a9d705d3ae2ac07f50c0c5a44ae21a9da3d78f"
+    },
+    "MacQuadra800.map.summary": {
+      "bytes": 518,
+      "sha256": "233858354be3ec28664e60f2270b5a89c2c89ea1350dcf3abb0f0dd1475c9bf3"
+    },
+    "build_20260928_053221.log": {
+      "bytes": 471446,
+      "sha256": "88f21eabd5d20d01710af93ee6af87ade01b2f01d721db2876015741332a4395"
+    }
+  },
+  "cross_domain": {
+    "unit": "codex-fpu-6c-wq-available-quartus-20260928-seed33-cross.service",
+    "invocation_id": "382aab6edc884579a7cb7ae33f0448a8",
+    "tool_session_id": 56548,
+    "child_quartus_sta_pid": 2579721,
+    "tool_exit": 0,
+    "sys_to_ram_report": "tree/scratch/cross_sys2ram_fpu_6c_wq_available_seed33_20260928.txt",
+    "sys_to_ram_sha256": "d5fcba543705d9d2deb53e667f403cba9f4eafde2aab0e97c9cc534b0a8dc7a2",
+    "ram_to_sys_report": "tree/scratch/cross_ram2sys_fpu_6c_wq_available_seed33_20260928.txt",
+    "ram_to_sys_sha256": "61ae6b103702c0718e9e12a8a0eddddd21a9dae96c5010ec0f8fe3d44b6bc08a2",
+    "all_12_positive": true,
+    "sys_to_ram_worst_ns": 0.035,
+    "ram_to_sys_worst_ns": 0.099
+  },
+  "ram_paths": {
+    "unit": "codex-fpu-6c-wq-available-quartus-20260928-seed33-ram-paths.service",
+    "invocation_id": "0ecb8b0c76a44e46a0c4a725a8e4b38b",
+    "tool_session_id": 98237,
+    "child_quartus_sta_pid": 2580318,
+    "tool_exit": 0,
+    "summary": "tree/scratch/ram_timing_6c_wq_available_seed33_20260928/worst_paths.txt",
+    "summary_sha256": "04280a20a376b464910323e1a2e08020e0294d0e8b471965c494ec0f6049988b",
+    "detail": "tree/scratch/ram_timing_6c_wq_available_seed33_20260928/worst_detail.txt",
+    "detail_sha256": "9d9b850d67a1752adc609956d15016e1005bd3212a776dbf313afd1a501fc5b8",
+    "summary_paths": 12,
+    "negative_paths": 2,
+    "worst_path": "wq_rp[1] -> wq_available_handoff~DUPLICATE",
+    "worst_slack_ns": -0.292,
+    "direct_wq_rp_to_available_slack_ns": -0.287,
+    "wq_wp_to_available_direct_slack_ns": 0.04,
+    "wq_available_to_d_ram31_slack_ns": 0.355
+  }
+}

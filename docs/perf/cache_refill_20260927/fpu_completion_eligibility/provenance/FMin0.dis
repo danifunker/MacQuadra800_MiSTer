@@ -1,0 +1,9 @@
+07ba 4e560000  link    A6, #$0
+07be 302e0008  move.w  ($8,A6), D0
+07c2 b06e000a  cmp.w   ($a,A6), D0
+07c6 6c06  bge     $7ce
+07c8 302e0008  move.w  ($8,A6), D0
+07cc 6004  bra     $7d2
+07ce 302e000a  move.w  ($a,A6), D0
+07d2 4e5e  unlk    A6
+07d4 4e75  rts

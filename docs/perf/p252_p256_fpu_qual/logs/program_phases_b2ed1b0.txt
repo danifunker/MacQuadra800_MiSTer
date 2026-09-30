@@ -1,0 +1,17 @@
+cand fpu pass=1 phases=103154/148198/148198
+cand fpu_frames pass=1 phases=8488/12820/12820
+cand fpu_resume pass=1 phases=14090/21162/21162
+cand mmu pass=1 phases=340160/505494/505494
+cand exceptions pass=1 phases=140688/213186/213182
+cand cache pass=1 phases=2294/3382/3382
+cand integer rc=0 pass=1 bad=0 phases=16676/25530/25530
+cand bitfield_mmu rc=0 pass=1 bad=0 phases=6336/9352/9352
+cand bitfield_cache rc=0 pass=1 bad=0 phases=25314/35768/35768
+cand moves_fc rc=0 pass=1 bad=0 phases=3276/4930/4930
+cand movem_restart rc=0 pass=1 bad=0 phases=35252/53442/53442
+cand atcprobe rc=0 pass=1 bad=0 phases=40004/59210/59210
+cand branch_early rc=0 pass=1 bad=0 phases=60444/67618/67618
+cand loops_irq rc=0 pass=1 bad=0 phases=143290/165436/165436
+cand refill_load rc=0 pass=1 bad=0 phases=4792/7090/7090
+cand lea_d16 rc=0 pass=1 bad=0 phases=41970/64488/64488
+cand lea_fault rc=0 pass=1 bad=0 phases=574/782/782

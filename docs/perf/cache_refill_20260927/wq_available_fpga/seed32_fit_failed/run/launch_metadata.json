@@ -1,0 +1,20 @@
+{
+  "unit": "codex-fpu-6c-wq-available-quartus-20260928-seed32.service",
+  "invocation_id": "c0f6b4cc51b3412793704bff5fb4b799",
+  "wrapper_child_pid": 2535240,
+  "quartus_sh_pid": 2535255,
+  "quartus_map_pid": 2535288,
+  "quartus_fit_pid": 2538902,
+  "started_local": "2026-09-28 04:49:54 EDT",
+  "build_log": "tree/output_files/build_20260928_044954.log",
+  "build_command": "bash scripts/build_only.sh",
+  "working_directory": "tree/",
+  "prelaunch_check": "full_prelaunch_collision_check.json",
+  "manifest": "candidate_seed32_manifest.sha256",
+  "manifest_sha256": "84c6b48b1637b46c73940da8f46b9834498dd7deddcd61bedc6ac83310094cae",
+  "status": "terminal",
+  "last_updated_unix": 1790587567.8186882,
+  "stage": "quartus_fit_failed",
+  "wrapper_exit": 3,
+  "finished_local": "2026-09-28 05:24:07 EDT"
+}

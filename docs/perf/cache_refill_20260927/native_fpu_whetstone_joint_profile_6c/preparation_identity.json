@@ -1,0 +1,21 @@
+{
+  "stage": "PREPARED_ONLY_NO_BUILD_OR_RUN",
+  "candidate_fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "previous73bc_to6c_RTL_delta": [
+    "ap68040/rtl/ap040_fpu.v"
+  ],
+  "RTL_files": 113,
+  "paired_RTL_byte_exact": true,
+  "paired_shared_fixture_byte_exact_except_passive_TB_include_and_two_calls": true,
+  "original_qualified_TB_byte_exact_in_uninstrumented": true,
+  "original_check_result_py_byte_exact": true,
+  "ram_sha256": "9e58e9b226e03acbee4e1ae690a8b67500328dfb5933df55e1b832c926c653e9",
+  "ROM_sha256": "7d9cb8c3bae0e26171adf9f24bedf10bf6371ae3c9bdbcdfd3b94e5350099fb6",
+  "romlat": 6,
+  "check_profile_sha256": "bb065bcc6276c7b370d70695b0a011f526642b9ef5fc35265cfdcb1de6322afb",
+  "passive_header_sha256": "ee5035df6f1f3ea131c05b820f990121f83245f212abcf4a22a6ae9a067569ca",
+  "scope": "native tEsT12000 selector1 FPUWStone, actual SDRAM path and ROMlat6 stub; no numerical oracle",
+  "assessment_sha256": "5050e2402f32bfb69984a51f1873456fe6a6c78b294d041a7e605c29f93dcc5f",
+  "host_checker_status": "PASS validfixtures +15corruptions; no RTL/model compiled",
+  "supervisor_scope": "650s runner deadline, separate60s postchecks"
+}

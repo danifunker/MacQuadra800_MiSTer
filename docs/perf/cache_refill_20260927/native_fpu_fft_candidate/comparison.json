@@ -1,0 +1,13 @@
+{
+  "scope": "matched native selector2 FPUFFT runtime/ABI profiling; no numerical payload capture or independent numerical oracle",
+  "baseline_fpu_sha256": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "candidate_fpu_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "baseline_loop": 14301941,
+  "candidate_loop": 13358788,
+  "saved_clocks": 943153,
+  "cycle_decrease_percent": 6.594580413945212,
+  "throughput_increase_percent": 7.060168931492883,
+  "ABI_heap_code_error_histogram_and_call_gates": "PASS both",
+  "numerical_output": "UNQUALIFIED; no payload capture",
+  "inherited_labels": "Exact unchanged checker and measurement.scope still say baseline; this comparison identity identifies candidate73bc."
+}

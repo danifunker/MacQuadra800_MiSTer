@@ -1,0 +1,17 @@
+p258 fpu pass=1 phases=101556/146602/146602
+p258 fpu_frames pass=1 phases=8240/12526/12526
+p258 fpu_resume pass=1 phases=13352/20312/20312
+p258 mmu pass=1 phases=335150/500484/500484
+p258 exceptions pass=1 phases=137984/210308/210304
+p258 cache pass=1 phases=2282/3368/3368
+p258 integer rc=0 pass=1 bad=0 phases=16664/25516/25516
+p258 bitfield_mmu rc=0 pass=1 bad=0 phases=6274/9292/9292
+p258 bitfield_cache rc=0 pass=1 bad=0 phases=25300/35756/35756
+p258 moves_fc rc=0 pass=1 bad=0 phases=3238/4894/4894
+p258 movem_restart rc=0 pass=1 bad=0 phases=35118/53308/53308
+p258 atcprobe rc=0 pass=1 bad=0 phases=39910/59116/59116
+p258 branch_early rc=0 pass=1 bad=0 phases=59630/66804/66804
+p258 loops_irq rc=0 pass=1 bad=0 phases=138476/160624/160624
+p258 refill_load rc=0 pass=1 bad=0 phases=4780/7078/7078
+p258 lea_d16 rc=0 pass=1 bad=0 phases=41958/64476/64476
+p258 lea_fault rc=0 pass=1 bad=0 phases=552/760/760

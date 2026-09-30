@@ -1,0 +1,8 @@
+BOUNDARY scenario=0 target=00003000 victim=00001000 refetched=PASS
+BOUNDARY scenario=1 target=00003100 victim=00001100 refetched=PASS
+BOUNDARY scenario=2 target=00003200 victim=00001200 refetched=PASS
+BOUNDARY scenario=3 delayed_sideband=PASS reads=2
+BOUNDARY scenario=4 target=00003400 victim=00001400 refetched=PASS
+COVERAGE snoop_bulk=3 snoop_tag=1 error_bulk=1 delayed_issued=2 ce_frozen=2 candidate_bulk=6
+ALL BOUNDARY TESTS PASSED
+scratch/fpu_refill_path_20260927/tb_bulk_boundary.sv:614: $finish called at 6730000 (1ps)

@@ -1,0 +1,9 @@
+# Matched baseline seed-27 fit result
+
+This is the seed-27 build with the baseline FPU source SHA-256 `2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465`, built from the pinned `708c12542a74c0b92872910d330a6e989b6a2181` tracked tree. It differs from the successful candidate seed-27 project only in `rtl/ap68040/rtl/ap040_fpu.v`; QSF and SDC are byte-identical. `tracked_delta_check.json` and the exact candidate-to-baseline FPU diff are retained alongside this result.
+
+The single full compile completed A&S and fitting successfully, and Quartus reported full compilation exit 0. The wrapper returned 1 because final setup STA found worst slack −0.025 ns on HDMI. Per-clock setup slack was CPU/sys +0.193 ns, SDRAM/RAM +0.295 ns, HDMI −0.025 ns. The fitted report shows 38,742 ALMs needed, 24,614 registers, 468 RAM blocks (3,389,411 memory bits), and 36 DSPs. The authorized cross-domain STA completed exit 0: sys→RAM +0.295 ns; RAM→sys +0.554 ns.
+
+RBF is preserved only in the scratch tree: `/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_baseline_quartus_20260928/tree/output_files/MacQuadra800.rbf`, 4,465,568 bytes, SHA-256 `a666342b30a69bd4f03aaeb904e0b10046de9fb60840b23654f44986090bbcaf`, MD5 `85924646654c0a5fe745fc4a32853b24`. Its MD5 prefix matches the `85924646` prefix in the historical seed-27 handoff, but no remote full hash is available to establish identity with that historical bitstream. This local RBF is not timing-clean; the standard deployment wrapper rejects it. BUILD.md and CLAUDE.md permit a deliberate marginal hardware probe with a timing override, but this result does not authorize deployment or establish shared-board availability. No hardware guest score is associated with it yet.
+
+`build_20260927_234519.log`, fit/flow/timing summaries, cross-domain reports, unit logs, process identities, and source manifests preserve the result. No RBF or Quartus database is copied into this archive.

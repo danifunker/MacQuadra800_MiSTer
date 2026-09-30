@@ -1,0 +1,48 @@
+{
+  "source": {
+    "git_head": "708c12542a74c0b92872910d330a6e989b6a2181",
+    "fpu_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+    "qsf_sha256": "75c69f933515f05c729076108b26515f3f6aff84a36692fdd58d2f95077fe1fd",
+    "seed": 21
+  },
+  "run": {
+    "unit": "codex-fpu-normal-single-move-quartus-20260928-full.service",
+    "invocation_id": "8d109c76f12e45c8a19164ed8589ec64",
+    "wrapper_main_pid": 2282557,
+    "quartus_sh_pid": 2282570,
+    "quartus_fit_pid": 2282611,
+    "exit_status": 3,
+    "completed_local": "2026-09-27 23:04:49",
+    "elapsed": "00:12:43",
+    "quartus_errors": 4,
+    "quartus_warnings": 18,
+    "route_status": "failed",
+    "failure_codes": [
+      "16618",
+      "188026",
+      "170143",
+      "11802"
+    ],
+    "cause": "routing congestion; fitter final attempt unsuccessful"
+  },
+  "fit_summary": {
+    "ALMs": 38659,
+    "ALMs_total": 41910,
+    "registers": 24229,
+    "block_memory_bits": 3389411,
+    "RAM_blocks": 468,
+    "RAM_blocks_total": 553,
+    "DSP_blocks": 36,
+    "PLLs": 4
+  },
+  "timing": {
+    "sta_generated": false,
+    "worst_slack_ns": null,
+    "note": "No STA summary or timing claim; build log reports timing STA not generated."
+  },
+  "artifact": {
+    "rbf_produced": false,
+    "note": "No fresh artifact; any existing RBF is not from this run."
+  },
+  "log": "build_20260927_225206.log"
+}

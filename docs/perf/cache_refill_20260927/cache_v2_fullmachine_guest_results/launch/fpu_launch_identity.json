@@ -1,0 +1,22 @@
+{
+  "stage": "LAUNCHED_FPU_ONCE",
+  "start_utc": "2026-09-28T10:39:49.469554+00:00",
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--unit=cache-xline-sideband-fpu-20260928",
+    "--collect",
+    "--property=WorkingDirectory=/home/alans/mister/MacQuadra800_MiSTer",
+    "/usr/bin/python3",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_fullmachine_supervision_20260928/run_fpu.py",
+    "--launch"
+  ],
+  "unit": "cache-xline-sideband-fpu-20260928",
+  "initial_unit_state": "MainPID=2612651\nActiveState=active\nSubState=running\nInvocationID=0cec4711f02d4a2981c907c54268b1aa\n",
+  "source_manifest_sha256": "8c70ed5af366c6dd8b5507ac5a575d991042716b044bec406567db2fd1332137",
+  "binary_sha256": "727eb1298eaab8189b4b9f472008b3b47aa6b0b88afc343a9ab9ec3318b9a600",
+  "supervisor_sha256": "18199cc5dbe840fcdf6e9a82242cdfff5f8a0eb1541d19ad06f22c355bd0df6b",
+  "golden_input_disk_sha256": "80d8479430a66edae161c2bac6a9563dbb4f6bd0f564ee7849a555c447df8888",
+  "disk_bytes": 90224128,
+  "control_sha256": "33108dcd7af064820bb59ae89f72c77a2f8a62b74bbee73f86bd912c244253e4"
+}

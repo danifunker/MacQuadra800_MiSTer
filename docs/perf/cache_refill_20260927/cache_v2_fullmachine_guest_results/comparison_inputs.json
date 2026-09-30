@@ -1,0 +1,134 @@
+{
+  "format": "cache-xline-guest-comparisons-v1",
+  "baseline_fpu": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "baseline_cache": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+  "comparisons": {
+    "fpu": {
+      "completed6c_archive": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_fpu/candidate",
+      "files": {
+        "control.txt": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_fpu/candidate/control.txt",
+          "sha256": "33108dcd7af064820bb59ae89f72c77a2f8a62b74bbee73f86bd912c244253e4"
+        },
+        "screenshot_f4277.png": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_fpu/candidate/screenshot_f4277.png",
+          "sha256": "e7c623b75e7d5bd3a390cd1a5db375d551ad435981403c2635637ed3754ae9b1"
+        },
+        "screenshot_f7382.png": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_fpu/candidate/screenshot_f7382.png",
+          "sha256": "f62654d3ea0760e557ff3fa6b88516ac44be66931a13e236902d510fd9a1fdf1"
+        },
+        "refill.tsv": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_fpu/candidate/refill.tsv",
+          "sha256": "db7602f159c50b08ea3141e460d6e692ab1cb8efc33aa8033ec3e2a7425e4ae9"
+        },
+        "run.meta.json": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_fpu/candidate/run.meta.json",
+          "sha256": "e8340af613850a4d72ad0e60b9319d6647408ab71a64acfadbbbc5ed72806349"
+        },
+        "manual_review.json": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_fpu/candidate/manual_review.json",
+          "sha256": "84c7a31f802c0e8821121ec3fe38a87ab73095ce61a7a753885e4ce7849d35c5"
+        },
+        "refill_check.log": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_fpu/candidate/refill_check.log",
+          "sha256": "e233406e3563e5a8b1dec02d283e4b427aa368860a901eb39f7d1711c57287f1"
+        },
+        "observer_check.log": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_fpu/candidate/observer_check.log",
+          "sha256": "c6fb62513b2804096c3e96819763480c58bc18b05e021fe1976a8011768ef74d"
+        }
+      },
+      "displayed_scores": {
+        "aggregate": 0.729,
+        "Whetstone_KWhetstones_per_sec": 3850.048,
+        "Matrix_seconds": 0.928,
+        "FFT_seconds": 0.418
+      },
+      "setup_review": "all selected tests/iteration1 verified by root; final Mix middle cells occluded, do not infer them"
+    },
+    "mix": {
+      "completed6c_archive": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_mix/candidate",
+      "files": {
+        "control.txt": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_mix/candidate/control.txt",
+          "sha256": "eafdd1b91b0984cf882584f7714b12083f082ea7443dd44d60808d507ccd0639"
+        },
+        "screenshot_f4277.png": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_mix/candidate/screenshot_f4277.png",
+          "sha256": "c494076aac7cb6cf960b6258ef41b43068133f03ee3f40c29a2fa6a3a8300b93"
+        },
+        "screenshot_f7382.png": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_mix/candidate/screenshot_f7382.png",
+          "sha256": "faacda0e9b2427cfb918be947e95cd1d01f83ca2958fa802d56c03f6c216c9a1"
+        },
+        "refill.tsv": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_mix/candidate/refill.tsv",
+          "sha256": "c534886965619d82bc29e6c9d2e5015a6f1e2ea761fd4cc129a115abd6945928"
+        },
+        "run.meta.json": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_mix/candidate/run.meta.json",
+          "sha256": "ff32c6c6656ccd59dd33e1c1627f9a806416da144558deefdded5c09735ba23d"
+        },
+        "manual_review.json": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_mix/candidate/manual_review.json",
+          "sha256": "16e0a026b92c5b6526abefcf0861e433d193d584f87b1d648d837610b9fed663"
+        },
+        "refill_check.log": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_mix/candidate/refill_check.log",
+          "sha256": "1b7d90cb3929247d5ceb32b84725fefad26f019921bad8db18cdfb9738fb73f6"
+        },
+        "observer_check.log": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_mix/candidate/observer_check.log",
+          "sha256": "dc9be1072130c2919e2703246f6cee17c5e71ad7b307a53342092d42fcb42880"
+        }
+      },
+      "displayed_scores": {
+        "aggregate": 1.798
+      },
+      "setup_review": "all selected tests/iteration1 verified by root; final Mix middle cells occluded, do not infer them"
+    },
+    "color8": {
+      "completed6c_archive": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_color/candidate",
+      "files": {
+        "control.txt": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_color/candidate/control.txt",
+          "sha256": "fae07029b5f17ecc0e7471fa90499d09b29bd08a50c433eb058f603d24a15ecc"
+        },
+        "screenshot_f4277.png": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_color/candidate/screenshot_f4277.png",
+          "sha256": "92082dbb64531d12b08550b9861840f7c48f034cbd143afed3bdd6c994794810"
+        },
+        "screenshot_f5525.png": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_color/candidate/screenshot_f5525.png",
+          "sha256": "a810f0be5774f5dd6abcf147839992c19f3cb6e2b59f3c9da30fc1d044060e67"
+        },
+        "refill.tsv": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_color/candidate/refill.tsv",
+          "sha256": "0b9e6863c98250de4567b2217a89638ec1d38f66e1c5b8482be2758401030cb5"
+        },
+        "run.meta.json": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_color/candidate/run.meta.json",
+          "sha256": "4857f5624d79f302d740d51faba74a002a5b6951b27fbbcae0bf0b91763e27aa"
+        },
+        "manual_review.json": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_color/candidate/manual_review.json",
+          "sha256": "21c5840aa212f68ef29c2ea51906414d4ad18284b0cb51be2909338333fb66c3"
+        },
+        "refill_check.log": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_color/candidate/refill_check.log",
+          "sha256": "6e6a0e1be2cc4897b2ce5e3a62466728af182c72e13978d5985c693b51eab3e5"
+        },
+        "observer_check.log": {
+          "path": "/home/alans/mister/MacQuadra800_MiSTer/docs/perf/cache_refill_20260927/normal_single_enabled_fullmachine_color/candidate/observer_check.log",
+          "sha256": "b73c7082a548030955d25c0fe830d8b3d7971d988c039e4018021fe40f0b84b6"
+        }
+      },
+      "displayed_scores": {
+        "Eightbit_seconds": 9.878,
+        "rating": 1.072
+      },
+      "setup_review": "all selected tests/iteration1 verified by root; final Mix middle cells occluded, do not infer them"
+    }
+  }
+}

@@ -54,9 +54,8 @@ assign BUTTONS = 0;
 //////////////////////////////////////////////////////////////////
 
 wire [1:0] ar = status[122:121];
-
-assign VIDEO_ARX = (!ar) ? 12'd4 : (ar - 1'd1);
-assign VIDEO_ARY = (!ar) ? 12'd3 : 12'd0;
+// VIDEO_ARX/ARY and VGA_DE come from the framework's video_freak below
+// (aspect ratio plus the OSD's integer-scaling choice, status[13:12]).
 
 `include "build_id.v"
 localparam CONF_STR = {
@@ -87,6 +86,7 @@ localparam CONF_STR = {
 	"O[5],Monitor (on reset),13in 640x480,12in 512x384;",
 `endif
 	"O[122:121],Aspect ratio,Original,Full Screen,[ARC1],[ARC2];",
+	"O[13:12],Scale,Normal,V-Integer,Narrower HV-Integer,Wider HV-Integer;",
 	// Built-in Ethernet (rtl/sonic_mbx.sv + the Main fork's support/mac).  Off by
 	// default: the machine is then bit for bit the one without it.  The core reads
 	// only [6]; the interface choice is the Main's.  The guest's MAC is 08:00:07 +
@@ -95,11 +95,6 @@ localparam CONF_STR = {
 	"-;",
 	"O[6],Ethernet (on reset),Off,On;",
 	"O[8:7],Net interface,eth0,eth1,wlan0,tap0;",
-	// BRING-UP ONLY (2026-09-18, remove before a release): machine fast paths off, to find what
-	// Open Transport's CAS/CAS2 list code trips over.  All latched under reset.
-	"O[9],Dbg store buffer,On,Off;",
-	"O[10],Dbg SDRAM line,On,Off;",
-	"O[11],Dbg DMA snoop,On,Off;",
 `endif
 	"-;",
 	"T[0],Reset;",
@@ -445,6 +440,7 @@ wire [31:0] mem_wdata;
 wire  [1:0] mem_memsel;
 wire [31:0] mem_rdata;                     // VRAM/ROM reg, or the SDRAM bridge
 wire        mem_ack;
+wire        mem_vram_wp;                   // direct VRAM write (mem_req low)
 reg  [31:0] mem_rdata_r;
 reg         mem_ack_r;
 
@@ -510,10 +506,13 @@ localparam SONIC_EN = 0;
 localparam SONIC_EN = 1;
 `endif
 reg         eth_ena = 1'b0;
-reg   [2:0] dbg_sw  = 3'd0;
+// The machine's three fast-path switches (store buffer, SDRAM line, DMA
+// snoop) were OSD "Dbg" options during the Ethernet bring-up; the paths
+// have been on in every release since, so the OSD lines are gone and the
+// switches are tied to their normal state.
+wire  [2:0] dbg_sw  = 3'd0;
 always @(posedge clk_sys) if (reset) begin
 	eth_ena <= (SONIC_EN != 0) && status[6];
-	dbg_sw  <= status[11:9];
 end
 wire [11:0] eth_mem_addr;
 wire        eth_mem_rd, eth_mem_we;
@@ -543,9 +542,13 @@ quadra800 #(.RAM_ADDR_BITS(RAM_ADDR_BITS), .CDROM(CDROM_EN), .SONIC(SONIC_EN)) m
 	.mem_wp_be(mem_wp_be),
 	.mem_wp_data(mem_wp_data),
 	.mem_wq_room(sdr_wq_room),
+	.mem_vram_wp(mem_vram_wp),
 	.mem_line_valid(sdr_line_valid),
 	.mem_line_tag(sdr_line_tag),
 	.mem_line_data(sdr_line_data),
+	.mem_rom_line_valid(rom_line_valid),
+	.mem_rom_line_tag(rom_line_tag),
+	.mem_rom_line_data(rom_line),
 	.mem_line_pending(sdr_line_pending),
 	.mem_line_pending_tag(sdr_line_pending_tag),
 
@@ -610,7 +613,29 @@ quadra800 #(.RAM_ADDR_BITS(RAM_ADDR_BITS), .CDROM(CDROM_EN), .SONIC(SONIC_EN)) m
 
 wire m_hblank, m_vblank;
 assign CLK_VIDEO = clk_vid;
-assign VGA_DE = ~(m_hblank | m_vblank);
+wire mac_de = ~(m_hblank | m_vblank);
+
+// Aspect ratio and integer scaling are the framework's: video_freak turns
+// the OSD's Scale choice into the VIDEO_ARX/ARY scaled-size form the
+// scaler understands (V-Integer keeps every Mac line an integer number of
+// output lines).  No crop.
+video_freak video_freak
+(
+	.CLK_VIDEO(clk_vid),
+	.CE_PIXEL(CE_PIXEL),
+	.VGA_VS(VGA_VS),
+	.HDMI_WIDTH(HDMI_WIDTH),
+	.HDMI_HEIGHT(HDMI_HEIGHT),
+	.VGA_DE(VGA_DE),
+	.VIDEO_ARX(VIDEO_ARX),
+	.VIDEO_ARY(VIDEO_ARY),
+	.VGA_DE_IN(mac_de),
+	.ARX((!ar) ? 12'd4 : (ar - 1'd1)),
+	.ARY((!ar) ? 12'd3 : 12'd0),
+	.CROP_SIZE(12'd0),
+	.CROP_OFF(5'd0),
+	.SCALE({1'b0, status[13:12]})
+);
 
 //////////////////////////////////////////////////////////////////
 // SCC serial — MidiLink / PPP / console on channel A, MT32-pi on the user port
@@ -634,7 +659,13 @@ assign VGA_DE = ~(m_hblank | m_vblank);
 //////////////////////////////////////////////////////////////////
 wire serialOut, serialRTS;
 wire serialOutB;                           // printer port TX — unused for now
-wire serialCTS = 1'b1;                     // idle/deasserted: no device attached
+// The HPS UART's RTS, as the framework presents it (active low): a printer
+// daemon or pppd opened with RTS/CTS asserts it (low) when it can take data.
+// It reaches RR0's CTS bit uninverted, which is the polarity the Mac's
+// drivers want (hardware-settled, docs/perf/p262_trial_hw_20260929): 0 =
+// clear to send, and a daemon that is not running or drops RTS holds the
+// Mac off.  It used to be a constant 1 (never reaching RR0, which read 0).
+wire serialCTS = UART_CTS;
 wire [7:0] uart_mode;                      // from hps_io; 3 = MIDI
 
 wire userport_midi_in = (uart_mode == 8'd3) ? mt32_midi_rx : 1'b1;
@@ -772,10 +803,14 @@ assign LED_DISK = {1'b1, (|sd_rd) | (|sd_wr)};
 wire        sdr_ack;
 wire [31:0] sdr_rdata;
 
-// The ack the machine sees is this bridge's or the VRAM/ROM one; they are
-// never asserted together, because mem_memsel picks exactly one consumer.
-assign mem_ack   = mem_ack_r | sdr_ack;
-assign mem_rdata = sdr_ack ? sdr_rdata : mem_rdata_r;
+// The ack the machine sees is this bridge's, the VRAM port's or the ROM one;
+// they are never asserted together, because mem_memsel picks exactly one
+// consumer.  A VRAM beat is acknowledged in its second clock, straight from
+// the block RAM's output (vram_ack, below).
+wire        vram_ack;
+reg  [31:0] vram_qa;
+assign mem_ack   = mem_ack_r | sdr_ack | vram_ack;
+assign mem_rdata = sdr_ack ? sdr_rdata : mem_is_vram ? vram_qa : mem_rdata_r;
 
 sdram_beat32 sdr
 (
@@ -869,12 +904,14 @@ function [16:0] vram_map(input [16:0] w);  // window word -> storage word
 	end
 endfunction
 
-reg [31:0] vram_qa;
 reg        vram_ph;                        // port-A phase: 0 capture, 1 deliver
 
 wire [16:0]  va_addr     = vram_map(mem_addr[18:2]);
 wire [16:0]  vb_addr     = vram_map(vid_addr[18:2]);
-wire         va_we       = mem_req && mem_is_vram && mem_write && !vram_ph;
+// a beat writes in its capture clock; a direct write (the store buffer's
+// drain, quadra800 bus_vram_direct) is a one-clock pulse with mem_req low
+wire         va_we       = (mem_req && mem_is_vram && mem_write && !vram_ph) || mem_vram_wp;
+assign       vram_ack    = mem_req && mem_is_vram && vram_ph;
 
 // Storage is one byte-wide array per lane rather than one 32-bit array
 // with byte enables: mem_be becomes each lane's write enable, so nothing
@@ -938,7 +975,15 @@ reg        ioctl_pend;
 reg [26:0] ioctl_a;
 reg [15:0] ioctl_d;
 reg        ddr_wait_data;                  // read issued, awaiting DOUT_READY
-reg        ddr_rd_hi;
+// The ROM's retained line: every ROM read fetches its whole 16-byte line in
+// one two-beat burst, and the machine answers the line's other longwords from
+// here (quadra800 bus_rom_match) -- the I-cache's fill of a ROM line is one
+// DDR3 round trip instead of four.  ROM changes only by a boot.rom download.
+reg [127:0] rom_line;                      // longword 0 in [127:96]
+reg  [19:4] rom_line_tag;
+reg         rom_line_valid = 1'b0;
+reg   [1:0] ddr_rd_word;
+reg         ddr_rd_beat1;                  // the line's first 64-bit beat is in
 reg        ddr_wait_eth = 1'b0;            // ... for the Ethernet window instead
 assign     eth_mem_rvalid = ddr_wait_eth && DDRAM_DOUT_READY;
 
@@ -959,21 +1004,29 @@ always @(posedge clk_sys) begin
 		ddram_rd <= 0;
 	end
 
-	// VRAM beats (BRAM port A): capture edge, then deliver vram_qa
-	if (mem_req && !mem_ack && mem_is_vram) begin
-		if (!vram_ph) vram_ph <= 1;
-		else begin
-			vram_ph <= 0;
-			mem_rdata_r <= vram_qa;
-			mem_ack_r <= 1;
-		end
-	end
+	// VRAM beats (BRAM port A): the capture edge, then vram_qa is delivered
+	// with the combinational vram_ack; the machine drops mem_req on it
+	if (mem_req && mem_is_vram) vram_ph <= !vram_ph;
 
 	if (ddr_wait_data) begin
 		if (DDRAM_DOUT_READY) begin
-			mem_rdata_r <= ddr_rd_hi ? DDRAM_DOUT[63:32] : DDRAM_DOUT[31:0];
-			mem_ack_r   <= 1;
-			ddr_wait_data <= 0;
+			// beat 0 holds longwords 0 (low half) and 1, beat 1 longwords 2 and 3
+			if (!ddr_rd_beat1) begin
+				rom_line[127:64] <= {DDRAM_DOUT[31:0], DDRAM_DOUT[63:32]};
+				ddr_rd_beat1 <= 1;
+			end
+			else begin
+				rom_line[63:0] <= {DDRAM_DOUT[31:0], DDRAM_DOUT[63:32]};
+				rom_line_valid <= 1;
+				case (ddr_rd_word)
+					2'd0: mem_rdata_r <= rom_line[127:96];
+					2'd1: mem_rdata_r <= rom_line[95:64];
+					2'd2: mem_rdata_r <= DDRAM_DOUT[31:0];
+					2'd3: mem_rdata_r <= DDRAM_DOUT[63:32];
+				endcase
+				mem_ack_r   <= 1;
+				ddr_wait_data <= 0;
+			end
 		end
 	end
 	else if (ddr_wait_eth) begin
@@ -998,10 +1051,13 @@ always @(posedge clk_sys) begin
 				mem_ack_r <= 1;            // djMEMC discards ROM writes
 			end
 			else begin
-				ddram_addr     <= DDR_ROM_BASE | {12'd0, mem_addr[19:3]};
-				ddram_burstcnt <= 8'd1;
+				ddram_addr     <= DDR_ROM_BASE | {12'd0, mem_addr[19:4], 1'b0};
+				ddram_burstcnt <= 8'd2;
 				ddram_rd       <= 1;
-				ddr_rd_hi      <= mem_addr[2];
+				ddr_rd_word    <= mem_addr[3:2];
+				ddr_rd_beat1   <= 0;
+				rom_line_valid <= 0;
+				rom_line_tag   <= mem_addr[19:4];
 				ddr_wait_data  <= 1;
 			end
 		end
@@ -1023,6 +1079,7 @@ always @(posedge clk_sys) begin
 		// access never waits on the DDR3 side of this block.
 	end
 
+	if (ioctl_download && rom_index) rom_line_valid <= 0;
 	if (reset && !ioctl_download) begin
 		vram_ph <= 0;
 		ddr_wait_data <= 0;

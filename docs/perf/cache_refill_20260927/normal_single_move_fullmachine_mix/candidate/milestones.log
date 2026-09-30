@@ -1,0 +1,40 @@
+[SIM-CONTROL] wait 330000 rising edges cycle=2958384377
+[SIM-CONTROL] up 44 cycle=2959044379
+[SIM-CONTROL] wait 330000 rising edges cycle=2959144381
+[SIM-CONTROL] up 11 cycle=2959804383
+[SIM-CONTROL] wait 3300000 rising edges cycle=2959904385
+[SIM-CONTROL] wait 150000000 rising edges cycle=2966504387
+Saved screenshot_f3889.png (800x600)
+[SIM-CONTROL] wait 30000000 rising edges cycle=3266704051
+[SIM-CONTROL] down 5A cycle=3326704053
+[SIM-CONTROL] wait 330000 rising edges cycle=3326804055
+[SIM-CONTROL] up 5A cycle=3327464057
+[SIM-CONTROL] wait 330000 rising edges cycle=3327564059
+[SIM-CONTROL] wait 3300000 rising edges cycle=3328224061
+[SIM-CONTROL] wait 30000000 rising edges cycle=3334824063
+[SIM-CONTROL] down 76 cycle=3394824065
+[SIM-CONTROL] wait 330000 rising edges cycle=3394924067
+[SIM-CONTROL] up 76 cycle=3395584069
+[SIM-CONTROL] wait 330000 rising edges cycle=3395684071
+[SIM-CONTROL] wait 3300000 rising edges cycle=3396344073
+[SIM-CONTROL] wait 60000000 rising edges cycle=3402944075
+[SIM-CONTROL] down 11 cycle=3522944077
+[SIM-CONTROL] wait 330000 rising edges cycle=3523044079
+[SIM-CONTROL] down 32 cycle=3523704081
+[SIM-CONTROL] wait 330000 rising edges cycle=3523804083
+[SIM-CONTROL] up 32 cycle=3524464085
+[SIM-CONTROL] wait 330000 rising edges cycle=3524564087
+[SIM-CONTROL] up 11 cycle=3525224089
+[SIM-CONTROL] wait 3300000 rising edges cycle=3525324091
+[SIM-CONTROL] wait 30000000 rising edges cycle=3531924093
+Saved screenshot_f4277.png (800x600)
+[CPU-PROFILE] started at simulator cycle 3592624051
+[SIM-CONTROL] down 5A cycle=3592624053
+[SIM-CONTROL] wait 330000 rising edges cycle=3592724055
+[SIM-CONTROL] up 5A cycle=3593384057
+[SIM-CONTROL] wait 330000 rising edges cycle=3593484059
+[SIM-CONTROL] wait 3300000 rising edges cycle=3594144061
+[SIM-CONTROL] wait 1300000000 rising edges cycle=3600744063
+Saved screenshot_f7382.png (800x600)
+[CPU-PROFILE] wrote refill.tsv: 1304100000 cycles, 394360235 opcode dispatches, 3.307 clocks/dispatch
+[SIM-CONTROL] wait 1000000 rising edges cycle=6200824053

@@ -1,0 +1,71 @@
+{
+  "full_compile": {
+    "unit": "codex-fpu-6c-wq-available-quartus-20260928-seed31.service",
+    "invocation_id": "f7a4f628f4594b149dc064f9d77df8ec",
+    "wrapper_pid": 2514648,
+    "quartus_sh_pid": 2514663,
+    "map_pid": 2514697,
+    "fit_pid": 2518677,
+    "started_local": "2026-09-28 04:24:43 EDT",
+    "build_log": "tree/output_files/build_20260928_042443.log",
+    "wrapper_exit": 1,
+    "quartus_flow_errors": 0,
+    "timing_gate": "FAIL"
+  },
+  "fit": {
+    "alm": 38741,
+    "registers": 24624,
+    "ram_blocks": 468
+  },
+  "setup_slack_ns": {
+    "cpu": -0.033,
+    "hdmi": -0.119,
+    "ram_falling_to_rising": 0.528
+  },
+  "artifacts": {
+    "rbf": {
+      "path": "tree/output_files/MacQuadra800.rbf",
+      "bytes": 4456988,
+      "sha256": "8f875a50d9d03b4cc40eeab0a7a857ab3038d625d4232c2d0dc1a33d70837a30"
+    },
+    "sof": {
+      "path": "tree/output_files/MacQuadra800.sof",
+      "bytes": 6690368,
+      "sha256": "07343ae95a79cd909826b42825eae03bf493d0fefea387777252a9e59621aa27"
+    }
+  },
+  "cpu_paths": {
+    "unit": "codex-fpu-6c-wq-available-quartus-20260928-seed31-cpu-paths.service",
+    "invocation_id": "46f48a8015114a928a164ae5d6f83658",
+    "tool_exit": 0,
+    "summary": "tree/scratch/cpu_timing_wq_seed31/worst_paths.txt",
+    "summary_sha256": "fcec41484fe98c8f5b537377bdbe388b059ea8820585e8dc240591bce04c731f",
+    "detail": "tree/scratch/cpu_timing_wq_seed31/worst_detail.txt",
+    "detail_sha256": "f074eaac45c759d95b6d0afc9bae1d74b8e59fc0568ba68cc0c9adbf8522dc6e",
+    "summary_paths": 12,
+    "worst_slack_ns": -0.033,
+    "tns_ns": -0.033,
+    "worst_path": "ap040_regfile.rf_written[9] -> ap040_core.epf_data[4][3] (prefetch queue data)",
+    "worst_path_detail_levels": 24
+  },
+  "cross_paths": {
+    "sys_to_ram_report": "tree/scratch/cross_sys2ram_fpu_6c_wq_available_seed31_20260928.txt",
+    "sys_to_ram_sha256": "57290ab607520f1a4d67bea825012b696b02beb602ab96cea45caaa7377dc195",
+    "ram_to_sys_report": "tree/scratch/cross_ram2sys_fpu_6c_wq_available_seed31_20260928.txt",
+    "ram_to_sys_sha256": "2db7f656adda8b6d271a1dadcda32518d760c0da974103166cba3d4cb827afde",
+    "all_12_positive": true,
+    "queue_input_path_slack_ns": 1.739
+  },
+  "ram_paths": {
+    "summary": "tree/scratch/ram_timing_6c_wq_available_seed31_20260928/worst_paths.txt",
+    "summary_sha256": "de02f7c975cd71a5fe587b343f41e812fd96799fda875b838421e78c6bc4c769",
+    "detail": "tree/scratch/ram_timing_6c_wq_available_seed31_20260928/worst_detail.txt",
+    "detail_sha256": "8b65b1d2344927300febfe1ab72053c6665f99fa4d1181bb24eed3ece646843a",
+    "all_12_positive": true,
+    "queue_output_path": "wq_available_handoff -> a_ram[26]/[24]",
+    "queue_output_slack_ns": 0.528,
+    "queue_output_data_delay_ns": 3.903,
+    "queue_output_clock_skew_ns": -0.46
+  },
+  "source_postrun": "source_postrun_check.json"
+}

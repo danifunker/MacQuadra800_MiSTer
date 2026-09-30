@@ -1,0 +1,18 @@
+Selected launch-observer event context, preserved verbatim from fpu_timed_observer.log.
+
+LIVE cycle=1809849420 kind=PREFIX phase=1 site=0 pc=75e186 reason=
+LIVE cycle=1809850108 kind=PREFIX phase=2 site=0 pc=7597da reason=
+LIVE cycle=1809850108 kind=PREFIX phase=3 site=0 pc=7597e0 reason=
+LIVE cycle=1809850113 kind=PREFIX phase=4 site=0 pc=7597e0 reason=
+LIVE cycle=1809850113 kind=PREFIX phase=5 site=0 pc=7597e6 reason=
+LIVE cycle=1809855969 kind=INVALIDATE phase=5 site=0 pc=7597da reason=PFLUSH_OR_CINV
+ADAPTER cycle=1812987623 request_samples=1013715942 ack_samples=384576372 instruction_acks=155701810 data_acks=228874562 error_acks=0 fetched_bytes=521264432 dispatches=372000000 known_dispatches=233790708 ir_mismatch=5383501 signature_failures=0 secondary_skipped=275963 primary_mismatch_skipped=5383501 diagnostic_dropped=0 starts=0 stops=0 callbacks=0 returns=0 aborts=0 unmatched=0 prefix_aborts=137 prefix0=0 prefix1=137 prefix2=1 prefix3=1 prefix4=1 prefix5=1 invalidation0=183234 invalidation1=145180 invalidation2=1 invalidation3=0 invalidation4=0 invalidation5=0
+LIVE cycle=1926222027 kind=PREFIX phase=1 site=1 pc=75e186 reason=
+LIVE cycle=1926222706 kind=PREFIX phase=2 site=1 pc=759b0a reason=
+LIVE cycle=1926222706 kind=PREFIX phase=3 site=1 pc=759b10 reason=
+LIVE cycle=1926222711 kind=PREFIX phase=4 site=2 pc=759b10 reason=
+LIVE cycle=1926222711 kind=PREFIX phase=5 site=2 pc=759b16 reason=
+LIVE cycle=1926228555 kind=INVALIDATE phase=5 site=2 pc=759b0a reason=PFLUSH_OR_CINV
+ADAPTER cycle=1928426120 request_samples=1043818559 ack_samples=402959741 instruction_acks=162475813 data_acks=240483928 error_acks=0 fetched_bytes=545917618 dispatches=398000000 known_dispatches=245717967 ir_mismatch=5480661 signature_failures=0 secondary_skipped=303744 primary_mismatch_skipped=5480661 diagnostic_dropped=0 starts=0 stops=0 callbacks=0 returns=0 aborts=0 unmatched=0 prefix_aborts=157 prefix0=1 prefix1=158 prefix2=3 prefix3=3 prefix4=3 prefix5=2 invalidation0=187634 invalidation1=147095 invalidation2=1 invalidation3=0 invalidation4=0 invalidation5=0
+FPU_SUMMARY starts=0 stops=0 callbacks=0 returns=0 aborts=0 unmatched=0 prefix_aborts=172 timer_open=0 callback_open=0 raw_stop_pending=0
+SUMMARY records=0 identities=0 micro_starts=0 micro_stops=0 contexts=218374 capped=0

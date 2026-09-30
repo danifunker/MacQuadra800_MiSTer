@@ -1,0 +1,14 @@
+started_utc=2026-09-28T13:45:58Z
+host_pid=2895602
+unit=b4a2ddbf7f6d4c9bbe3c5b0f263b66ab
+head_commit=0b2d26559e60ece94aca3eead0f882f93b51a537
+binary_sha256=45f7b372d3b8a5410679aef828d7123196169a03a7bb0d7f2ca36f6fd9f9d556
+monitor_sha256=1f13e64006aaa26228a32dd552c789d1629bc881bbe74cbb276dafe6578c4932
+sim_main_sha256=4c8ecfe5b91b77fb749568256cdd3ec0ae85cec20348958c8834f46e6e31b95a
+sim_v_sha256=372f1a1988c55a900d45132bfde6e251e439143c299464081886c39dbf878c36
+source_manifest_sha256=f3540e75984174eb4b25b3ab94fabb18ffb1d504e33afafc56296b70a228c6a2
+golden_disk_sha256=80d8479430a66edae161c2bac6a9563dbb4f6bd0f564ee7849a555c447df8888
+control_sha256=33108dcd7af064820bb59ae89f72c77a2f8a62b74bbee73f86bd912c244253e4
+rom_sha256=045c02746b5f15f83132d33c5414f806e7b049f3bfe53a7bd0ecacb8e072d673
+argv=--headless --no-cpu-trace --disk run.hda +rom=rom.hex +ram=0 --control control.txt --cpu-profile refill.tsv --fpu-window fwm.txt --fpu-window-period 200000 --max-cycles 20000000000 +ram_line_model +ram_first_latency=4 +ram_line_publish_delay=2
+finished_utc=2026-09-28T15:32:35Z exit=0

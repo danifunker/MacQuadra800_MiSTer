@@ -1,0 +1,63 @@
+{
+  "project": "MacQuadra800 matched baseline, seed 27",
+  "source_commit": "708c12542a74c0b92872910d330a6e989b6a2181",
+  "baseline_fpu_sha256": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "candidate_fpu_sha256": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "only_tracked_difference_from_candidate": "rtl/ap68040/rtl/ap040_fpu.v",
+  "qsf_sha256": "9b6fa7c352dd7667339e6e6ec4f03a00d1894b7e7fce14908f8b57b99c059ec4",
+  "sdc_sha256": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062",
+  "seed": 27,
+  "quartus_version": "17.0.2 Build 602 07/19/2017 SJ Lite Edition",
+  "full_compile": {
+    "systemd_unit": "codex-fpu-normal-single-baseline-quartus-20260928-seed27.service",
+    "invocation_id": "f44e29d90df447c5ba84d321b1f16ba9",
+    "processes": {
+      "systemd_run": 2324451,
+      "unit_main_and_build_only": 2324453,
+      "identity_probe_python": 2324454,
+      "quartus_sh": 2324467,
+      "quartus_map": 2324515,
+      "quartus_fit": 2327921
+    },
+    "terminal": "Quartus full compile exit 0; A&S and fitter successful; wrapper exit 1 because final all-clock setup timing violated",
+    "unit_result": "exit-code; wrapper ExecMainStatus=1",
+    "elapsed": "16m49s"
+  },
+  "timing_setup_slack_ns": {
+    "CPU_sys": 0.193,
+    "SDRAM_ram": 0.295,
+    "HDMI": -0.025
+  },
+  "cross_domain": {
+    "systemd_unit": "codex-fpu-normal-single-baseline-cross-sta-20260928-seed27.service",
+    "invocation_id": "705eacda360044d9bd7fb3054f81f7ba",
+    "child_and_quartus_sta_pid": 2338539,
+    "exit_status": 0,
+    "setup_slack_ns": {
+      "sys_to_ram": 0.295,
+      "ram_to_sys": 0.554
+    }
+  },
+  "resources": {
+    "ALMs_needed": 38742,
+    "registers": 24614,
+    "RAM_blocks": 468,
+    "block_memory_bits": 3389411,
+    "DSP_blocks": 36
+  },
+  "rbf": {
+    "path_in_scratch": "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_baseline_quartus_20260928/tree/output_files/MacQuadra800.rbf",
+    "size_bytes": 4465568,
+    "sha256": "a666342b30a69bd4f03aaeb904e0b10046de9fb60840b23654f44986090bbcaf",
+    "md5": "85924646654c0a5fe745fc4a32853b24",
+    "copied_to_archive": false,
+    "deployed": false
+  },
+  "limitations": [
+    "HDMI setup slack is -0.025 ns; this is a timing-failed artifact and must not be flashed.",
+    "The MD5 begins with the 85924646 prefix documented for the remote historical seed-27 build; the remote full hash is unavailable, so this establishes only a local prefix match.",
+    "No hardware guest score is associated with this local RBF yet."
+  ],
+  "full_systemd_stderr_empty": true,
+  "cross_systemd_stderr_empty": true
+}

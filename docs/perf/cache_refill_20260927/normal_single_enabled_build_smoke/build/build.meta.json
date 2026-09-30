@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "supervisor_pid": 2443652,
+  "started_utc": "2026-09-28T06:46:40.111300+00:00",
+  "source_manifest_sha256": "6ce6d46953c97a8de7c4944d189ef5af62dcfcdb712a896f8164e99bb03c3094",
+  "before_manifest": "PASS",
+  "tool_version": "Verilator 5.050 2026-07-01 rev v5.050",
+  "tool_sha256": "fb2cc573b1055cf096c90e1efc9966fe56bdb4b265c83590cf2a49f7a0defcdf",
+  "supervisor_sha256": "0bee4ba3eaf9c27cdc1e92fee87d794d081997118efef42f81acb31cab2f7471",
+  "commands": [
+    {
+      "argv": [
+        "make",
+        "fastboot"
+      ],
+      "child_pid": 2443657,
+      "exit_status": 0
+    },
+    {
+      "argv": [
+        "make",
+        "-j2",
+        "V=/home/alans/verilator5/bin/verilator"
+      ],
+      "child_pid": 2443659,
+      "exit_status": 0
+    }
+  ],
+  "after_manifest": "PASS",
+  "finished_utc": "2026-09-28T06:48:18.790405+00:00"
+}

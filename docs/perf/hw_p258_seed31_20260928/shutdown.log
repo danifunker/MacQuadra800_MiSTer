@@ -1,0 +1,4 @@
+[18:53:48] pinning the pointer into the top-left corner
+[18:54:04] Finder menu bar at rest: SPECIAL 181 1.00  # centre x=180.5
+[18:54:04] button up: 6 x mouse:0,1 onto the bar, 121 x mouse:1,0 across to Special
+[18:54:21] pointer not found (NOCURSOR): did it move at all? Remote input goes dead if the mrext service restarts under a running core (CLAUDE.md rule 3)

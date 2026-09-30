@@ -1,0 +1,26 @@
+{
+  "status": "prepared, host tests and short real model fixtures passed; no long workload launched",
+  "binary_sha256": "20c5da9ee78863758cc387cf8579673d9d374436dc2589280e976f115548d3a3",
+  "golden_disk_sha256": "80d8479430a66edae161c2bac6a9563dbb4f6bd0f564ee7849a555c447df8888",
+  "golden_disk_bytes": 90224128,
+  "attempt1_running_binary_sha256": "5456932292677dddddc2e0563927e15dc54aa93e2f3ffaaf6dc3ac519dd7b188",
+  "attempt1_manifest_sha256": "7fa63eec2603a26bf99b7378643a2a8c72302228baa6d96150efec1440f07233",
+  "RTL_differences": 0,
+  "generated_model_differences": 0,
+  "CPU_macros": [
+    "AP040_EXPERIMENTAL_XSTORE",
+    "AP040_EXPERIMENTAL_LEA",
+    "AP040_EXPERIMENTAL_PIPELINE",
+    "AP040_EXPERIMENTAL_PIPELINE_LOADS",
+    "AP040_EXPERIMENTAL_PIPELINE_STORES",
+    "AP040_EXPERIMENTAL_PIPELINE_PEA",
+    "AP040_EXPERIMENTAL_PIPELINE_P6",
+    "AP040_PIPELINE_MEMORY_ENTRY",
+    "AP040_PIPELINE_COMPARE",
+    "AP040_PIPELINE_EARLY_DRAIN"
+  ],
+  "ram_model": {
+    "first_latency": 4,
+    "line_publish_delay": 2
+  }
+}

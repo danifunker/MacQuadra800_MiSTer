@@ -1,0 +1,74 @@
+{
+  "scope": "matched full OS Speedometer Mix all10 oneiteration; calibrated RAM service model4/2, not hardware timing",
+  "baseline_aggregate": 1.798,
+  "candidate_aggregate": 1.798,
+  "setup_all10_checked": true,
+  "setup_all_iterations": 1,
+  "tests_done_both": true,
+  "final_visible_all10_metrics_nonzero": true,
+  "occluded_fields": "middle ratings/iteration cells hidden by done dialog; not reconstructed",
+  "visible_raw_rows": [
+    {
+      "test": "KWhet/sec",
+      "baseline": 1762.002,
+      "candidate": 1762.139
+    },
+    {
+      "test": "Dhr/sec",
+      "baseline": 1931.816,
+      "candidate": 1932.324
+    },
+    {
+      "test": "Towers of Hanoi seconds",
+      "baseline": 0.479,
+      "candidate": 0.479
+    },
+    {
+      "test": "Quicksort seconds",
+      "baseline": 0.507,
+      "candidate": 0.507
+    },
+    {
+      "test": "Bubble Sort seconds",
+      "baseline": 0.602,
+      "candidate": 0.602
+    },
+    {
+      "test": "Queens seconds",
+      "baseline": 0.362,
+      "candidate": 0.362
+    },
+    {
+      "test": "Puzzle seconds",
+      "baseline": 0.755,
+      "candidate": 0.756
+    },
+    {
+      "test": "Permutations seconds",
+      "baseline": 0.712,
+      "candidate": 0.712
+    },
+    {
+      "test": "Integer Matrix seconds",
+      "baseline": 0.495,
+      "candidate": 0.495
+    },
+    {
+      "test": "Sieve seconds",
+      "baseline": 0.845,
+      "candidate": 0.845
+    }
+  ],
+  "setup_byteexact": true,
+  "setup_sha256": "c494076aac7cb6cf960b6258ef41b43068133f03ee3f40c29a2fa6a3a8300b93",
+  "fixed_window_clocks": 1304100000,
+  "profile_usage": "reconciliation only, not timed execution or speed",
+  "baseline_fpu": "2d53db3ae4a04310add04eeb7919f0219197a98827ed92e410e6d4a4a90f5465",
+  "candidate_fpu": "73bc156d147e4f8b1c7ee08f0bb03c7f1cd720d4e78293d8252f63bf992f0b1f",
+  "only_RTL_delta": "ap68040/rtl/ap040_fpu.v",
+  "children_postrun": "both absent; verified host namespace",
+  "final_screens": {
+    "baseline": "9dfee2c98e403268e8d8a287b0def74c1c254e1ae66fbdc8ea2bd47aa7ea6431",
+    "candidate": "faacda0e9b2427cfb918be947e95cd1d01f83ca2958fa802d56c03f6c216c9a1"
+  }
+}

@@ -1,0 +1,8 @@
+5106 3f3c0003  move.w  #$3, -(A7)
+510a 4e94  jsr     (A4)
+510c 4a2dc90e  tst.b   (-$36f2,A5)
+5110 544f  addq.w  #2, A7
+5112 671e  beq     $5132
+5114 486efff8  pea     (-$8,A6)
+5118 a193  dc.w    $a193; opcode 1010
+511a 225f  movea.l (A7)+, A1

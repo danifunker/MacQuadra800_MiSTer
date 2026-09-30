@@ -1,0 +1,28 @@
+923
+MacQuadra800;
+UART57600:115200,MIDI;
+SC0,HDAVHD,Mount SCSI disk 0;
+SC1,HDAVHD,Mount SCSI disk 1;
+SC4,ISOTO*CUEBINCHD,Mount CD-ROM;
+-;
+O[4:3],RAM (on reset),32MB,64MB,128MB;
+O[5],Monitor (on reset),13in 640x480,12in 512x384;
+O[122:121],Aspect ratio,Original,Full Screen,[ARC1],[ARC2];
+O[13:12],Scale,Normal,V-Integer,Narrower HV-Integer,Wider HV-Integer;
+-;
+O[6],Ethernet (on reset),Off,On;
+O[8:7],Net interface,eth0,eth1,wlan0,tap0;
+-;
+T[0],Reset;
+R[0],Reset and close OSD;
+-;
+P1,MT32-pi;
+P1-;
+P1O[35],Use MT32-pi,Yes,No;
+P1O[36],Synth,Munt,FluidSynth;
+P1O[38:37],Munt ROM,MT-32 v1,MT-32 v2,CM-32L;
+P1O[41:39],SoundFont,0,1,2,3,4,5,6,7;
+P1O[43:42],Show Info,No,Yes,LCD-On,LCD-Auto;
+I,MT32-pi: SoundFont #0,MT32-pi: SoundFont #1,MT32-pi: SoundFont #2,MT32-pi: SoundFont #3,MT32-pi: SoundFont #4,MT32-pi: SoundFont #5,MT32-pi: SoundFont #6,MT32-pi: SoundFont #7,MT32-pi: MT-32 v1,MT32-pi: MT-32 v2,MT32-pi: CM-32L,MT32-pi: Unknown mode;
+v,0;
+V,v260929

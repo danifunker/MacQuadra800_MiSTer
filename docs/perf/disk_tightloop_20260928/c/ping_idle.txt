@@ -1,0 +1,30 @@
+PING 10.3.231.233 (10.3.231.233) 56(84) bytes of data.
+64 bytes from 10.3.231.233: icmp_seq=1 ttl=255 time=3.96 ms
+64 bytes from 10.3.231.233: icmp_seq=2 ttl=255 time=1.39 ms
+64 bytes from 10.3.231.233: icmp_seq=3 ttl=255 time=1.47 ms
+64 bytes from 10.3.231.233: icmp_seq=4 ttl=255 time=1.36 ms
+64 bytes from 10.3.231.233: icmp_seq=5 ttl=255 time=1.50 ms
+64 bytes from 10.3.231.233: icmp_seq=6 ttl=255 time=1.40 ms
+64 bytes from 10.3.231.233: icmp_seq=7 ttl=255 time=1.40 ms
+64 bytes from 10.3.231.233: icmp_seq=8 ttl=255 time=1.38 ms
+64 bytes from 10.3.231.233: icmp_seq=9 ttl=255 time=1.45 ms
+64 bytes from 10.3.231.233: icmp_seq=10 ttl=255 time=1.52 ms
+64 bytes from 10.3.231.233: icmp_seq=11 ttl=255 time=1.44 ms
+64 bytes from 10.3.231.233: icmp_seq=12 ttl=255 time=1.43 ms
+64 bytes from 10.3.231.233: icmp_seq=13 ttl=255 time=1.44 ms
+64 bytes from 10.3.231.233: icmp_seq=14 ttl=255 time=1.42 ms
+64 bytes from 10.3.231.233: icmp_seq=15 ttl=255 time=1.38 ms
+64 bytes from 10.3.231.233: icmp_seq=16 ttl=255 time=1.54 ms
+64 bytes from 10.3.231.233: icmp_seq=17 ttl=255 time=1.46 ms
+64 bytes from 10.3.231.233: icmp_seq=18 ttl=255 time=1.51 ms
+64 bytes from 10.3.231.233: icmp_seq=19 ttl=255 time=1.45 ms
+64 bytes from 10.3.231.233: icmp_seq=20 ttl=255 time=1.36 ms
+64 bytes from 10.3.231.233: icmp_seq=21 ttl=255 time=1.59 ms
+64 bytes from 10.3.231.233: icmp_seq=22 ttl=255 time=1.40 ms
+64 bytes from 10.3.231.233: icmp_seq=23 ttl=255 time=1.36 ms
+64 bytes from 10.3.231.233: icmp_seq=24 ttl=255 time=1.35 ms
+64 bytes from 10.3.231.233: icmp_seq=25 ttl=255 time=1.42 ms
+
+--- 10.3.231.233 ping statistics ---
+25 packets transmitted, 25 received, 0% packet loss, time 4816ms
+rtt min/avg/max/mdev = 1.352/1.534/3.963/0.499 ms

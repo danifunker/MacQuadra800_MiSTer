@@ -1,0 +1,30 @@
+{
+  "baseline": {
+    "fpu_path": "inputs/baseline_ap040_fpu.v",
+    "fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+    "cache_path": "inputs/ap68040/rtl/ap040_cache.v",
+    "cache_sha256": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747"
+  },
+  "candidate": {
+    "fpu_path": "inputs/ap68040/rtl/ap040_fpu.v",
+    "fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+    "cache_path": "inputs/candidate_ap040_cache.v",
+    "cache_sha256": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481"
+  },
+  "common_compiled_inputs": {
+    "inputs/tb/tb_ap040_program.v": "0ebe0e951c6119710828ed35808371da1994e7f1fb770179d93654a155799fc3",
+    "inputs/ap68040/rtl/ap040_tg68k_compat.v": "df92dcfc55b1573183168524853919e6e2b68595951769bd42ce5fa540380fd9",
+    "inputs/ap68040/rtl/ap040_core.v": "82601eae9e14908ba2944b6e1e0f2d1d869135bb68e791d2b65c45fc88aa0a16",
+    "inputs/ap68040/rtl/ap040_bus16_adapter.v": "fc4973774e985720f50ff3e0fff6a69f9fec65323fe00859147ec13f15f052f0",
+    "inputs/ap68040/rtl/ap040_bus_timeout.v": "30e67ac325c639a797cc971ccb9dc78e931053158704b50a8da2d27ae2d623e5",
+    "inputs/ap68040/rtl/ap040_regfile.v": "ecf54d31929e5aa0511a9a80fd09e69a13525d51a7e62cfd3bc278031fd3f0e9",
+    "inputs/ap68040/rtl/ap040_alu.v": "3c7f2f1329d72959718fbf96b8797f8e476123824ce7f328a07e68268903a7b2",
+    "inputs/ap68040/rtl/ap040_muldiv.v": "925bbea473dfbd8c65cf0271416632c947f64563199eb6d6070b54286161fb0c",
+    "inputs/ap68040/rtl/ap040_mmu.v": "72e8f8c3862c7fad55a6d0f1275252e7ebb6cc6cf9571592661c3fc28cd5c2de",
+    "inputs/ap68040/rtl/ap040_walker_cdc.v": "3541305117fdf574a93ebb4d810b05e946f7695f9367cea87e909f7f67a3e1ce",
+    "inputs/ap68040/rtl/primitives/dpram.v": "0b5fd0869d29374cb01f084ad545b4250efe303a366bd7b274e163a145363ba6",
+    "inputs/ap68040/experimental/ap040_pipeline_integer.sv": "92ea4d96a5b2da0784e65fe2015118e4889353a7df83e4ccca8bf6a1e7059435"
+  },
+  "selected_cache_is_only_semantic_delta": true,
+  "candidate_diff_sha256": "407894f435f8e0e693f0fa1fc28e15cb2752e05d8d932bbd99cf217978ff2759"
+}

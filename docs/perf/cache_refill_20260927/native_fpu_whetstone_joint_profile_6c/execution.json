@@ -1,0 +1,26 @@
+{
+  "status": "QUALIFIED_PAIR",
+  "launcher_pid": 2554533,
+  "started_utc": "2026-09-28T09:16:51.358654+00:00",
+  "source_manifest_sha256": "e5393d16e3281cef14d365fd7a421db1e27e358aa47782d51d42a4f1dcde9d9a",
+  "stages": [
+    {
+      "variant": "uninstrumented",
+      "supervisor_pid": 2554538,
+      "exit_status": 0,
+      "runner_pid": 2554539,
+      "native_pid": 2554830,
+      "native_exe_sha256": "763a01ee5ae3448723a58f0d9614e7290582e767a9235f2878dfbb428cc70036"
+    },
+    {
+      "variant": "profile",
+      "supervisor_pid": 2555180,
+      "exit_status": 0,
+      "runner_pid": 2555181,
+      "native_pid": 2555594,
+      "native_exe_sha256": "e195f0c026d2298820b639fbe18f9e2ee1a1b6e90e830978448dec9385a0dfae"
+    }
+  ],
+  "pair_check_exit_status": 0,
+  "finished_utc": "2026-09-28T09:18:58.883443+00:00"
+}

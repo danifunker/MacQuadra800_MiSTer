@@ -105,8 +105,44 @@ wire        mem_wp_valid;
 wire [31:2] mem_wp_addr;
 wire  [3:0] mem_wp_be;
 wire [31:0] mem_wp_data;
-reg  [31:0] mem_rdata;
-reg         mem_ack;
+wire        mem_vram_wp;
+reg [127:0] rom_line;                        // the ROM's retained line
+reg  [19:4] rom_line_tag;
+reg         rom_line_valid = 1'b0;
+// Optional abstract SDRAM-line timing model. Off retains the original
+// one-clock beat-port behavior. Delays count clk_sys rising edges and are
+// intended for calibration against the integrated cache/SDRAM bench.
+reg ram_line_model = 1'b0;
+integer ram_first_latency = 1;
+integer ram_line_publish_delay = 0;
+initial begin
+	if ($test$plusargs("ram_line_model")) ram_line_model = 1'b1;
+	if ($value$plusargs("ram_first_latency=%d", ram_first_latency)) begin end
+	if ($value$plusargs("ram_line_publish_delay=%d", ram_line_publish_delay)) begin end
+	if (ram_first_latency < 1) ram_first_latency = 1;
+	if (ram_line_publish_delay < 0) ram_line_publish_delay = 0;
+	if (ram_line_model)
+		$display("[RAM-LINE-MODEL] abstract first_latency=%0d publish_delay=%0d clk_sys edges",
+		         ram_first_latency, ram_line_publish_delay);
+end
+reg [127:0] ram_line;
+reg  [26:4] ram_line_tag;
+reg         ram_line_valid = 1'b0;
+reg         ram_line_pending = 1'b0;
+reg         ram_line_publish_armed = 1'b0;
+integer     ram_line_publish_count = 0;
+reg         ram_model_busy = 1'b0;
+reg         ram_model_ack_sent = 1'b0;
+reg         ram_model_poisoned = 1'b0;
+integer     ram_model_wait_count = 0;
+reg  [31:2] ram_model_addr;
+reg         ram_model_write;
+reg   [3:0] ram_model_be;
+reg  [31:0] ram_model_wdata;
+wire [31:0] mem_rdata;
+wire        mem_ack;
+reg  [31:0] mem_rdata_r;
+reg         mem_ack_r;
 
 wire [21:2] vid_addr;
 wire [13:0] vid_stride;
@@ -144,6 +180,15 @@ quadra800 #(.RAM_ADDR_BITS(RAM_ADDR_BITS), .SONIC(0)) machine (
 	.mem_wp_be(mem_wp_be),
 	.mem_wp_data(mem_wp_data),
 	.mem_wq_room(1'b1),
+	.mem_line_valid(ram_line_model && ram_line_valid),
+	.mem_line_tag(ram_line_tag),
+	.mem_line_data(ram_line),
+	.mem_line_pending(ram_line_model && ram_line_pending),
+	.mem_line_pending_tag(ram_line_tag),
+	.mem_rom_line_valid(rom_line_valid),
+	.mem_rom_line_tag(rom_line_tag),
+	.mem_rom_line_data(rom_line),
+	.mem_vram_wp(mem_vram_wp),
 
 	.vid_addr(vid_addr),
 	.vid_stride(vid_stride),
@@ -259,13 +304,48 @@ always @(posedge clk_sys) if (mem_wp_valid) begin
 	if (mem_wp_be[0]) ram[wp_idx][7:0]   <= mem_wp_data[7:0];
 end
 
+// VRAM as MacQuadra800.sv serves it: the block RAM's registered read, a
+// beat's capture clock (which also writes) and its combinational ack in the
+// second clock; a direct write (mem_vram_wp) is a pulse with mem_req low.
+wire        mem_is_vram = (mem_memsel != 2'd0) && (mem_memsel != 2'd1);
+reg  [31:0] vram_qa;
+reg         vram_ph = 1'b0;
+wire        mem_port_available = !ram_line_model || !ram_model_busy;
+wire        vram_ack = mem_req && mem_is_vram && vram_ph && mem_port_available;
+wire        va_we = (mem_req && mem_is_vram && mem_write && !vram_ph && mem_port_available) || mem_vram_wp;
+assign mem_ack   = mem_ack_r | vram_ack;
+assign mem_rdata = mem_is_vram ? vram_qa : mem_rdata_r;
+
 always @(posedge clk_sys) begin
-	mem_ack <= 0;
-	if (mem_req && !mem_ack) begin
-		mem_ack <= 1;
+	vram_qa <= vram[vram_idx];
+	if (va_we) begin
+		if (mem_be[3]) vram[vram_idx][31:24] <= mem_wdata[31:24];
+		if (mem_be[2]) vram[vram_idx][23:16] <= mem_wdata[23:16];
+		if (mem_be[1]) vram[vram_idx][15:8]  <= mem_wdata[15:8];
+		if (mem_be[0]) vram[vram_idx][7:0]   <= mem_wdata[7:0];
+	end
+	if (mem_req && mem_is_vram && mem_port_available) vram_ph <= !vram_ph;
+end
+
+wire ram_model_accept = ram_line_model && !reset && !ram_model_busy &&
+	mem_req && !mem_ack_r && !mem_is_vram && (mem_memsel == 2'd0) && !mem_wp_valid;
+wire ram_model_complete = (ram_model_accept && (mem_write || ram_first_latency == 1)) ||
+	(ram_line_model && ram_model_busy && !ram_model_ack_sent &&
+	 (ram_model_wait_count <= 1) && !mem_wp_valid);
+wire [31:2] ram_service_addr = ram_model_accept ? mem_addr : ram_model_addr;
+wire ram_service_write = ram_model_accept ? mem_write : ram_model_write;
+wire [3:0] ram_service_be = ram_model_accept ? mem_be : ram_model_be;
+wire [31:0] ram_service_wdata = ram_model_accept ? mem_wdata : ram_model_wdata;
+wire [RAM_ADDR_BITS-3:0] ram_service_idx = ram_service_addr[RAM_ADDR_BITS-1:2];
+wire [RAM_ADDR_BITS-3:0] ram_line_base = {ram_service_addr[RAM_ADDR_BITS-1:4], 2'b00};
+
+always @(posedge clk_sys) begin
+	mem_ack_r <= 0;
+	if (!ram_line_model && mem_req && !mem_ack_r && !mem_is_vram) begin
+		mem_ack_r <= 1;
 		case (mem_memsel)
 		2'd0: begin
-			mem_rdata <= ram[ram_idx];
+			mem_rdata_r <= ram[ram_idx];
 			if (mem_write) begin
 				if (mem_be[3]) ram[ram_idx][31:24] <= mem_wdata[31:24];
 				if (mem_be[2]) ram[ram_idx][23:16] <= mem_wdata[23:16];
@@ -273,17 +353,108 @@ always @(posedge clk_sys) begin
 				if (mem_be[0]) ram[ram_idx][7:0]   <= mem_wdata[7:0];
 			end
 		end
-		2'd1: mem_rdata <= rom[rom_idx];
 		default: begin
-			mem_rdata <= vram[vram_idx];
-			if (mem_write) begin
-				if (mem_be[3]) vram[vram_idx][31:24] <= mem_wdata[31:24];
-				if (mem_be[2]) vram[vram_idx][23:16] <= mem_wdata[23:16];
-				if (mem_be[1]) vram[vram_idx][15:8]  <= mem_wdata[15:8];
-				if (mem_be[0]) vram[vram_idx][7:0]   <= mem_wdata[7:0];
+			mem_rdata_r <= rom[rom_idx];
+			// the emu's ROM read fetches the whole line (MacQuadra800.sv)
+			if (!mem_write) begin
+				rom_line       <= {rom[{rom_idx[17:2], 2'd0}], rom[{rom_idx[17:2], 2'd1}],
+				                   rom[{rom_idx[17:2], 2'd2}], rom[{rom_idx[17:2], 2'd3}]};
+				rom_line_tag   <= mem_addr[19:4];
+				rom_line_valid <= 1'b1;
 			end
 		end
 		endcase
+	end
+	if (ram_line_model) begin
+		if (reset) begin
+			ram_line_valid <= 0;
+			ram_line_pending <= 0;
+			ram_line_publish_armed <= 0;
+			ram_model_busy <= 0;
+			ram_model_ack_sent <= 0;
+			ram_model_poisoned <= 0;
+		end
+		else begin
+			// A pending line is visible to the machine until all four words
+			// are published together. The original read still gets its ack.
+			if (ram_line_publish_armed) begin
+				if (ram_line_publish_count <= 1) begin
+					ram_line_valid <= 1;
+					ram_line_pending <= 0;
+					ram_line_publish_armed <= 0;
+				end
+				else ram_line_publish_count <= ram_line_publish_count - 1;
+			end
+			if (ram_model_accept) begin
+				ram_model_busy <= 1;
+				ram_model_ack_sent <= 0;
+				ram_model_addr <= mem_addr;
+				ram_model_write <= mem_write;
+				ram_model_be <= mem_be;
+				ram_model_wdata <= mem_wdata;
+				ram_model_wait_count <= mem_write ? 0 : ram_first_latency - 1;
+				ram_model_poisoned <= 0;
+				if (!mem_write) begin
+					ram_line_tag <= mem_addr[26:4];
+					ram_line_valid <= 0;
+					ram_line_pending <= 1;
+					ram_line_publish_armed <= 0;
+				end
+			end
+			else if (ram_model_busy && !ram_model_ack_sent && !ram_model_complete &&
+			         ram_model_wait_count > 1)
+				ram_model_wait_count <= ram_model_wait_count - 1;
+			if (ram_model_complete) begin
+				mem_ack_r <= 1;
+				ram_model_ack_sent <= 1;
+				if (ram_service_write) begin
+					mem_rdata_r <= ram[ram_service_idx];
+					if (ram_service_be[3]) ram[ram_service_idx][31:24] <= ram_service_wdata[31:24];
+					if (ram_service_be[2]) ram[ram_service_idx][23:16] <= ram_service_wdata[23:16];
+					if (ram_service_be[1]) ram[ram_service_idx][15:8]  <= ram_service_wdata[15:8];
+					if (ram_service_be[0]) ram[ram_service_idx][7:0]   <= ram_service_wdata[7:0];
+				end
+				else begin
+					mem_rdata_r <= ram[ram_service_idx];
+					if (ram_model_accept || !ram_model_poisoned) begin
+						ram_line <= {ram[ram_line_base], ram[ram_line_base + 1'b1],
+						             ram[ram_line_base + 2'd2], ram[ram_line_base + 2'd3]};
+						if (ram_line_publish_delay == 0) begin
+							ram_line_valid <= 1;
+							ram_line_pending <= 0;
+						end
+						else begin
+							ram_line_publish_count <= ram_line_publish_delay;
+							ram_line_publish_armed <= 1;
+						end
+					end
+					else ram_line_pending <= 0;
+				end
+			end
+			if (ram_model_busy && ram_model_ack_sent && !mem_req && !ram_line_pending)
+				ram_model_busy <= 0;
+			if (!ram_model_busy && mem_req && !mem_ack_r && !mem_is_vram &&
+			    mem_memsel != 2'd0) begin
+				// ROM retains its original one-edge response in modeled mode.
+				mem_ack_r <= 1;
+				mem_rdata_r <= rom[rom_idx];
+				if (!mem_write) begin
+					rom_line       <= {rom[{rom_idx[17:2], 2'd0}], rom[{rom_idx[17:2], 2'd1}],
+					                   rom[{rom_idx[17:2], 2'd2}], rom[{rom_idx[17:2], 2'd3}]};
+					rom_line_tag   <= mem_addr[19:4];
+					rom_line_valid <= 1'b1;
+				end
+			end
+			// A posted write can land while the retained line is still
+			// pending. It poisons publication but never cancels the read ack.
+			if (mem_wp_valid || (ram_model_complete && ram_service_write)) begin
+				ram_line_valid <= 0;
+				ram_line_pending <= 0;
+				ram_line_publish_armed <= 0;
+				if (mem_wp_valid && ram_model_busy && !ram_model_ack_sent)
+					ram_model_poisoned <= 1;
+			end
+		end
 	end
 end
 

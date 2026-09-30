@@ -1,0 +1,17 @@
+{
+  "status": "TERMINAL_PAIRED_REGRESSION_PASS",
+  "runner_exec_session_id": 19222,
+  "runner_command": "python3 scratch/fpu_normal_single_enabled_regressions_20260928/run.py --launch-reviewed",
+  "root_observed_live_child": {
+    "pid": 2441423,
+    "variant": "baseline",
+    "target": "mmu",
+    "command": "vvp outputs/baseline/prog.vvp +prog=mmu.hex",
+    "observation_source": "primary/root host process audit during the run"
+  },
+  "individual_child_pids_persisted_by_runner": false,
+  "terminal_result": "outputs/result.json",
+  "status_detail": "all 12 paired target logs pass; 102 immutable inputs revalidated",
+  "immutable_input_manifest_sha256": "b769a8d916b316f39b7a210564e0efb73473e3eb3a5df9b0dbdcebc91be91e2b",
+  "runner_wall_seconds": 231.429
+}

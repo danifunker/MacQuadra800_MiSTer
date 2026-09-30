@@ -1,0 +1,33 @@
+test_checker.py
+PASS valid masks/shortcut/odd-size/immediate/partials fixture
+PASS whole-only per-address path/event fixture
+REJECT orphan first pass plus matching mask
+REJECT orphan fast event
+REJECT orphan second event plus matching mask
+REJECT duplicate
+REJECT schema
+REJECT out of bounds
+REJECT invalid size
+REJECT noncross branch
+REJECT missing first mask
+REJECT zero first mask
+REJECT second outcome
+REJECT invalidation projection
+REJECT missing path
+REJECT unclassified
+REJECT address sum
+REJECT impossible max
+REJECT active partial
+REJECT partial projection
+REJECT saved context
+REJECT existing group sum
+REJECT synthetic fixture as real qualification
+PASS 2 valid / 21 negative report fixtures; no model executed
+
+test_comparison.py
+PASS exact reports/NEXT/captures with new passive rows
+REJECT original report changed
+REJECT joint report changed
+REJECT joint row duplicated
+REJECT capture changed
+PASS comparison fixtures; no model executed

@@ -1,0 +1,5 @@
+baseline PASS normal_single checks=97834 normal=97795 fast=0 slow=97830 wall 12.08
+candidate PASS normal_single checks=97834 normal=97795 fast=97795 slow=35 wall 11.63
+PASS production_excluded_and_restore_signatures 36
+runner_exit_status=0
+tool_session_id=28125

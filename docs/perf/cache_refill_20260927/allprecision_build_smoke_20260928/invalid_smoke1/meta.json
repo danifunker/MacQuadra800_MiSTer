@@ -1,0 +1,29 @@
+{
+  "scope": "new generated model short disk-free smoke, not benchmark or guest guard coverage",
+  "supervisor_pid": 2366808,
+  "argv": [
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_fullmachine_20260928/verilator/obj_dir/Vemu",
+    "--headless",
+    "--no-cpu-trace",
+    "+rom=/home/alans/mister/MacQuadra800_MiSTer/scratch/fpu_normal_single_allprecision_fullmachine_20260928/verilator/quadra800-fastboot.rom.hex",
+    "+ram=0",
+    "--control",
+    "control.txt",
+    "--cpu-profile",
+    "refill.tsv",
+    "--max-cycles",
+    "200000",
+    "+ram_line_model",
+    "+ram_first_latency=4",
+    "+ram_line_publish_delay=2"
+  ],
+  "binary_sha256": "fc196b28762c249c6af8820326a1c4689f9ac99e30350160a70091eac8464a4d",
+  "started_utc": "2026-09-28T04:45:38.922683+00:00",
+  "child_pid": 2366813,
+  "running_exe_sha256": "fc196b28762c249c6af8820326a1c4689f9ac99e30350160a70091eac8464a4d",
+  "status": "INVALID_ROM_PATH_TRUNCATION",
+  "exit_status": 0,
+  "child_terminal": true,
+  "check0": 1,
+  "invalid_reason": "absolute ROM plusarg truncated; readmemh file not found; no valid ROM integration proof"
+}

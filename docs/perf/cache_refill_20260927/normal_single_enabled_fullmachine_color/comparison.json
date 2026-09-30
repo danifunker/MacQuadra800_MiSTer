@@ -1,0 +1,14 @@
+{
+  "candidate_fpu": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "guest_seconds": 9.878,
+  "baseline_seconds": 9.878,
+  "displayed_time_change": 0,
+  "same_setup_and_final_png": true,
+  "standard_profile_byte_exact_after_removing_added_passive_FPU_GUARD_rows": true,
+  "profile_cycles": 524160000,
+  "guard_raw": 273,
+  "guard_normal": 0,
+  "guard_6c": 0,
+  "eligible_post_mismatch": 0,
+  "scope": "Color8 regression; fixed-window totals are not test duration; no hardware qualification"
+}

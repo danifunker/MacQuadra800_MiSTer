@@ -1,0 +1,22 @@
+{
+  "stage": "PREPARED_ONLY_NO_BUILD_SMOKE_OR_GUEST_LAUNCH",
+  "source_project": "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_fullmachine_20260928",
+  "source_manifest_sha256": "8c70ed5af366c6dd8b5507ac5a575d991042716b044bec406567db2fd1332137",
+  "baseline6c_manifest_sha256": "6ce6d46953c97a8de7c4944d189ef5af62dcfcdb712a896f8164e99bb03c3094",
+  "source_inputs": 223,
+  "sole_source_delta": "rtl/ap68040/rtl/ap040_cache.v",
+  "cache_sha256": "9e8c0582db1b0bb88428e56fec63e99029b61faffac62c6f3dda9326b5191481",
+  "fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "recipe_scripts": {
+    "run_fpu.py": "18199cc5dbe840fcdf6e9a82242cdfff5f8a0eb1541d19ad06f22c355bd0df6b",
+    "check_guard_report.py": "69c525db4dbb4adfdea4986f6ab166cf4080b522fef61361922a0954245ec280",
+    "build.py": "4e693e6cace4f672bcb1fe646b82394085c2094b6480c930753a595ab498d7ed",
+    "smoke.py": "e781772f6abd9fb02debdd761b6358587571ff402045e08fdccbd094d450d900"
+  },
+  "source_and_comparison_readonly_preflight": "PASS",
+  "python_ast": "PASS",
+  "new_generated_model_exists": false,
+  "disk_files": [],
+  "model": "calibrated4/2;all10CPUrelease+SCSI_CACHE_OFF;unroll256;8+8;Verilator5.050",
+  "source_bytes": 12061841
+}

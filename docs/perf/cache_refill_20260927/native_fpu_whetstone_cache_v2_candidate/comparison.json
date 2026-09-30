@@ -1,0 +1,54 @@
+{
+  "baseline_loop_cycles": 8724166,
+  "candidate_loop_cycles": 8541493,
+  "candidate_wrapper_start_local": "2026-09-28T06:30:09.035899-04:00",
+  "candidate_wrapper_finish_local": "2026-09-28T06:31:16.498764-04:00",
+  "candidate_wrapper_exit_status": 0,
+  "exec_session_id": 92103,
+  "runner_pid_namespace": 6,
+  "native_pid_namespace": 95,
+  "native_executable_sha256": "21972cf27f6c0c78a00229e0fabfbda1b0032f89a2b65b1918cf232322bec359",
+  "candidate_compile_jobs": 2,
+  "candidate_supervisor_cap_seconds": 650,
+  "candidate_source_manifest_sha256": "3f8a2680fd8170261876a78bfbd1a83bb80180e2298a770f9b79a2c6446b70c7",
+  "candidate_source_manifest_count": 128,
+  "candidate_postrun_source_manifest": "PASS",
+  "candidate_run_log_sha256": "73315466fcecfeac816332af0ab9e28af42285977e264779ffc33d774928c105",
+  "baseline_run_log_sha256": "1a564e5dfb727d824dfaabc9682185e9764e3a002badfd0a81fde8bbb790c557",
+  "candidate_compile_log_sha256": "68bdb0632ec7a3ef7fb0f4cbaf170e5744a155b5248ab13f920d8df719b68952",
+  "candidate_compile_wall_seconds": 31.155,
+  "delta_cycles": -182673,
+  "delta_percent": -2.093873500343758,
+  "baseline_NATIVE_CACHE": {
+    "0": 7358702,
+    "1": 283164,
+    "4": 8294,
+    "5": 292,
+    "6": 804428,
+    "8": 134643,
+    "9": 134643
+  },
+  "candidate_NATIVE_CACHE": {
+    "0": 7339939,
+    "1": 292932,
+    "4": 8300,
+    "5": 293,
+    "6": 630743,
+    "8": 134643,
+    "9": 134643
+  },
+  "baseline_EXT_read_bus32_n_sum": [
+    9773,
+    173150
+  ],
+  "candidate_EXT_read_bus32_n_sum": [
+    0,
+    0
+  ],
+  "baseline_BUS32_SHAPE_class2_size2_offsetE": 9773,
+  "candidate_BUS32_SHAPE_class2_size2_offsetE": 0,
+  "baseline_BUS32_REGION_class2_0600000": 9630,
+  "candidate_BUS32_REGION_class2_0600000": 0,
+  "final_memory_captures": "BYTE_EXACT",
+  "scope": "single native selector1 Whetstone fixture; aggregate attribution only; not an exact EAE/path identity, numerical oracle, fullguest result, FPGA timing or hardware result"
+}

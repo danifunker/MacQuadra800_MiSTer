@@ -1,0 +1,55 @@
+CONFIG_END	pc	cacr	tc
+CONFIG_END	000107FC	00000000	00000000
+ENABLED_CYCLES	ic	dc	mmu
+ENABLED_CYCLES	0	0	0
+SUMMARY	cycles	dispatches	clocks_per_dispatch	rd_accept_samples	look_hit_cycles	ipred_hit_cycles
+SUMMARY	100002	15385	6.499968	0	0	0
+STATE	id	cycles	entries	percent
+STATE	3	69232	15385	69.230615
+STATE	4	15385	15385	15.384692
+STATE	190	15385	15385	15.384692
+MEM	name	value
+MEM	mrd_cycles_sb_pending	0
+MEM	mwr_cycles_sb_pending	0
+MEM	data_tagwrite_entries	0
+MEM	instr_tagwrite_entries	0
+MEM	sb_push_signal_samples	0
+MEM	sb_full_request_samples	0
+MEM	read_with_store_pending_samples	0
+MEM	pass_cycles_write	0
+MEM	pass_cycles_read	38462
+REFILL_META	clock_sample	post_eval_rising_edge
+REFILL_META	duration	C_FILL_through_C_TAGW_complete_bracket_spans_only
+REFILL_META	mrd_overlap	core_state_9_and_C_FILL_same_sample
+REFILL_META	states	issued_is_registered_state_local_match_is_combinational_setup_is_neither
+REFILL_PARTIAL	start	0
+REFILL_PARTIAL	end	0
+REFILL_PARTIAL	aborted	0
+REFILL_REGION	bank	region	fill_entries	fill_samples	tagwrite_samples	issued_state_samples	local_match_samples	setup_state_samples	mrd_overlap_samples	completed
+REFILL_SAMPLE	bank	region	fill_cnt	r_issued	fill_acked	clocks
+REFILL_DURATION	bank	region	clocks	complete_fills
+CACHE_STATE	id	cycles	percent
+CACHE_STATE	0	61540	61.538769
+CACHE_STATE	6	38462	38.461231
+TRANSITION	from	to	count
+TRANSITION	3	4	15384
+TRANSITION	4	190	15385
+TRANSITION	190	3	15385
+OPCODE	opcode	dispatches	percent
+OPCODE	0000	15385	100.000000
+FPU_GUARD_META	format	fpu-guard-profile-v1
+FPU_GUARD_META	sample	pre_eval_inputs_committed_start_inclusive_stop_exclusive
+FPU_GUARD_META	counts	new_fp_command_branch_events_not_retirements_or_unique_requests
+FPU_GUARD_META	side_bits	cr_we,fm_we,bsun_req,fp_reset,frestore_idle,frestore_unimp,fsave_ack,pend_capture
+FPU_GUARD_SUMMARY	edges	raw	restore	pending	unexpected_single_class	enable_rejected_normal	context_dropped	eligible_post_round	eligible_post_mismatch	reconciles
+FPU_GUARD_SUMMARY	100002	0	0	0	0	0	0	0	0	1
+FPU_GUARD_BUCKET	precision	enables	raw	single	exp_zero	exp_normal	exp_allones	old_guard	new_guard
+FPU_GUARD_REJECT_SIDE	0	0
+FPU_GUARD_REJECT_SIDE	1	0
+FPU_GUARD_REJECT_SIDE	2	0
+FPU_GUARD_REJECT_SIDE	3	0
+FPU_GUARD_REJECT_SIDE	4	0
+FPU_GUARD_REJECT_SIDE	5	0
+FPU_GUARD_REJECT_SIDE	6	0
+FPU_GUARD_REJECT_SIDE	7	0
+FPU_GUARD_CONTEXT	profile_edge	pc	fpcr	opclass	side_bits	old_guard	new_guard

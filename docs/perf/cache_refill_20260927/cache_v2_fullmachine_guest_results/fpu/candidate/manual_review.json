@@ -1,0 +1,29 @@
+{
+  "stage": "MANUAL_REVIEW_AFTER_ORIGINAL_TERMINAL_METADATA",
+  "kind": "fpu",
+  "verdict": "INVALID_GUEST_TIMING",
+  "setup_byteexact_completed6c": true,
+  "setup_sha256": "e7c623b75e7d5bd3a390cd1a5db375d551ad435981403c2635637ed3754ae9b1",
+  "final_sha256": "661c02149e510cb6e41920acbaff5c98d765429c6fdddef74430e8e93294b6cc",
+  "final_frame": "screenshot_f7382.png",
+  "finding": {
+    "verdict": "INVALID_GUEST_TIMING",
+    "completed6c": {
+      "average": 0.729,
+      "whetstone": 3850.048,
+      "matrix_seconds": 0.928,
+      "fft_seconds": 0.418
+    },
+    "current": {
+      "average": -96.774,
+      "whetstone": 11460.135,
+      "matrix_seconds": 0.007,
+      "fft_seconds": -738.0,
+      "iterations": 1
+    }
+  },
+  "original_automated_exit_checks": "PASS; do not validate guest timing",
+  "overall_candidate_qualification": "FAILED",
+  "cause": "UNPROVEN",
+  "review_source": "Primary reviewed final/setup images; independent final image view and setup byte comparison recorded; no automatic OCR or timing oracle"
+}

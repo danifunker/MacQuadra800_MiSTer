@@ -1,0 +1,7 @@
+# Matched native Whetstone candidate replay — prepared, not launched
+
+Copy exact completed native selector1 fixture image/entry/TB/counters/runner/checker, original ROMlat6/unroll256/all10 release CPU flags and actual SDRAM path. Fresh copied immutable RTL tree has sole FPU2d53→73bc delta; no instrumentation or kernel change. Baseline loop8726508. Original baseline source identities still match. Input/shared hashes and original consumed binary/source provenance are in preflight.json. No independent numerical oracle or output payload capture.
+
+Existing runner/TB remain byteexact baseline; runner already has300s phase caps and freshout/40M-cycle gate. Add only an external processgroup supervisor to preserve actual runner/Vtb PID/exehash and kill/wait the group if either existing phase timeout or an outer650s deadline fails. Sequential supervisor preflight verifies all source hashes/sole-delta/image/flags/ROM before running. New output path only; no retry. No launch until primary review.
+
+Exact original checker requires measurement.json to preexist as a recorded-result consistency check. External postprocessor will execute its existing read-only checks and result construction before that final recorded-result assertion, write candidate measurement.json, then run the exact unchanged checker in full. Inherited checker/result strings still say baseline; paired report and preflight identify candidate73bc explicitly. No fabricated numerical reference or reused baseline measurement.

@@ -1,0 +1,25 @@
+{
+  "unit": "codex-fpu-normal-single-enabled-quartus-20260928-seed28-cross.service",
+  "invocation_id": "1b283bba201f442c928c9c8b514ddeb5",
+  "tool_session_id": 57979,
+  "quartus_sta_pid": 2486453,
+  "quartus_sta_executable_sha256": "3e5b6469769824667c28dcad237a4ad5f46aad67c3ccd76ec3c0824e7094fe78",
+  "command": "quartus_sta -t scripts/cpu/timequest_cross_domain.tcl fpu_normal_single_enabled_seed28_20260928",
+  "exit_status": 0,
+  "tool_result": "success, 0 Quartus errors; timing result has one violation",
+  "sys_to_ram": {
+    "path": "tree/scratch/cross_sys2ram_fpu_normal_single_enabled_seed28_20260928.txt",
+    "paths": 6,
+    "violated": 0,
+    "worst_slack_ns": 0.731,
+    "report_sha256": "960d313bdf3b4dae6d71a9fe940102ec7e6570216e070639dbf2f9077bc5c441"
+  },
+  "ram_to_sys": {
+    "path": "tree/scratch/cross_ram2sys_fpu_normal_single_enabled_seed28_20260928.txt",
+    "paths": 6,
+    "violated": 1,
+    "worst_slack_ns": -0.203,
+    "report_sha256": "6a6090527ad443bf1ea5357737b22bf7261423873b7e01eed4bb98146a55d3bb"
+  },
+  "status": "complete-one-cross-domain-setup-violation"
+}

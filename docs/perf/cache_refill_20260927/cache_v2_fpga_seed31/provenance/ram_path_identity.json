@@ -1,0 +1,21 @@
+{
+  "unit": "codex-cache-xline-first-fill-quartus-seed31-20260928-ram-paths",
+  "invocation_id": "d02525811cca40758788f93505463abe",
+  "child_pid": 2628751,
+  "wrapper_exit": 0,
+  "quartus_sta_exit": 0,
+  "quartus_sta_command": "quartus_sta -t scratch/timequest_ram_worst_paths_seed31.tcl",
+  "source_tcl_sha256": "e86c7d985f991dd3a10617e7b6dd158cb29f9fabae12e0ce82d30d98b07f4c7a",
+  "reports": [
+    {
+      "path": "tree/scratch/ram_timing_6c_seed31_20260928/worst_paths.txt",
+      "sha256": "2b5aedb9b57441feb126620114a10686cb3bdbf33abfdc98be328d8faee6a485",
+      "size_bytes": 5508
+    },
+    {
+      "path": "tree/scratch/ram_timing_6c_seed31_20260928/worst_detail.txt",
+      "sha256": "89c8b3d03e891de4e431f91c72845856a63d14455cc646a2ce0ead047288c042",
+      "size_bytes": 23767
+    }
+  ]
+}

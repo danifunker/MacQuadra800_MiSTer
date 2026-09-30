@@ -1,0 +1,52 @@
+{
+  "unit": "codex-fpu-6c-wq-available-quartus-20260928-seed31.service",
+  "invocation_id": "f7a4f628f4594b149dc064f9d77df8ec",
+  "tool_session_id": 28973,
+  "systemd_main_pid": 2514648,
+  "run_full_compile_child_pid_namespace": 2514648,
+  "host_verified_processes": [
+    {
+      "pid": 2514663,
+      "ppid": 2514650,
+      "comm": "quartus_sh"
+    },
+    {
+      "pid": 2514697,
+      "ppid": 2514663,
+      "comm": "quartus_map"
+    }
+  ],
+  "build_command": "bash scripts/build_only.sh",
+  "working_directory": "tree/",
+  "base_manifest_sha256": "2a09ab93d2ba9b92d448eb07be0717061a3912ce23dea8418cbb5a169ec58747",
+  "candidate_manifest_sha256": "cd070426e5efd6e9d1b12216d4dbf6c34bce3bdf09671e108bba17f6ec1f89fb",
+  "prelaunch_collision_check": "full_prelaunch_collision_check.json",
+  "status": "terminal",
+  "milestones": [
+    {
+      "stage": "quartus_sh",
+      "pid": 2514663,
+      "ppid": 2514650
+    },
+    {
+      "stage": "quartus_map",
+      "pid": 2514697,
+      "ppid": 2514663,
+      "status": "analysis/synthesis complete"
+    },
+    {
+      "stage": "quartus_fit",
+      "pid": 2518677,
+      "ppid": 2514663,
+      "status": "live"
+    }
+  ],
+  "started_local": "2026-09-28 04:24:43 EDT",
+  "build_log": "tree/output_files/build_20260928_042443.log",
+  "build_start_marker": "tree/output_files/build_20260928_042443.start",
+  "wrapper_exit_status": 1,
+  "quartus_flow_errors": 0,
+  "timing_status": "failed timing gate",
+  "rbf_sha256": "8f875a50d9d03b4cc40eeab0a7a857ab3038d625d4232c2d0dc1a33d70837a30",
+  "source_postrun_check": "source_postrun_check.json"
+}

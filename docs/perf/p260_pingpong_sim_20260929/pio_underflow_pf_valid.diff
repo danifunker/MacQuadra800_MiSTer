@@ -1,0 +1,11 @@
+--- a/rtl/ncr53c96.sv	2026-09-29 11:47:11.288870702 -0400
++++ b/rtl/ncr53c96.sv	2026-09-29 11:47:11.289870746 -0400
+@@ -1233,7 +1233,7 @@
+ 		// m68k -- i.e. a Mac bootloader hitting the identical stall.
+ 		// docs/scsi/qemu-esp-behavior.md:357-369.
+ 		if (xfer_pio_in && !byte_avail && blocks_left == 0 && !nexus_io &&
+-		    !synth_on) begin
++		    !synth_on && !pf_valid) begin
+ 			xfer_pio_in <= 0;
+ 			phase <= PH_STAT;
+ 			raise(I_BUS);

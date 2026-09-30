@@ -1,4 +1,8 @@
-# RESUME — open items after the 2026-09-08 release (read this one first)
+# Historical open items after the 2026-09-08 release
+
+**Historical snapshot. Current handoff: [HANDOFF-20260928.md](HANDOFF-20260928.md).**
+Remote addresses, permissions, release state and open-item status below describe
+September8 and must not be used as current operational instructions.
 
 Written 2026-09-08 ~13:40 at the end of the day's session. Everything below
 is either on `main` or on the MiSTer as described; nothing is uncommitted.

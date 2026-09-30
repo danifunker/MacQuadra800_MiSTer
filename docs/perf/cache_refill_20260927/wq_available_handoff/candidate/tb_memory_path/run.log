@@ -1,0 +1,11 @@
+tb_memory_path: FAST_BYPASS=1 DIRECT_FIRST_MISS=1 REGISTERED_FIRST_MISS=1 ADAPTER_LINE_HIT=1 DIRECT_MEM_ACK=0 REGISTERED_LINE_HIT=1
+PASS  64 integrated sequential reads are data-correct
+PASS  2048 mixed posted-write/read operations retire in order
+  integrated 64 reads  4878 ns = 52.4 MB/s
+  average 16-byte fill 304 ns
+tb_memory_path: 0 failures, 0 chip protocol errors
+tb_memory_path: OK
+- /home/alans/mister/MacQuadra800_MiSTer/scratch/wq_available_validation_20260928/shared/tb_memory_path.sv:308: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01
+- Verilator: $finish at 600us; walltime 0.022 s; speed 27.147 ms/s
+- Verilator: cpu 0.022 s on 1 threads; allocated 6 MB

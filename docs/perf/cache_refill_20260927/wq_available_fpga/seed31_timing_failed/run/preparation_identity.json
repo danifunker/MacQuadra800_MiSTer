@@ -1,0 +1,20 @@
+{
+  "base_project": "scratch/fpu_normal_single_enabled_quartus_20260928_seed31",
+  "base_manifest_sha256": "2a09ab93d2ba9b92d448eb07be0717061a3912ce23dea8418cbb5a169ec58747",
+  "candidate_manifest_entries": 1892,
+  "candidate_manifest_sha256": "cd070426e5efd6e9d1b12216d4dbf6c34bce3bdf09671e108bba17f6ec1f89fb",
+  "changed_manifest_paths": [
+    "rtl/sdram_beat32.sv"
+  ],
+  "bridge_source": "rtl/sdram_beat32.sv",
+  "base_bridge_sha256": "6b49355a45b6e3d81d603d0542139a45854223c71c295ac8515c26cf5f9937ba",
+  "candidate_bridge_source": "scratch/wq_available_handoff_20260928/sdram_beat32.sv",
+  "candidate_bridge_sha256": "5f24b115c01105d376a763c5eee84a45728587eab9a146072b97fc4d364f2ddf",
+  "candidate_requested_sha256": "5f24b115c01105d376a763c5eee84a45728587eab9a146072b97fc4d364f2ddf",
+  "bridge_diff_sha256": "11c2416e9ce8d4a4e8a1d208c02a361ffc13baaf73e7af8d535a17c90042191e",
+  "fpu_sha256": "6c157b3bc045e74a90416f4764f35cf65024e77577019a100b8aa9b5bdd9ce9b",
+  "sdc_sha256": "b2f5bd18b52d7897f711b7b1c465c6a5bd1fffa344275557761aba8f40929062",
+  "cache_sha256": "7cba7f73f6f7f16fa7a45d439af6a786bd55c3ef2a3f8c876b400e10d4fb7747",
+  "qsf_sha256": "711a64565e5aeaf4c8be9cb5606f142322c0ffd6434b0f2f85e710805e3951b4",
+  "status": "prepared-only; no Quartus launched"
+}

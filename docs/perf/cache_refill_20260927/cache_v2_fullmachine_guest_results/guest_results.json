@@ -1,0 +1,43 @@
+{
+  "goal": "PAUSED",
+  "overall_qualification": "FAILED",
+  "cause": "UNPROVEN",
+  "no_retry_or_new_run": true,
+  "fpu": {
+    "verdict": "INVALID_GUEST_TIMING",
+    "completed6c": {
+      "average": 0.729,
+      "whetstone": 3850.048,
+      "matrix_seconds": 0.928,
+      "fft_seconds": 0.418
+    },
+    "current": {
+      "average": -96.774,
+      "whetstone": 11460.135,
+      "matrix_seconds": 0.007,
+      "fft_seconds": -738.0,
+      "iterations": 1
+    }
+  },
+  "mix": {
+    "verdict": "INVALID_GUEST_TIMING",
+    "completed6c_average": 1.798,
+    "current_average": 330.532,
+    "clearly_visible_invalid_seconds": {
+      "Bubble": -4548.0,
+      "Queens": -293.0,
+      "Puzzle": 0.0,
+      "Sieve": -19808.0
+    },
+    "occlusion_limit": "Do not infer middle rating/iteration cells or unclear Permutations sign from modal overlap"
+  },
+  "color8": {
+    "verdict": "ISOLATED_VISIBLE_RESULT_ONLY_NOT_OVERALL_QUALIFICATION",
+    "completed6c_seconds": 9.878,
+    "current_seconds": 9.856,
+    "current_rating": 1.075,
+    "current_iterations": 1,
+    "other_iterations": 0
+  },
+  "review_source": "Primary reviewed final/setup images; independent final image view and setup byte comparison recorded; no automatic OCR or timing oracle"
+}

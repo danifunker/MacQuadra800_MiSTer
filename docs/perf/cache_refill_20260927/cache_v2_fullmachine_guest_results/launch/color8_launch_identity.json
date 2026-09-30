@@ -1,0 +1,24 @@
+{
+  "kind": "color8",
+  "stage": "LAUNCHED_ONCE",
+  "start_utc": "2026-09-28T10:42:51.064660+00:00",
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--unit=cache-xline-sideband-color8-20260928",
+    "--collect",
+    "--property=WorkingDirectory=/home/alans/mister/MacQuadra800_MiSTer",
+    "/usr/bin/python3",
+    "/home/alans/mister/MacQuadra800_MiSTer/scratch/cache_xline_sideband_color8_20260928/run_profile.py",
+    "--launch"
+  ],
+  "unit": "cache-xline-sideband-color8-20260928",
+  "initial_unit_state": "MainPID=2615095\nActiveState=active\nSubState=running\nInvocationID=72aace08a7434bde97a012b812b460b4\n",
+  "package_manifest_sha256": "be291534b762e80535b17a8ce43ec32274404e2d51aefe0b084c9da311129a3b",
+  "source_manifest_sha256": "8c70ed5af366c6dd8b5507ac5a575d991042716b044bec406567db2fd1332137",
+  "binary_sha256": "727eb1298eaab8189b4b9f472008b3b47aa6b0b88afc343a9ab9ec3318b9a600",
+  "runner_sha256": "985532fe66079e81a57aa3de1ceb337884d91af8aa98b5a18df5964a7de77d3f",
+  "prelaunch_manifest_sha256": "2f90550c74e13d491a414d0b72da4235174059cab104897dce9ad03566ada673",
+  "fresh_disk_sha256": "80d8479430a66edae161c2bac6a9563dbb4f6bd0f564ee7849a555c447df8888",
+  "disk_bytes": 90224128
+}
